@@ -93,7 +93,7 @@ public class DiscardView extends OverlayView implements IDiscardView
 	private BufferedImage upImage;
 	private BufferedImage downImage;
 	
-	private Board<ResourceType, Resource> resources;
+	private Map<ResourceType, Resource> resources;
 	private List<ResourceType> resourceList;
 	
 	public DiscardView()

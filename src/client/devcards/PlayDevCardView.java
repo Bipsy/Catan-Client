@@ -402,8 +402,8 @@ class ResourceCardChooser extends ButtonGroupPanel {
 
 @SuppressWarnings("serial")
 class DevelopmentCardChooser extends ButtonGroupPanel {
-	private Board<DevCardType, JToggleButton> devCards;
-	private Board<JToggleButton, DevCardType> devCardTypes;
+	private Map<DevCardType, JToggleButton> devCards;
+	private Map<JToggleButton, DevCardType> devCardTypes;
 
 	private JToggleButton soldier;		
 	private JToggleButton yearofplenty;		

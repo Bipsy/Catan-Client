@@ -37,12 +37,12 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
 	private ArrayList<JPanel> resourceSelectionPanels;
 	private ArrayList<JToggleButton> playerButtons;
 	private ArrayList<JPanel> upDownPanels;
-	private Board<ResourceType, JPanel> upDownPanelByResourceType;
+	private Map<ResourceType, JPanel> upDownPanelByResourceType;
 	private PlayerInfo[] players;
 	private ButtonGroup toggleButtonGroup;
 	
-	private Board<ResourceType, JLabel> resourceCounts;
-	private Board<ResourceType, ArrayList<JButton>> resourceButtonsMap;
+	private Map<ResourceType, JLabel> resourceCounts;
+	private Map<ResourceType, ArrayList<JButton>> resourceButtonsMap;
 
 	public DomesticTradeOverlay() {
 		

@@ -1,7 +1,12 @@
 package shared.models;
 
 import shared.definitions.ResourceType;
+import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
+
+import java.util.List;
+import java.util.Map;
 
 public class Hex {
 	private HexLocation location;

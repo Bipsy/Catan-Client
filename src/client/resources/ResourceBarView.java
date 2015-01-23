@@ -93,7 +93,7 @@ public class ResourceBarView extends PanelView implements IResourceBarView
 	private BufferedImage playDevCardImage;
 	private BufferedImage soldierImage;
 	
-	private Board<ResourceBarElement, ResourceElement> resources;
+	private Map<ResourceBarElement, ResourceElement> resources;
 	private List<ResourceBarElement> resourceElementList;
 	
 	public ResourceBarView()
