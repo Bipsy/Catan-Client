@@ -12,6 +12,9 @@ import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import shared.models.Game;
+import shared.models.GameContainer;
+import shared.models.ResourceList;
 
 /**
  *
@@ -54,7 +57,7 @@ public interface iServerProxy {
 	int rollNumber();
 	
 	/**
-	 * Sends a reuqest to the server to build a road
+	 * Sends a request to the server to build a road
 	 * @pre the player has the resources to build a road
 	 * @pre the location is valid to build a road
 	 * @post a road is built and the model updated
@@ -118,7 +121,5 @@ public interface iServerProxy {
 	void postGameCommands() throws IOException;
 	void listAITypes() throws IOException;
 	void addAIPlayer() throws IOException;
-	void changeLogLevel(int logLevel) throws IOException;
-	
-	
+	void changeLogLevel(int logLevel) throws IOException;	
 }

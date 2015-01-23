@@ -1,5 +1,8 @@
 package shared.models;
 
+import shared.definitions.PieceType;
+import shared.definitions.PortType;
+
 /**
  * Vertex Objects represent pieces that exist on the vertices of hexes. E.G. Settlements and Cities.
  * @author Mikey Murphy <mikeyamadeo@gmail.com>
