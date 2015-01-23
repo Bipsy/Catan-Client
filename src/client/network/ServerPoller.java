@@ -5,7 +5,7 @@
  */
 package client.network;
 
-import shared.network.iServerProxy;
+import client.network.iServerProxy;
 import client.model.ModelContainer;
 import client.model.ModelFacade;
 import client.model.Serializer;
