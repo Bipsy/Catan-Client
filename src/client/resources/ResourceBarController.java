@@ -10,7 +10,7 @@ import client.base.*;
  */
 public class ResourceBarController extends Controller implements IResourceBarController {
 
-	private Map<ResourceBarElement, IAction> elementActions;
+	private Board<ResourceBarElement, IAction> elementActions;
 	
 	public ResourceBarController(IResourceBarView view) {
 

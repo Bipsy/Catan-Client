@@ -1,7 +1,7 @@
 package shared.models;
 
 /**
- * 
+ * Vertex Objects represent pieces that exist on the vertices of hexes. E.G. Settlements and Cities.
  * @author Mikey Murphy <mikeyamadeo@gmail.com>
  */
 public class VertexObject {

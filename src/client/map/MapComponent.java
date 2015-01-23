@@ -40,17 +40,17 @@ public class MapComponent extends JComponent
 	private static final int CITY_WALL_HEIGHT = (int)(CITY_WIDTH * 0.7);
 	private static final int CITY_ROOF_HEIGHT = (int)(CITY_WIDTH * 1.0);
 	
-	private static Map<HexType, BufferedImage> HEX_IMAGES;
-	private static Map<PortType, BufferedImage> PORT_IMAGES;
-	private static Map<Integer, BufferedImage> NUMBER_IMAGES;
+	private static Board<HexType, BufferedImage> HEX_IMAGES;
+	private static Board<PortType, BufferedImage> PORT_IMAGES;
+	private static Board<Integer, BufferedImage> NUMBER_IMAGES;
 	private static BufferedImage ROBBER_IMAGE;
 	private static BufferedImage DISALLOW_IMAGE;
-	private static Map<EdgeDirection, List<Point2D>> ROADS;
+	private static Board<EdgeDirection, List<Point2D>> ROADS;
 	private static List<Point2D> SETTLEMENT;
 	private static List<Point2D> CITY;
-	private static Map<VertexDirection, Point2D> VERTEX_POINTS;
-	private static Map<EdgeDirection, Point2D> EDGE_POINTS;
-	private static Map<EdgeDirection, java.lang.Double> PORT_ROTATIONS;
+	private static Board<VertexDirection, Point2D> VERTEX_POINTS;
+	private static Board<EdgeDirection, Point2D> EDGE_POINTS;
+	private static Board<EdgeDirection, java.lang.Double> PORT_ROTATIONS;
 	
 	static
 	{
@@ -182,16 +182,16 @@ public class MapComponent extends JComponent
 	}
 	
 	private IMapController controller;
-	private Map<HexLocation, HexType> hexes;
-	private Map<EdgeLocation, CatanColor> roads;
-	private Map<VertexLocation, CatanColor> settlements;
-	private Map<VertexLocation, CatanColor> cities;
-	private Map<EdgeLocation, PortType> ports;
-	private Map<HexLocation, Integer> numbers;
+	private Board<HexLocation, HexType> hexes;
+	private Board<EdgeLocation, CatanColor> roads;
+	private Board<VertexLocation, CatanColor> settlements;
+	private Board<VertexLocation, CatanColor> cities;
+	private Board<EdgeLocation, PortType> ports;
+	private Board<HexLocation, Integer> numbers;
 	private HexLocation robber;
-	private Map<HexLocation, Point2D> allHexPoints;
-	private Map<VertexLocation, Point2D> allVertexPoints;
-	private Map<EdgeLocation, Point2D> allEdgePoints;
+	private Board<HexLocation, Point2D> allHexPoints;
+	private Board<VertexLocation, Point2D> allVertexPoints;
+	private Board<EdgeLocation, Point2D> allEdgePoints;
 	private PieceType dropType;
 	private CatanColor dropColor;
 	private boolean dropAllowed;
@@ -462,7 +462,7 @@ public class MapComponent extends JComponent
 				EdgeLocation closestEdgeLoc = null;
 				double closestDistance = 0;
 				
-				for (Map.Entry<EdgeLocation, Point2D> entry : allEdgePoints.entrySet())
+				for (Board.Entry<EdgeLocation, Point2D> entry : allEdgePoints.entrySet())
 				{
 					
 					EdgeLocation edgeLoc = entry.getKey();
@@ -487,7 +487,7 @@ public class MapComponent extends JComponent
 				VertexLocation closestVertLoc = null;
 				double closestDistance = 0;
 				
-				for (Map.Entry<VertexLocation, Point2D> entry : allVertexPoints.entrySet())
+				for (Board.Entry<VertexLocation, Point2D> entry : allVertexPoints.entrySet())
 				{
 					
 					VertexLocation vertLoc = entry.getKey();
@@ -523,7 +523,7 @@ public class MapComponent extends JComponent
 				HexLocation closestHexLoc = null;
 				double closestDistance = 0;
 				
-				for (Map.Entry<HexLocation, Point2D> entry : allHexPoints.entrySet())
+				for (Board.Entry<HexLocation, Point2D> entry : allHexPoints.entrySet())
 				{
 					
 					HexLocation hexLoc = entry.getKey();
@@ -619,7 +619,7 @@ public class MapComponent extends JComponent
 	private void drawHexes(Graphics2D g2)
 	{
 		
-		for (Map.Entry<HexLocation, HexType> entry : hexes.entrySet())
+		for (Board.Entry<HexLocation, HexType> entry : hexes.entrySet())
 		{
 			
 			BufferedImage hexImage = getHexImage(entry.getValue());
@@ -640,7 +640,7 @@ public class MapComponent extends JComponent
 	private void drawNumbers(Graphics2D g2)
 	{
 		
-		for (Map.Entry<HexLocation, Integer> entry : numbers.entrySet())
+		for (Board.Entry<HexLocation, Integer> entry : numbers.entrySet())
 		{
 			
 			BufferedImage numImage = getNumberImage(entry.getValue());
@@ -668,7 +668,7 @@ public class MapComponent extends JComponent
 	
 	private void drawRoads(Graphics2D g2)
 	{
-		for (Map.Entry<EdgeLocation, CatanColor> entry : roads.entrySet())
+		for (Board.Entry<EdgeLocation, CatanColor> entry : roads.entrySet())
 		{
 			EdgeLocation edgeLoc = entry.getKey();
 			CatanColor color = entry.getValue();
@@ -703,7 +703,7 @@ public class MapComponent extends JComponent
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 							RenderingHints.VALUE_ANTIALIAS_ON);
 		
-		for (Map.Entry<VertexLocation, CatanColor> entry : settlements.entrySet())
+		for (Board.Entry<VertexLocation, CatanColor> entry : settlements.entrySet())
 		{
 			VertexLocation vertLoc = entry.getKey();
 			CatanColor color = entry.getValue();
@@ -737,7 +737,7 @@ public class MapComponent extends JComponent
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 							RenderingHints.VALUE_ANTIALIAS_ON);
 		
-		for (Map.Entry<VertexLocation, CatanColor> entry : cities.entrySet())
+		for (Board.Entry<VertexLocation, CatanColor> entry : cities.entrySet())
 		{
 			VertexLocation vertLoc = entry.getKey();
 			CatanColor color = entry.getValue();
@@ -767,7 +767,7 @@ public class MapComponent extends JComponent
 	
 	private void drawPorts(Graphics2D g2)
 	{
-		for (Map.Entry<EdgeLocation, PortType> entry : ports.entrySet())
+		for (Board.Entry<EdgeLocation, PortType> entry : ports.entrySet())
 		{
 			EdgeLocation edgeLoc = entry.getKey();
 			PortType portType = entry.getValue();
