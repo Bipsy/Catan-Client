@@ -12,6 +12,9 @@ import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import shared.models.Game;
+import shared.models.GameContainer;
+import shared.models.ResourceList;
 
 /**
  *
@@ -118,7 +121,5 @@ public interface iServerProxy {
 	void postGameCommands() throws IOException;
 	void listAITypes() throws IOException;
 	void addAIPlayer() throws IOException;
-	void changeLogLevel(int logLevel) throws IOException;
-	
-	
+	void changeLogLevel(int logLevel) throws IOException;	
 }

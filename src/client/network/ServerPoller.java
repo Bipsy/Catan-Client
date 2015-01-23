@@ -5,7 +5,6 @@
  */
 package client.network;
 
-import client.network.iServerProxy;
 import client.model.ModelContainer;
 import client.model.ModelFacade;
 import client.model.Serializer;
@@ -24,6 +23,18 @@ public class ServerPoller {
     private int version;
     
     /**
+     * @param proxy The proxy object that the poller will use to update
+     * the client model
+     * @param serializer The serializer object that will perform the
+     * serialization of the JSON.
+     * @param facade The facade object that will receive the serialized model
+     */
+    public ServerPoller(iServerProxy proxy, Serializer serializer,
+                        ModelFacade facade) {
+        
+    }
+    
+    /**
      * This method is run periodically to request the updated model from the
      * server. It uses the server proxy to communicate with the server
      * instead of direct communication.
@@ -40,6 +51,8 @@ public class ServerPoller {
      * therein is greater than the version number stored with the Poller object.
      * Essentially this method determines whether the model needs to be 
      * re-populated with fresh data.
+     * @post Updates the version number of the model that the client
+     * has received.
      * @param JSON This is a string representation of the model. This should 
      * have been returned to the proxy by the server. 
      * @return isNew return true if the string is a valid representation of the
