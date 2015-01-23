@@ -12,6 +12,9 @@ import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import shared.models.Game;
+import shared.models.GameContainer;
+import shared.models.ResourceList;
 
 /**
  *
@@ -20,7 +23,8 @@ import shared.locations.VertexLocation;
 public interface iServerProxy {
     
 	/**
-	 * 
+	 * Sends a request to the server to send a chat
+	 * @post the chat contains the message
 	 * @param content
 	 * @throws IOException
 	 */
@@ -30,7 +34,8 @@ public interface iServerProxy {
 	 * Sends request to server to accept a trade with another player. 
 	 * @pre player has the ability to trade, whether on his turn or during the trader's turn.
 	 * @pre player has the resources to trade
-	 * @post the cards are distributed between the players and the model is updated
+	 * @post the cards are distributed between the players and the model is updated if accepted
+	 * @post the trade offer is discarded if not accepted
 	 * @param willAccept
 	 * @throws IOException
 	 */
@@ -38,7 +43,8 @@ public interface iServerProxy {
 	
 	/**
 	 * Sends a request to the server to discard cards from the players ResourceList
-	 * @pre the player has the cards to discard
+	 * @pre the player has over 7 cards
+	 * @pre the status is discarding and the player has chosen cards to discard
 	 * @post the cards are no longer within the player's ResourceList and the model is updated
 	 * @param discardedCards
 	 * @throws IOException
@@ -48,7 +54,6 @@ public interface iServerProxy {
 	/**
 	 * Sends a request to the server to roll a number
 	 * @pre it is the beginning of the players turn
-	 * @pre it is the correct player rolling the dice
 	 * @post a number between 2-12 was randomly selected and the model is updated
 	 */
 	int rollNumber();
@@ -111,7 +116,7 @@ public interface iServerProxy {
 	/**
 	 * Sends a request to the server to rob a player
 	 * @pre a 7 was rolled
-	 * @pre the robber was moved to the valid location
+	 * @pre the robber was moved to the valid location and the resources were stolen
 	 * @post a random resource is taken from the robbed player and the model is updated
 	 * @param location
 	 * @param victimIndex
@@ -121,7 +126,6 @@ public interface iServerProxy {
 	
 	/**
 	 * Sends a request to the server to end a turn
-	 * @pre it is the current player's turn
 	 * @post the turn tracker is incremented to the next player and the model is updated
 	 * @throws IOException
 	 */
@@ -152,6 +156,7 @@ public interface iServerProxy {
 	 * Sends a request to the server to play the Year of Plenty development card
 	 * @pre the player has a Year of Plenty in his collection of development cards
 	 * @pre the player has not already played a development card
+	 * @pre there are the two resources in the bank
 	 * @post the card is discarded
 	 * @post two chosen resources are given to the appropriate player and the model is updated
 	 * @param resource1
@@ -164,6 +169,7 @@ public interface iServerProxy {
 	 * Sends a request to the server to play a Road Building development card
 	 * @pre the player has a Road Building card in his collection of development cards
 	 * @pre the player has not already played a development card
+	 * @pre the player has the roads to build
 	 * @post the card is discarded
 	 * @post two roads are built and the model is updated
 	 * @param spot1
@@ -186,7 +192,8 @@ public interface iServerProxy {
 	/**
 	 * Sends a request to the server to play the monument card
 	 * @pre the player has a monument card in his collection of development cards
-	 * @post the players token count is incremented and the model is updated
+	 * @pre the player has enough to win the game
+	 * @post the players victory points are incremented and the model is updated
 	 * @throws IOException
 	 */
 	void playMonument() throws IOException;
@@ -216,7 +223,7 @@ public interface iServerProxy {
 	
 	/**
 	 * Sends a request to the server to list the games
-	 * @pre there is at least one game
+	 * @post retrieves a list of games
 	 * @return GameContainer
 	 * @throws IOException
 	 */
@@ -225,6 +232,7 @@ public interface iServerProxy {
 	/**
 	 * Sends a request to the server to create a game
 	 * @pre valid game name
+	 * @pre tiles, numbers and ports have valid numbers
 	 * @post a map is created with random tiles, numbers, and ports and the model is updated
 	 * @param name
 	 * @param randomTiles
@@ -237,9 +245,10 @@ public interface iServerProxy {
 	
 	/**
 	 * Sends a requesto to the server to join a game
-	 * @pre valid user
-	 * @pre game to join
-	 * @post a player is added to the game and the model is updated
+	 * @pre valid user that has logged in
+	 * @pre game to join with valid id
+	 * @pre valid color to be assigned
+	 * @post a player is added to the game with the specified color and the model is updated
 	 * @param gameId
 	 * @param color
 	 * @throws IOException
@@ -248,8 +257,9 @@ public interface iServerProxy {
 	
 	/**
 	 * Sends a request to the server to save a game
-	 * @pre there is a game to save
-	 * @post the game is saved
+	 * @pre game name is valid
+	 * @pre file name is valid
+	 * @post the game is saved and the model updated
 	 * @param gameId
 	 * @param fileName
 	 * @throws IOException
@@ -258,8 +268,8 @@ public interface iServerProxy {
 	
 	/**
 	 * Sends a request to the server to load a game
-	 * @pre there is a game in the list of games
-	 * @post a game is loaded and displayed
+	 * @pre there is a version of the game previously saved
+	 * @post a game is loaded and displayed and the model updated
 	 * @throws IOException
 	 */
 	void loadGame() throws IOException;
@@ -267,6 +277,7 @@ public interface iServerProxy {
 	/**
 	 * Sends a request to the server to retrieve the current state of the game
 	 * @pre there is a valid game
+	 * @pre the version number is valid
 	 * @post if necessary, the model is updated
 	 * @param versionNumber
 	 * @throws IOException
@@ -275,8 +286,8 @@ public interface iServerProxy {
 	
 	/**
 	 * Sends a request to the server to reset a game
-	 * @pre a valid game
-	 * @post the game is rest to the initiation stage
+	 * @pre a valid game and user logged in
+	 * @post the game is rest to the initiation stage while keepin the players intact
 	 * @throws IOException
 	 */
 	void resetGame() throws IOException;
