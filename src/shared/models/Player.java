@@ -1,7 +1,10 @@
 package shared.models;
 
+import shared.definitions.CatanColor;
+
 public class Player extends User {
-    private boolean discarded;
+
+	private boolean discarded;
     private int victoryPoints;
     
     //Structure Fields
@@ -17,9 +20,18 @@ public class Player extends User {
     
     private PlayerHand resources;
     
-    public Player() {
-
+    /**
+     * This will create a player with a color, name, index, and id
+     * @param color
+     * @param name
+     * @param playerIndex
+     * @param playerID
+     */
+    public Player(CatanColor color, String name, int playerIndex, int playerID) {
+    	super(color, name, playerIndex, playerID);
+    	// TODO Auto-generated constructor stub
     }
+    
     /**
      * canPlayDevCard determines if the selected player is able to play
      * a dev card. If the player does not have a dev card, has already played 

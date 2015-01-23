@@ -1,5 +1,8 @@
 package shared.models;
 
+import shared.definitions.PieceType;
+import shared.definitions.PortType;
+
 /**
  * 
  * @author Mikey Murphy <mikeyamadeo@gmail.com>
