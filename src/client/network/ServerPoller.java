@@ -17,7 +17,7 @@ import client.model.Serializer;
  * @author Peter Anderson <anderson.peter@byu.edu>
  */
 public class ServerPoller {
-    private ServerProxy proxy;
+    private iServerProxy serverProxy;
     private Serializer serializer;
     private ModelFacade modelHandle;
     private int version;

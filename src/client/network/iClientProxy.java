@@ -7,8 +7,10 @@ package client.network;
 
 /**
  *
- * @author Peter Anderson <anderson.peter@byu.edu>
+ * @author Jillian Koontz <jpkoontz@gmail.com>
  */
-public interface ServerProxy {
+public interface iClientProxy {
     
+	
+	
 }
