@@ -59,7 +59,7 @@ public interface iServerProxy {
 	int rollNumber();
 	
 	/**
-	 * Sends a reuqest to the server to build a road
+	 * Sends a request to the server to build a road
 	 * @pre the player has the resources to build a road
 	 * @pre the location is valid to build a road
 	 * @post a road is built and the model is updated
@@ -333,6 +333,4 @@ public interface iServerProxy {
 	 * @throws IOException
 	 */
 	void changeLogLevel(int logLevel) throws IOException;
-	
-	
 }

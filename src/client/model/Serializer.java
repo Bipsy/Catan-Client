@@ -25,7 +25,8 @@ public interface Serializer {
     
     /**
      * Converts a Java object representation of the model into a JSON 
-     * representation. Serialize requires the Java object to be a valid 
+     * representation. 
+     * @pre Serialize requires the Java object to be a valid 
      * representation as described in the Catan JSON API.
      * @param container A valid representation of the model in Java.
      * @return A JSON string that represents the client model using 
