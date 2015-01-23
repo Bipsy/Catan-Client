@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package client.network;
+package shared.network;
 
 import java.io.IOException;
 import shared.locations.*;
@@ -15,10 +15,11 @@ import shared.definitions.*;
  */
 public interface iClientProxy {
     
+	
 	void sendChat(String content) throws IOException;
 	void acceptTrade(boolean willAccept) throws IOException;
 	void discardCards(ResourceList discardedCards) throws IOException; //ResourceList
-	int rollNumber();
+	void rollNumber();
 	void buildRoad(boolean free, EdgeLocation roadLocation) throws IOException;
 	void buildSettlement(boolean free, VertexLocation vertexLocation) throws IOException;
 	void buildCity(VertexLocation vertexLocation) throws IOException;

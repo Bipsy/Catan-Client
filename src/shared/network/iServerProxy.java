@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package client.network;
+package shared.network;
 
 import java.io.IOException;
+
+import shared.definitions.CatanColor;
 
 /**
  *
@@ -15,9 +17,9 @@ public interface iServerProxy {
     
 	void login(String username, String password) throws IOException;
 	void registerNewUser(String username, String password) throws IOException;
-	void listGames() throws IOException; 
-	void createGames(String name, int randomTiles, int randomNumbers, int randomPorts) throws IOException;
-	void joinGame(int gameId, String color) throws IOException;
+	GameContainer listGames() throws IOException; 
+	Game createGames(String name, int randomTiles, int randomNumbers, int randomPorts) throws IOException;
+	void joinGame(int gameId, CatanColor color) throws IOException;
 	void saveGames(int gameId, String fileName) throws IOException;
 	void loadGame() throws IOException;
 	void retrieveCurrentState(int versionNumber) throws IOException;
