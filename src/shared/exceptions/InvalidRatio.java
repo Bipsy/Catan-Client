@@ -1,5 +1,6 @@
 package shared.exceptions;
 
+@SuppressWarnings("serial")
 public class InvalidRatio extends Exception {
 
 	public InvalidRatio() {
