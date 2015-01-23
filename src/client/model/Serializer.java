@@ -13,15 +13,15 @@ package client.model;
  */
 public interface Serializer {
     /**
-     * Converts a JSON representation of the model into a Java representation. 
-     * Serialize requires the JSON string to be a valid representation as 
+     * Converts a JSON string into <code>Model Container</code> Object. 
+     * @pre Serialize requires the JSON string to be a valid representation as 
      * described in the Catan JSON API.
      * @param JSON A valid representation of the model in JSON.
-     * @return A ModelContainer object that represents the client model using 
-     * Java objects. This method will return null if the the JSON parameter was
-     * not valid (null, missing fields, etc).
+     * @return A <code>ModelContainer</code> object that represents the client 
+     * model using Java objects. This method will return null if the the JSON 
+     * parameter was not valid (null, missing fields, etc).
      */
-    ModelContainer serialize(String JSON);
+    ModelContainer deserialize(String JSON);
     
     /**
      * Converts a Java object representation of the model into a JSON 
@@ -32,5 +32,5 @@ public interface Serializer {
      * JSON. This method will return null if the the container parameter was
      * not valid (null, missing fields, etc).
      */
-    String deserialize(ModelContainer container);
+    String serialize(ModelContainer container);
 }
