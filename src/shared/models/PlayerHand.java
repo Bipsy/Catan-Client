@@ -54,14 +54,23 @@ public class PlayerHand {
 	}
 	
 	/**
-	 * this function is used to determine if a player can use a dev card
-	 * @return
+	 * This function is used to determine if a dev card can be played
+	 * @pre User must own dev card in order to play it
+	 * @param type the type of dev card
+	 * @return true if player owns dev card
 	 */
 	public boolean canUseDevCard(DevCardType type) {
 		return true;
 	}
 	
-	public void useDevCard() {
+	/**
+	 * this function is used when a player plays a dev card to decrement
+	 * the type of dev card owned by the player
+	 * @pre the function <code>canUseDevCard(DevCardType)</code> must return 
+	 * true
+	 * @param type type of dev card played
+	 */
+	public void useDevCard(DevCardType type) {
 		
 	}
 }
