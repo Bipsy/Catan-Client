@@ -1,5 +1,7 @@
 package shared.models;
 
+import java.util.List;
+
 /**
  * Model representation of the Catan board
  * @author Mikey Murphy <mikeyamadeo@gmail.com>
