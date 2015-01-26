@@ -3,7 +3,7 @@ package shared.models;
 public class GameState {
 	private Bank bank;
 	private ChatObject chat;
-	private Map map;
+	private Board map;
 	private UserManager userManager;
 	private TradeOffer tradeOffer;
 	private int version;
@@ -26,10 +26,10 @@ public class GameState {
 	public void setChat(ChatObject chat) {
 		this.chat = chat;
 	}
-	public Map getMap() {
+	public Board getMap() {
 		return map;
 	}
-	public void setMap(Map map) {
+	public void setMap(Board map) {
 		this.map = map;
 	}
 	public UserManager getUserManager() {
