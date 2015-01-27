@@ -8,6 +8,10 @@ package client.network;
 import client.model.ModelContainer;
 import client.model.Populator;
 import client.model.Serializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -31,6 +35,7 @@ public class ServerPoller implements ActionListener {
      * @param serializer The serializer object that will perform the
      * serialization of the JSON.
      * @param facade The facade object that will receive the serialized model
+     * @param version The initial version of the client model.
      */
     public ServerPoller(iServerProxy proxy, Serializer serializer,
                         Populator facade, int version) {
@@ -74,6 +79,23 @@ public class ServerPoller implements ActionListener {
      * conditions are not met then isNew() returns false.
      */
     public boolean isNew(String JSON) {
+        JsonParser parser = new JsonParser();
+        JsonElement parseTree = parser.parse(JSON);
+        if (verifyJSON(JSON)) {
+            JsonObject jsonObject = parseTree.getAsJsonObject();
+            JsonPrimitive result = jsonObject.getAsJsonPrimitive("version");
+            if (result == null || result.isNumber() == false) {
+                return false;
+            } else {
+                int newVersion = result.getAsInt();
+                if (newVersion > version) {
+                    version = newVersion;
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
         return false;
     }
     
@@ -95,6 +117,12 @@ public class ServerPoller implements ActionListener {
         } else {
             return modelHandle.populateModel(container);
         }
+    }
+    
+    private boolean verifyJSON(String JSON) {
+        JsonParser parser = new JsonParser();
+        JsonElement parseTree = parser.parse(JSON);
+        return parseTree.isJsonObject();
     }
 
     @Override
