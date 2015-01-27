@@ -70,6 +70,8 @@ public class ServerPoller implements ActionListener {
      * therein is greater than the version number stored with the Poller object.
      * Essentially this method determines whether the model needs to be 
      * re-populated with fresh data.
+     * @pre This method should only be called if the JSON has first been 
+     * verified to be correct with verifiyJSON.
      * @post Updates the version number of the model that the client
      * has received.
      * @param JSON This is a string representation of the model. This should 
@@ -78,7 +80,8 @@ public class ServerPoller implements ActionListener {
      * model and it contains a more recent version number. If either of these
      * conditions are not met then isNew() returns false.
      */
-    public boolean isNew(String JSON) {
+    private boolean isNew(String JSON) {
+        //TO DO -- push the verification of the JSON into the verifier method
         JsonParser parser = new JsonParser();
         JsonElement parseTree = parser.parse(JSON);
         if (verifyJSON(JSON)) {
@@ -128,9 +131,11 @@ public class ServerPoller implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String newModel = poll();
-        if (isNew(newModel)) {
-            ModelContainer container = serializer.deserialize(newModel);
-            updateModel(container);
+        if (verifyJSON(newModel)) {
+            if (isNew(newModel)) {
+                ModelContainer container = serializer.deserialize(newModel);
+                updateModel(container);
+            }
         }
     }
     
