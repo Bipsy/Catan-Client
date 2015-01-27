@@ -304,7 +304,7 @@ public interface iServerProxy {
 	 * @pre a user is logged in and has joined a game
 	 * @pre 
 	 * @post a list of commands is sent to the server or an error message
-	 * @throws IOException
+	 * @throws IOException 
 	 */
 	String postGameCommands(CommandContainer commands) throws IOException;
 	

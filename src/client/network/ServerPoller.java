@@ -21,7 +21,7 @@ import java.io.IOException;
  * the current JSON representation of the model from the server via the server
  * proxy. ServerPoller also determines if the client and server are out of sync
  * and if so serializes the JSON and delivers it to the model facade.
- * @author Peter Anderson <anderson.peter@byu.edu>
+ * @author Peter Anderson <anderson.peter@byu.edu> 
  */
 public class ServerPoller implements ActionListener { //We don't want this to implemebt ActionListener
     final private iServerProxy serverProxy;

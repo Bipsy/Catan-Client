@@ -17,7 +17,7 @@ import shared.models.*;
 /**
  * MockServerProxy is a mock implementation of iServerProxy. This class
  * is used for testing purposes. Its methods return hard coded responses.
- * @author Peter Anderson <anderson.peter@byu.edu>
+ * @author Peter Anderson <anderson.peter@byu.edu> 
  */
 public class MockServerProxy implements iServerProxy {
 

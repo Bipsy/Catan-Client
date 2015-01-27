@@ -24,7 +24,7 @@ import shared.models.User;
 /**
  * ServerProxy is our implementation of the iServerProxy interface.
  * This class will be used to handle all communication with the server.
- * @author Peter Anderson <anderson.peter@byu.edu>
+ * @author Peter Anderson <anderson.peter@byu.edu> 
  */
 public class ServerProxy implements iServerProxy {
 
