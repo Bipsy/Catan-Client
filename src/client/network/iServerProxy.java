@@ -12,9 +12,7 @@ import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
-import shared.models.Game;
-import shared.models.GameContainer;
-import shared.models.ResourceList;
+import shared.models.*;
 
 /**
  *
@@ -95,11 +93,10 @@ public interface iServerProxy {
 	 * @pre It is the players turn or the player is offering to the player whose turn it currently is
 	 * @pre the player has the resources they are offering
 	 * @post the player is notified with the resources up for trade and the model is updated
-	 * @param offer
-	 * @param reciever
+	 * @param tradeOffer the information about the offer
 	 * @throws IOException
 	 */
-	void offerTrade(ResourceList offer, int reciever) throws IOException;
+	void offerTrade(TradeOffer tradeOffer) throws IOException;
 	
 	/**
 	 * Sends a request to the server to offer a maritimetrade
@@ -206,9 +203,10 @@ public interface iServerProxy {
 	 * @post the player is logged in and assigned a color and the model is updated
 	 * @param username
 	 * @param password
+	 * @return user 
 	 * @throws IOException
 	 */
-	void login(String username, String password) throws IOException;
+	User login(String username, String password) throws IOException;
 	
 	/**
 	 * Sends a request to the server to register a new user
@@ -217,9 +215,10 @@ public interface iServerProxy {
 	 * @post user created and the model is updated
 	 * @param username
 	 * @param password
+	 * @return user 
 	 * @throws IOException
 	 */
-	void registerNewUser(String username, String password) throws IOException;
+	User registerNewUser(String username, String password) throws IOException;
 	
 	/**
 	 * Sends a request to the server to list the games
@@ -253,7 +252,7 @@ public interface iServerProxy {
 	 * @param color
 	 * @throws IOException
 	 */
-	void joinGame(int gameId, CatanColor color) throws IOException;
+	User joinGame(int gameId, CatanColor color) throws IOException;
 	
 	/**
 	 * Sends a request to the server to save a game
@@ -264,7 +263,7 @@ public interface iServerProxy {
 	 * @param fileName
 	 * @throws IOException
 	 */
-	void saveGames(int gameId, String fileName) throws IOException;
+	boolean saveGames(int gameId, String fileName) throws IOException;
 	
 	/**
 	 * Sends a request to the server to load a game
@@ -298,22 +297,23 @@ public interface iServerProxy {
 	 * @post a list of commands is retrieved
 	 * @throws IOException
 	 */
-	void getCommands() throws IOException;
+	CommandContainer getCommands() throws IOException;
 	
 	/**
-	 * Sends a request to server to get a list of the post game commands
+	 * Sends a request to server with a list of the game commands
 	 * @pre a user is logged in and has joined a game
-	 * @post a list of commands is retrieved
+	 * @pre 
+	 * @post a list of commands is sent to the server
 	 * @throws IOException
 	 */
-	void postGameCommands() throws IOException;
+	void postGameCommands(CommandContainer commands) throws IOException;
 	
 	/**
 	 * Sends a request to the server to list all Artificial intelligence types
 	 * @post retrieves a list of ai players
 	 * @throws IOException
 	 */
-	void listAITypes() throws IOException;
+	AITypesContainer listAITypes() throws IOException;
 	
 	/**
 	 * Sends a request to the server to add an artificial intelligence player
@@ -323,7 +323,7 @@ public interface iServerProxy {
 	 * @post an AIPlayer is added to the game and given a color and the model is updated
 	 * @throws IOException
 	 */
-	void addAIPlayer() throws IOException;
+	void addAIPlayer(AIPlayer player) throws IOException;
 	
 	/**
 	 * Sends a request to server to change the log level

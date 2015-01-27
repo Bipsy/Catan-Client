@@ -101,7 +101,7 @@ public class ServerPoller implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String newModel = poll();
         if (isNew(newModel)) {
-            ModelContainer container = serializer.deserialize(newModel);
+            ModelContainer container = serializer.deserializeModel(newModel);
             updateModel(container);
         }
     }

@@ -6,14 +6,20 @@
 package client.network;
 
 import java.io.IOException;
+
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import shared.models.AIPlayer;
+import shared.models.AITypesContainer;
+import shared.models.CommandContainer;
 import shared.models.Game;
 import shared.models.GameContainer;
 import shared.models.ResourceList;
+import shared.models.TradeOffer;
+import shared.models.User;
 
 /**
  * ServerProxy is our implementation of the iServerProxy interface.
@@ -21,6 +27,7 @@ import shared.models.ResourceList;
  * @author Peter Anderson <anderson.peter@byu.edu>
  */
 public class ServerProxy implements iServerProxy {
+
 
     @Override
     public void sendChat(String content) throws IOException {
@@ -58,7 +65,7 @@ public class ServerProxy implements iServerProxy {
     }
 
     @Override
-    public void offerTrade(ResourceList offer, int reciever) throws IOException {
+    public void offerTrade(TradeOffer offer) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -108,12 +115,12 @@ public class ServerProxy implements iServerProxy {
     }
 
     @Override
-    public void login(String username, String password) throws IOException {
+    public User login(String username, String password) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void registerNewUser(String username, String password) throws IOException {
+    public User registerNewUser(String username, String password) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -128,12 +135,12 @@ public class ServerProxy implements iServerProxy {
     }
 
     @Override
-    public void joinGame(int gameId, CatanColor color) throws IOException {
+    public User joinGame(int gameId, CatanColor color) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void saveGames(int gameId, String fileName) throws IOException {
+    public boolean saveGames(int gameId, String fileName) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -153,22 +160,22 @@ public class ServerProxy implements iServerProxy {
     }
 
     @Override
-    public void getCommands() throws IOException {
+    public CommandContainer getCommands() throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void postGameCommands() throws IOException {
+    public void postGameCommands(CommandContainer commands) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void listAITypes() throws IOException {
+    public AITypesContainer listAITypes() throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void addAIPlayer() throws IOException {
+    public void addAIPlayer(AIPlayer player) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -178,3 +185,4 @@ public class ServerProxy implements iServerProxy {
     }
     
 }
+
