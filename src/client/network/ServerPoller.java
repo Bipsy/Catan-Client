@@ -23,7 +23,7 @@ import java.io.IOException;
  * and if so serializes the JSON and delivers it to the model facade.
  * @author Peter Anderson <anderson.peter@byu.edu>
  */
-public class ServerPoller implements ActionListener {
+public class ServerPoller implements ActionListener { //We don't want this to implemebt ActionListener
     final private iServerProxy serverProxy;
     final private Serializer serializer;
     final private Populator modelHandle;
