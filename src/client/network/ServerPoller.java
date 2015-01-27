@@ -8,6 +8,10 @@ package client.network;
 import client.model.ModelContainer;
 import client.model.Populator;
 import client.model.Serializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -31,6 +35,7 @@ public class ServerPoller implements ActionListener {
      * @param serializer The serializer object that will perform the
      * serialization of the JSON.
      * @param facade The facade object that will receive the serialized model
+     * @param version The initial version of the client model.
      */
     public ServerPoller(iServerProxy proxy, Serializer serializer,
                         Populator facade, int version) {
@@ -65,6 +70,8 @@ public class ServerPoller implements ActionListener {
      * therein is greater than the version number stored with the Poller object.
      * Essentially this method determines whether the model needs to be 
      * re-populated with fresh data.
+     * @pre This method should only be called if the JSON has first been 
+     * verified to be correct with verifiyJSON.
      * @post Updates the version number of the model that the client
      * has received.
      * @param JSON This is a string representation of the model. This should 
@@ -73,7 +80,25 @@ public class ServerPoller implements ActionListener {
      * model and it contains a more recent version number. If either of these
      * conditions are not met then isNew() returns false.
      */
-    public boolean isNew(String JSON) {
+    private boolean isNew(String JSON) {
+        //TO DO -- push the verification of the JSON into the verifier method
+        JsonParser parser = new JsonParser();
+        JsonElement parseTree = parser.parse(JSON);
+        if (verifyJSON(JSON)) {
+            JsonObject jsonObject = parseTree.getAsJsonObject();
+            JsonPrimitive result = jsonObject.getAsJsonPrimitive("version");
+            if (result == null || result.isNumber() == false) {
+                return false;
+            } else {
+                int newVersion = result.getAsInt();
+                if (newVersion > version) {
+                    version = newVersion;
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
         return false;
     }
     
@@ -96,13 +121,21 @@ public class ServerPoller implements ActionListener {
             return modelHandle.populateModel(container);
         }
     }
+    
+    private boolean verifyJSON(String JSON) {
+        JsonParser parser = new JsonParser();
+        JsonElement parseTree = parser.parse(JSON);
+        return parseTree.isJsonObject();
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         String newModel = poll();
-        if (isNew(newModel)) {
-            ModelContainer container = serializer.deserialize(newModel);
-            updateModel(container);
+        if (verifyJSON(newModel)) {
+            if (isNew(newModel)) {
+                ModelContainer container = serializer.deserialize(newModel);
+                updateModel(container);
+            }
         }
     }
     
