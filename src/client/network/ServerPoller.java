@@ -8,6 +8,9 @@ package client.network;
 import client.model.ModelContainer;
 import client.model.Populator;
 import client.model.Serializer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 
 /**
  * ServerPoller is used to periodically update the client model by requesting
@@ -16,10 +19,10 @@ import client.model.Serializer;
  * and if so serializes the JSON and delivers it to the model facade.
  * @author Peter Anderson <anderson.peter@byu.edu>
  */
-public class ServerPoller {
-    private iServerProxy serverProxy;
-    private Serializer serializer;
-    private Populator modelHandle;
+public class ServerPoller implements ActionListener {
+    final private iServerProxy serverProxy;
+    final private Serializer serializer;
+    final private Populator modelHandle;
     private int version;
     
     /**
@@ -30,8 +33,11 @@ public class ServerPoller {
      * @param facade The facade object that will receive the serialized model
      */
     public ServerPoller(iServerProxy proxy, Serializer serializer,
-                        Populator facade) {
-        
+                        Populator facade, int version) {
+        this.serverProxy = proxy;
+        this.serializer = serializer;
+        this.modelHandle = facade;
+        this.version = version;
     }
     
     /**
@@ -39,10 +45,18 @@ public class ServerPoller {
      * server. It uses the server proxy to communicate with the server
      * instead of direct communication.
      * @return poll() returns a string that represents the JSON model received
-     * from the server via the update model interface.
+     * from the server via the update model interface. If an error occurs then
+     * poll() returns an empty string.
      */
     public String poll() {
-        return "";
+        String newModel = "";
+        try {
+            newModel = serverProxy.retrieveCurrentState(version);
+        } catch (IOException ex) {
+            System.err.println("Error while polling server");
+            System.err.println(ex.getLocalizedMessage());
+        }
+        return newModel;
     }
     
     /**
@@ -76,7 +90,20 @@ public class ServerPoller {
      * occurs then this method returns false.
      */
     private boolean updateModel(ModelContainer container) {
-        return false;
+        if (container == null) {
+            return false;
+        } else {
+            return modelHandle.populateModel(container);
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String newModel = poll();
+        if (isNew(newModel)) {
+            ModelContainer container = serializer.deserialize(newModel);
+            updateModel(container);
+        }
     }
     
 }

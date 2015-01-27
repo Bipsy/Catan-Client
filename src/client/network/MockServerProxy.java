@@ -143,7 +143,7 @@ public class MockServerProxy implements iServerProxy {
     }
 
     @Override
-    public void retrieveCurrentState(int versionNumber) throws IOException {
+    public String retrieveCurrentState(int versionNumber) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

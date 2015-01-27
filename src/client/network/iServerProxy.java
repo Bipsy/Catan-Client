@@ -282,7 +282,7 @@ public interface iServerProxy {
 	 * @param versionNumber
 	 * @throws IOException
 	 */
-	void retrieveCurrentState(int versionNumber) throws IOException;
+	String retrieveCurrentState(int versionNumber) throws IOException;
 	
 	/**
 	 * Sends a request to the server to reset a game
