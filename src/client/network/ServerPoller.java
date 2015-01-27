@@ -6,7 +6,7 @@
 package client.network;
 
 import client.model.ModelContainer;
-import client.model.ModelFacade;
+import client.model.Populator;
 import client.model.Serializer;
 
 /**
@@ -19,7 +19,7 @@ import client.model.Serializer;
 public class ServerPoller {
     private iServerProxy serverProxy;
     private Serializer serializer;
-    private ModelFacade modelHandle;
+    private Populator modelHandle;
     private int version;
     
     /**
@@ -30,7 +30,7 @@ public class ServerPoller {
      * @param facade The facade object that will receive the serialized model
      */
     public ServerPoller(iServerProxy proxy, Serializer serializer,
-                        ModelFacade facade) {
+                        Populator facade) {
         
     }
     

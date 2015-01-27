@@ -9,6 +9,6 @@ package client.model;
  *
  * @author Peter Anderson <anderson.peter@byu.edu>
  */
-public interface ModelFacade {
+public interface Populator {
     public boolean populateModel(ModelContainer container);
 }
