@@ -206,7 +206,7 @@ public interface iServerProxy {
 	 * @return user 
 	 * @throws IOException
 	 */
-	String login(String username, String password) throws IOException;
+	User login(String username, String password) throws IOException;
 	
 	/**
 	 * Sends a request to the server to register a new user
