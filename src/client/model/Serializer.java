@@ -6,6 +6,7 @@
 package client.model;
 
 import shared.models.*;
+import shared.models.DTO.ClientModelDTO;
 
 /**
  * Serializer interface describes the API for converting JSON to Java objects. 
@@ -23,7 +24,7 @@ public interface Serializer {
      * model using Java objects. This method will return null if the the JSON 
      * parameter was not valid (null, missing fields, etc).
      */
-    ModelContainer deserializeModel(String JSON);
+    ClientModelDTO deserializeModel(String JSON);
     
     /**
      * Converts a Java object representation of the model into a JSON 
@@ -35,7 +36,7 @@ public interface Serializer {
      * JSON. This method will return null if the the container parameter was
      * not valid (null, missing fields, etc).
      */
-    String serializeModel(ModelContainer container);
+    String serializeModel(ClientModelDTO container);
     
     /**
      * Converts a JSON string into <code>User</code> Object. 

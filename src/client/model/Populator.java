@@ -5,10 +5,12 @@
  */
 package client.model;
 
+import shared.models.DTO.ClientModelDTO;
+
 /**
  *
  * @author Peter Anderson <anderson.peter@byu.edu>
  */
 public interface Populator {
-    public boolean populateModel(ModelContainer container);
+    public boolean populateModel(ClientModelDTO container);
 }

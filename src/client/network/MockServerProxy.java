@@ -13,6 +13,7 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.models.*;
+import shared.models.DTO.ClientModelDTO;
 
 /**
  * MockServerProxy is a mock implementation of iServerProxy. This class
@@ -142,7 +143,7 @@ public class MockServerProxy implements iServerProxy {
     }
 
     @Override
-    public String retrieveCurrentState(int versionNumber) throws IOException {
+    public ClientModelDTO retrieveCurrentState(int versionNumber) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

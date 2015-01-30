@@ -16,6 +16,7 @@ import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.models.AIPlayer;
 import shared.models.CommandContainer;
+import shared.models.DTO.ClientModelDTO;
 import shared.models.ResourceList;
 import shared.models.TradeOffer;
 import shared.models.User;
@@ -135,7 +136,7 @@ public class ServerProxy implements iServerProxy {
     }
 
     @Override
-    public String retrieveCurrentState(int versionNumber) throws IOException {
+    public ClientModelDTO retrieveCurrentState(int versionNumber) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

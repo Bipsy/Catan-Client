@@ -13,6 +13,7 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.models.*;
+import shared.models.DTO.ClientModelDTO;
 
 /**
  *
@@ -281,7 +282,7 @@ public interface iServerProxy {
 	 * @param versionNumber
 	 * @throws IOException
 	 */
-	String retrieveCurrentState(int versionNumber) throws IOException;
+	ClientModelDTO retrieveCurrentState(int versionNumber) throws IOException;
 	
 	/**
 	 * Sends a request to the server to reset a game
