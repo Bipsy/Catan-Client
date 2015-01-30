@@ -107,7 +107,7 @@ public class MockServerProxy implements iServerProxy {
     }
 
     @Override
-    public String login(String username, String password) throws IOException {
+    public User login(String username, String password) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

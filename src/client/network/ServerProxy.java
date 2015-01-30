@@ -18,6 +18,7 @@ import shared.models.AIPlayer;
 import shared.models.CommandContainer;
 import shared.models.ResourceList;
 import shared.models.TradeOffer;
+import shared.models.User;
 
 /**
  * ServerProxy is our implementation of the iServerProxy interface.
@@ -45,7 +46,7 @@ public class ServerProxy implements iServerProxy {
 		this.serverPort = serverPort;
 	}
 	
-	private Object doGet(String urlPath) throws IOException {
+	public Object doGet(String urlPath, Object params) throws IOException {
 		try {
 			URL url = new URL("http://" + serverHost + ":" + serverPort + urlPath);
 			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
@@ -96,7 +97,7 @@ public class ServerProxy implements iServerProxy {
 	
 
     @Override
-    public String login(String username, String password) throws IOException {
+    public User login(String username, String password) throws IOException {
     	//send params to serializer
     	//user DTO returned
         //return User doPost("/user/login", user);
