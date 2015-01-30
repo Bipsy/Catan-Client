@@ -19,6 +19,7 @@ import shared.models.CommandContainer;
 import shared.models.ResourceList;
 import shared.models.TradeOffer;
 import shared.models.User;
+import client.model.Serializer;
 
 /**
  * ServerProxy is our implementation of the iServerProxy interface.
@@ -70,16 +71,18 @@ public class ServerProxy implements iServerProxy {
 		}
 	}
 	
-	public Object doPost(String urlPath, Object params) throws IOException {
+	public Object doPost(String urlPath, String jsonString) throws IOException {
 		try {
 			URL url = new URL("http://" + serverHost + ":" + serverPort + urlPath);
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("POST");
-			connection.setRequestProperty("Accept","JSON");
+			connection.setRequestProperty("Content-Type","application/json");
+			connection.setRequestProperty("Accept","application/json");
 			connection.setDoInput(true);
 			connection.setDoOutput(true);
 			
 			connection.connect();
+			
 			if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
 				//Set cookies
 				//send the result to the serializer
@@ -98,10 +101,11 @@ public class ServerProxy implements iServerProxy {
 
     @Override
     public User login(String username, String password) throws IOException {
-    	//send params to serializer
-    	//user DTO returned
-        //return User doPost("/user/login", user);
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	//User user = new User(username, password);
+    	//serialize user
+    	//String params = Serializer.serializeUser(user);
+    	String params = "";
+        return (User) doPost("/user/login", params);
     }
 
     @Override
