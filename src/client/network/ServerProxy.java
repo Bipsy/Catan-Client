@@ -13,13 +13,9 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.models.AIPlayer;
-import shared.models.AITypesContainer;
 import shared.models.CommandContainer;
-import shared.models.Game;
-import shared.models.GameContainer;
 import shared.models.ResourceList;
 import shared.models.TradeOffer;
-import shared.models.User;
 
 /**
  * ServerProxy is our implementation of the iServerProxy interface.
