@@ -112,17 +112,17 @@ public class MockServerProxy implements iServerProxy {
     }
 
     @Override
-    public String registerNewUser(String username, String password) throws IOException {
+    public User registerNewUser(String username, String password) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String listGames() throws IOException {
+    public GameContainer listGames() throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String createGames(String name, int randomTiles, int randomNumbers, int randomPorts) throws IOException {
+    public Game createGames(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

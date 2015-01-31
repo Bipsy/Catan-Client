@@ -7,7 +7,7 @@ package client.network;
 
 import client.model.ModelContainer;
 import client.model.Populator;
-import client.model.Serializer;
+import client.model.iSerializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -25,7 +25,7 @@ import java.io.IOException;
  */
 public class ServerPoller implements ActionListener { //We don't want this to implemebt ActionListener
     final private iServerProxy serverProxy;
-    final private Serializer serializer;
+    final private iSerializer serializer;
     final private Populator modelHandle;
     private int version;
     
@@ -37,7 +37,7 @@ public class ServerPoller implements ActionListener { //We don't want this to im
      * @param facade The facade object that will receive the serialized model
      * @param version The initial version of the client model.
      */
-    public ServerPoller(iServerProxy proxy, Serializer serializer,
+    public ServerPoller(iServerProxy proxy, iSerializer serializer,
                         Populator facade, int version) {
         this.serverProxy = proxy;
         this.serializer = serializer;
