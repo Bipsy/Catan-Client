@@ -3,6 +3,7 @@ package client.model;
 import shared.models.AIPlayer;
 import shared.models.AITypesContainer;
 import shared.models.CommandContainer;
+import shared.models.DTO.ClientModelDTO;
 import shared.models.Game;
 import shared.models.GameContainer;
 import shared.models.User;
@@ -13,12 +14,12 @@ public class Serializer implements iSerializer  {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ModelContainer deserializeModel(String JSON) {
+	public ClientModelDTO deserializeModel(String JSON) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public String serializeModel(ModelContainer container) {
+	public String serializeModel(ClientModelDTO container) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -83,5 +84,4 @@ public class Serializer implements iSerializer  {
 		return null;
 	}
 
->>>>>>> 383a83c29ffe3600dd0a9017b8474a3ec558ea5b
 }

@@ -1,5 +1,6 @@
 package shared.models.DTO;
 
+import shared.definitions.MoveType;
 import shared.exceptions.InvalidPlayerIndex;
 
 /**

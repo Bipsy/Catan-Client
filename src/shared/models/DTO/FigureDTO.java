@@ -12,13 +12,13 @@ import shared.locations.HexLocation;
  *
  * @author Peter Anderson <anderson.peter@byu.edu>
  */
-public class RobPlayerDTO {
+public class FigureDTO {
     public final MoveType type;
     public final int playerIndex;
     public final int victimIndex;
     public final HexLocation location;
     
-    public RobPlayerDTO(MoveType newType, int newPlayerIndex,
+    public FigureDTO(MoveType newType, int newPlayerIndex,
             int newVictimIndex, HexLocation newLocation) {
         type = newType;
         playerIndex = newPlayerIndex;

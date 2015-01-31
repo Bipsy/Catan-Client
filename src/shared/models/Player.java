@@ -27,9 +27,9 @@ public class Player extends User {
      * @param playerIndex
      * @param playerID
      */
-    public Player(CatanColor color, String name, int playerIndex, int playerID) {
-    	super(color, name, playerIndex, playerID);
-    	// TODO Auto-generated constructor stub
+    public Player(CatanColor color, String name, int playerIndex, int playerID,
+            String username, String password) {
+        super(color, username, password, playerIndex, playerID);
     }
     
     /**

@@ -22,9 +22,11 @@ import shared.models.DTO.DiscardCardsDTO;
 import shared.models.DTO.GameDTO;
 import shared.models.DTO.MaritimeTradeDTO;
 import shared.models.DTO.MessageDTO;
-import shared.models.DTO.RobPlayerDTO;
+import shared.models.DTO.FigureDTO;
+import shared.models.DTO.RoadBuildingDTO;
 import shared.models.DTO.RollNumberDTO;
 import shared.models.DTO.TradeOfferDTO;
+import shared.models.DTO.YearOfPlentyDTO;
 
 /**
  *
@@ -132,14 +134,14 @@ public interface iServerProxy {
 	 * @param victimIndex
 	 * @throws IOException
 	 */
-	ClientModelDTO robPlayer(RobPlayerDTO robMove) throws IOException;
+	ClientModelDTO robPlayer(FigureDTO robMove) throws IOException;
 	
 	/**
 	 * Sends a request to the server to end a turn
 	 * @post the turn tracker is incremented to the next player and the model is updated or an error message
 	 * @throws IOException
 	 */
-	String finishTurn() throws IOException;
+	ClientModelDTO finishTurn(MoveType finishTurn, int playerIndex) throws IOException;
 	
 	/**
 	 * Sends a request to the server to buy a development card
@@ -148,7 +150,7 @@ public interface iServerProxy {
 	 * @post the development card is given to the player and the model is updated or an error message
 	 * @throws IOException
 	 */
-	String buyDevCard() throws IOException;
+	ClientModelDTO buyDevCard(MoveType buyDevCard, int playerIndex) throws IOException;
 	
 	/**
 	 * Sends a request to the server to play a soldier
@@ -160,7 +162,7 @@ public interface iServerProxy {
 	 * @param victimIndex
 	 * @throws IOException
 	 */
-	String playSoldier(HexLocation location, int victimIndex) throws IOException;
+	ClientModelDTO playSoldier(FigureDTO soldierMove) throws IOException;
 	
 	/**
 	 * Sends a request to the server to play the Year of Plenty development card
@@ -173,7 +175,7 @@ public interface iServerProxy {
 	 * @param resource2
 	 * @throws IOException
 	 */
-	String playYearOfPlenty(ResourceType resource1, ResourceType resource2) throws IOException;
+	ClientModelDTO playYearOfPlenty(YearOfPlentyDTO yearOfPlentyMove) throws IOException;
 	
 	/**
 	 * Sends a request to the server to play a Road Building development card
@@ -186,7 +188,7 @@ public interface iServerProxy {
 	 * @param spot2
 	 * @throws IOException
 	 */
-	String playRoadBuilding(EdgeLocation spot1, EdgeLocation spot2) throws IOException;
+	ClientModelDTO playRoadBuilding(RoadBuildingDTO roadBuildingMove) throws IOException;
 	
 	/**
 	 * Sends a request to the server to play the monopoly development card
@@ -197,7 +199,8 @@ public interface iServerProxy {
 	 * @param resource
 	 * @throws IOException
 	 */
-	String playMonopoly(ResourceType resource) throws IOException;
+	ClientModelDTO playMonopoly(MoveType playMonopoly, ResourceType resource,
+                int playerIndex) throws IOException;
 	
 	/**
 	 * Sends a request to the server to play the monument card
@@ -206,7 +209,7 @@ public interface iServerProxy {
 	 * @post the players victory points are incremented and the model is updated or an error message
 	 * @throws IOException
 	 */
-	String playMonument() throws IOException;
+	ClientModelDTO playMonument(MoveType playMonument, int playerIndex) throws IOException;
 	
 	
 	/**
@@ -239,7 +242,7 @@ public interface iServerProxy {
 	 * @return GameContainer
 	 * @throws IOException
 	 */
-	List<GameDTO> listGames() throws IOException; 
+	GameContainer listGames() throws IOException; 
 
 	/**
 	 * Sends a request to the server to create a game
@@ -253,7 +256,7 @@ public interface iServerProxy {
 	 * @return
 	 * @throws IOException
 	 */
-	GameDTO createGames(String name, int randomTiles, int randomNumbers, int randomPorts) throws IOException;
+	Game createGames(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts) throws IOException;
 	
 	/**
 	 * Sends a request to the server to join a game
@@ -346,5 +349,5 @@ public interface iServerProxy {
 	 * @param logLevel
 	 * @throws IOException
 	 */
-	String changeLogLevel(int logLevel) throws IOException;
+	void changeLogLevel(String logLevel) throws IOException;
 }
