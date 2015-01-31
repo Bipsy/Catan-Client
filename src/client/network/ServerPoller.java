@@ -31,6 +31,7 @@ public class ServerPoller implements ActionListener { //We don't want this to im
      * @param version The initial version of the client model.
      */
     public ServerPoller(iServerProxy proxy, Populator facade, int version) {
+
         this.serverProxy = proxy;
         this.modelHandle = facade;
         this.version = version;
