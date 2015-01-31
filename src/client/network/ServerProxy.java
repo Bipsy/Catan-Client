@@ -5,7 +5,10 @@
  */
 package client.network;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -48,19 +51,26 @@ public class ServerProxy implements iServerProxy {
 		this.serverPort = serverPort;
 	}
 	
-	public Object doGet(String urlPath, Object params) throws IOException {
+	public String doGet(String urlPath) throws IOException {
 		try {
 			URL url = new URL("http://" + serverHost + ":" + serverPort + urlPath);
 			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
 			connection.setRequestMethod("GET");
-			connection.setRequestProperty("Accept","JSON");
+			connection.setRequestProperty("Accept","application/json");
 			connection.setDoInput(true);
 			connection.setDoOutput(true);
 			
 			connection.connect();
 			if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-				Object result = connection.getInputStream();
-				return result;
+				BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+		        StringBuilder out = new StringBuilder();
+		        String line;
+		        while ((line = reader.readLine()) != null) {
+		            out.append(line);
+		        }
+		        System.out.println(out.toString());
+				
+				return out.toString();
 			}
 			else {
 				throw new IOException(String.format("doGet failed: %s (http code %d)",
@@ -72,7 +82,8 @@ public class ServerProxy implements iServerProxy {
 		}
 	}
 	
-	public Object doPost(String urlPath, String jsonString) throws IOException {
+
+	public String doPost(String urlPath, String jsonString) throws IOException {
 		try {
 			URL url = new URL("http://" + serverHost + ":" + serverPort + urlPath);
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -84,12 +95,23 @@ public class ServerProxy implements iServerProxy {
 			connection.setDoOutput(true);
 			
 			connection.connect();
-			
+			byte[] outputBytes = jsonString.getBytes("UTF-8");
+			OutputStream os = connection.getOutputStream();
+			os.write(outputBytes);
+
+			os.close();
 			if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
 				//Set cookies
 				//send the result to the serializer
-				Object result = connection.getInputStream();
-				return result;
+		        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+		        StringBuilder out = new StringBuilder();
+		        String line;
+		        while ((line = reader.readLine()) != null) {
+		            out.append(line);
+		        }
+		        System.out.println(out.toString());
+				
+				return out.toString();
 			} else {
 				throw new IOException(String.format("doPost failed: %s (http code %d)",
 						urlPath, connection.getResponseCode()));
@@ -274,6 +296,19 @@ public class ServerProxy implements iServerProxy {
     @Override
     public String playMonument() throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public static void main(final String[] args)
+	{
+    	ServerProxy test = new ServerProxy();
+    	try {
+			String user = test.doPost("/user/login", "{'username':'Pete','password':'pete'}");
+
+			user = test.doGet("/games/list");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
 }
