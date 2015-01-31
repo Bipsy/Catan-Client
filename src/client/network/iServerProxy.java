@@ -218,7 +218,7 @@ public interface iServerProxy {
 	 * @return user 
 	 * @throws IOException
 	 */
-	String registerNewUser(String username, String password) throws IOException;
+	User registerNewUser(String username, String password) throws IOException;
 	
 	/**
 	 * Sends a request to the server to list the games
@@ -226,7 +226,7 @@ public interface iServerProxy {
 	 * @return GameContainer
 	 * @throws IOException
 	 */
-	String listGames() throws IOException; 
+	GameContainer listGames() throws IOException; 
 	
 	/**
 	 * Sends a request to the server to create a game
