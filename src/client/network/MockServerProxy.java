@@ -6,6 +6,7 @@
 package client.network;
 
 import java.io.IOException;
+import java.util.List;
 
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
@@ -14,6 +15,7 @@ import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.models.*;
 import shared.models.DTO.ClientModelDTO;
+import shared.models.DTO.GameDTO;
 
 /**
  * MockServerProxy is a mock implementation of iServerProxy. This class
@@ -118,7 +120,7 @@ public class MockServerProxy implements iServerProxy {
     }
 
     @Override
-    public String listGames() throws IOException {
+    public List<GameDTO> listGames() throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
