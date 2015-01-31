@@ -51,6 +51,8 @@ public class ServerProxy implements iServerProxy {
 		this.serverPort = serverPort;
 	}
 	
+	Serializer serializer = new Serializer();
+	
 	public String doGet(String urlPath) throws IOException {
 		try {
 			URL url = new URL("http://" + serverHost + ":" + serverPort + urlPath);
@@ -126,11 +128,9 @@ public class ServerProxy implements iServerProxy {
     @Override
     public User login(String username, String password) throws IOException {
     	try {
-	    	//User user = new User(username, password);
-	    	//serialize user
-	    	//String params = Serializer.serializeUser(user);
-	    	String params = "";
-	        return (User) doPost("/user/login", params);
+	    	User user = new User(username, password);
+	    	String params = serializer.serializeUser(user);
+	        return serializer.deserializeUser(doPost("/user/login", params));
     	} catch (IOException e) {
     		e.printStackTrace();
     		throw new IOException();
@@ -140,11 +140,9 @@ public class ServerProxy implements iServerProxy {
     @Override
     public User registerNewUser(String username, String password) throws IOException {
     	try {
-	    	//User user = new User(username, password);
-	    	//serialize user
-	    	//String params = Serializer.serializeUser(user);
-	    	String params = "";
-	        return (User) doPost("/user/login", params);
+	    	User user = new User(username, password);
+	    	String params = serializer.serializeUser(user);
+	        return serializer.deserializeUser(doPost("/user/login", params));
     	} catch (IOException e) {
     		e.printStackTrace();
     		throw new IOException();
