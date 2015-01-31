@@ -19,6 +19,7 @@ import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.models.AIPlayer;
 import shared.models.CommandContainer;
+import shared.models.Game;
 import shared.models.GameContainer;
 import shared.models.ResourceList;
 import shared.models.TradeOffer;
@@ -104,7 +105,6 @@ public class ServerProxy implements iServerProxy {
 			os.close();
 			if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
 				//Set cookies
-				//send the result to the serializer
 		        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 		        StringBuilder out = new StringBuilder();
 		        String line;
@@ -142,7 +142,7 @@ public class ServerProxy implements iServerProxy {
     	try {
 	    	User user = new User(username, password);
 	    	String params = serializer.serializeUser(user);
-	        return serializer.deserializeUser(doPost("/user/login", params));
+	        return serializer.deserializeUser(doPost("/user/register", params));
     	} catch (IOException e) {
     		e.printStackTrace();
     		throw new IOException();
@@ -151,13 +151,24 @@ public class ServerProxy implements iServerProxy {
 
     @Override
     public GameContainer listGames() throws IOException {
-		return null;
-    	
+    	try {
+	        return serializer.deserializeGameContainer(doGet("/games/list"));
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    		throw new IOException();
+    	}
     }
 
     @Override
-    public String createGames(String name, int randomTiles, int randomNumbers, int randomPorts) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Game createGames(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts) throws IOException {
+    	try {
+	    	Game game = new Game(name, randomTiles, randomNumbers, randomPorts);
+	    	String params = serializer.serializeGame(game);
+	        return serializer.deserializeGame(doPost("/user/register", params));
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    		throw new IOException();
+    	}
     }
 
     @Override

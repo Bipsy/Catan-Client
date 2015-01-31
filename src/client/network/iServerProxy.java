@@ -240,7 +240,7 @@ public interface iServerProxy {
 	 * @return
 	 * @throws IOException
 	 */
-	String createGames(String name, int randomTiles, int randomNumbers, int randomPorts) throws IOException;
+	Game createGames(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts) throws IOException;
 	
 	/**
 	 * Sends a requesto to the server to join a game
