@@ -6,13 +6,27 @@
 package client.network;
 
 import java.io.IOException;
+import java.util.List;
 
 import shared.definitions.CatanColor;
+import shared.definitions.MoveType;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.models.*;
+import shared.models.DTO.BuildRoadDTO;
+import shared.models.DTO.BuildStructureDTO;
+import shared.models.DTO.ClientModelDTO;
+import shared.models.DTO.DiscardCardsDTO;
+import shared.models.DTO.GameDTO;
+import shared.models.DTO.MaritimeTradeDTO;
+import shared.models.DTO.MessageDTO;
+import shared.models.DTO.FigureDTO;
+import shared.models.DTO.RoadBuildingDTO;
+import shared.models.DTO.RollNumberDTO;
+import shared.models.DTO.TradeOfferDTO;
+import shared.models.DTO.YearOfPlentyDTO;
 
 /**
  *
@@ -26,7 +40,7 @@ public interface iServerProxy {
 	 * @param content
 	 * @throws IOException
 	 */
-	String sendChat(String content) throws IOException;
+	ClientModelDTO sendChat(MessageDTO message) throws IOException;
 	
 	/**
 	 * Sends request to server to accept a trade with another player. 
@@ -37,7 +51,8 @@ public interface iServerProxy {
 	 * @param willAccept
 	 * @throws IOException
 	 */
-	String acceptTrade(boolean willAccept) throws IOException;
+	ClientModelDTO acceptTrade(MoveType acceptType, int playerIndex, 
+                boolean willAccept) throws IOException;
 	
 	/**
 	 * Sends a request to the server to discard cards from the players ResourceList
@@ -47,14 +62,14 @@ public interface iServerProxy {
 	 * @param discardedCards
 	 * @throws IOException
 	 */
-	String discardCards(ResourceList discardedCards) throws IOException; //ResourceList
+	ClientModelDTO discardCards(DiscardCardsDTO discardedCards) throws IOException; //ResourceList
 	
 	/**
 	 * Sends a request to the server to roll a number
 	 * @pre it is the beginning of the players turn
 	 * @post a number between 2-12 was randomly selected and the model is updated or an error message
 	 */
-	String rollNumber();
+	ClientModelDTO rollNumber(RollNumberDTO rollMove);
 	
 	/**
 	 * Sends a request to the server to build a road
@@ -65,7 +80,7 @@ public interface iServerProxy {
 	 * @param roadLocation
 	 * @throws IOException
 	 */
-	String buildRoad(boolean free, EdgeLocation roadLocation) throws IOException;
+	ClientModelDTO buildRoad(BuildRoadDTO roadMove) throws IOException;
 	
 	/**
 	 * Sends a request to the server to build a settlement
@@ -76,7 +91,7 @@ public interface iServerProxy {
 	 * @param vertexLocation
 	 * @throws IOException
 	 */
-	String buildSettlement(boolean free, VertexLocation vertexLocation) throws IOException;
+	ClientModelDTO buildSettlement(BuildStructureDTO settlementMove) throws IOException;
 	
 	/**
 	 * Sends a request to the server to build a city
@@ -86,7 +101,7 @@ public interface iServerProxy {
 	 * @param vertexLocation
 	 * @throws IOException
 	 */
-	String buildCity(VertexLocation vertexLocation) throws IOException;
+	ClientModelDTO buildCity(BuildStructureDTO cityMove) throws IOException;
 	
 	/**
 	 * Sends a request to the server to offer a trade
@@ -96,7 +111,7 @@ public interface iServerProxy {
 	 * @param tradeOffer the information about the offer
 	 * @throws IOException
 	 */
-	String offerTrade(TradeOffer tradeOffer) throws IOException;
+	ClientModelDTO offerTrade(TradeOfferDTO tradeOffer) throws IOException;
 	
 	/**
 	 * Sends a request to the server to offer a maritimetrade
@@ -108,7 +123,7 @@ public interface iServerProxy {
 	 * @param outputResource
 	 * @throws IOException
 	 */
-	String maritimeTrade(int ratio, ResourceType inputResource, ResourceType outputResource) throws IOException;
+	ClientModelDTO maritimeTrade(MaritimeTradeDTO maritimeMove) throws IOException;
 	
 	/**
 	 * Sends a request to the server to rob a player
@@ -119,14 +134,14 @@ public interface iServerProxy {
 	 * @param victimIndex
 	 * @throws IOException
 	 */
-	String robPlayer(HexLocation location, int victimIndex) throws IOException;
+	ClientModelDTO robPlayer(FigureDTO robMove) throws IOException;
 	
 	/**
 	 * Sends a request to the server to end a turn
 	 * @post the turn tracker is incremented to the next player and the model is updated or an error message
 	 * @throws IOException
 	 */
-	String finishTurn() throws IOException;
+	ClientModelDTO finishTurn(MoveType finishTurn, int playerIndex) throws IOException;
 	
 	/**
 	 * Sends a request to the server to buy a development card
@@ -135,7 +150,7 @@ public interface iServerProxy {
 	 * @post the development card is given to the player and the model is updated or an error message
 	 * @throws IOException
 	 */
-	String buyDevCard() throws IOException;
+	ClientModelDTO buyDevCard(MoveType buyDevCard, int playerIndex) throws IOException;
 	
 	/**
 	 * Sends a request to the server to play a soldier
@@ -147,7 +162,7 @@ public interface iServerProxy {
 	 * @param victimIndex
 	 * @throws IOException
 	 */
-	String playSoldier(HexLocation location, int victimIndex) throws IOException;
+	ClientModelDTO playSoldier(FigureDTO soldierMove) throws IOException;
 	
 	/**
 	 * Sends a request to the server to play the Year of Plenty development card
@@ -160,7 +175,7 @@ public interface iServerProxy {
 	 * @param resource2
 	 * @throws IOException
 	 */
-	String playYearOfPlenty(ResourceType resource1, ResourceType resource2) throws IOException;
+	ClientModelDTO playYearOfPlenty(YearOfPlentyDTO yearOfPlentyMove) throws IOException;
 	
 	/**
 	 * Sends a request to the server to play a Road Building development card
@@ -173,7 +188,7 @@ public interface iServerProxy {
 	 * @param spot2
 	 * @throws IOException
 	 */
-	String playRoadBuilding(EdgeLocation spot1, EdgeLocation spot2) throws IOException;
+	ClientModelDTO playRoadBuilding(RoadBuildingDTO roadBuildingMove) throws IOException;
 	
 	/**
 	 * Sends a request to the server to play the monopoly development card
@@ -184,7 +199,8 @@ public interface iServerProxy {
 	 * @param resource
 	 * @throws IOException
 	 */
-	String playMonopoly(ResourceType resource) throws IOException;
+	ClientModelDTO playMonopoly(MoveType playMonopoly, ResourceType resource,
+                int playerIndex) throws IOException;
 	
 	/**
 	 * Sends a request to the server to play the monument card
@@ -193,7 +209,7 @@ public interface iServerProxy {
 	 * @post the players victory points are incremented and the model is updated or an error message
 	 * @throws IOException
 	 */
-	String playMonument() throws IOException;
+	ClientModelDTO playMonument(MoveType playMonument, int playerIndex) throws IOException;
 	
 	
 	/**
@@ -227,7 +243,7 @@ public interface iServerProxy {
 	 * @throws IOException
 	 */
 	GameContainer listGames() throws IOException; 
-	
+
 	/**
 	 * Sends a request to the server to create a game
 	 * @pre valid game name
@@ -243,35 +259,35 @@ public interface iServerProxy {
 	Game createGames(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts) throws IOException;
 	
 	/**
-	 * Sends a requesto to the server to join a game
+	 * Sends a request to the server to join a game
 	 * @pre valid user that has logged in
 	 * @pre game to join with valid id
 	 * @pre valid color to be assigned
 	 * @post a player is added to the game with the specified color and the model is updated or an error message
-	 * @param gameId
-	 * @param color
+	 * @param game DTO that specifies the game the user would like to join.
 	 * @throws IOException
 	 */
-	String joinGame(int gameId, CatanColor color) throws IOException;
+	void joinGame(GameDTO game) throws IOException;
 	
 	/**
 	 * Sends a request to the server to save a game
 	 * @pre game name is valid
 	 * @pre file name is valid
 	 * @post the game is saved and the model updated or an error message
-	 * @param gameId
-	 * @param fileName
+	 * @param gameId the id of the game that the user would like saved
+	 * @param fileName the file location where the game should be saved
 	 * @throws IOException
 	 */
-	String saveGames(int gameId, String fileName) throws IOException;
+	void saveGames(int gameId, String fileName) throws IOException;
 	
 	/**
 	 * Sends a request to the server to load a game
 	 * @pre there is a version of the game previously saved
 	 * @post a game is loaded and displayed and the model updated or an error message
+         * @param fileName the file that stores the saved state of a game
 	 * @throws IOException
 	 */
-	String loadGame() throws IOException;
+	void loadGame(String fileName) throws IOException;
 	
 	/**
 	 * Sends a request to the server to retrieve the current state of the game
@@ -281,15 +297,16 @@ public interface iServerProxy {
 	 * @param versionNumber
 	 * @throws IOException
 	 */
-	String retrieveCurrentState(int versionNumber) throws IOException;
+	ClientModelDTO retrieveCurrentState(int versionNumber) throws IOException;
 	
 	/**
 	 * Sends a request to the server to reset a game
+         * @return the model of the game at the reset state
 	 * @pre a valid game and user logged in
 	 * @post the game is rest to the initiation stage while keeping the players intact or an error message
 	 * @throws IOException
 	 */
-	String resetGame() throws IOException;
+	ClientModelDTO resetGame() throws IOException;
 	
 	/**
 	 * Sends a request to the server to get a list of the game commands
@@ -297,7 +314,7 @@ public interface iServerProxy {
 	 * @post a list of commands is retrieved or an error message
 	 * @throws IOException
 	 */
-	String getCommands() throws IOException;
+	CommandContainer getCommands() throws IOException;
 	
 	/**
 	 * Sends a request to server with a list of the game commands
@@ -306,14 +323,14 @@ public interface iServerProxy {
 	 * @post a list of commands is sent to the server or an error message
 	 * @throws IOException 
 	 */
-	String postGameCommands(CommandContainer commands) throws IOException;
+	ClientModelDTO postGameCommands(CommandContainer commands) throws IOException;
 	
 	/**
 	 * Sends a request to the server to list all Artificial intelligence types
 	 * @post retrieves a list of ai players or an error message
 	 * @throws IOException
 	 */
-	String listAITypes() throws IOException;
+	List<AIPlayer> listAITypes() throws IOException;
 	
 	/**
 	 * Sends a request to the server to add an artificial intelligence player
@@ -323,7 +340,7 @@ public interface iServerProxy {
 	 * @post an AIPlayer is added to the game and given a color and the model is updated or an error message
 	 * @throws IOException
 	 */
-	String addAIPlayer(AIPlayer player) throws IOException;
+	void addAIPlayer(AIPlayer player) throws IOException;
 	
 	/**
 	 * Sends a request to server to change the log level
@@ -332,5 +349,5 @@ public interface iServerProxy {
 	 * @param logLevel
 	 * @throws IOException
 	 */
-	String changeLogLevel(int logLevel) throws IOException;
+	void changeLogLevel(String logLevel) throws IOException;
 }

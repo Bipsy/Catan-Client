@@ -9,6 +9,6 @@ package client.model;
  *
  * @author Peter Anderson <anderson.peter@byu.edu>
  */
-public class ModelContainer {
+interface iSerializer {
     
 }
