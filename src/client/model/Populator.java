@@ -1,5 +1,6 @@
 package client.model;
 
+import shared.models.DTO.DevCardListDTO;
 import shared.models.DTO.GameContainerDTO;
 import shared.models.DTO.MapDTO;
 import shared.models.DTO.MessageListDTO;
@@ -30,7 +31,7 @@ public class Populator implements iPopulator{
 		 */
 		
 		//Why does getBank return ResourceListDTO?? It needs a DevCardListDTO as well or bankDTO
-		populateBank(container.getBank());
+		populateBank(container.getResources(), container.getDevCards());
 		
 		//no list of ports in mapDTO, but there is a list of harbors in Board model
 		populateBoard(container.getMap());
@@ -69,7 +70,7 @@ public class Populator implements iPopulator{
 		
 	}
 
-	private void populateBank(ResourceListDTO bank) {
+	private void populateBank(ResourceListDTO bank, DevCardListDTO devCardListDTO) {
 		//needs resource list and a dev card list
 	}
 	
