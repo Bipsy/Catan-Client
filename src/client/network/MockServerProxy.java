@@ -11,11 +11,14 @@ import java.util.List;
 import shared.definitions.MoveType;
 import shared.definitions.ResourceType;
 import shared.models.*;
+import shared.models.DTO.AIPlayerDTO;
 import shared.models.DTO.BuildRoadDTO;
 import shared.models.DTO.BuildStructureDTO;
 import shared.models.DTO.ClientModelDTO;
+import shared.models.DTO.CommandContainerDTO;
 import shared.models.DTO.DiscardCardsDTO;
 import shared.models.DTO.FigureDTO;
+import shared.models.DTO.GameContainerDTO;
 import shared.models.DTO.GameDTO;
 import shared.models.DTO.MaritimeTradeDTO;
 import shared.models.DTO.MessageDTO;
@@ -117,22 +120,22 @@ public class MockServerProxy implements iServerProxy {
     }
 
     @Override
-    public User login(String username, String password) throws IOException {
+    public void login(String username, String password) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public User registerNewUser(String username, String password) throws IOException {
+    public void registerNewUser(String username, String password) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public GameContainer listGames() throws IOException {
+    public GameContainerDTO listGames() throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Game createGames(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts) throws IOException {
+    public GameDTO createGames(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -162,22 +165,22 @@ public class MockServerProxy implements iServerProxy {
     }
 
     @Override
-    public CommandContainer getCommands() throws IOException {
+    public CommandContainerDTO getCommands() throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public ClientModelDTO postGameCommands(CommandContainer commands) throws IOException {
+    public ClientModelDTO postGameCommands(CommandContainerDTO commands) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<AIPlayer> listAITypes() throws IOException {
+    public List<AIPlayerDTO> listAITypes() throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void addAIPlayer(AIPlayer player) throws IOException {
+    public void addAIPlayer(AIPlayerDTO player) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

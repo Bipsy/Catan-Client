@@ -12,28 +12,15 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-
-import shared.models.DTO.ClientModelDTO;
+import shared.models.Game;
 import shared.models.User;
 import client.model.Serializer;
+
 import java.util.List;
+
 import shared.definitions.MoveType;
 import shared.definitions.ResourceType;
-import shared.models.AIPlayer;
-import shared.models.CommandContainer;
-import shared.models.DTO.BuildRoadDTO;
-import shared.models.DTO.BuildStructureDTO;
-import shared.models.DTO.DiscardCardsDTO;
-import shared.models.DTO.FigureDTO;
-import shared.models.DTO.GameDTO;
-import shared.models.DTO.MaritimeTradeDTO;
-import shared.models.DTO.MessageDTO;
-import shared.models.DTO.RoadBuildingDTO;
-import shared.models.DTO.RollNumberDTO;
-import shared.models.DTO.TradeOfferDTO;
-import shared.models.DTO.YearOfPlentyDTO;
-import shared.models.Game;
-import shared.models.GameContainer;
+import shared.models.DTO.*;
 
 /**
  * ServerProxy is our implementation of the iServerProxy interface.
@@ -135,11 +122,11 @@ public class ServerProxy implements iServerProxy {
 	
 
     @Override
-    public User login(String username, String password) throws IOException {
+    public void login(String username, String password) throws IOException {
     	try {
-	    	User user = new User(username, password);
+	    	UserDTO user = new UserDTO(username, password);
 	    	String params = serializer.serializeUser(user);
-	        return serializer.deserializeUser(doPost("/user/login", params));
+	        doPost("/user/login", params);
     	} catch (IOException e) {
     		e.printStackTrace();
     		throw new IOException();
@@ -147,11 +134,11 @@ public class ServerProxy implements iServerProxy {
     }
 
     @Override
-    public User registerNewUser(String username, String password) throws IOException {
+    public void registerNewUser(String username, String password) throws IOException {
     	try {
-	    	User user = new User(username, password);
+	    	UserDTO user = new UserDTO(username, password);
 	    	String params = serializer.serializeUser(user);
-	        return serializer.deserializeUser(doPost("/user/register", params));
+	        doPost("/user/register", params);
     	} catch (IOException e) {
     		e.printStackTrace();
     		throw new IOException();
@@ -159,7 +146,7 @@ public class ServerProxy implements iServerProxy {
     }
 
     @Override
-    public GameContainer listGames() throws IOException {
+    public GameContainerDTO listGames() throws IOException {
     	try {
 	        return serializer.deserializeGameContainer(doGet("/games/list"));
     	} catch (IOException e) {
@@ -169,10 +156,10 @@ public class ServerProxy implements iServerProxy {
     }
 
     @Override
-    public Game createGames(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts) throws IOException {
+    public GameDTO createGames(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts) throws IOException {
     	try {
-	    	Game game = new Game(name, randomTiles, randomNumbers, randomPorts);
-	    	String params = serializer.serializeGame(game);
+    		GameToCreateDTO game = new GameToCreateDTO(name, randomTiles, randomNumbers, randomPorts);
+	    	String params = serializer.serializeGameToCreate(game);
 	        return serializer.deserializeGame(doPost("/user/register", params));
     	} catch (IOException e) {
     		e.printStackTrace();
@@ -301,22 +288,22 @@ public class ServerProxy implements iServerProxy {
     }
 
     @Override
-    public CommandContainer getCommands() throws IOException {
+    public CommandContainerDTO getCommands() throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public ClientModelDTO postGameCommands(CommandContainer commands) throws IOException {
+    public ClientModelDTO postGameCommands(CommandContainerDTO commands) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<AIPlayer> listAITypes() throws IOException {
+    public List<AIPlayerDTO> listAITypes() throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void addAIPlayer(AIPlayer player) throws IOException {
+    public void addAIPlayer(AIPlayerDTO player) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

@@ -1,5 +1,6 @@
 package shared.models;
 
+
 /**
  * This class stores information about a game.
  * @author Austin

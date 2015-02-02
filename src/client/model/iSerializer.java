@@ -10,5 +10,4 @@ package client.model;
  * @author Peter Anderson <anderson.peter@byu.edu>
  */
 interface iSerializer {
-    
 }
