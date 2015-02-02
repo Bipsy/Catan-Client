@@ -13,10 +13,11 @@ import shared.definitions.CatanColor;
  * @author Peter Anderson <anderson.peter@byu.edu>
  */
 public class User {
-    private final CatanColor color;
-    private final String name;
-    private final int index;
-    private final int ID;
+    private CatanColor color = null;
+    private String username;
+	private String password; 
+    private int index = 0;
+    private int ID = 0;
     
     /**Default Constructor for User. This will generate a user with immutable 
      * fields. If invalid parameters are given then system defaults will be 
@@ -34,11 +35,17 @@ public class User {
      * @param playerID Specifies the ID of the player. ID must be unique. If ID
      * is not unique then a unique ID will be generated.
      */
-    public User(CatanColor color, String name,
+    public User(CatanColor color, String username, String password,
                 int playerIndex, int playerID) {
         this.color = color;
-        this.name = name;
+        this.username = username;
+        this.password = password;
         this.index = playerIndex;
         this.ID = playerID;
     }
+    
+    public User(String username, String password) {
+	    this.username = username;
+	    this.password = password;
+	}
 }

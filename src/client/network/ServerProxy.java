@@ -5,20 +5,35 @@
  */
 package client.network;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import shared.definitions.CatanColor;
+
+import shared.models.DTO.ClientModelDTO;
+import shared.models.User;
+import client.model.Serializer;
+import java.util.List;
+import shared.definitions.MoveType;
 import shared.definitions.ResourceType;
-import shared.locations.EdgeLocation;
-import shared.locations.HexLocation;
-import shared.locations.VertexLocation;
 import shared.models.AIPlayer;
 import shared.models.CommandContainer;
-import shared.models.ResourceList;
-import shared.models.TradeOffer;
-import shared.models.User;
+import shared.models.DTO.BuildRoadDTO;
+import shared.models.DTO.BuildStructureDTO;
+import shared.models.DTO.DiscardCardsDTO;
+import shared.models.DTO.FigureDTO;
+import shared.models.DTO.GameDTO;
+import shared.models.DTO.MaritimeTradeDTO;
+import shared.models.DTO.MessageDTO;
+import shared.models.DTO.RoadBuildingDTO;
+import shared.models.DTO.RollNumberDTO;
+import shared.models.DTO.TradeOfferDTO;
+import shared.models.DTO.YearOfPlentyDTO;
+import shared.models.Game;
+import shared.models.GameContainer;
 
 /**
  * ServerProxy is our implementation of the iServerProxy interface.
@@ -46,19 +61,28 @@ public class ServerProxy implements iServerProxy {
 		this.serverPort = serverPort;
 	}
 	
-	public Object doGet(String urlPath, Object params) throws IOException {
+	Serializer serializer = new Serializer();
+	
+	public String doGet(String urlPath) throws IOException {
 		try {
 			URL url = new URL("http://" + serverHost + ":" + serverPort + urlPath);
 			HttpURLConnection connection = (HttpURLConnection)url.openConnection();
 			connection.setRequestMethod("GET");
-			connection.setRequestProperty("Accept","JSON");
+			connection.setRequestProperty("Accept","application/json");
 			connection.setDoInput(true);
 			connection.setDoOutput(true);
 			
 			connection.connect();
 			if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-				Object result = connection.getInputStream();
-				return result;
+				BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+		        StringBuilder out = new StringBuilder();
+		        String line;
+		        while ((line = reader.readLine()) != null) {
+		            out.append(line);
+		        }
+		        System.out.println(out.toString());
+				
+				return out.toString();
 			}
 			else {
 				throw new IOException(String.format("doGet failed: %s (http code %d)",
@@ -70,21 +94,35 @@ public class ServerProxy implements iServerProxy {
 		}
 	}
 	
-	public Object doPost(String urlPath, Object params) throws IOException {
+
+	public String doPost(String urlPath, String jsonString) throws IOException {
 		try {
 			URL url = new URL("http://" + serverHost + ":" + serverPort + urlPath);
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			//HttpURLConnection.setRequestProperty("Cookie", cookie);
 			connection.setRequestMethod("POST");
-			connection.setRequestProperty("Accept","JSON");
+			connection.setRequestProperty("Content-Type","application/json");
+			connection.setRequestProperty("Accept","application/json");
 			connection.setDoInput(true);
 			connection.setDoOutput(true);
 			
 			connection.connect();
+			byte[] outputBytes = jsonString.getBytes("UTF-8");
+			OutputStream os = connection.getOutputStream();
+			os.write(outputBytes);
+
+			os.close();
 			if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
 				//Set cookies
-				//send the result to the serializer
-				Object result = connection.getInputStream();
-				return result;
+		        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+		        StringBuilder out = new StringBuilder();
+		        String line;
+		        while ((line = reader.readLine()) != null) {
+		            out.append(line);
+		        }
+		        System.out.println(out.toString());
+				
+				return out.toString();
 			} else {
 				throw new IOException(String.format("doPost failed: %s (http code %d)",
 						urlPath, connection.getResponseCode()));
@@ -98,160 +136,192 @@ public class ServerProxy implements iServerProxy {
 
     @Override
     public User login(String username, String password) throws IOException {
-    	//send params to serializer
-    	//user DTO returned
-        //return User doPost("/user/login", user);
+    	try {
+	    	User user = new User(username, password);
+	    	String params = serializer.serializeUser(user);
+	        return serializer.deserializeUser(doPost("/user/login", params));
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    		throw new IOException();
+    	}
+    }
+
+    @Override
+    public User registerNewUser(String username, String password) throws IOException {
+    	try {
+	    	User user = new User(username, password);
+	    	String params = serializer.serializeUser(user);
+	        return serializer.deserializeUser(doPost("/user/register", params));
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    		throw new IOException();
+    	}
+    }
+
+    @Override
+    public GameContainer listGames() throws IOException {
+    	try {
+	        return serializer.deserializeGameContainer(doGet("/games/list"));
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    		throw new IOException();
+    	}
+    }
+
+    @Override
+    public Game createGames(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts) throws IOException {
+    	try {
+	    	Game game = new Game(name, randomTiles, randomNumbers, randomPorts);
+	    	String params = serializer.serializeGame(game);
+	        return serializer.deserializeGame(doPost("/user/register", params));
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    		throw new IOException();
+    	}
+    }
+
+    @Override
+    public ClientModelDTO retrieveCurrentState(int versionNumber) throws IOException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public static void main(final String[] args) {
+        ServerProxy test = new ServerProxy();
+    	try {
+            String user = test.doPost("/user/login", "{'username':'Pete','password':'pete'}");
+            user = test.doGet("/games/list");
+        } catch (IOException e) {
+            e.printStackTrace();
+	}
+    }
+
+    @Override
+    public ClientModelDTO sendChat(MessageDTO message) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String registerNewUser(String username, String password) throws IOException {
+    public ClientModelDTO acceptTrade(MoveType acceptType, int playerIndex, boolean willAccept) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String listGames() throws IOException {
+    public ClientModelDTO discardCards(DiscardCardsDTO discardedCards) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String createGames(String name, int randomTiles, int randomNumbers, int randomPorts) throws IOException {
+    public ClientModelDTO rollNumber(RollNumberDTO rollMove) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String joinGame(int gameId, CatanColor color) throws IOException {
+    public ClientModelDTO buildRoad(BuildRoadDTO roadMove) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String saveGames(int gameId, String fileName) throws IOException {
+    public ClientModelDTO buildSettlement(BuildStructureDTO settlementMove) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String loadGame() throws IOException {
+    public ClientModelDTO buildCity(BuildStructureDTO cityMove) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String retrieveCurrentState(int versionNumber) throws IOException {
+    public ClientModelDTO offerTrade(TradeOfferDTO tradeOffer) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String resetGame() throws IOException {
+    public ClientModelDTO maritimeTrade(MaritimeTradeDTO maritimeMove) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String getCommands() throws IOException {
+    public ClientModelDTO robPlayer(FigureDTO robMove) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String postGameCommands(CommandContainer commands) throws IOException {
+    public ClientModelDTO finishTurn(MoveType finishTurn, int playerIndex) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String listAITypes() throws IOException {
+    public ClientModelDTO buyDevCard(MoveType buyDevCard, int playerIndex) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String addAIPlayer(AIPlayer player) throws IOException {
+    public ClientModelDTO playSoldier(FigureDTO soldierMove) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String changeLogLevel(int logLevel) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-	
-	
-    @Override
-    public String sendChat(String content) throws IOException {
+    public ClientModelDTO playYearOfPlenty(YearOfPlentyDTO yearOfPlentyMove) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String acceptTrade(boolean willAccept) throws IOException {
+    public ClientModelDTO playRoadBuilding(RoadBuildingDTO roadBuildingMove) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String discardCards(ResourceList discardedCards) throws IOException {
+    public ClientModelDTO playMonopoly(MoveType playMonopoly, ResourceType resource, int playerIndex) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String rollNumber() {
+    public ClientModelDTO playMonument(MoveType playMonument, int playerIndex) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String buildRoad(boolean free, EdgeLocation roadLocation) throws IOException {
+    public void joinGame(GameDTO game) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String buildSettlement(boolean free, VertexLocation vertexLocation) throws IOException {
+    public void saveGames(int gameId, String fileName) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String buildCity(VertexLocation vertexLocation) throws IOException {
+    public void loadGame(String fileName) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String offerTrade(TradeOffer offer) throws IOException {
+    public ClientModelDTO resetGame() throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String maritimeTrade(int ratio, ResourceType inputResource, ResourceType outputResource) throws IOException {
+    public CommandContainer getCommands() throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String robPlayer(HexLocation location, int victimIndex) throws IOException {
+    public ClientModelDTO postGameCommands(CommandContainer commands) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String finishTurn() throws IOException {
+    public List<AIPlayer> listAITypes() throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String buyDevCard() throws IOException {
+    public void addAIPlayer(AIPlayer player) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String playSoldier(HexLocation location, int victimIndex) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String playYearOfPlenty(ResourceType resource1, ResourceType resource2) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String playRoadBuilding(EdgeLocation spot1, EdgeLocation spot2) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String playMonopoly(ResourceType resource) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String playMonument() throws IOException {
+    public void changeLogLevel(String logLevel) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

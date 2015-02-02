@@ -5,16 +5,12 @@
  */
 package client.network;
 
-import client.model.ModelContainer;
+
 import client.model.iPopulator;
-import client.model.Serializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonPrimitive;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import shared.models.DTO.ClientModelDTO;
 
 /**
  * ServerPoller is used to periodically update the client model by requesting
@@ -25,22 +21,21 @@ import java.io.IOException;
  */
 public class ServerPoller implements ActionListener { //We don't want this to implemebt ActionListener
     final private iServerProxy serverProxy;
-    final private Serializer serializer;
+
     final private iPopulator modelHandle;
     private int version;
     
     /**
      * @param proxy The proxy object that the poller will use to update
      * the client model
-     * @param serializer The serializer object that will perform the
-     * serialization of the JSON.
+
      * @param facade The facade object that will receive the serialized model
      * @param version The initial version of the client model.
      */
-    public ServerPoller(iServerProxy proxy, Serializer serializer,
-                        iPopulator facade, int version) {
+
+    public ServerPoller(iServerProxy proxy, iPopulator facade, int version) {
+
         this.serverProxy = proxy;
-        this.serializer = serializer;
         this.modelHandle = facade;
         this.version = version;
     }
@@ -53,89 +48,41 @@ public class ServerPoller implements ActionListener { //We don't want this to im
      * from the server via the update model interface. If an error occurs then
      * poll() returns an empty string.
      */
-    public String poll() {
-        String newModel = "";
+    public ClientModelDTO poll() {
         try {
-            newModel = serverProxy.retrieveCurrentState(version);
+            ClientModelDTO newModel = serverProxy.retrieveCurrentState(version);
+            return newModel;
         } catch (IOException ex) {
             System.err.println("Error while polling server");
             System.err.println(ex.getLocalizedMessage());
         }
-        return newModel;
+        return null;
     }
-    
-    /**
-     * The isNew method parses the given JSON string to determine if the string
-     * is a valid representation of the model and the version number contained
-     * therein is greater than the version number stored with the Poller object.
-     * Essentially this method determines whether the model needs to be 
-     * re-populated with fresh data.
-     * @pre This method should only be called if the JSON has first been 
-     * verified to be correct with verifiyJSON.
-     * @post Updates the version number of the model that the client
-     * has received.
-     * @param JSON This is a string representation of the model. This should 
-     * have been returned to the proxy by the server. 
-     * @return isNew return true if the string is a valid representation of the
-     * model and it contains a more recent version number. If either of these
-     * conditions are not met then isNew() returns false.
-     */
-    private boolean isNew(String JSON) {
-        //TO DO -- push the verification of the JSON into the verifier method
-        JsonParser parser = new JsonParser();
-        JsonElement parseTree = parser.parse(JSON);
-        if (verifyJSON(JSON)) {
-            JsonObject jsonObject = parseTree.getAsJsonObject();
-            JsonPrimitive result = jsonObject.getAsJsonPrimitive("version");
-            if (result == null || result.isNumber() == false) {
-                return false;
-            } else {
-                int newVersion = result.getAsInt();
-                if (newVersion > version) {
-                    version = newVersion;
-                    return true;
-                } else {
-                    return false;
-                }
-            }
+
+    private boolean isNew(ClientModelDTO model) {
+        if (model == null) {
+            return false;
+        } else if (model.getVersion() > version) {
+            version = model.getVersion();
+            return true;
+        } else {
+            return false;
         }
-        return false;
     }
     
-    /**
-     * UpdateModel uses the API of the model facade to update the model. It
-     * passes the ModelContainer object to the facade to be used for update.
-     * This method should only be called with a container object that has
-     * been produced by the serializer. 
-     * @param container ModelContainer should be a valid representation of the
-     * model (not null). This object will be given to the model facade to 
-     * populate the model.
-     * @return updateModel returns true if the model facade successfully updated
-     * the model using the container. If the container is null or another error
-     * occurs then this method returns false.
-     */
-    private boolean updateModel(ModelContainer container) {
-        if (container == null) {
+    private boolean updateModel(ClientModelDTO model) {
+        if (model == null) {
             return false;
         } else {
-            return modelHandle.populateModel(container);
+            return modelHandle.populateModel(model);
         }
-    }
-    
-    private boolean verifyJSON(String JSON) {
-        JsonParser parser = new JsonParser();
-        JsonElement parseTree = parser.parse(JSON);
-        return parseTree.isJsonObject();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String newModel = poll();
-        if (verifyJSON(newModel)) {
-            if (isNew(newModel)) {
-                ModelContainer container = serializer.deserializeModel(newModel);
-                updateModel(container);
-            }
+        ClientModelDTO newModel = poll();
+        if (isNew(newModel)) {
+            updateModel(newModel);
         }
     }
     
