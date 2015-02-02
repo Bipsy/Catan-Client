@@ -1,5 +1,6 @@
 package shared.models.DTO;
 
+import shared.definitions.MoveType;
 import shared.exceptions.InvalidPlayerIndex;
 
 /**
@@ -10,9 +11,14 @@ import shared.exceptions.InvalidPlayerIndex;
  *
  */
 public class TradeOfferDTO {
+        public final MoveType type;
 	private int sender;
 	private int receiver;
 	private ResourceListDTO offer;
+        
+        public TradeOfferDTO(MoveType newType) {
+            type = newType;
+        }
 	
 	public int getSender() {
 		return sender;

@@ -6,13 +6,26 @@
 package client.network;
 
 import java.io.IOException;
+import java.util.List;
 
-import shared.definitions.CatanColor;
+import shared.definitions.MoveType;
 import shared.definitions.ResourceType;
-import shared.locations.EdgeLocation;
-import shared.locations.HexLocation;
-import shared.locations.VertexLocation;
 import shared.models.*;
+import shared.models.DTO.AIPlayerDTO;
+import shared.models.DTO.BuildRoadDTO;
+import shared.models.DTO.BuildStructureDTO;
+import shared.models.DTO.ClientModelDTO;
+import shared.models.DTO.CommandContainerDTO;
+import shared.models.DTO.DiscardCardsDTO;
+import shared.models.DTO.FigureDTO;
+import shared.models.DTO.GameContainerDTO;
+import shared.models.DTO.GameDTO;
+import shared.models.DTO.MaritimeTradeDTO;
+import shared.models.DTO.MessageDTO;
+import shared.models.DTO.RoadBuildingDTO;
+import shared.models.DTO.RollNumberDTO;
+import shared.models.DTO.TradeOfferDTO;
+import shared.models.DTO.YearOfPlentyDTO;
 
 /**
  * MockServerProxy is a mock implementation of iServerProxy. This class
@@ -22,157 +35,157 @@ import shared.models.*;
 public class MockServerProxy implements iServerProxy {
 
     @Override
-    public String sendChat(String content) throws IOException {
+    public ClientModelDTO sendChat(MessageDTO message) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String acceptTrade(boolean willAccept) throws IOException {
+    public ClientModelDTO acceptTrade(MoveType acceptType, int playerIndex, boolean willAccept) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String discardCards(ResourceList discardedCards) throws IOException {
+    public ClientModelDTO discardCards(DiscardCardsDTO discardedCards) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String rollNumber() {
+    public ClientModelDTO rollNumber(RollNumberDTO rollMove) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String buildRoad(boolean free, EdgeLocation roadLocation) throws IOException {
+    public ClientModelDTO buildRoad(BuildRoadDTO roadMove) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String buildSettlement(boolean free, VertexLocation vertexLocation) throws IOException {
+    public ClientModelDTO buildSettlement(BuildStructureDTO settlementMove) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String buildCity(VertexLocation vertexLocation) throws IOException {
+    public ClientModelDTO buildCity(BuildStructureDTO cityMove) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String offerTrade(TradeOffer offer) throws IOException {
+    public ClientModelDTO offerTrade(TradeOfferDTO tradeOffer) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String maritimeTrade(int ratio, ResourceType inputResource, ResourceType outputResource) throws IOException {
+    public ClientModelDTO maritimeTrade(MaritimeTradeDTO maritimeMove) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String robPlayer(HexLocation location, int victimIndex) throws IOException {
+    public ClientModelDTO robPlayer(FigureDTO robMove) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String finishTurn() throws IOException {
+    public ClientModelDTO finishTurn(MoveType finishTurn, int playerIndex) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String buyDevCard() throws IOException {
+    public ClientModelDTO buyDevCard(MoveType buyDevCard, int playerIndex) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String playSoldier(HexLocation location, int victimIndex) throws IOException {
+    public ClientModelDTO playSoldier(FigureDTO soldierMove) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String playYearOfPlenty(ResourceType resource1, ResourceType resource2) throws IOException {
+    public ClientModelDTO playYearOfPlenty(YearOfPlentyDTO yearOfPlentyMove) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String playRoadBuilding(EdgeLocation spot1, EdgeLocation spot2) throws IOException {
+    public ClientModelDTO playRoadBuilding(RoadBuildingDTO roadBuildingMove) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String playMonopoly(ResourceType resource) throws IOException {
+    public ClientModelDTO playMonopoly(MoveType playMonopoly, ResourceType resource, int playerIndex) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String playMonument() throws IOException {
+    public ClientModelDTO playMonument(MoveType playMonument, int playerIndex) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public User login(String username, String password) throws IOException {
+    public void login(String username, String password) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public User registerNewUser(String username, String password) throws IOException {
+    public void registerNewUser(String username, String password) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public GameContainer listGames() throws IOException {
+    public GameContainerDTO listGames() throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String createGames(String name, int randomTiles, int randomNumbers, int randomPorts) throws IOException {
+    public GameDTO createGames(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String joinGame(int gameId, CatanColor color) throws IOException {
+    public void joinGame(GameDTO game) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String saveGames(int gameId, String fileName) throws IOException {
+    public void saveGames(int gameId, String fileName) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String loadGame() throws IOException {
+    public void loadGame(String fileName) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String retrieveCurrentState(int versionNumber) throws IOException {
+    public ClientModelDTO retrieveCurrentState(int versionNumber) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String resetGame() throws IOException {
+    public ClientModelDTO resetGame() throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String getCommands() throws IOException {
+    public CommandContainerDTO getCommands() throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String postGameCommands(CommandContainer commands) throws IOException {
+    public ClientModelDTO postGameCommands(CommandContainerDTO commands) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String listAITypes() throws IOException {
+    public List<AIPlayerDTO> listAITypes() throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String addAIPlayer(AIPlayer player) throws IOException {
+    public void addAIPlayer(AIPlayerDTO player) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public String changeLogLevel(int logLevel) throws IOException {
+    public void changeLogLevel(String logLevel) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

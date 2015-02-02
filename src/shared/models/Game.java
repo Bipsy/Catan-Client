@@ -1,5 +1,6 @@
 package shared.models;
 
+
 /**
  * This class stores information about a game.
  * @author Austin
@@ -13,6 +14,17 @@ public class Game {
 	private boolean randomTiles;
 	private boolean randomNumbers;
 	private boolean randomPorts;
+
+	
+	
+	public Game(String title, boolean randomTiles,
+			boolean randomNumbers, boolean randomPorts) {
+		super();
+		this.title = title;
+		this.randomTiles = randomTiles;
+		this.randomNumbers = randomNumbers;
+		this.randomPorts = randomPorts;
+	}
 
 	public Game() {
 		// TODO Auto-generated constructor stub

@@ -1,14 +1,27 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package client.model;
 
-/**
- *
- * @author Peter Anderson <anderson.peter@byu.edu>
- */
-public interface Populator {
-    public boolean populateModel(ModelContainer container);
+import shared.models.DTO.GameContainerDTO;
+import shared.models.DTO.UserDTO;
+import shared.models.DTO.ClientModelDTO;
+
+public class Populator implements iPopulator{
+
+	@Override
+	public boolean populateModel(ClientModelDTO container) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean populateModel(UserDTO container) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean populateModel(GameContainerDTO container) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
