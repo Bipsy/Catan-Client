@@ -11,7 +11,7 @@ import shared.models.DTO.GameContainerDTO;
 
 /**
  *
- * @author Peter Anderson <anderson.peter@byu.edu>
+ * @author Mikey Murphy <mikeyamadeo@gmail.com>
  */
 public interface iPopulator {
     public boolean populateModel(ClientModelDTO container);
