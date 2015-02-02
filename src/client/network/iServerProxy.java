@@ -15,10 +15,13 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 import shared.models.*;
+import shared.models.DTO.AIPlayerDTO;
 import shared.models.DTO.BuildRoadDTO;
 import shared.models.DTO.BuildStructureDTO;
 import shared.models.DTO.ClientModelDTO;
+import shared.models.DTO.CommandContainerDTO;
 import shared.models.DTO.DiscardCardsDTO;
+import shared.models.DTO.GameContainerDTO;
 import shared.models.DTO.GameDTO;
 import shared.models.DTO.MaritimeTradeDTO;
 import shared.models.DTO.MessageDTO;
@@ -219,10 +222,9 @@ public interface iServerProxy {
 	 * @post the player is logged in and assigned a color and the model is updated or an error message
 	 * @param username
 	 * @param password
-	 * @return user 
 	 * @throws IOException
 	 */
-	User login(String username, String password) throws IOException;
+	void login(String username, String password) throws IOException;
 	
 	/**
 	 * Sends a request to the server to register a new user
@@ -231,10 +233,9 @@ public interface iServerProxy {
 	 * @post user created and the model is updated or an error message
 	 * @param username
 	 * @param password
-	 * @return user 
 	 * @throws IOException
 	 */
-	User registerNewUser(String username, String password) throws IOException;
+	void registerNewUser(String username, String password) throws IOException;
 	
 	/**
 	 * Sends a request to the server to list the games
@@ -242,7 +243,7 @@ public interface iServerProxy {
 	 * @return GameContainer
 	 * @throws IOException
 	 */
-	GameContainer listGames() throws IOException; 
+	GameContainerDTO listGames() throws IOException; 
 
 	/**
 	 * Sends a request to the server to create a game
@@ -256,7 +257,7 @@ public interface iServerProxy {
 	 * @return
 	 * @throws IOException
 	 */
-	Game createGames(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts) throws IOException;
+	GameDTO createGames(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts) throws IOException;
 	
 	/**
 	 * Sends a request to the server to join a game
@@ -314,7 +315,7 @@ public interface iServerProxy {
 	 * @post a list of commands is retrieved or an error message
 	 * @throws IOException
 	 */
-	CommandContainer getCommands() throws IOException;
+	CommandContainerDTO getCommands() throws IOException;
 	
 	/**
 	 * Sends a request to server with a list of the game commands
@@ -323,14 +324,14 @@ public interface iServerProxy {
 	 * @post a list of commands is sent to the server or an error message
 	 * @throws IOException 
 	 */
-	ClientModelDTO postGameCommands(CommandContainer commands) throws IOException;
+	ClientModelDTO postGameCommands(CommandContainerDTO commands) throws IOException;
 	
 	/**
 	 * Sends a request to the server to list all Artificial intelligence types
 	 * @post retrieves a list of ai players or an error message
 	 * @throws IOException
 	 */
-	List<AIPlayer> listAITypes() throws IOException;
+	List<AIPlayerDTO> listAITypes() throws IOException;
 	
 	/**
 	 * Sends a request to the server to add an artificial intelligence player
@@ -340,7 +341,7 @@ public interface iServerProxy {
 	 * @post an AIPlayer is added to the game and given a color and the model is updated or an error message
 	 * @throws IOException
 	 */
-	void addAIPlayer(AIPlayer player) throws IOException;
+	void addAIPlayer(AIPlayerDTO player) throws IOException;
 	
 	/**
 	 * Sends a request to server to change the log level

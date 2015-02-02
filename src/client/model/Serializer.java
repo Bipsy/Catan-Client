@@ -1,87 +1,82 @@
 package client.model;
 
-import shared.models.AIPlayer;
-import shared.models.AITypesContainer;
-import shared.models.CommandContainer;
-import shared.models.DTO.ClientModelDTO;
-import shared.models.Game;
-import shared.models.GameContainer;
-import shared.models.User;
+import java.io.IOException;
+
+import shared.models.DTO.*;
+
+import com.google.gson.*;
 
 public class Serializer implements iSerializer  {
+	
+	private Gson gson;
 
 	public Serializer(){
-		// TODO Auto-generated constructor stub
+		gson = new Gson();
 	}
 
-	public ClientModelDTO deserializeModel(String JSON) {
-		// TODO Auto-generated method stub
-		return null;
+	public ClientModelDTO deserializeModel(String JSON) throws IOException {
+		return gson.fromJson(JSON, ClientModelDTO.class);  
 	}
 
 	public String serializeModel(ClientModelDTO container) {
-		// TODO Auto-generated method stub
-		return null;
+		return gson.toJson(container);
 	}
 
-	public User deserializeUser(String JSON) {
-		// TODO Auto-generated method stub
-		return null;
+	public UserDTO deserializeUser(String JSON) throws IOException {
+		return gson.fromJson(JSON, UserDTO.class);
 	}
 
-	public String serializeUser(User user) {
-		// TODO Auto-generated method stub
-		return null;
+	public String serializeUser(UserDTO user) {
+		return gson.toJson(user);
 	}
 
-	public GameContainer deserializeGameContainer(String JSON) {
-		// TODO Auto-generated method stub
-		return null;
+	public GameContainerDTO deserializeGameContainer(String JSON) throws IOException {
+		return gson.fromJson(JSON, GameContainerDTO.class);
 	}
 
-	public String serializeGameContainer(GameContainer games) {
-		// TODO Auto-generated method stub
-		return null;
+	public String serializeGameContainer(GameContainerDTO games) {
+		return gson.toJson(games);
 	}
 
-	public Game deserializeGame(String JSON) {
-		// TODO Auto-generated method stub
-		return null;
+	public GameDTO deserializeGame(String JSON) throws IOException {
+		return gson.fromJson(JSON, GameDTO.class);
 	}
 
-	public String serializeGame(Game game) {
-		// TODO Auto-generated method stub
-		return null;
+	public String serializeGame(GameDTO game) {
+		return gson.toJson(game);
 	}
 
-	public CommandContainer deserializeCommandContainer(String JSON) {
-		// TODO Auto-generated method stub
-		return null;
+	public CommandContainerDTO deserializeCommandContainer(String JSON) throws IOException {
+		return gson.fromJson(JSON, CommandContainerDTO.class);
 	}
 
-	public String serializeCommandContainer(CommandContainer commands) {
-		// TODO Auto-generated method stub
-		return null;
+	public String serializeCommandContainer(CommandContainerDTO commands) {
+		return gson.toJson(commands);
 	}
 
-	public AITypesContainer deserializeAITypesContainer(String JSON) {
-		// TODO Auto-generated method stub
-		return null;
+	public AITypesContainerDTO deserializeAITypesContainer(String JSON) throws IOException {
+		return gson.fromJson(JSON, AITypesContainerDTO.class);
 	}
 
-	public String serializeAITypesContainer(AITypesContainer aIplayers) {
-		// TODO Auto-generated method stub
-		return null;
+	public String serializeAITypesContainer(AITypesContainerDTO aIplayers) {
+		return gson.toJson(aIplayers);
 	}
 
-	public AIPlayer deserializeAIPlayer(String JSON) {
-		// TODO Auto-generated method stub
-		return null;
+	public AIPlayerDTO deserializeAIPlayer(String JSON) throws IOException {
+		return gson.fromJson(JSON, AIPlayerDTO.class);
 	}
 
-	public String serializeAIPlayer(AIPlayer aIplayer) {
-		// TODO Auto-generated method stub
-		return null;
+	public String serializeAIPlayer(AIPlayerDTO aIplayer) {
+		return gson.toJson(aIplayer);
 	}
+	
+	public GameToCreateDTO deserializeGameToCreate(String JSON) throws IOException {
+		return gson.fromJson(JSON, GameToCreateDTO.class);
+	}
+
+	public String serializeGameToCreate(GameToCreateDTO game) {
+		return gson.toJson(game);
+	}
+	
 
 }

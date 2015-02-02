@@ -5,9 +5,9 @@
  */
 package client.model;
 
-import shared.models.GameContainer;
-import shared.models.User;
+import shared.models.DTO.UserDTO;
 import shared.models.DTO.ClientModelDTO;
+import shared.models.DTO.GameContainerDTO;
 
 /**
  *
@@ -15,6 +15,6 @@ import shared.models.DTO.ClientModelDTO;
  */
 public interface iPopulator {
     public boolean populateModel(ClientModelDTO container);
-    public boolean populateModel(User container);
-    public boolean populateModel(GameContainer container);
+    public boolean populateModel(UserDTO container);
+    public boolean populateModel(GameContainerDTO container);
 }
