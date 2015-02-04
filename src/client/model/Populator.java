@@ -41,27 +41,7 @@ public class Populator implements iPopulator{
 	private ClientModel	model;
 	@Override
 	public boolean populateModel(ClientModelDTO container) {
-		/**
-		 * Coming from container ->
-		  ResourceListDTO bank;			x
-		  MessageListDTO chat;
-		  MessageListDTO log;
-		  MapDTO map;					x
-		  PlayerDTO[] players;
-		  TradeOfferDTO tradeOffer;		x
-		  TurnTrackerDTO turnTracker;
-		 */
-		/**
-		 * Client Model
-	private Bank bank;					x
-	private Board board;				x
-	private ChatObject chatObject;		x
-	private UserManager userManager;
-	private TradeOffer tradeOffer;		x
-	private int version;				x
-	private int winner;					x
-		 */
-		
+
 		populateBank(container.getResources(), container.getDevCards());
 		
 		populateBoard(container.getMap());
@@ -80,17 +60,9 @@ public class Populator implements iPopulator{
 		return false;
 	}
 
-	private void populateTradeOffer(TradeOfferDTO tradeOffer) {
-		//make new TradeOffer
-		//new.sender sets -> tradeOffer.getSender()
-		//new.receiver sets -> tradeOffer.getReceiver()
-		//set resourceList from resourceListDTO
-		
-	}
-
 	private void populateUserManager(PlayerDTO[] players,
 			TurnTrackerDTO turnTracker) {
-		List users = new ArrayList();
+		List<Player> users = new ArrayList<Player>();
 		for (int i = 0; i < players.length; i ++) {
 			users.add(new Player(players[i]));
 		}
@@ -100,23 +72,6 @@ public class Populator implements iPopulator{
 	}
 
 	private void populateBoard(MapDTO map) {
-
-//		private List<Hex> hexes;					x
-//		private List<Harbor> harbor; 				x
-//		private List<Road> road;					x
-//		private List<VertexObject> settlements;		x
-//		private List<VertexObject> cities;			x
-//		private int radius;
-//		private Robber robber;
-		
-//		private HexDTO[] hexes;						x
-//		private EdgeValueDTO[] roads;				x
-//		private PortDTO[] ports;					x
-//		private VertexObjectDTO settlements;		x
-//		private VertexObjectDTO cities;				x
-//		private int radius;
-//		private HexLocation robber;
-
 		
 		Board board = new Board();
 		
