@@ -56,4 +56,14 @@ public class GameState {
 	public void setWinner(int winner) {
 		this.winner = winner;
 	}
+
+	public boolean CanDiscardCards() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean CanRollNumber() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
