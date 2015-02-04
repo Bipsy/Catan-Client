@@ -6,6 +6,11 @@ import shared.models.DTO.*;
 
 import com.google.gson.*;
 
+/**
+ * @author Anna Sokolova
+ *
+ */
+
 public class Serializer implements iSerializer  {
 	
 	private Gson gson;
