@@ -18,6 +18,7 @@ import client.model.Serializer;
 
 import java.util.List;
 
+
 import shared.definitions.MoveType;
 import shared.definitions.ResourceType;
 import shared.models.DTO.*;
@@ -32,6 +33,7 @@ public class ServerProxy implements iServerProxy {
 
 	private String serverHost = "localhost";
 	private String serverPort = "8081";
+	private String myCookie = "";
 	
 	/**
 	 * Class constructor
@@ -86,7 +88,7 @@ public class ServerProxy implements iServerProxy {
 		try {
 			URL url = new URL("http://" + serverHost + ":" + serverPort + urlPath);
 			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-			//HttpURLConnection.setRequestProperty("Cookie", cookie);
+			connection.setRequestProperty("Cookie", myCookie);
 			connection.setRequestMethod("POST");
 			connection.setRequestProperty("Content-Type","application/json");
 			connection.setRequestProperty("Accept","application/json");
@@ -101,6 +103,20 @@ public class ServerProxy implements iServerProxy {
 			os.close();
 			if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
 				//Set cookies
+				String headerName = null;
+				for (int i=1; (headerName = connection.getHeaderFieldKey(i))!=null; i++) {
+					if (headerName.equals("Set-Cookie")) {
+						String unsplit = connection.getHeaderField(i);
+						String[] split = unsplit.split("=");
+						if (split[0] == "catan.user") {
+							myCookie = connection.getHeaderField(i);
+						} else  {
+							myCookie.concat("; " + connection.getHeaderField(i));
+						}
+					}
+				}
+				
+				
 		        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 		        StringBuilder out = new StringBuilder();
 		        String line;
@@ -160,7 +176,7 @@ public class ServerProxy implements iServerProxy {
     	try {
     		GameToCreateDTO game = new GameToCreateDTO(name, randomTiles, randomNumbers, randomPorts);
 	    	String params = serializer.serializeGameToCreate(game);
-	        return serializer.deserializeGame(doPost("/games/create", params));
+	        return (GameDTO) serializer.deserializeGame(doPost("/games/create", params));
     	} catch (IOException e) {
     		e.printStackTrace();
     		throw new IOException();

@@ -13,6 +13,17 @@ public class Serializer implements iSerializer  {
 	public Serializer(){
 		gson = new Gson();
 	}
+	
+	public String seralize(Object object) {
+		return gson.toJson(object);
+	}
+	
+	public Object deserialize(String JSON) {
+		return gson.fromJson(JSON, Object.class);
+	}
+	
+	
+	
 
 	public ClientModelDTO deserializeModel(String JSON) throws IOException {
 		return gson.fromJson(JSON, ClientModelDTO.class);  
