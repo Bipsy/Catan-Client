@@ -48,4 +48,10 @@ public class User {
 	    this.username = username;
 	    this.password = password;
 	}
+
+	public User(CatanColor color2, int playerIndex, int playerID) {
+		this.color = color2;
+		this.index = playerIndex;
+		this.ID = playerID;
+	}
 }

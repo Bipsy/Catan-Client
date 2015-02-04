@@ -1,6 +1,7 @@
 package shared.models;
 
 import shared.definitions.CatanColor;
+import shared.models.DTO.PlayerDTO;
 
 public class Player extends User {
 
@@ -32,7 +33,18 @@ public class Player extends User {
         super(color, username, password, playerIndex, playerID);
     }
     
-    /**
+    public Player(PlayerDTO playerDTO) {
+    	super(playerDTO.getColor(), playerDTO.getPlayerIndex(), playerDTO.getPlayerID());
+		this.cities = playerDTO.getCities();
+		this.roads = playerDTO.getRoads();
+		this.settlements = playerDTO.getSettlements();
+		this.soldiers = playerDTO.getSoldiers();
+		this.newDevCards = new DevCardList(playerDTO.getNewDevCards());
+		this.oldDevCards = new DevCardList(playerDTO.getOldDevCards());
+		this.resources = new PlayerHand(playerDTO.getResources(), playerDTO.getNewDevCards());	
+	}
+
+	/**
      * canPlayDevCard determines if the selected player is able to play
      * a dev card. If the player does not have a dev card, has already played 
      * a dev card (and couldn't win that turn by playing multiple monument 

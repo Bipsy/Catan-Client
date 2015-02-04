@@ -1,5 +1,6 @@
 package shared.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import shared.definitions.PieceType;
@@ -121,7 +122,7 @@ public class Board {
 
 
 	public void setHexes(HexDTO[] hexArray) {
-		List<Hex> temp = null;
+		List<Hex> temp = new ArrayList<Hex>();
 		for (int i = 0; i < hexArray.length; i++) {
 			temp.add(new Hex(hexArray[i]));
 		}
@@ -130,7 +131,7 @@ public class Board {
 
 
 	public void setHarbor(PortDTO[] ports) {
-		List<Harbor> temp = null;
+		List<Harbor> temp = new ArrayList<Harbor>();
 		for (int i = 0; i < ports.length; i++) {
 			temp.add(new Harbor(ports[i]));
 		}
@@ -139,7 +140,7 @@ public class Board {
 
 
 	public void setRoads(EdgeValueDTO[] roadArray) {
-		List<Road> temp = null;
+		List<Road> temp = new ArrayList<Road>();
 		for (int i = 0; i < roadArray.length; i++) {
 			temp.add(new Road(roadArray[i]));
 		}
@@ -148,7 +149,7 @@ public class Board {
 
 
 	public void setSettlements(VertexObjectDTO[] settlementArray) {
-		List<VertexObject> temp = null;
+		List<VertexObject> temp = new ArrayList<VertexObject>();
 		for (int i = 0; i < settlementArray.length; i++) {
 			temp.add(new VertexObject(settlementArray[i], PieceType.SETTLEMENT));
 		}
@@ -158,7 +159,7 @@ public class Board {
 
 
 	public void setCities(VertexObjectDTO[] cityArray) {
-		List<VertexObject> temp = null;
+		List<VertexObject> temp = new ArrayList<VertexObject>();
 		for (int i = 0; i < cityArray.length; i++) {
 			temp.add(new VertexObject(cityArray[i], PieceType.CITY));
 		}

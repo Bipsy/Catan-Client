@@ -1,16 +1,22 @@
 package client.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import shared.locations.HexLocation;
 import shared.models.Bank;
 import shared.models.Board;
+import shared.models.ChatObject;
 import shared.models.DevCardList;
 import shared.models.Harbor;
 import shared.models.Hex;
+import shared.models.Player;
 import shared.models.ResourceList;
 import shared.models.Road;
 import shared.models.Robber;
+import shared.models.TradeOffer;
+import shared.models.TurnTracker;
+import shared.models.UserManager;
 import shared.models.VertexObject;
 import shared.models.DTO.DevCardListDTO;
 import shared.models.DTO.EdgeValueDTO;
@@ -37,13 +43,23 @@ public class Populator implements iPopulator{
 	public boolean populateModel(ClientModelDTO container) {
 		/**
 		 * Coming from container ->
-		  ResourceListDTO bank;
+		  ResourceListDTO bank;			x
 		  MessageListDTO chat;
 		  MessageListDTO log;
-		  MapDTO map;
+		  MapDTO map;					x
 		  PlayerDTO[] players;
-		  TradeOfferDTO tradeOffer;
+		  TradeOfferDTO tradeOffer;		x
 		  TurnTrackerDTO turnTracker;
+		 */
+		/**
+		 * Client Model
+	private Bank bank;					x
+	private Board board;				x
+	private ChatObject chatObject;		x
+	private UserManager userManager;
+	private TradeOffer tradeOffer;		x
+	private int version;				x
+	private int winner;					x
 		 */
 		
 		populateBank(container.getResources(), container.getDevCards());
@@ -51,13 +67,12 @@ public class Populator implements iPopulator{
 		populateBoard(container.getMap());
 				
 		//I'm getting a chat and a log but the chatObject only has a list of messages...
-		populateChatObject(container.getChat());
+		populateChatObject(container.getChat(), container.getLog());
 			
 		//
 		populateUserManager(container.getPlayers(), container.getTurnTracker());
 		
-		//
-		populateTradeOffer(container.getTradeOffer());
+		model.setTradeOffer(new TradeOffer(container.getTradeOffer()));
 
 		model.setVersion(container.getVersion());
 		model.setWinner(container.getWinner());
@@ -75,12 +90,17 @@ public class Populator implements iPopulator{
 
 	private void populateUserManager(PlayerDTO[] players,
 			TurnTrackerDTO turnTracker) {
-		
+		List users = new ArrayList();
+		for (int i = 0; i < players.length; i ++) {
+			users.add(new Player(players[i]));
+		}
+
+		model.setUserManager(new UserManager(users, new TurnTracker(turnTracker)));
 		
 	}
 
 	private void populateBoard(MapDTO map) {
-		// needs a list of ports from mapDTO
+
 //		private List<Hex> hexes;					x
 //		private List<Harbor> harbor; 				x
 //		private List<Road> road;					x
@@ -98,7 +118,6 @@ public class Populator implements iPopulator{
 //		private HexLocation robber;
 
 		
-		//TODO: look into warnings from constructors in Board.java
 		Board board = new Board();
 		
 		//TODO: Individual hexes have communityMap, roadMap, and Harbor. HexDTO hexes has none of these. how
@@ -118,10 +137,7 @@ public class Populator implements iPopulator{
 		
 		//TODO: logic for robber # property
 		board.setRobber(new Robber(map.getRobber()));
-		
-		
-		
-		
+			
 		model.setBoard(board);
 		
 	}
@@ -133,8 +149,10 @@ public class Populator implements iPopulator{
 		model.setBank(new Bank(resourceList, devCardList));
 	}
 	
-	private void populateChatObject(MessageListDTO messageListDTO) {
-		
+	private void populateChatObject(MessageListDTO chat, MessageListDTO log) {
+	
+		ChatObject chatObject = new ChatObject(chat.getLines(), log.getLines());
+		model.setChatObject(chatObject);
 	}
 
 	
