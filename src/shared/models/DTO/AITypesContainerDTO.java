@@ -1,5 +1,10 @@
 package shared.models.DTO;
 
+/**
+ * @author Anna Sokolova
+ *
+ */
+
 import java.util.List;
 import java.util.ArrayList;
 
