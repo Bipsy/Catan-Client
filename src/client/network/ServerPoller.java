@@ -50,7 +50,8 @@ public class ServerPoller implements ActionListener { //We don't want this to im
      */
     public ClientModelDTO poll() {
         try {
-            ClientModelDTO newModel = serverProxy.retrieveCurrentState(version);
+            ClientModelDTO newModel = new ClientModelDTO(version);
+            newModel = serverProxy.retrieveCurrentState(newModel);
             return newModel;
         } catch (IOException ex) {
             System.err.println("Error while polling server");

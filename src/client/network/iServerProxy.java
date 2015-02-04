@@ -8,20 +8,14 @@ package client.network;
 import java.io.IOException;
 import java.util.List;
 
-import shared.definitions.CatanColor;
 import shared.definitions.MoveType;
 import shared.definitions.ResourceType;
-import shared.locations.EdgeLocation;
-import shared.locations.HexLocation;
-import shared.locations.VertexLocation;
-import shared.models.*;
 import shared.models.DTO.AIPlayerDTO;
 import shared.models.DTO.BuildRoadDTO;
 import shared.models.DTO.BuildStructureDTO;
 import shared.models.DTO.ClientModelDTO;
 import shared.models.DTO.CommandContainerDTO;
 import shared.models.DTO.DiscardCardsDTO;
-import shared.models.DTO.GameContainerDTO;
 import shared.models.DTO.GameDTO;
 import shared.models.DTO.GameToCreateDTO;
 import shared.models.DTO.MaritimeTradeDTO;
@@ -246,7 +240,7 @@ public interface iServerProxy {
 	 * @return GameContainer
 	 * @throws IOException
 	 */
-	GameContainerDTO listGames() throws IOException; 
+	ClientModelDTO listGames() throws IOException; 
 
 	/**
 	 * Sends a request to the server to create a game
@@ -260,7 +254,7 @@ public interface iServerProxy {
 	 * @return
 	 * @throws IOException
 	 */
-	GameDTO createGames(GameToCreateDTO game) throws IOException;
+	ClientModelDTO createGames(GameToCreateDTO game) throws IOException;
 	
 	/**
 	 * Sends a request to the server to join a game
@@ -301,7 +295,7 @@ public interface iServerProxy {
 	 * @param versionNumber
 	 * @throws IOException
 	 */
-	ClientModelDTO retrieveCurrentState(int versionNumber) throws IOException;
+	ClientModelDTO retrieveCurrentState(ClientModelDTO model) throws IOException;
 	
 	/**
 	 * Sends a request to the server to reset a game

@@ -29,6 +29,16 @@ public class ClientModelDTO {
 	 */
 	private int winner;
 	
+
+	/**
+	 * Constructor with version number
+	 * @param version
+	 */
+	public ClientModelDTO(int version) {
+		super();
+		this.version = version;
+	}
+
 	public ResourceListDTO getResources() {
 		return resources;
 	}

@@ -10,7 +10,6 @@ import java.util.List;
 
 import shared.definitions.MoveType;
 import shared.definitions.ResourceType;
-import shared.models.*;
 import shared.models.DTO.AIPlayerDTO;
 import shared.models.DTO.BuildRoadDTO;
 import shared.models.DTO.BuildStructureDTO;
@@ -18,7 +17,6 @@ import shared.models.DTO.ClientModelDTO;
 import shared.models.DTO.CommandContainerDTO;
 import shared.models.DTO.DiscardCardsDTO;
 import shared.models.DTO.FigureDTO;
-import shared.models.DTO.GameContainerDTO;
 import shared.models.DTO.GameDTO;
 import shared.models.DTO.GameToCreateDTO;
 import shared.models.DTO.MaritimeTradeDTO;
@@ -132,12 +130,12 @@ public class MockServerProxy implements iServerProxy {
     }
 
     @Override
-    public GameContainerDTO listGames() throws IOException {
+    public ClientModelDTO listGames() throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public GameDTO createGames(GameToCreateDTO game) throws IOException {
+    public ClientModelDTO createGames(GameToCreateDTO game) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -157,7 +155,7 @@ public class MockServerProxy implements iServerProxy {
     }
 
     @Override
-    public ClientModelDTO retrieveCurrentState(int versionNumber) throws IOException {
+    public ClientModelDTO retrieveCurrentState(ClientModelDTO model) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
