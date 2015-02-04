@@ -14,6 +14,7 @@ public class MapDTO {
 	 */
 	private HexDTO[] hexes;
 	private EdgeValueDTO[] roads;
+	private PortDTO[] ports;
 	private VertexObjectDTO settlements;
 	private VertexObjectDTO cities;
 	/**
@@ -68,5 +69,13 @@ public class MapDTO {
 
 	public void setRobber(HexLocation robber) {
 		this.robber = robber;
+	}
+
+	public PortDTO[] getPorts() {
+		return ports;
+	}
+
+	public void setPorts(PortDTO[] ports) {
+		this.ports = ports;
 	}
 }

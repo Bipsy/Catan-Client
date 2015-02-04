@@ -8,7 +8,8 @@ package shared.models.DTO;
  *
  */
 public class ClientModelDTO {
-	private ResourceListDTO bank;
+	private ResourceListDTO resources;
+	private DevCardListDTO devCards;
 	private MessageListDTO chat;
 	private MessageListDTO log;
 	private MapDTO map;
@@ -28,21 +29,12 @@ public class ClientModelDTO {
 	 */
 	private int winner;
 	
-	/**
-	 * Constructor
-	 * @param chat
-	 */
-	public ClientModelDTO(MessageListDTO chat) {
-		super();
-		this.chat = chat;
-	}
-
-	public ResourceListDTO getBank() {
-		return bank;
+	public ResourceListDTO getResources() {
+		return resources;
 	}
 	
-	public void setBank(ResourceListDTO bank) {
-		this.bank = bank;
+	public void setBank(ResourceListDTO resources) {
+		this.resources = resources;
 	}
 
 	public MessageListDTO getChat() {
@@ -107,6 +99,14 @@ public class ClientModelDTO {
 
 	public void setWinner(int winner) {
 		this.winner = winner;
+	}
+
+	public DevCardListDTO getDevCards() {
+		return devCards;
+	}
+
+	public void setDevCards(DevCardListDTO devCards) {
+		this.devCards = devCards;
 	}
 
 	
