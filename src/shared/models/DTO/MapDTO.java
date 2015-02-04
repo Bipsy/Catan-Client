@@ -15,8 +15,8 @@ public class MapDTO {
 	private HexDTO[] hexes;
 	private EdgeValueDTO[] roads;
 	private PortDTO[] ports;
-	private VertexObjectDTO settlements;
-	private VertexObjectDTO cities;
+	private VertexObjectDTO[] settlements;
+	private VertexObjectDTO[] cities;
 	/**
 	 * The radius of the map includes the center hex and the ocean hexes
 	 */
@@ -39,21 +39,6 @@ public class MapDTO {
 		this.roads = roads;
 	}
 
-	public VertexObjectDTO getSettlements() {
-		return settlements;
-	}
-
-	public void setSettlements(VertexObjectDTO settlements) {
-		this.settlements = settlements;
-	}
-
-	public VertexObjectDTO getCities() {
-		return cities;
-	}
-
-	public void setCities(VertexObjectDTO cities) {
-		this.cities = cities;
-	}
 
 	public int getRadius() {
 		return radius;
@@ -77,5 +62,21 @@ public class MapDTO {
 
 	public void setPorts(PortDTO[] ports) {
 		this.ports = ports;
+	}
+
+	public VertexObjectDTO[] getSettlements() {
+		return settlements;
+	}
+
+	public void setSettlements(VertexObjectDTO[] settlements) {
+		this.settlements = settlements;
+	}
+
+	public VertexObjectDTO[] getCities() {
+		return cities;
+	}
+
+	public void setCities(VertexObjectDTO[] cities) {
+		this.cities = cities;
 	}
 }

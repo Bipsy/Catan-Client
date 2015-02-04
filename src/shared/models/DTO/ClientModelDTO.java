@@ -28,14 +28,6 @@ public class ClientModelDTO {
 	 * is a winner
 	 */
 	private int winner;
-	
-	public ResourceListDTO getResources() {
-		return resources;
-	}
-	
-	public void setBank(ResourceListDTO resources) {
-		this.resources = resources;
-	}
 
 	public MessageListDTO getChat() {
 		return chat;
@@ -107,6 +99,14 @@ public class ClientModelDTO {
 
 	public void setDevCards(DevCardListDTO devCards) {
 		this.devCards = devCards;
+	}
+
+	public ResourceListDTO getResources() {
+		return resources;
+	}
+
+	public void setResources(ResourceListDTO resources) {
+		this.resources = resources;
 	}
 
 	

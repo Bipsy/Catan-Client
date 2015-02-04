@@ -1,15 +1,31 @@
 package client.model;
 
+import java.util.List;
+
+import shared.locations.HexLocation;
+import shared.models.Bank;
+import shared.models.Board;
+import shared.models.DevCardList;
+import shared.models.Harbor;
+import shared.models.Hex;
+import shared.models.ResourceList;
+import shared.models.Road;
+import shared.models.Robber;
+import shared.models.VertexObject;
 import shared.models.DTO.DevCardListDTO;
+import shared.models.DTO.EdgeValueDTO;
 import shared.models.DTO.GameContainerDTO;
+import shared.models.DTO.HexDTO;
 import shared.models.DTO.MapDTO;
 import shared.models.DTO.MessageListDTO;
 import shared.models.DTO.PlayerDTO;
+import shared.models.DTO.PortDTO;
 import shared.models.DTO.ResourceListDTO;
 import shared.models.DTO.TradeOfferDTO;
 import shared.models.DTO.TurnTrackerDTO;
 import shared.models.DTO.UserDTO;
 import shared.models.DTO.ClientModelDTO;
+import shared.models.DTO.VertexObjectDTO;
 
 /**
  * 
@@ -30,10 +46,8 @@ public class Populator implements iPopulator{
 		  TurnTrackerDTO turnTracker;
 		 */
 		
-		//Why does getBank return ResourceListDTO?? It needs a DevCardListDTO as well or bankDTO
 		populateBank(container.getResources(), container.getDevCards());
 		
-		//no list of ports in mapDTO, but there is a list of harbors in Board model
 		populateBoard(container.getMap());
 				
 		//I'm getting a chat and a log but the chatObject only has a list of messages...
@@ -67,11 +81,56 @@ public class Populator implements iPopulator{
 
 	private void populateBoard(MapDTO map) {
 		// needs a list of ports from mapDTO
+//		private List<Hex> hexes;					x
+//		private List<Harbor> harbor; 				x
+//		private List<Road> road;					x
+//		private List<VertexObject> settlements;		x
+//		private List<VertexObject> cities;			x
+//		private int radius;
+//		private Robber robber;
+		
+//		private HexDTO[] hexes;						x
+//		private EdgeValueDTO[] roads;				x
+//		private PortDTO[] ports;					x
+//		private VertexObjectDTO settlements;		x
+//		private VertexObjectDTO cities;				x
+//		private int radius;
+//		private HexLocation robber;
+
+		
+		//TODO: look into warnings from constructors in Board.java
+		Board board = new Board();
+		
+		//TODO: Individual hexes have communityMap, roadMap, and Harbor. HexDTO hexes has none of these. how
+		//should we go about this?
+		board.setHexes(map.getHexes());
+		
+		board.setHarbor(map.getPorts());
+		
+		//NOTE: DTO provides an edge location that is unused by Road model object
+		board.setRoads(map.getRoads());
+		
+		//TODO: logic to determine port type
+		board.setSettlements(map.getSettlements());
+		board.setCities(map.getCities());
+		
+		board.setRadius(map.getRadius());
+		
+		//TODO: logic for robber # property
+		board.setRobber(new Robber(map.getRobber()));
+		
+		
+		
+		
+		model.setBoard(board);
 		
 	}
 
-	private void populateBank(ResourceListDTO bank, DevCardListDTO devCardListDTO) {
-		//needs resource list and a dev card list
+	private void populateBank(ResourceListDTO resources, DevCardListDTO devCards) {
+		ResourceList resourceList = new ResourceList(resources);
+		DevCardList devCardList = new DevCardList(devCards);
+		
+		model.setBank(new Bank(resourceList, devCardList));
 	}
 	
 	private void populateChatObject(MessageListDTO messageListDTO) {

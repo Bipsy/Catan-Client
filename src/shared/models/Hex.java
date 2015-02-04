@@ -4,6 +4,7 @@ import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+import shared.models.DTO.HexDTO;
 
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,12 @@ public class Hex {
 	private Harbor harbor;
 	private Map<VertexLocation, VertexObject> communityMap;
 	
+	public Hex(HexDTO hexDTO) {
+		this.location = new HexLocation(hexDTO.getLocation());
+		this.resource = hexDTO.getResource();
+		this.chit = hexDTO.getNumber();
+	}
+
 	/**
 	 * This function returns all the adjacent edges.
 	 * @return list of edges
@@ -66,6 +73,54 @@ public class Hex {
 	 */
 	public boolean canBuildCity() {
 		return false;
+	}
+
+	public HexLocation getLocation() {
+		return location;
+	}
+
+	public void setLocation(HexLocation location) {
+		this.location = location;
+	}
+
+	public ResourceType getResource() {
+		return resource;
+	}
+
+	public void setResource(ResourceType resource) {
+		this.resource = resource;
+	}
+
+	public int getChit() {
+		return chit;
+	}
+
+	public void setChit(int chit) {
+		this.chit = chit;
+	}
+
+	public Map<EdgeLocation, Road> getRoadMap() {
+		return roadMap;
+	}
+
+	public void setRoadMap(Map<EdgeLocation, Road> roadMap) {
+		this.roadMap = roadMap;
+	}
+
+	public Harbor getHarbor() {
+		return harbor;
+	}
+
+	public void setHarbor(Harbor harbor) {
+		this.harbor = harbor;
+	}
+
+	public Map<VertexLocation, VertexObject> getCommunityMap() {
+		return communityMap;
+	}
+
+	public void setCommunityMap(Map<VertexLocation, VertexObject> communityMap) {
+		this.communityMap = communityMap;
 	}
 	
 }
