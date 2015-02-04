@@ -2,6 +2,7 @@ package shared.models;
 
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
+import shared.models.DTO.DevCardListDTO;
 
 public class DevCardList {
 	
@@ -19,6 +20,14 @@ public class DevCardList {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public DevCardList(DevCardListDTO devCards) {
+		this.monopoly = devCards.getMonopoly();
+		this.roadBuilding = devCards.getRoadBuilding();
+		this.yearOfPlenty = devCards.getYearOfPlenty();
+		this.monument = devCards.getMonument();
+		this.soldier = devCards.getSoldier();
+	}
+
 	/**
 	 * This function is used to add dev cards to the list
 	 * @param type the type of resource
