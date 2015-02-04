@@ -14,7 +14,7 @@ public class Serializer implements iSerializer  {
 		gson = new Gson();
 	}
 	
-	public String seralize(Object object) {
+	public String serialize(Object object) {
 		return gson.toJson(object);
 	}
 	

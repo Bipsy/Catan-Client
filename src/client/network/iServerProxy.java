@@ -23,12 +23,14 @@ import shared.models.DTO.CommandContainerDTO;
 import shared.models.DTO.DiscardCardsDTO;
 import shared.models.DTO.GameContainerDTO;
 import shared.models.DTO.GameDTO;
+import shared.models.DTO.GameToCreateDTO;
 import shared.models.DTO.MaritimeTradeDTO;
 import shared.models.DTO.MessageDTO;
 import shared.models.DTO.FigureDTO;
 import shared.models.DTO.RoadBuildingDTO;
 import shared.models.DTO.RollNumberDTO;
 import shared.models.DTO.TradeOfferDTO;
+import shared.models.DTO.UserDTO;
 import shared.models.DTO.YearOfPlentyDTO;
 
 /**
@@ -69,10 +71,11 @@ public interface iServerProxy {
 	
 	/**
 	 * Sends a request to the server to roll a number
+	 * @throws IOException 
 	 * @pre it is the beginning of the players turn
 	 * @post a number between 2-12 was randomly selected and the model is updated or an error message
 	 */
-	ClientModelDTO rollNumber(RollNumberDTO rollMove);
+	ClientModelDTO rollNumber(RollNumberDTO rollMove) throws IOException;
 	
 	/**
 	 * Sends a request to the server to build a road
@@ -224,7 +227,7 @@ public interface iServerProxy {
 	 * @param password
 	 * @throws IOException
 	 */
-	void login(String username, String password) throws IOException;
+	void login(UserDTO user) throws IOException;
 	
 	/**
 	 * Sends a request to the server to register a new user
@@ -235,7 +238,7 @@ public interface iServerProxy {
 	 * @param password
 	 * @throws IOException
 	 */
-	void registerNewUser(String username, String password) throws IOException;
+	void registerNewUser(UserDTO user) throws IOException;
 	
 	/**
 	 * Sends a request to the server to list the games
@@ -257,7 +260,7 @@ public interface iServerProxy {
 	 * @return
 	 * @throws IOException
 	 */
-	GameDTO createGames(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts) throws IOException;
+	GameDTO createGames(GameToCreateDTO game) throws IOException;
 	
 	/**
 	 * Sends a request to the server to join a game

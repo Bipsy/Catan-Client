@@ -12,8 +12,6 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import shared.models.Game;
-import shared.models.User;
 import client.model.Serializer;
 
 import java.util.List;
@@ -138,9 +136,8 @@ public class ServerProxy implements iServerProxy {
 	
 
     @Override
-    public void login(String username, String password) throws IOException {
+    public void login(UserDTO user) throws IOException {
     	try {
-	    	UserDTO user = new UserDTO(username, password);
 	    	String params = serializer.serializeUser(user);
 	        doPost("/user/login", params);
     	} catch (IOException e) {
@@ -150,9 +147,8 @@ public class ServerProxy implements iServerProxy {
     }
 
     @Override
-    public void registerNewUser(String username, String password) throws IOException {
+    public void registerNewUser(UserDTO user) throws IOException {
     	try {
-	    	UserDTO user = new UserDTO(username, password);
 	    	String params = serializer.serializeUser(user);
 	        doPost("/user/register", params);
     	} catch (IOException e) {
@@ -164,7 +160,7 @@ public class ServerProxy implements iServerProxy {
     @Override
     public GameContainerDTO listGames() throws IOException {
     	try {
-	        return serializer.deserializeGameContainer(doGet("/games/list"));
+	        return (GameContainerDTO) serializer.deserialize(doGet("/games/list"));
     	} catch (IOException e) {
     		e.printStackTrace();
     		throw new IOException();
@@ -172,9 +168,8 @@ public class ServerProxy implements iServerProxy {
     }
 
     @Override
-    public GameDTO createGames(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts) throws IOException {
+    public GameDTO createGames(GameToCreateDTO game) throws IOException {
     	try {
-    		GameToCreateDTO game = new GameToCreateDTO(name, randomTiles, randomNumbers, randomPorts);
 	    	String params = serializer.serializeGameToCreate(game);
 	        return (GameDTO) serializer.deserializeGame(doPost("/games/create", params));
     	} catch (IOException e) {
@@ -200,16 +195,13 @@ public class ServerProxy implements iServerProxy {
 
     @Override
     public ClientModelDTO sendChat(MessageDTO message) throws IOException {
-		return null;
-//    	try {
-//	    	ClientModelDTO model = new ClientModelDTO();
-//	    	model.setChat(chat);
-//	    	String params = serializer.serializeModel(message);
-//	        return serializer.deserializeModel(doPost("/games/sendChat", params));
-//    	} catch (IOException e) {
-//    		e.printStackTrace();
-//    		throw new IOException();
-//    	}   
+    	try {
+	    	String params = serializer.serialize(message);
+	        return (ClientModelDTO) serializer.deserialize(doPost("/games/sendChat", params));
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    		throw new IOException();
+    	}   
     }
 
     @Override
@@ -218,7 +210,7 @@ public class ServerProxy implements iServerProxy {
 //    	try {
 //	    	ClientModelDTO model = new ClientModelDTO(username, password);
 //	    	String params = serializer.serializeModel(model);
-//	        return serializer.deserializeModel(doPost("/user/register", params));
+//	        return serializer.deserializeModel(doPost("/moves/acceptTrade", params));
 //    	} catch (IOException e) {
 //    		e.printStackTrace();
 //    		throw new IOException();
@@ -227,67 +219,146 @@ public class ServerProxy implements iServerProxy {
 
     @Override
     public ClientModelDTO discardCards(DiscardCardsDTO discardedCards) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    	try {
+	    	String params = serializer.serialize(discardedCards);
+	        return (ClientModelDTO) serializer.deserialize(doPost("/moves/discardedCards", params));
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    		throw new IOException();
+    	}    }
 
     @Override
-    public ClientModelDTO rollNumber(RollNumberDTO rollMove) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ClientModelDTO rollNumber(RollNumberDTO rollMove) throws IOException {
+    	try {
+	    	String params = serializer.serialize(rollMove);
+	        return (ClientModelDTO) serializer.deserialize(doPost("/moves/rollNumber", params));
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    		throw new IOException();
+    	}   
     }
 
     @Override
     public ClientModelDTO buildRoad(BuildRoadDTO roadMove) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	try {
+	    	String params = serializer.serialize(roadMove);
+	        return (ClientModelDTO) serializer.deserialize(doPost("/move/buildRoad", params));
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    		throw new IOException();
+    	}
     }
 
     @Override
     public ClientModelDTO buildSettlement(BuildStructureDTO settlementMove) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	try {
+	    	String params = serializer.serialize(settlementMove);
+	        return (ClientModelDTO) serializer.deserialize(doPost("/moves/buildSettlement", params));
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    		throw new IOException();
+    	}
     }
 
     @Override
     public ClientModelDTO buildCity(BuildStructureDTO cityMove) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	try {
+	    	String params = serializer.serialize(cityMove);
+	        return (ClientModelDTO) serializer.deserialize(doPost("/moves/buildCity", params));
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    		throw new IOException();
+    	}
     }
 
     @Override
     public ClientModelDTO offerTrade(TradeOfferDTO tradeOffer) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	try {
+	    	String params = serializer.serialize(tradeOffer);
+	        return (ClientModelDTO) serializer.deserialize(doPost("/moves/offerTrade", params));
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    		throw new IOException();
+    	}
     }
 
     @Override
     public ClientModelDTO maritimeTrade(MaritimeTradeDTO maritimeMove) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	try {
+	    	String params = serializer.serialize(maritimeMove);
+	        return (ClientModelDTO) serializer.deserialize(doPost("/moves/maritimeTrade", params)); ////url
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    		throw new IOException();
+    	}
     }
 
     @Override
     public ClientModelDTO robPlayer(FigureDTO robMove) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	try {
+	    	String params = serializer.serialize(robMove);
+	        return (ClientModelDTO) serializer.deserialize(doPost("/moves/robPlayer", params)); ////url
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    		throw new IOException();
+    	}
     }
 
     @Override
     public ClientModelDTO finishTurn(MoveType finishTurn, int playerIndex) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return null;
+//    	try {
+//	    	String params = serializer.serialize(finishTurn);
+//	        return (ClientModelDTO) serializer.deserialize(doPost("/moves/finishTurn", params));
+//    	} catch (IOException e) {
+//    		e.printStackTrace();
+//    		throw new IOException();
+//    	}
     }
 
     @Override
     public ClientModelDTO buyDevCard(MoveType buyDevCard, int playerIndex) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		return null;
+//    	try {
+//	    	String params = serializer.serialize(buyDevCard);
+//	        return (ClientModelDTO) serializer.deserialize(doPost("/moves/buyDevCard", params));
+//    	} catch (IOException e) {
+//    		e.printStackTrace();
+//    		throw new IOException();
+//    	}
     }
 
     @Override
     public ClientModelDTO playSoldier(FigureDTO soldierMove) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	try {
+	    	String params = serializer.serialize(soldierMove);
+	        return (ClientModelDTO) serializer.deserialize(doPost("/moves/Soldier", params));
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    		throw new IOException();
+    	}
     }
 
     @Override
     public ClientModelDTO playYearOfPlenty(YearOfPlentyDTO yearOfPlentyMove) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	try {
+	    	String params = serializer.serialize(yearOfPlentyMove);
+	        return (ClientModelDTO) serializer.deserialize(doPost("/moves/Year_of_Plenty", params));
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    		throw new IOException();
+    	}
     }
 
     @Override
     public ClientModelDTO playRoadBuilding(RoadBuildingDTO roadBuildingMove) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	try {
+	    	String params = serializer.serialize(roadBuildingMove);
+	        return (ClientModelDTO) serializer.deserialize(doPost("/moves/Road_Building", params));
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    		throw new IOException();
+    	}
     }
 
     @Override
@@ -302,7 +373,13 @@ public class ServerProxy implements iServerProxy {
 
     @Override
     public void joinGame(GameDTO game) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	try {
+	    	String params = serializer.serialize(game);
+	        serializer.deserialize(doPost("/games/sendChat", params));
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    		throw new IOException();
+    	}
     }
 
     @Override

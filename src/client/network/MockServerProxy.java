@@ -20,11 +20,13 @@ import shared.models.DTO.DiscardCardsDTO;
 import shared.models.DTO.FigureDTO;
 import shared.models.DTO.GameContainerDTO;
 import shared.models.DTO.GameDTO;
+import shared.models.DTO.GameToCreateDTO;
 import shared.models.DTO.MaritimeTradeDTO;
 import shared.models.DTO.MessageDTO;
 import shared.models.DTO.RoadBuildingDTO;
 import shared.models.DTO.RollNumberDTO;
 import shared.models.DTO.TradeOfferDTO;
+import shared.models.DTO.UserDTO;
 import shared.models.DTO.YearOfPlentyDTO;
 
 /**
@@ -120,12 +122,12 @@ public class MockServerProxy implements iServerProxy {
     }
 
     @Override
-    public void login(String username, String password) throws IOException {
+    public void login(UserDTO user) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void registerNewUser(String username, String password) throws IOException {
+    public void registerNewUser(UserDTO user) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -135,7 +137,7 @@ public class MockServerProxy implements iServerProxy {
     }
 
     @Override
-    public GameDTO createGames(String name, boolean randomTiles, boolean randomNumbers, boolean randomPorts) throws IOException {
+    public GameDTO createGames(GameToCreateDTO game) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
