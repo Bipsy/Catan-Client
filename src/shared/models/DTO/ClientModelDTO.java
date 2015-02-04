@@ -28,6 +28,15 @@ public class ClientModelDTO {
 	 */
 	private int winner;
 	
+	/**
+	 * Constructor
+	 * @param chat
+	 */
+	public ClientModelDTO(MessageListDTO chat) {
+		super();
+		this.chat = chat;
+	}
+
 	public ResourceListDTO getBank() {
 		return bank;
 	}

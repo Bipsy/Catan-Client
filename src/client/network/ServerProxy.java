@@ -160,7 +160,7 @@ public class ServerProxy implements iServerProxy {
     	try {
     		GameToCreateDTO game = new GameToCreateDTO(name, randomTiles, randomNumbers, randomPorts);
 	    	String params = serializer.serializeGameToCreate(game);
-	        return serializer.deserializeGame(doPost("/user/register", params));
+	        return serializer.deserializeGame(doPost("/games/create", params));
     	} catch (IOException e) {
     		e.printStackTrace();
     		throw new IOException();
@@ -179,17 +179,32 @@ public class ServerProxy implements iServerProxy {
             user = test.doGet("/games/list");
         } catch (IOException e) {
             e.printStackTrace();
-	}
+        }
     }
 
     @Override
     public ClientModelDTO sendChat(MessageDTO message) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	try {
+	    	ClientModelDTO model = new ClientModelDTO();
+	    	model.setChat(chat);
+	    	String params = serializer.serializeModel(message);
+	        return serializer.deserializeModel(doPost("/games/sendChat", params));
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    		throw new IOException();
+    	}   
     }
 
     @Override
     public ClientModelDTO acceptTrade(MoveType acceptType, int playerIndex, boolean willAccept) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	try {
+	    	ClientModelDTO model = new ClientModelDTO(username, password);
+	    	String params = serializer.serializeModel(model);
+	        return serializer.deserializeModel(doPost("/user/register", params));
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    		throw new IOException();
+    	}    
     }
 
     @Override
