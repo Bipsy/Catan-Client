@@ -5,6 +5,8 @@
  */
 package shared.models;
 
+import shared.models.DTO.TurnTrackerDTO;
+
 /** TurnTracker is a class that store information regarding the index of the 
  * player who's turn it currently is. Additionally, it also stores the current
  * status of the turn, and the index of the player who has obtained 
@@ -21,6 +23,14 @@ public class TurnTracker {
 	public TurnTracker() {
 		
 	}
+	
+	public TurnTracker(TurnTrackerDTO turnTracker) {
+		this.currentTurn = turnTracker.getCurrentTurn();
+		this.status = turnTracker.getStatus();
+		this.longestRoad = turnTracker.getLongestRoad();
+		this.largestArmy = turnTracker.getLargestArmy();
+	}
+	
 	public int getCurrentTurn() {
 		return currentTurn;
 	}

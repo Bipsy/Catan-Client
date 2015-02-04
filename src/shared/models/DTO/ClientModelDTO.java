@@ -38,10 +38,6 @@ public class ClientModelDTO {
 		super();
 		this.version = version;
 	}
-
-	public ResourceListDTO getResources() {
-		return resources;
-	}
 	
 	public void setBank(ResourceListDTO resources) {
 		this.resources = resources;
@@ -117,6 +113,14 @@ public class ClientModelDTO {
 
 	public void setDevCards(DevCardListDTO devCards) {
 		this.devCards = devCards;
+	}
+
+	public ResourceListDTO getResources() {
+		return resources;
+	}
+
+	public void setResources(ResourceListDTO resources) {
+		this.resources = resources;
 	}
 
 	
