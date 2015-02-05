@@ -1,5 +1,7 @@
 package shared.locations;
 
+import shared.models.DTO.HexDTO;
+
 /**
  * Represents the location of a hex on a hex map
  */
@@ -8,6 +10,11 @@ public class HexLocation
 	
     private int x;
     private int y;
+    
+    public HexLocation(HexLocation location) {
+        x = location.getX();
+        y = location.getY();
+    }
 
     public HexLocation(int x, int y)
     {
@@ -89,6 +96,5 @@ public class HexLocation
                             return null;
             }
     }
-	
 }
 

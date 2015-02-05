@@ -1,6 +1,5 @@
 package shared.models.DTO;
 
-import shared.definitions.ResourceType;
 import shared.definitions.ResourceTypeOptional;
 import shared.locations.HexLocation;
 

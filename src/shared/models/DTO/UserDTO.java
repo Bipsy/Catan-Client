@@ -1,5 +1,10 @@
 package shared.models.DTO;
 
+/**
+ * @author Anna Sokolova
+ *
+ */
+
 public class UserDTO {
 	
 	private String username;
