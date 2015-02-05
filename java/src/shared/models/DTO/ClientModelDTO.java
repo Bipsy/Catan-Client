@@ -1,5 +1,6 @@
 package shared.models.DTO;
 
+
 /**
  * This class stores the information needed to create a JSON string of a
  * game's state, and is used to facilitate the transfer of data between
@@ -28,6 +29,24 @@ public class ClientModelDTO {
 	 * is a winner
 	 */
 	private int winner;
+	
+
+	/**
+	 * Constructor with version number
+	 * @param version
+	 */
+	public ClientModelDTO(int version) {
+		super();
+		this.version = version;
+	}
+	
+	public ClientModelDTO() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public void setBank(ResourceListDTO resources) {
+		this.resources = resources;
+	}
 
 	public MessageListDTO getChat() {
 		return chat;

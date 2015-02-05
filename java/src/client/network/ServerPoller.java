@@ -19,7 +19,7 @@ import shared.models.DTO.ClientModelDTO;
  * and if so serializes the JSON and delivers it to the model facade.
  * @author Peter Anderson <anderson.peter@byu.edu> 
  */
-public class ServerPoller implements ActionListener { //We don't want this to implemebt ActionListener
+public class ServerPoller implements ActionListener {
     final private iServerProxy serverProxy;
 
     final private iPopulator modelHandle;
@@ -50,7 +50,8 @@ public class ServerPoller implements ActionListener { //We don't want this to im
      */
     public ClientModelDTO poll() {
         try {
-            ClientModelDTO newModel = serverProxy.retrieveCurrentState(version);
+            ClientModelDTO newModel = new ClientModelDTO(version);
+            newModel = serverProxy.retrieveCurrentState(newModel);
             return newModel;
         } catch (IOException ex) {
             System.err.println("Error while polling server");
