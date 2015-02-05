@@ -1,11 +1,14 @@
 package shared.models.DTO;
 
 import shared.locations.HexLocation;
+import shared.definitions.ResourceTypeOptional;
+import shared.locations.EdgeLocation;
+import shared.locations.EdgeDirection;
 
 /**
  * This class stores the information needed to create a JSON string of a map, 
  * and is used to facilitate the transfer of data between the server and client.
- * @author Austin
+ * @author Austin Von Wagner
  *
  */
 public class MapDTO {

@@ -13,6 +13,14 @@ public class ResourceListDTO {
 	private int sheep;
 	private int wheat;
 	private int wood;
+        
+        public ResourceListDTO() {
+            brick = 23;
+            ore = 22;
+            sheep = 20;
+            wheat = 22;
+            wood = 21;            
+        }
 	
 	public int getBrick() {
 		return brick;

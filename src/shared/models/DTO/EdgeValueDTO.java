@@ -14,6 +14,11 @@ public class EdgeValueDTO {
 	
 	private int owner;
 	private EdgeLocation location;
+        
+        public EdgeValueDTO(int newOwner, EdgeLocation newLocation) {
+            owner = newOwner;
+            location = newLocation;
+        }
 
 	public int getOwner() {
 		return owner;

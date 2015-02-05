@@ -10,7 +10,6 @@ import java.util.List;
 
 import shared.definitions.MoveType;
 import shared.definitions.ResourceType;
-import shared.models.*;
 import shared.models.DTO.AIPlayerDTO;
 import shared.models.DTO.BuildRoadDTO;
 import shared.models.DTO.BuildStructureDTO;
@@ -33,6 +32,12 @@ import shared.models.DTO.YearOfPlentyDTO;
  * @author Peter Anderson <anderson.peter@byu.edu> 
  */
 public class MockServerProxy implements iServerProxy {
+    
+    private final ClientModelDTO model;
+    
+    public MockServerProxy() {
+        model = new ClientModelDTO();
+    }
 
     @Override
     public ClientModelDTO sendChat(MessageDTO message) throws IOException {
@@ -120,14 +125,10 @@ public class MockServerProxy implements iServerProxy {
     }
 
     @Override
-    public void login(String username, String password) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public void login(String username, String password) throws IOException {}
 
     @Override
-    public void registerNewUser(String username, String password) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public void registerNewUser(String username, String password) throws IOException {}
 
     @Override
     public GameContainerDTO listGames() throws IOException {
@@ -156,7 +157,7 @@ public class MockServerProxy implements iServerProxy {
 
     @Override
     public ClientModelDTO retrieveCurrentState(int versionNumber) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return model;
     }
 
     @Override
