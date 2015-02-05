@@ -1,5 +1,6 @@
 package shared.models.DTO;
 
+import shared.definitions.ResourceType;
 import shared.exceptions.InvalidRatio;
 import shared.locations.HexLocation;
 
@@ -13,7 +14,7 @@ public class PortDTO {
 	/**
 	 * Must be: 'Wood', 'Brick', 'Sheep', 'Wheat', or 'Ore', optional
 	 */
-	private String resource;
+	private ResourceType resource;
 	private HexLocation location;
 	/**
 	 * Must be: 'NW', 'N', 'NE', 'SW', 'S', or 'SE'
@@ -35,11 +36,11 @@ public class PortDTO {
 		this.ratio = 3;
 	}
 	
-	public String getResource() {
+	public ResourceType getResource() {
 		return resource;
 	}
 	
-	public void setResource(String resource) {
+	public void setResource(ResourceType resource) {
 		this.resource = resource;
 	}
 	
