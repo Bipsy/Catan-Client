@@ -10,5 +10,6 @@ package shared.definitions;
  * @author Peter Anderson <anderson.peter@byu.edu>
  */
 public enum ResourceTypeOptional {
+
     WOOD, BRICK, SHEEP, WHEAT, ORE, NONE
 }

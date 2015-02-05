@@ -13,12 +13,13 @@ import shared.locations.VertexLocation;
  * @author Peter Anderson <anderson.peter@byu.edu>
  */
 public class BuildStructureDTO {
+
     public final MoveType type;
     public final int index;
     public final VertexLocation location;
     public final boolean free;
-    
-    public BuildStructureDTO(MoveType newType, int newIndex, 
+
+    public BuildStructureDTO(MoveType newType, int newIndex,
             VertexLocation newLocation, boolean newFree) {
         type = newType;
         index = newIndex;

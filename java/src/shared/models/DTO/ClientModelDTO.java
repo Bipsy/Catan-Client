@@ -1,133 +1,132 @@
 package shared.models.DTO;
 
-
 /**
- * This class stores the information needed to create a JSON string of a
- * game's state, and is used to facilitate the transfer of data between
- * the server and client.
+ * This class stores the information needed to create a JSON string of a game's
+ * state, and is used to facilitate the transfer of data between the server and
+ * client.
+ *
  * @author Austin
  *
  */
 public class ClientModelDTO {
-	private ResourceListDTO resources;
-	private DevCardListDTO devCards;
-	private MessageListDTO chat;
-	private MessageListDTO log;
-	private MapDTO map;
-	private PlayerDTO[] players;
-	/**
-	 * optional
-	 */
-	private TradeOfferDTO tradeOffer;
-	private TurnTrackerDTO turnTracker;
-	/**
-	 * gets incremented every time someone makes a move.
-	 */
-	private int version;
-	/**
-	 * if it is -1, there is no winner yet. Else if it is between 0 - 3, there
-	 * is a winner
-	 */
-	private int winner;
-	
 
-	/**
-	 * Constructor with version number
-	 * @param version
-	 */
-	public ClientModelDTO(int version) {
-		super();
-		this.version = version;
-	}
-	
-	public ClientModelDTO() {
-		// TODO Auto-generated constructor stub
-	}
+    private ResourceListDTO resources;
+    private DevCardListDTO devCards;
+    private MessageListDTO chat;
+    private MessageListDTO log;
+    private MapDTO map;
+    private PlayerDTO[] players;
+    /**
+     * optional
+     */
+    private TradeOfferDTO tradeOffer;
+    private TurnTrackerDTO turnTracker;
+    /**
+     * gets incremented every time someone makes a move.
+     */
+    private int version;
+    /**
+     * if it is -1, there is no winner yet. Else if it is between 0 - 3, there
+     * is a winner
+     */
+    private int winner;
 
-	public void setBank(ResourceListDTO resources) {
-		this.resources = resources;
-	}
+    /**
+     * Constructor with version number
+     *
+     * @param version
+     */
+    public ClientModelDTO(int version) {
+        super();
+        this.version = version;
+    }
 
-	public MessageListDTO getChat() {
-		return chat;
-	}
+    public ClientModelDTO() {
+        // TODO Auto-generated constructor stub
+    }
 
-	public void setChat(MessageListDTO chat) {
-		this.chat = chat;
-	}
+    public void setBank(ResourceListDTO resources) {
+        this.resources = resources;
+    }
 
-	public MessageListDTO getLog() {
-		return log;
-	}
+    public MessageListDTO getChat() {
+        return chat;
+    }
 
-	public void setLog(MessageListDTO log) {
-		this.log = log;
-	}
+    public void setChat(MessageListDTO chat) {
+        this.chat = chat;
+    }
 
-	public MapDTO getMap() {
-		return map;
-	}
+    public MessageListDTO getLog() {
+        return log;
+    }
 
-	public void setMap(MapDTO map) {
-		this.map = map;
-	}
+    public void setLog(MessageListDTO log) {
+        this.log = log;
+    }
 
-	public PlayerDTO[] getPlayers() {
-		return players;
-	}
+    public MapDTO getMap() {
+        return map;
+    }
 
-	public void setPlayers(PlayerDTO[] players) {
-		this.players = players;
-	}
+    public void setMap(MapDTO map) {
+        this.map = map;
+    }
 
-	public TradeOfferDTO getTradeOffer() {
-		return tradeOffer;
-	}
+    public PlayerDTO[] getPlayers() {
+        return players;
+    }
 
-	public void setTradeOffer(TradeOfferDTO tradeOffer) {
-		this.tradeOffer = tradeOffer;
-	}
+    public void setPlayers(PlayerDTO[] players) {
+        this.players = players;
+    }
 
-	public TurnTrackerDTO getTurnTracker() {
-		return turnTracker;
-	}
+    public TradeOfferDTO getTradeOffer() {
+        return tradeOffer;
+    }
 
-	public void setTurnTracker(TurnTrackerDTO turnTracker) {
-		this.turnTracker = turnTracker;
-	}
+    public void setTradeOffer(TradeOfferDTO tradeOffer) {
+        this.tradeOffer = tradeOffer;
+    }
 
-	public int getVersion() {
-		return version;
-	}
+    public TurnTrackerDTO getTurnTracker() {
+        return turnTracker;
+    }
 
-	public void setVersion(int version) {
-		this.version = version;
-	}
+    public void setTurnTracker(TurnTrackerDTO turnTracker) {
+        this.turnTracker = turnTracker;
+    }
 
-	public int getWinner() {
-		return winner;
-	}
+    public int getVersion() {
+        return version;
+    }
 
-	public void setWinner(int winner) {
-		this.winner = winner;
-	}
+    public void setVersion(int version) {
+        this.version = version;
+    }
 
-	public DevCardListDTO getDevCards() {
-		return devCards;
-	}
+    public int getWinner() {
+        return winner;
+    }
 
-	public void setDevCards(DevCardListDTO devCards) {
-		this.devCards = devCards;
-	}
+    public void setWinner(int winner) {
+        this.winner = winner;
+    }
 
-	public ResourceListDTO getResources() {
-		return resources;
-	}
+    public DevCardListDTO getDevCards() {
+        return devCards;
+    }
 
-	public void setResources(ResourceListDTO resources) {
-		this.resources = resources;
-	}
+    public void setDevCards(DevCardListDTO devCards) {
+        this.devCards = devCards;
+    }
 
-	
-	
+    public ResourceListDTO getResources() {
+        return resources;
+    }
+
+    public void setResources(ResourceListDTO resources) {
+        this.resources = resources;
+    }
+
 }

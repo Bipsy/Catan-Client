@@ -34,107 +34,107 @@ import shared.models.DTO.ClientModelDTO;
 import shared.models.DTO.VertexObjectDTO;
 
 /**
- * 
+ *
  * @author Mikey Murphy <mikeyamadeo@gmail.com>
  */
-public class Populator implements iPopulator{
-	private ClientModel	model;
-	@Override
-	public boolean populateModel(ClientModelDTO container) {
+public class Populator implements iPopulator {
 
-		populateBank(container.getResources(), container.getDevCards());
-		
-		populateBoard(container.getMap());
-				
-		//I'm getting a chat and a log but the chatObject only has a list of messages...
-		populateChatObject(container.getChat(), container.getLog());
-			
-		//
-		populateUserManager(container.getPlayers(), container.getTurnTracker());
-		
-		model.setTradeOffer(new TradeOffer(container.getTradeOffer()));
+    private ClientModel model;
 
-		model.setVersion(container.getVersion());
-		model.setWinner(container.getWinner());
-		
-		return false;
-	}
+    @Override
+    public boolean populateModel(ClientModelDTO container) {
 
-	private void populateUserManager(PlayerDTO[] players,
-			TurnTrackerDTO turnTracker) {
-		List<Player> users = new ArrayList<Player>();
-		for (int i = 0; i < players.length; i ++) {
-			users.add(new Player(players[i]));
-		}
+        populateBank(container.getResources(), container.getDevCards());
 
-		model.setUserManager(new UserManager(users, new TurnTracker(turnTracker)));
-		
-	}
+        populateBoard(container.getMap());
 
-	private void populateBoard(MapDTO map) {
-		
-		Board board = new Board();
-		
+        //I'm getting a chat and a log but the chatObject only has a list of messages...
+        populateChatObject(container.getChat(), container.getLog());
+
+        //
+        populateUserManager(container.getPlayers(), container.getTurnTracker());
+
+        model.setTradeOffer(new TradeOffer(container.getTradeOffer()));
+
+        model.setVersion(container.getVersion());
+        model.setWinner(container.getWinner());
+
+        return false;
+    }
+
+    private void populateUserManager(PlayerDTO[] players,
+            TurnTrackerDTO turnTracker) {
+        List<Player> users = new ArrayList<Player>();
+        for (int i = 0; i < players.length; i++) {
+            users.add(new Player(players[i]));
+        }
+
+        model.setUserManager(new UserManager(users, new TurnTracker(turnTracker)));
+
+    }
+
+    private void populateBoard(MapDTO map) {
+
+        Board board = new Board();
+
 		//TODO: Individual hexes have communityMap, roadMap, and Harbor. HexDTO hexes has none of these. how
-		//should we go about this?
-		board.setHexes(map.getHexes());
-		
-		board.setHarbor(map.getPorts());
-		
-		//NOTE: DTO provides an edge location that is unused by Road model object
-		board.setRoads(map.getRoads());
-		
-		//TODO: logic to determine port type
-		board.setSettlements(map.getSettlements());
-		board.setCities(map.getCities());
-		
-		board.setRadius(map.getRadius());
-		
-		//TODO: logic for robber # property
-		board.setRobber(new Robber(map.getRobber()));
-			
-		model.setBoard(board);
-		
-	}
+        //should we go about this?
+        board.setHexes(map.getHexes());
 
-	private void populateBank(ResourceListDTO resources, DevCardListDTO devCards) {
-		ResourceList resourceList = new ResourceList(resources);
-		DevCardList devCardList = new DevCardList(devCards);
-		
-		model.setBank(new Bank(resourceList, devCardList));
-	}
-	
-	private void populateChatObject(MessageListDTO chat, MessageListDTO log) {
-	
-		ChatObject chatObject = new ChatObject(chat.getLines(), log.getLines());
-		model.setChatObject(chatObject);
-	}
+        board.setHarbor(map.getPorts());
 
-	
-	
-	//Is this needed in the client model? I think no.
-	@Override
-	public boolean populateModel(UserDTO container) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+        //NOTE: DTO provides an edge location that is unused by Road model object
+        board.setRoads(map.getRoads());
 
-	//Is this needed in the client model? I think no.
-	@Override
-	public boolean populateModel(GameContainerDTO container) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+        //TODO: logic to determine port type
+        board.setSettlements(map.getSettlements());
+        board.setCities(map.getCities());
 
-	/**
-	 * Getters and Setters
-	 */
-	public ClientModel getModel() {
-		return model;
-	}
+        board.setRadius(map.getRadius());
 
-	public void setModel(ClientModel model) {
-		this.model = model;
-	}
+        //TODO: logic for robber # property
+        board.setRobber(new Robber(map.getRobber()));
+
+        model.setBoard(board);
+
+    }
+
+    private void populateBank(ResourceListDTO resources, DevCardListDTO devCards) {
+        ResourceList resourceList = new ResourceList(resources);
+        DevCardList devCardList = new DevCardList(devCards);
+
+        model.setBank(new Bank(resourceList, devCardList));
+    }
+
+    private void populateChatObject(MessageListDTO chat, MessageListDTO log) {
+
+        ChatObject chatObject = new ChatObject(chat.getLines(), log.getLines());
+        model.setChatObject(chatObject);
+    }
+
+    //Is this needed in the client model? I think no.
+    @Override
+    public boolean populateModel(UserDTO container) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    //Is this needed in the client model? I think no.
+    @Override
+    public boolean populateModel(GameContainerDTO container) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    /**
+     * Getters and Setters
+     */
+    public ClientModel getModel() {
+        return model;
+    }
+
+    public void setModel(ClientModel model) {
+        this.model = model;
+    }
 
 }

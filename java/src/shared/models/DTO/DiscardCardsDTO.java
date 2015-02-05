@@ -12,11 +12,12 @@ import shared.definitions.MoveType;
  * @author Peter Anderson <anderson.peter@byu.edu>
  */
 public class DiscardCardsDTO {
+
     public final MoveType type;
     public final int index;
     public final ResourcePacketDTO cards;
-    
-    public DiscardCardsDTO(MoveType newType, int newIndex, 
+
+    public DiscardCardsDTO(MoveType newType, int newIndex,
             ResourcePacketDTO newCards) {
         type = newType;
         index = newIndex;

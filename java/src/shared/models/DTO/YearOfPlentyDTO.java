@@ -13,12 +13,13 @@ import shared.definitions.ResourceType;
  * @author Peter Anderson <anderson.peter@byu.edu>
  */
 public class YearOfPlentyDTO {
+
     public final MoveType type;
     public final int index;
     ResourceType resourceOne;
     ResourceType resourceTwo;
-    
-    public YearOfPlentyDTO(MoveType newType, int newIndex, 
+
+    public YearOfPlentyDTO(MoveType newType, int newIndex,
             ResourceType newResourceOne, ResourceType newResourceTwo) {
         type = newType;
         index = newIndex;

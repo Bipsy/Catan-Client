@@ -13,7 +13,7 @@ import javax.swing.JScrollPane;
  */
 @SuppressWarnings("serial")
 public class ChatView extends PanelView implements IChatView {
-    
+
     private LogComponent chatPanel;
     private JScrollPane chatScrollPane;
     private JPanel inputPanel;
@@ -32,15 +32,15 @@ public class ChatView extends PanelView implements IChatView {
         chatTextInput = new PlaceholderTextField();
         chatTextInput.setPlaceholder("Send a message!");
         chatTextInput.setPreferredSize(new Dimension(260, 20));
-        
+
         // Register the listeners
         EventListener listener = new EventListener();
         sendChatBtn.addActionListener(listener);
         chatTextInput.addKeyListener(listener);
-        
+
         // Create the layout and add the components
         inputPanel.setLayout(new GridBagLayout());
-        
+
         // Send Chat Button
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridx = 0;
@@ -61,12 +61,12 @@ public class ChatView extends PanelView implements IChatView {
         constraints.weighty = 1.0;
         constraints.insets = new Insets(5, 0, 5, 0);
         inputPanel.add(chatTextInput, constraints);
-        
+
         setLayout(new BorderLayout());
         add(chatScrollPane, BorderLayout.CENTER);
         add(inputPanel, BorderLayout.PAGE_END);
-        
-	setBackground(Color.white);
+
+        setBackground(Color.white);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class ChatView extends PanelView implements IChatView {
     public void setEntries(final List<LogEntry> entries) {
         chatPanel.setEntries(entries);
     }
-    
+
     /**
      * Calls the send message function on the registered IChatController.
      */
@@ -86,12 +86,12 @@ public class ChatView extends PanelView implements IChatView {
         String message = chatTextInput.getText();
         if (!message.isEmpty()) {
             getController().sendMessage(message);
-            
+
             // Clear the text area so we are ready for the next message
             chatTextInput.setText("");
         }
     }
-    
+
     /**
      * Handles events that occur on the chat view.
      */
@@ -101,7 +101,7 @@ public class ChatView extends PanelView implements IChatView {
         public void actionPerformed(ActionEvent e) {
             sendMessage();
         }
-        
+
         @Override
         public void keyReleased(KeyEvent e) {
             // Check if the enter key was pressed
@@ -110,7 +110,5 @@ public class ChatView extends PanelView implements IChatView {
             }
         }
     }
-	
+
 }
-
-

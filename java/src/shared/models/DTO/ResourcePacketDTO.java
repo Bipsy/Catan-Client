@@ -10,12 +10,13 @@ package shared.models.DTO;
  * @author Peter Anderson <anderson.peter@byu.edu>
  */
 public class ResourcePacketDTO {
+
     public final int brick;
     public final int ore;
     public final int sheep;
     public final int wheat;
     public final int wood;
-    
+
     public ResourcePacketDTO(int newBrick, int newOre, int newSheep,
             int newWheat, int newWood) {
         brick = newBrick;
@@ -24,5 +25,5 @@ public class ResourcePacketDTO {
         wheat = newWheat;
         wood = newWood;
     }
-    
+
 }

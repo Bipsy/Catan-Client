@@ -13,17 +13,18 @@ import shared.models.DTO.ClientModelDTO;
 import shared.models.DTO.params.*;
 
 /**
- * MockServerProxy is a mock implementation of iServerProxy. This class
- * is used for testing purposes. Its methods return hard coded responses.
- * @author Peter Anderson <anderson.peter@byu.edu> 
+ * MockServerProxy is a mock implementation of iServerProxy. This class is used
+ * for testing purposes. Its methods return hard coded responses.
+ *
+ * @author Peter Anderson <anderson.peter@byu.edu>
  * @author Jillian Koontz <jpkoontz@gmail.com>
  */
 public class MockServerProxy implements iServerProxy {
-    
+
     private final ClientModelDTO model;
     private final Serializer serializer;
-    
-    public MockServerProxy(Serializer newSerializer, String defaultModel) {  
+
+    public MockServerProxy(Serializer newSerializer, String defaultModel) {
         serializer = newSerializer;
         model = (ClientModelDTO) serializer.deserialize(defaultModel);
     }
@@ -143,33 +144,28 @@ public class MockServerProxy implements iServerProxy {
 //    public void saveGames(int gameId, String fileName) throws IOException {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 //    }
-
 //    @Override
 //    public void loadGame(String fileName) throws IOException {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 //    }
-
     @Override
 
     public ClientModelDTO retrieveCurrentState(ClientModelDTO model) throws IOException {
-    	return model;
+        return model;
     }
 
 //    @Override
 //    public ClientModelDTO resetGame() throws IOException {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 //    }
-
 //    @Override
 //    public CommandContainerDTO getCommands() throws IOException {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 //    }
-
 //    @Override
 //    public ClientModelDTO postGameCommands(CommandContainerDTO commands) throws IOException {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 //    }
-
     @Override
     public List<AddAIRequest> listAITypes() throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -184,5 +180,4 @@ public class MockServerProxy implements iServerProxy {
 //    public void changeLogLevel(String logLevel) throws IOException {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 //    }
-    
 }

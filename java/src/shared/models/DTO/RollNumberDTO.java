@@ -12,10 +12,11 @@ import shared.definitions.MoveType;
  * @author Peter Anderson <anderson.peter@byu.edu>
  */
 public class RollNumberDTO {
+
     public final MoveType type;
     public final int index;
     public final int number;
-    
+
     public RollNumberDTO(MoveType newType, int newIndex, int newNumber) {
         type = newType;
         index = newIndex;

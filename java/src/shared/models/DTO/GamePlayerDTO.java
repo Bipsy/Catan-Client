@@ -12,10 +12,11 @@ import shared.definitions.CatanColor;
  * @author Peter Anderson <anderson.peter@byu.edu>
  */
 public class GamePlayerDTO {
+
     public final CatanColor color;
     public final String name;
     public final int ID;
-    
+
     public GamePlayerDTO(CatanColor newColor, String newName, int newID) {
         color = newColor;
         name = newName;

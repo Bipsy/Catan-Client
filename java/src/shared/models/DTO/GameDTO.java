@@ -12,10 +12,11 @@ import java.util.List;
  * @author Peter Anderson <anderson.peter@byu.edu>
  */
 public class GameDTO {
+
     public final String title;
     public final int ID;
     public final List<GamePlayerDTO> players;
-    
+
     GameDTO(String newTitle, int newID, List<GamePlayerDTO> newPlayers) {
         title = newTitle;
         ID = newID;

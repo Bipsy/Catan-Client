@@ -4,181 +4,183 @@ import shared.definitions.CatanColor;
 import shared.exceptions.InvalidPlayerIndex;
 
 /**
- * This class stores the information needed to create a JSON string of a
- * player, and is used to facilitate the transfer of data between
- * the server and client.
+ * This class stores the information needed to create a JSON string of a player,
+ * and is used to facilitate the transfer of data between the server and client.
+ *
  * @author Austin
  *
  */
 public class PlayerDTO {
-	
-	private int cities;
-	private CatanColor color;
-	/**
-	 * flag for whether or not a player has discarded cards during a discard 
-	 * phase
-	 */
-	private boolean discarded;
-	/**
-	 * number of monument cards owned/played by player
-	 */
-	private int monuments;
-	private String name;
-	/**
-	 * new dev cards bought this turn
-	 */
-	private DevCardListDTO newDevCards;
-	/**
-	 * the cards a player had when the turn started
-	 */
-	private DevCardListDTO oldDevCards;
-	/**
-	 * a number between 0 and 3
-	 */
-	private int playerIndex;
-	/**
-	 * This is a flag for if a player has played a dev card this turn
-	 */
-	private boolean playedDevCard;
-	/**
-	 * The playerId is the unique playerId it is used to pick the player apart
-	 * from the others. It is also used in the cookie object which hasn't been
-	 * implemented yet.
-	 */
-	private int playerID;
-	private ResourceListDTO resources;
-	private int roads;
-	private int settlements;
-	private int soldiers;
-	private int victoryPoints;
-	
-	public int getCities() {
-		return cities;
-	}
 
-	public void setCities(int cities) {
-		this.cities = cities;
-	}
+    private int cities;
+    private CatanColor color;
+    /**
+     * flag for whether or not a player has discarded cards during a discard
+     * phase
+     */
+    private boolean discarded;
+    /**
+     * number of monument cards owned/played by player
+     */
+    private int monuments;
+    private String name;
+    /**
+     * new dev cards bought this turn
+     */
+    private DevCardListDTO newDevCards;
+    /**
+     * the cards a player had when the turn started
+     */
+    private DevCardListDTO oldDevCards;
+    /**
+     * a number between 0 and 3
+     */
+    private int playerIndex;
+    /**
+     * This is a flag for if a player has played a dev card this turn
+     */
+    private boolean playedDevCard;
+    /**
+     * The playerId is the unique playerId it is used to pick the player apart
+     * from the others. It is also used in the cookie object which hasn't been
+     * implemented yet.
+     */
+    private int playerID;
+    private ResourceListDTO resources;
+    private int roads;
+    private int settlements;
+    private int soldiers;
+    private int victoryPoints;
 
-	public boolean isDiscarded() {
-		return discarded;
-	}
+    public int getCities() {
+        return cities;
+    }
 
-	public void setDiscarded(boolean discarded) {
-		this.discarded = discarded;
-	}
+    public void setCities(int cities) {
+        this.cities = cities;
+    }
 
-	public int getMonuments() {
-		return monuments;
-	}
+    public boolean isDiscarded() {
+        return discarded;
+    }
 
-	public void setMonuments(int monuments) {
-		this.monuments = monuments;
-	}
+    public void setDiscarded(boolean discarded) {
+        this.discarded = discarded;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public int getMonuments() {
+        return monuments;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setMonuments(int monuments) {
+        this.monuments = monuments;
+    }
 
-	public DevCardListDTO getNewDevCards() {
-		return newDevCards;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setNewDevCards(DevCardListDTO newDevCards) {
-		this.newDevCards = newDevCards;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public DevCardListDTO getOldDevCards() {
-		return oldDevCards;
-	}
+    public DevCardListDTO getNewDevCards() {
+        return newDevCards;
+    }
 
-	public void setOldDevCards(DevCardListDTO oldDevCards) {
-		this.oldDevCards = oldDevCards;
-	}
+    public void setNewDevCards(DevCardListDTO newDevCards) {
+        this.newDevCards = newDevCards;
+    }
 
-	public int getPlayerIndex() {
-		return playerIndex;
-	}
+    public DevCardListDTO getOldDevCards() {
+        return oldDevCards;
+    }
 
-	/**
-	 * Sets the player index
-	 * @pre the player index must be in the range 0 -3
-	 * @param playerIndex the player index
-	 * @throws InvalidPlayerIndex  this exception is thrown if the index is not 
-	 * an integer in the range 0 - 3
-	 */
-	public void setPlayerIndex(int playerIndex) throws InvalidPlayerIndex {
-		if(playerIndex > 3 || playerIndex < 0)
-			throw new InvalidPlayerIndex();
-		this.playerIndex = playerIndex;
-	}
+    public void setOldDevCards(DevCardListDTO oldDevCards) {
+        this.oldDevCards = oldDevCards;
+    }
 
-	public boolean isPlayedDevCard() {
-		return playedDevCard;
-	}
+    public int getPlayerIndex() {
+        return playerIndex;
+    }
 
-	public void setPlayedDevCard(boolean playedDevCard) {
-		this.playedDevCard = playedDevCard;
-	}
+    /**
+     * Sets the player index
+     *
+     * @pre the player index must be in the range 0 -3
+     * @param playerIndex the player index
+     * @throws InvalidPlayerIndex this exception is thrown if the index is not
+     * an integer in the range 0 - 3
+     */
+    public void setPlayerIndex(int playerIndex) throws InvalidPlayerIndex {
+        if (playerIndex > 3 || playerIndex < 0) {
+            throw new InvalidPlayerIndex();
+        }
+        this.playerIndex = playerIndex;
+    }
 
-	public int getPlayerID() {
-		return playerID;
-	}
+    public boolean isPlayedDevCard() {
+        return playedDevCard;
+    }
 
-	public void setPlayerID(int playerID) {
-		this.playerID = playerID;
-	}
+    public void setPlayedDevCard(boolean playedDevCard) {
+        this.playedDevCard = playedDevCard;
+    }
 
-	public ResourceListDTO getResources() {
-		return resources;
-	}
+    public int getPlayerID() {
+        return playerID;
+    }
 
-	public void setResources(ResourceListDTO resources) {
-		this.resources = resources;
-	}
+    public void setPlayerID(int playerID) {
+        this.playerID = playerID;
+    }
 
-	public int getRoads() {
-		return roads;
-	}
+    public ResourceListDTO getResources() {
+        return resources;
+    }
 
-	public void setRoads(int roads) {
-		this.roads = roads;
-	}
+    public void setResources(ResourceListDTO resources) {
+        this.resources = resources;
+    }
 
-	public int getSettlements() {
-		return settlements;
-	}
+    public int getRoads() {
+        return roads;
+    }
 
-	public void setSettlements(int settlements) {
-		this.settlements = settlements;
-	}
+    public void setRoads(int roads) {
+        this.roads = roads;
+    }
 
-	public int getSoldiers() {
-		return soldiers;
-	}
+    public int getSettlements() {
+        return settlements;
+    }
 
-	public void setSoldiers(int soldiers) {
-		this.soldiers = soldiers;
-	}
+    public void setSettlements(int settlements) {
+        this.settlements = settlements;
+    }
 
-	public int getVictoryPoints() {
-		return victoryPoints;
-	}
+    public int getSoldiers() {
+        return soldiers;
+    }
 
-	public void setVictoryPoints(int victoryPoints) {
-		this.victoryPoints = victoryPoints;
-	}
+    public void setSoldiers(int soldiers) {
+        this.soldiers = soldiers;
+    }
 
-	public CatanColor getColor() {
-		return color;
-	}
+    public int getVictoryPoints() {
+        return victoryPoints;
+    }
 
-	public void setColor(CatanColor color) {
-		this.color = color;
-	}
+    public void setVictoryPoints(int victoryPoints) {
+        this.victoryPoints = victoryPoints;
+    }
+
+    public CatanColor getColor() {
+        return color;
+    }
+
+    public void setColor(CatanColor color) {
+        this.color = color;
+    }
 
 }

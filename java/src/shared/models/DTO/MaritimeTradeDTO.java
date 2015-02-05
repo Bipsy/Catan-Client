@@ -13,12 +13,13 @@ import shared.definitions.PortType;
  * @author Peter Anderson <anderson.peter@byu.edu>
  */
 public class MaritimeTradeDTO {
+
     public final MoveType type;
     public final int index;
     public final PortType ratio;
     public final String input;
     public final String output;
-    
+
     public MaritimeTradeDTO(MoveType newType, int newIndex, PortType newRatio,
             String newInput, String newOutput) {
         type = newType;

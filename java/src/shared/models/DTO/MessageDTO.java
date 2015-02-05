@@ -12,10 +12,11 @@ import shared.definitions.MoveType;
  * @author Peter Anderson <anderson.peter@byu.edu>
  */
 public class MessageDTO {
+
     public final MoveType type;
     public final int destID;
     public final String content;
-    
+
     public MessageDTO(MoveType newType, int newDestID, String newContent) {
         type = newType;
         destID = newDestID;

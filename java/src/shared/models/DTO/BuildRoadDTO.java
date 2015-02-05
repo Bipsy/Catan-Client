@@ -13,13 +13,14 @@ import shared.locations.EdgeLocation;
  * @author Peter Anderson <anderson.peter@byu.edu>
  */
 public class BuildRoadDTO {
+
     public final MoveType type;
     public final int index;
     public final EdgeLocation location;
     public final boolean free;
-    
+
     public BuildRoadDTO(MoveType newType, int newIndex, EdgeLocation newLocation,
-                        boolean newFree) {
+            boolean newFree) {
         type = newType;
         index = newIndex;
         location = newLocation;

@@ -1,102 +1,102 @@
 package shared.models;
 
-
 /**
  * This class stores information about a game.
+ *
  * @author Austin
  *
  */
 public class Game {
-	
-	private String title;
-	private int id;
-	private User[] players;
-	private boolean randomTiles;
-	private boolean randomNumbers;
-	private boolean randomPorts;
 
-	
-	
-	public Game(String title, boolean randomTiles,
-			boolean randomNumbers, boolean randomPorts) {
-		super();
-		this.title = title;
-		this.randomTiles = randomTiles;
-		this.randomNumbers = randomNumbers;
-		this.randomPorts = randomPorts;
-	}
+    private String title;
+    private int id;
+    private User[] players;
+    private boolean randomTiles;
+    private boolean randomNumbers;
+    private boolean randomPorts;
 
-	public Game() {
-		// TODO Auto-generated constructor stub
-	}
+    public Game(String title, boolean randomTiles,
+            boolean randomNumbers, boolean randomPorts) {
+        super();
+        this.title = title;
+        this.randomTiles = randomTiles;
+        this.randomNumbers = randomNumbers;
+        this.randomPorts = randomPorts;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public Game() {
+        // TODO Auto-generated constructor stub
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public int getId() {
-		return id;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public User[] getPlayers() {
-		return players;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setPlayers(User[] players) {
-		this.players = players;
-	}
+    public User[] getPlayers() {
+        return players;
+    }
 
-	public boolean isRandomTiles() {
-		return randomTiles;
-	}
+    public void setPlayers(User[] players) {
+        this.players = players;
+    }
 
-	public void setRandomTiles(boolean randomTiles) {
-		this.randomTiles = randomTiles;
-	}
+    public boolean isRandomTiles() {
+        return randomTiles;
+    }
 
-	public boolean isRandomNumbers() {
-		return randomNumbers;
-	}
+    public void setRandomTiles(boolean randomTiles) {
+        this.randomTiles = randomTiles;
+    }
 
-	public void setRandomNumbers(boolean randomNumbers) {
-		this.randomNumbers = randomNumbers;
-	}
+    public boolean isRandomNumbers() {
+        return randomNumbers;
+    }
 
-	public boolean isRandomPorts() {
-		return randomPorts;
-	}
+    public void setRandomNumbers(boolean randomNumbers) {
+        this.randomNumbers = randomNumbers;
+    }
 
-	public void setRandomPorts(boolean randomPorts) {
-		this.randomPorts = randomPorts;
-	}
-	
-	/**
-	 * This function will look at the current array of Players to determine if
-	 * another player can be added.
-	 * @pre <code>players</code> array needs to be initialized
-	 * @return  If there are less than four players, this function will return
-	 * true. Otherwise, it will return false.
-	 */
-	public boolean canAddPlayer() {
-		return false;
-	}
-	
-	/**
-	 * This function will be used to add a player to a game.
-	 * @pre <code>canAddPlayer()</code> must return true;
-	 * @post If a player can be added, the players container will include the 
-	 * new player 
-	 * @param player the new <code>User</code> object to be added 
-	 */
-	public void addPlayer(User player) {
-		
-	}
+    public boolean isRandomPorts() {
+        return randomPorts;
+    }
+
+    public void setRandomPorts(boolean randomPorts) {
+        this.randomPorts = randomPorts;
+    }
+
+    /**
+     * This function will look at the current array of Players to determine if
+     * another player can be added.
+     *
+     * @pre <code>players</code> array needs to be initialized
+     * @return If there are less than four players, this function will return
+     * true. Otherwise, it will return false.
+     */
+    public boolean canAddPlayer() {
+        return false;
+    }
+
+    /**
+     * This function will be used to add a player to a game.
+     *
+     * @pre <code>canAddPlayer()</code> must return true;
+     * @post If a player can be added, the players container will include the
+     * new player
+     * @param player the new <code>User</code> object to be added
+     */
+    public void addPlayer(User player) {
+
+    }
 }

@@ -6,6 +6,4 @@ package client.test.mocks;
  */
 public class AIPlayerMock {
 
-
-
 }

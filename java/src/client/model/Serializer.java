@@ -10,89 +10,84 @@ import com.google.gson.*;
  * @author Anna Sokolova
  *
  */
+public class Serializer implements iSerializer {
 
-public class Serializer implements iSerializer  {
-	
-	private Gson gson;
+    private Gson gson;
 
-	public Serializer(){
-		gson = new Gson();
-	}
-	
-	public String serialize(Object object) {
-		return gson.toJson(object);
-	}
-	
-	public Object deserialize(String JSON) {
-		return gson.fromJson(JSON, Object.class);
-	}
-	
-	
-	
+    public Serializer() {
+        gson = new Gson();
+    }
 
-	public ClientModelDTO deserializeModel(String JSON) throws IOException {
-		return gson.fromJson(JSON, ClientModelDTO.class);  
-	}
+    public String serialize(Object object) {
+        return gson.toJson(object);
+    }
 
-	public String serializeModel(ClientModelDTO container) {
-		return gson.toJson(container);
-	}
+    public Object deserialize(String JSON) {
+        return gson.fromJson(JSON, Object.class);
+    }
 
-	public UserDTO deserializeUser(String JSON) throws IOException {
-		return gson.fromJson(JSON, UserDTO.class);
-	}
+    public ClientModelDTO deserializeModel(String JSON) throws IOException {
+        return gson.fromJson(JSON, ClientModelDTO.class);
+    }
 
-	public String serializeUser(UserDTO user) {
-		return gson.toJson(user);
-	}
+    public String serializeModel(ClientModelDTO container) {
+        return gson.toJson(container);
+    }
 
-	public GameContainerDTO deserializeGameContainer(String JSON) throws IOException {
-		return gson.fromJson(JSON, GameContainerDTO.class);
-	}
+    public UserDTO deserializeUser(String JSON) throws IOException {
+        return gson.fromJson(JSON, UserDTO.class);
+    }
 
-	public String serializeGameContainer(GameContainerDTO games) {
-		return gson.toJson(games);
-	}
+    public String serializeUser(UserDTO user) {
+        return gson.toJson(user);
+    }
 
-	public GameDTO deserializeGame(String JSON) throws IOException {
-		return gson.fromJson(JSON, GameDTO.class);
-	}
+    public GameContainerDTO deserializeGameContainer(String JSON) throws IOException {
+        return gson.fromJson(JSON, GameContainerDTO.class);
+    }
 
-	public String serializeGame(GameDTO game) {
-		return gson.toJson(game);
-	}
+    public String serializeGameContainer(GameContainerDTO games) {
+        return gson.toJson(games);
+    }
 
-	public CommandContainerDTO deserializeCommandContainer(String JSON) throws IOException {
-		return gson.fromJson(JSON, CommandContainerDTO.class);
-	}
+    public GameDTO deserializeGame(String JSON) throws IOException {
+        return gson.fromJson(JSON, GameDTO.class);
+    }
 
-	public String serializeCommandContainer(CommandContainerDTO commands) {
-		return gson.toJson(commands);
-	}
+    public String serializeGame(GameDTO game) {
+        return gson.toJson(game);
+    }
 
-	public AITypesContainerDTO deserializeAITypesContainer(String JSON) throws IOException {
-		return gson.fromJson(JSON, AITypesContainerDTO.class);
-	}
+    public CommandContainerDTO deserializeCommandContainer(String JSON) throws IOException {
+        return gson.fromJson(JSON, CommandContainerDTO.class);
+    }
 
-	public String serializeAITypesContainer(AITypesContainerDTO aIplayers) {
-		return gson.toJson(aIplayers);
-	}
+    public String serializeCommandContainer(CommandContainerDTO commands) {
+        return gson.toJson(commands);
+    }
 
-	public AIPlayerDTO deserializeAIPlayer(String JSON) throws IOException {
-		return gson.fromJson(JSON, AIPlayerDTO.class);
-	}
+    public AITypesContainerDTO deserializeAITypesContainer(String JSON) throws IOException {
+        return gson.fromJson(JSON, AITypesContainerDTO.class);
+    }
 
-	public String serializeAIPlayer(AIPlayerDTO aIplayer) {
-		return gson.toJson(aIplayer);
-	}
-	
-	public GameToCreateDTO deserializeGameToCreate(String JSON) throws IOException {
-		return gson.fromJson(JSON, GameToCreateDTO.class);
-	}
+    public String serializeAITypesContainer(AITypesContainerDTO aIplayers) {
+        return gson.toJson(aIplayers);
+    }
 
-	public String serializeGameToCreate(GameToCreateDTO game) {
-		return gson.toJson(game);
-	}
-	
+    public AIPlayerDTO deserializeAIPlayer(String JSON) throws IOException {
+        return gson.fromJson(JSON, AIPlayerDTO.class);
+    }
+
+    public String serializeAIPlayer(AIPlayerDTO aIplayer) {
+        return gson.toJson(aIplayer);
+    }
+
+    public GameToCreateDTO deserializeGameToCreate(String JSON) throws IOException {
+        return gson.fromJson(JSON, GameToCreateDTO.class);
+    }
+
+    public String serializeGameToCreate(GameToCreateDTO game) {
+        return gson.toJson(game);
+    }
 
 }
