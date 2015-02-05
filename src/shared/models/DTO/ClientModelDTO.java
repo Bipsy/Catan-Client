@@ -1,5 +1,6 @@
 package shared.models.DTO;
 
+
 /**
  * This class stores the information needed to create a JSON string of a
  * game's state, and is used to facilitate the transfer of data between
