@@ -18,6 +18,12 @@ import shared.models.DTO.params.*;
  * @author Jillian Koontz <jpkoontz@gmail.com>
  */
 public class MockServerProxy implements iServerProxy {
+    
+    private final ClientModelDTO model;
+    
+    public MockServerProxy() {
+        model = new ClientModelDTO();
+    }
 
     @Override
     public ClientModelDTO sendChat(SendChat message) throws IOException {
@@ -105,6 +111,7 @@ public class MockServerProxy implements iServerProxy {
     }
 
     @Override
+
     public void login(UserCredentials user) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -140,8 +147,9 @@ public class MockServerProxy implements iServerProxy {
 //    }
 
     @Override
+
     public ClientModelDTO retrieveCurrentState(ClientModelDTO model) throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	return model;
     }
 
 //    @Override

@@ -40,6 +40,10 @@ public class ClientModelDTO {
 		this.version = version;
 	}
 	
+	public ClientModelDTO() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void setBank(ResourceListDTO resources) {
 		this.resources = resources;
 	}

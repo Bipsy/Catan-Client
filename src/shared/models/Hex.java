@@ -1,6 +1,5 @@
 package shared.models;
 
-import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -8,6 +7,7 @@ import shared.models.DTO.HexDTO;
 
 import java.util.List;
 import java.util.Map;
+import shared.definitions.ResourceTypeOptional;
 
 /**
  * Represents a hex on the board.
@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public class Hex {
 	private HexLocation location;
-	private ResourceType resource;
+	private ResourceTypeOptional resource;
 	private int chit;
 	private Map<EdgeLocation, Road> roadMap;
 	private Harbor harbor;
@@ -83,11 +83,11 @@ public class Hex {
 		this.location = location;
 	}
 
-	public ResourceType getResource() {
+	public ResourceTypeOptional getResource() {
 		return resource;
 	}
 
-	public void setResource(ResourceType resource) {
+	public void setResource(ResourceTypeOptional resource) {
 		this.resource = resource;
 	}
 

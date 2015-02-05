@@ -1,6 +1,6 @@
 package shared.models.DTO;
 
-import shared.definitions.ResourceType;
+import shared.definitions.ResourceTypeOptional;
 import shared.locations.HexLocation;
 
 /**
@@ -14,33 +14,37 @@ public class HexDTO {
 	/**
 	 * Must be: 'Wood', 'Brick', 'Sheep', 'Wheat', or 'Ore', optional
 	 */
-	private ResourceType resource;
+	private ResourceTypeOptional resource;
 	/**
 	 * there is no number for desert or water tiles
 	 */
-	private Integer number;
+	private final Integer chit;
+        
+        public HexDTO(HexLocation newLocation, ResourceTypeOptional newResource,
+                Integer newChit) {
+            location = newLocation;
+            resource = newResource;
+            chit = newChit;
+        }
 	
 	public HexLocation getLocation() {
-		return location;
+            return location;
 	}
 	
 	public void setLocation(HexLocation location) {
-		this.location = location;
+            this.location = location;
 	}
 	
-	public ResourceType getResource() {
+	public ResourceTypeOptional getResource() {
 		return resource;
 	}
 	
-	public void setResource(ResourceType resource) {
+	public void setResource(ResourceTypeOptional resource) {
 		this.resource = resource;
 	}
 	
 	public Integer getNumber() {
-		return number;
+		return chit;
 	}
-	
-	public void setNumber(Integer number) {
-		this.number = number;
-	}
+
 }

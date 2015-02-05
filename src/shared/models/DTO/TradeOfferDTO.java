@@ -19,7 +19,7 @@ public class TradeOfferDTO {
         public TradeOfferDTO(MoveType newType) {
             type = newType;
         }
-	
+
 	public int getSender() {
 		return sender;
 	}

@@ -1,7 +1,11 @@
 package shared.models.DTO;
 
 public class MessageListDTO {
-	 private MessageLineDTO[] lines;
+	private MessageLineDTO[] lines;
+         
+        public MessageListDTO() {
+            lines = null;
+        } 
 
 	public MessageLineDTO[] getLines() {
 		return lines;
