@@ -11,6 +11,11 @@ public class Bank {
 		// TODO Auto-generated constructor stub
 	}
 	
+	public Bank(ResourceList resourceList, DevCardList devCardList) {
+		this.resources = resourceList;
+		this.devCards = devCardList;
+	}
+
 	/**
 	 * This function gets called to determine if there are enough cards to be 
 	 * distributed when drawing resource cards

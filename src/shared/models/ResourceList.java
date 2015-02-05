@@ -1,6 +1,7 @@
 package shared.models;
 
 import shared.definitions.ResourceType;
+import shared.models.DTO.ResourceListDTO;
 
 /**
  * This class will only store a list of resources. It is used by the 
@@ -18,6 +19,14 @@ public class ResourceList {
 
 	public ResourceList() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	public ResourceList(ResourceListDTO resources) {
+		this.brick = resources.getBrick();
+		this.ore = resources.getOre();
+		this.sheep = resources.getSheep();
+		this.wheat = resources.getWheat();
+		this.wood = resources.getWood();
 	}
 	
 	/**

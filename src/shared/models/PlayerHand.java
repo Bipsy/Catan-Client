@@ -1,6 +1,8 @@
 package shared.models;
 
 import shared.definitions.DevCardType;
+import shared.models.DTO.DevCardListDTO;
+import shared.models.DTO.ResourceListDTO;
 
 public class PlayerHand {
 
@@ -9,6 +11,11 @@ public class PlayerHand {
 	
 	public PlayerHand() {
 		// TODO Auto-generated constructor stub
+	}
+
+	public PlayerHand(ResourceListDTO resourceList, DevCardListDTO devCardList) {
+		resources = new ResourceList(resourceList);
+		devCards = new DevCardList(devCardList);
 	}
 	/**
 	 * This function is used to determine if a player has enough resources to 

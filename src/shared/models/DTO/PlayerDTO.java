@@ -1,5 +1,6 @@
 package shared.models.DTO;
 
+import shared.definitions.CatanColor;
 import shared.exceptions.InvalidPlayerIndex;
 
 /**
@@ -12,7 +13,7 @@ import shared.exceptions.InvalidPlayerIndex;
 public class PlayerDTO {
 	
 	private int cities;
-	private String color;
+	private CatanColor color;
 	/**
 	 * flag for whether or not a player has discarded cards during a discard 
 	 * phase
@@ -57,14 +58,6 @@ public class PlayerDTO {
 
 	public void setCities(int cities) {
 		this.cities = cities;
-	}
-
-	public String getColor() {
-		return color;
-	}
-
-	public void setColor(String color) {
-		this.color = color;
 	}
 
 	public boolean isDiscarded() {
@@ -178,6 +171,14 @@ public class PlayerDTO {
 
 	public void setVictoryPoints(int victoryPoints) {
 		this.victoryPoints = victoryPoints;
+	}
+
+	public CatanColor getColor() {
+		return color;
+	}
+
+	public void setColor(CatanColor color) {
+		this.color = color;
 	}
 
 }
