@@ -5,6 +5,7 @@
  */
 package client.network;
 
+import client.model.Serializer;
 import java.io.IOException;
 import java.util.List;
 
@@ -34,9 +35,11 @@ import shared.models.DTO.YearOfPlentyDTO;
 public class MockServerProxy implements iServerProxy {
     
     private final ClientModelDTO model;
+    private final Serializer serializer;
     
-    public MockServerProxy() {
-        model = new ClientModelDTO();
+    public MockServerProxy(Serializer newSerializer, String defaultModel) {  
+        serializer = newSerializer;
+        model = (ClientModelDTO) serializer.deserialize(defaultModel);
     }
 
     @Override
