@@ -37,7 +37,7 @@ public class MaritimeTradeOverlay extends OverlayView implements IMaritimeTradeO
     private JButton givewood, givebrick, givesheep, givewheat, giveore;
     ResourceType[] giveAvailables;
 
-	//get variables
+    //get variables
     private JButton getreload;
     private JLabel getAmount;
     private JButton getwood, getbrick, getsheep, getwheat, getore;
@@ -349,7 +349,7 @@ public class MaritimeTradeOverlay extends OverlayView implements IMaritimeTradeO
     }
 
     private JPanel createGetPane() {
-		//System.out.println(resourceImageFolder+"wheat.png");
+        //System.out.println(resourceImageFolder+"wheat.png");
         //System.out.println(new File(resourceImageFolder).getAbsolutePath());
         //create the buttons
         getreload = new JButton();
@@ -371,7 +371,7 @@ public class MaritimeTradeOverlay extends OverlayView implements IMaritimeTradeO
         getore.setPreferredSize(new Dimension(150, 150));
         getore.setIcon(new ImageIcon(resize(oreImg, 150, 150)));
 
-		//Remove the boarders from the buttons (this may not work everywhere.
+        //Remove the boarders from the buttons (this may not work everywhere.
         //It's Dependent on the OS look and feel.
         getwood.setContentAreaFilled(false);
         getbrick.setContentAreaFilled(false);
@@ -440,7 +440,7 @@ public class MaritimeTradeOverlay extends OverlayView implements IMaritimeTradeO
         giveore.setPreferredSize(new Dimension(150, 150));
         giveore.setIcon(new ImageIcon(resize(oreImg, 150, 150)));
 
-		//Remove the boarders from the buttons (this may not work everywhere.
+        //Remove the boarders from the buttons (this may not work everywhere.
         //It's Dependent on the OS look and feel.
         givewood.setContentAreaFilled(false);
         givebrick.setContentAreaFilled(false);

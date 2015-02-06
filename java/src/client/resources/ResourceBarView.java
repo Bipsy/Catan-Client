@@ -166,7 +166,7 @@ public class ResourceBarView extends PanelView implements IResourceBarView {
         ResourceElement soldier = new ResourceElement(ResourceBarElement.SOLDIERS, false);
         soldier.setElementImage(soldierImage);
 
-		// This is to determine the order of the Elements in the
+        // This is to determine the order of the Elements in the
         // ResourceBar.
         resourceElementList.add(ResourceBarElement.WOOD);
         resourceElementList.add(ResourceBarElement.BRICK);

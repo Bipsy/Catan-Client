@@ -305,7 +305,7 @@ public interface iServerProxy {
      * @param fileName the file location where the game should be saved
      * @throws IOException
      */
-	//void saveGames(int gameId, String fileName) throws IOException;
+    //void saveGames(int gameId, String fileName) throws IOException;
     /**
      * Sends a request to the server to load a game
      *
@@ -337,7 +337,7 @@ public interface iServerProxy {
      * intact or an error message
      * @throws IOException
      */
-	//ClientModelDTO resetGame() throws IOException;
+    //ClientModelDTO resetGame() throws IOException;
     /**
      * Sends a request to the server to get a list of the game commands
      *
@@ -353,7 +353,7 @@ public interface iServerProxy {
      * @post a list of commands is sent to the server or an error message
      * @throws IOException
      */
-	//ClientModelDTO postGameCommands(CommandContainerDTO commands) throws IOException;
+    //ClientModelDTO postGameCommands(CommandContainerDTO commands) throws IOException;
     /**
      * Sends a request to the server to list all Artificial intelligence types
      *

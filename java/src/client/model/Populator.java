@@ -77,7 +77,7 @@ public class Populator implements iPopulator {
 
         Board board = new Board();
 
-		//TODO: Individual hexes have communityMap, roadMap, and Harbor. HexDTO hexes has none of these. how
+        //TODO: Individual hexes have communityMap, roadMap, and Harbor. HexDTO hexes has none of these. how
         //should we go about this?
         board.setHexes(map.getHexes());
 

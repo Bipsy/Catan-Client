@@ -81,7 +81,7 @@ public class VertexLocation {
      */
     public VertexLocation getNormalizedLocation() {
 
-		// Return location that has direction NW or NE
+        // Return location that has direction NW or NE
         switch (dir) {
             case NorthWest:
             case NorthEast:

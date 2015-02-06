@@ -128,7 +128,7 @@ public class LogComponent extends JComponent {
                 String word = scanner.next();
 
                 if (line.length() == 0) {
-					// Each line must have at least one word (even if
+                    // Each line must have at least one word (even if
                     // it doesn't fit)
                     line = word;
                 } else {

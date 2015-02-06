@@ -257,7 +257,7 @@ public class MapComponent extends JComponent {
         copy.dropHexLoc = this.dropHexLoc;
         copy.dropEdgeLoc = this.dropEdgeLoc;
         copy.dropVertLoc = this.dropVertLoc;
-		// copy.scale = this.scale;
+        // copy.scale = this.scale;
         // copy.transform = this.transform;
 
         return copy;
@@ -407,7 +407,7 @@ public class MapComponent extends JComponent {
                 return;
             }
 
-			// Find
+            // Find
             // closest
             // drop
             // point

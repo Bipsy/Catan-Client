@@ -114,26 +114,26 @@ public class GameState {
     }
 
     public boolean CanBuildRoad(BuildRoad buildRoad) {
-		// TODO check that the location is free and the player has a road 
+        // TODO check that the location is free and the player has a road 
         // adjacent to that location
         return false;
     }
 
     public boolean CanBuildSettlement(BuildSettlement buildSettlement) {
-		// TODO check that the location is free, the player has a road adjacent
+        // TODO check that the location is free, the player has a road adjacent
         // to that location, and that there is not any other building on a 
         // nearby vertex
         return false;
     }
 
     public boolean CanBuildCity(BuildCity buildCity) {
-		// TODO check that the location has a settlement owned by the player at
+        // TODO check that the location has a settlement owned by the player at
         //the specified location
         return false;
     }
 
     public boolean CanOfferTrade(OfferTrade offerTrade) {
-		// TODO Check that the player is the current player index, the 
+        // TODO Check that the player is the current player index, the 
         // other player is not the current player, the current player has the 
         // necessary resources, and that a resource being offered is not one 
         // being requested
@@ -141,14 +141,14 @@ public class GameState {
     }
 
     public boolean CanMaritimeTrade(MaritimeTrade maritimeTrade) {
-		// TODO check that the player is the current player, the ratio reflects
+        // TODO check that the player is the current player, the ratio reflects
         // the player's ownership of ports, the resource offered has the right
         // ratio, and that the resource requested is available
         return false;
     }
 
     public boolean CanBuyDevCard(BuyDevCard buyDevCard) {
-		// TODO check that the player is the current player, and has the 
+        // TODO check that the player is the current player, and has the 
         // necessary resources to buy a dev card
         return false;
     }
@@ -159,7 +159,7 @@ public class GameState {
     }
 
     public boolean CanUseRoadBuilder(RoadBuilding roadBuilding) {
-		// TODO is current user, has dev card, hasn't played any other dev cards
+        // TODO is current user, has dev card, hasn't played any other dev cards
         // has roads
         return false;
     }
@@ -175,7 +175,7 @@ public class GameState {
     }
 
     public boolean CanUseMonument(Monument monument) {
-		// TODO is current user, has dev card, has enough monuments and victory
+        // TODO is current user, has dev card, has enough monuments and victory
         // points to win
         return false;
     }
