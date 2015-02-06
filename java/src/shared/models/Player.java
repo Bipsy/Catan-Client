@@ -3,6 +3,7 @@ package shared.models;
 import shared.definitions.CatanColor;
 import shared.models.DTO.PlayerDTO;
 import shared.models.DTO.params.DiscardCards;
+import shared.models.DTO.params.OfferTrade;
 
 public class Player extends User {
 
@@ -105,7 +106,11 @@ public class Player extends User {
 	public boolean CanDiscardCards(DiscardCards discardCards) {
 		if(discarded || resources.getNumResourceCards() < 7) 
     		return false;
-    	return resources.CanDiscardCards(discardCards);
+    	return resources.CanUpdateResourceCards(discardCards.getDiscardedCards());
+	}
+
+	public boolean CanOfferTrade(OfferTrade offerTrade) {
+		return resources.CanUpdateResourceCards(offerTrade.getOffer());
 	}
 
 }

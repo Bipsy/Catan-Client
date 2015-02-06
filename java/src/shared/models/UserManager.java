@@ -9,6 +9,7 @@ import java.util.List;
 
 import shared.models.DTO.TurnTrackerDTO;
 import shared.models.DTO.params.DiscardCards;
+import shared.models.DTO.params.OfferTrade;
 
 /**
  * UserManager stores the meta information regarding the users. This includes
@@ -29,6 +30,12 @@ public class UserManager {
 	public boolean CanDiscardCards(DiscardCards discardCards) {
 		// should check that player index is valid
 		return users.get(discardCards.getPlayerIndex()).CanDiscardCards(discardCards);
+	}
+	
+	public boolean CanOfferTrade(OfferTrade offerTrade) {
+    	return isCurrentPlayer(offerTrade.getPlayerIndex()) &&
+    			!isCurrentPlayer(offerTrade.getReceiver()) &&
+    			users.get(offerTrade.getPlayerIndex()).CanOfferTrade(offerTrade);
 	}
 
 	public boolean isCurrentPlayer(int playerIndex) {

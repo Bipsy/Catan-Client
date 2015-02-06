@@ -159,11 +159,7 @@ public class GameState {
     }
 
     public boolean CanOfferTrade(OfferTrade offerTrade) {
-		// TODO Check that the player is the current player index, the 
-        // other player is not the current player, the current player has the 
-        // necessary resources, and that a resource being offered is not one 
-        // being requested
-        return false;
+    	return userManager.CanOfferTrade(offerTrade);
     }
 
     public boolean CanMaritimeTrade(MaritimeTrade maritimeTrade) {
