@@ -72,11 +72,10 @@
 
   	<property name="java.dir" location="java"/>
 	<property name="java.src" location="${java.dir}/src"/>
-    <property name="java.test" location="#{java.dir}/test"/>
+    <property name="java.test" location="${java.dir}/test"/>
 	<property name="java.images" location="${java.dir}/img"/>
 	<property name="java.build" location="${java.dir}/build"/>
 	<property name="java.dist" location="${java.dir}/dist"/>
-	<property name="java.lib" location="${java.dir}/lib"/>
  
 	<target name="init" description="create build directories">
 		<tstamp/>
@@ -146,14 +145,22 @@
         <zip destfile="./tester.zip" basedir="${java.dist}" />
     </target>
 
-    <target name="test">
-        <formatter type="plain"/>
-        
-        <batchtest fork="yes" todir="${java.build}">
-            <fileset dir="${java.test}">
-                <include name="**/*Test*.java"/>
-            </fileset>
-        </batchtest>
+    <target name="test">  
+        <junit printsummary="yes">
+            <formatter type="plain"/>
+            <classpath>
+                <pathelement location="${java.lib.dir}"/>
+                <fileset dir="${java.lib.dir}">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+
+            <batchtest fork="yes" >
+                <fileset dir="${java.test}">
+                    <include name="**/*Test*.java"/>
+                </fileset>
+            </batchtest>
+        </junit>
     </target>
   
 </project>
