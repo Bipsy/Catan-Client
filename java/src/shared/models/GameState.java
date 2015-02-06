@@ -201,9 +201,11 @@ public class GameState {
     }
 
     public boolean CanUseMonument(Monument monument) {
-		// TODO is current user, has dev card, has enough monuments and victory
-        // points to win
-        return false;
+    	int index = monument.getPlayerIndex();
+    	Player player = userManager.getPlayer(index);
+    	boolean isCurrentUser = userManager.isCurrentPlayer(index);
+    	
+    	return isCurrentUser && player.canPlayMonument();
     }
 
     public boolean CanFinishTurn(FinishTurn finishTurn) {
