@@ -1,7 +1,7 @@
 package shared.models.DTO;
 
 import shared.exceptions.InvalidPlayerIndex;
-import shared.locations.EdgeLocation;
+import shared.locations.VertexLocation;
 
 /**
  * This class stores the information needed to create a JSON string of a vertex
@@ -14,7 +14,7 @@ import shared.locations.EdgeLocation;
 public class VertexObjectDTO {
 
     private int owner;
-    private EdgeLocation location;
+    private VertexLocation location;
 
     public int getOwner() {
         return owner;
@@ -34,11 +34,11 @@ public class VertexObjectDTO {
         this.owner = owner;
     }
 
-    public EdgeLocation getLocation() {
+    public VertexLocation getLocation() {
         return location;
     }
 
-    public void setLocation(EdgeLocation location) {
+    public void setLocation(VertexLocation location) {
         this.location = location;
     }
 

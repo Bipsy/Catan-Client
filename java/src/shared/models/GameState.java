@@ -88,52 +88,67 @@ public class GameState {
         this.winner = winner;
     }
 
+    /**
+     * This function will check that a player has not already discarded this
+     * turn, that the number of cards to be discarded is half of their total
+     * cards, that they have 7 or more cards in their hand, and that the cards
+     * to be discarded is not greater than the number of cards owned for each
+     * type
+     * @param discardCards
+     * @return
+     */
     public boolean CanDiscardCards(DiscardCards discardCards) {
-		// TODO check the player's hand to make sure that the number of 
-        // resources discarded is half of the player's hand, and that the cards
-        // discarded are available to be discarded
-
-        // This will get passed to the UserManager and then down to the user
-        return false;
+        return userManager.CanDiscardCards(discardCards);
     }
 
+    /**
+     * Checks that the player is the current player and that the roll number is
+     * between 2 and 12
+     * @param rollNumber
+     * @return
+     */
     public boolean CanRollNumber(RollNumber rollNumber) {
-		// TODO Check that the player index is the current player's index and 
-        // that the number rolled is between 2 and 12
-
-        // This will be passed to the UserManager
-        return false;
+        return rollNumber.getNumber() >= 2 && rollNumber.getNumber() <=  12 && 
+        		userManager.isCurrentPlayer(rollNumber.getPlayerIndex());
     }
 
+    /**
+     * Checks that the Player is the current player, the victim is a different
+     * player and that the location is different than the robber's current
+     * location
+     * @param robPlayer
+     * @return
+     */
     public boolean CanPlaceRobber(RobPlayer robPlayer) {
-		// TODO Check that the player index is the current player and the 
-        // location is not the robber's current location
-
-        // This will get data from the UsrManager and the map
-        return false;
+    	return userManager.isCurrentPlayer(robPlayer.getPlayerIndex()) &&
+    			!userManager.isCurrentPlayer(robPlayer.getVictimIndex()) &&
+    			map.canPlaceRobber(robPlayer.getLocation());
     }
 
+    /**
+     * Checks that there isn't a road already there. Also checks that there is
+     * an adjacent road owned by the player.
+     * @param buildRoad
+     * @return
+     */
     public boolean CanBuildRoad(BuildRoad buildRoad) {
-        // TODO check that the location is free and the player has a road 
-        // adjacent to that location
-        return false;
+    	return userManager.isCurrentPlayer(buildRoad.getPlayerIndex()) &&
+    			map.canBuildRoad(buildRoad);
     }
 
     public boolean CanBuildSettlement(BuildSettlement buildSettlement) {
-        // TODO check that the location is free, the player has a road adjacent
-        // to that location, and that there is not any other building on a 
-        // nearby vertex
-        return false;
+    	return userManager.isCurrentPlayer(buildSettlement.getPlayerIndex()) &&
+    			map.canBuildSettlement(buildSettlement);
     }
 
     public boolean CanBuildCity(BuildCity buildCity) {
-        // TODO check that the location has a settlement owned by the player at
+		// TODO check that the location has a settlement owned by the player at
         //the specified location
         return false;
     }
 
     public boolean CanOfferTrade(OfferTrade offerTrade) {
-        // TODO Check that the player is the current player index, the 
+		// TODO Check that the player is the current player index, the 
         // other player is not the current player, the current player has the 
         // necessary resources, and that a resource being offered is not one 
         // being requested
@@ -141,14 +156,14 @@ public class GameState {
     }
 
     public boolean CanMaritimeTrade(MaritimeTrade maritimeTrade) {
-        // TODO check that the player is the current player, the ratio reflects
+		// TODO check that the player is the current player, the ratio reflects
         // the player's ownership of ports, the resource offered has the right
         // ratio, and that the resource requested is available
         return false;
     }
 
     public boolean CanBuyDevCard(BuyDevCard buyDevCard) {
-        // TODO check that the player is the current player, and has the 
+		// TODO check that the player is the current player, and has the 
         // necessary resources to buy a dev card
         return false;
     }
@@ -159,7 +174,7 @@ public class GameState {
     }
 
     public boolean CanUseRoadBuilder(RoadBuilding roadBuilding) {
-        // TODO is current user, has dev card, hasn't played any other dev cards
+		// TODO is current user, has dev card, hasn't played any other dev cards
         // has roads
         return false;
     }
@@ -175,7 +190,7 @@ public class GameState {
     }
 
     public boolean CanUseMonument(Monument monument) {
-        // TODO is current user, has dev card, has enough monuments and victory
+		// TODO is current user, has dev card, has enough monuments and victory
         // points to win
         return false;
     }

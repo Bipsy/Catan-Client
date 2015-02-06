@@ -2,6 +2,7 @@ package shared.models;
 
 import shared.definitions.CatanColor;
 import shared.models.DTO.PlayerDTO;
+import shared.models.DTO.params.DiscardCards;
 
 public class Player extends User {
 
@@ -100,5 +101,11 @@ public class Player extends User {
     public boolean canBuyDevCard() {
         return false;
     }
+
+	public boolean CanDiscardCards(DiscardCards discardCards) {
+		if(discarded || resources.getNumResourceCards() < 7) 
+    		return false;
+    	return resources.CanDiscardCards(discardCards);
+	}
 
 }

@@ -1,8 +1,10 @@
 package shared.models;
 
 import shared.definitions.DevCardType;
+import shared.definitions.ResourceType;
 import shared.models.DTO.DevCardListDTO;
 import shared.models.DTO.ResourceListDTO;
+import shared.models.DTO.params.DiscardCards;
 
 public class PlayerHand {
 
@@ -85,4 +87,25 @@ public class PlayerHand {
     public void useDevCard(DevCardType type) {
 
     }
+
+	public boolean CanDiscardCards(DiscardCards discardCards) {
+		return (resources.getResourceNumber(ResourceType.BRICK) + 
+				discardCards.getDiscardedCards().getBrick() > 0 &&
+				resources.getResourceNumber(ResourceType.SHEEP) + 
+				discardCards.getDiscardedCards().getSheep() > 0 &&
+				resources.getResourceNumber(ResourceType.WOOD) + 
+				discardCards.getDiscardedCards().getWood() > 0 &&
+				resources.getResourceNumber(ResourceType.ORE) + 
+				discardCards.getDiscardedCards().getOre() > 0 &&
+				resources.getResourceNumber(ResourceType.WHEAT) + 
+				discardCards.getDiscardedCards().getWheat() > 0);
+	}
+
+	public int getNumResourceCards() {
+		return resources.getResourceNumber(ResourceType.BRICK) +
+				resources.getResourceNumber(ResourceType.SHEEP) +
+				resources.getResourceNumber(ResourceType.WOOD) +
+				resources.getResourceNumber(ResourceType.ORE) +
+				resources.getResourceNumber(ResourceType.WHEAT);
+	}
 }

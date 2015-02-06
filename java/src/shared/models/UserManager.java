@@ -8,6 +8,7 @@ package shared.models;
 import java.util.List;
 
 import shared.models.DTO.TurnTrackerDTO;
+import shared.models.DTO.params.DiscardCards;
 
 /**
  * UserManager stores the meta information regarding the users. This includes
@@ -17,11 +18,20 @@ import shared.models.DTO.TurnTrackerDTO;
  */
 public class UserManager {
 
-    private List users;
+    private List<Player> users;
     TurnTracker turnTracker;
 
-    public UserManager(List userList, TurnTracker turnTracker2) {
+    public UserManager(List<Player> userList, TurnTracker turnTracker2) {
         this.users = userList;
         this.turnTracker = turnTracker2;
     }
+
+	public boolean CanDiscardCards(DiscardCards discardCards) {
+		// should check that player index is valid
+		return users.get(discardCards.getPlayerIndex()).CanDiscardCards(discardCards);
+	}
+
+	public boolean isCurrentPlayer(int playerIndex) {
+		return turnTracker.matchesCurrent(playerIndex);
+	}
 }
