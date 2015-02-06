@@ -18,7 +18,7 @@ public class PlayerHand {
 
     public PlayerHand(ResourceListDTO resourceList, DevCardListDTO devCardList) {
         resources = new ResourceList(resourceList);
-        devCards = new DevCardList(devCardList);
+        setDevCards(new DevCardList(devCardList));
     }
 
     /**
@@ -108,5 +108,13 @@ public class PlayerHand {
 				resources.getResourceNumber(ResourceType.WOOD) +
 				resources.getResourceNumber(ResourceType.ORE) +
 				resources.getResourceNumber(ResourceType.WHEAT);
+	}
+
+	public DevCardList getDevCards() {
+		return devCards;
+	}
+
+	public void setDevCards(DevCardList devCards) {
+		this.devCards = devCards;
 	}
 }
