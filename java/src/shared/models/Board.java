@@ -13,7 +13,9 @@ import shared.models.DTO.EdgeValueDTO;
 import shared.models.DTO.HexDTO;
 import shared.models.DTO.PortDTO;
 import shared.models.DTO.VertexObjectDTO;
+import shared.models.DTO.params.BuildCity;
 import shared.models.DTO.params.BuildRoad;
+import shared.models.DTO.params.BuildSettlement;
 
 /**
  * Model representation of the Catan board
@@ -38,36 +40,6 @@ public class Board {
     	roadMap = new HashMap<EdgeLocation, Road>();
     	communityMap = new HashMap<VertexLocation, VertexObject>();
 
-    }
-
-    /**
-     * Determines from a hex provided if a road can be built
-     *
-     * @param hex they want to determine if a road can be built on
-     * @return true if they can build. false if they cannot
-     */
-    public boolean canBuildRoad(Hex hex) {
-        return false;
-    }
-
-    /**
-     * Determines from a hex provided if a settlement can be built
-     *
-     * @param hex they want to determine if a settlement can be built on
-     * @return true if they can build. false if they cannot
-     */
-    public boolean canBuildSettlement(Hex hex) {
-        return false;
-    }
-
-    /**
-     * Determines from a hex provided if a city can be built
-     *
-     * @param hex they want to determine if a city can be built on
-     * @return true if they can build. false if they cannot
-     */
-    public boolean canBuildCity(Hex hex) {
-        return false;
     }
 
     /**
@@ -97,7 +69,49 @@ public class Board {
     		return false;
     	}
     }
+    
+    public boolean canBuildSettlement(BuildSettlement buildSettlement) {
+    	boolean result = false;
+    	VertexLocation vertex = buildSettlement.getVertexLocation();
+    	
+    	if(!communityMap.containsKey(vertex.getNormalizedLocation())) {
+    		VertexLocation[] adjVertex = vertex.getAdjacentVertexes();
+    		boolean found = false;
+    		for (int i = 0; i < adjVertex.length; i++) {
+    			if(communityMap.containsKey(adjVertex[i].getNormalizedLocation())) {
+    				found = true;
+    				break;
+    			}
+    		}
+    		if(!found) {
+    			EdgeLocation[] adjRoads = vertex.getAdjacentEdges();
+    			for (int i = 0; i < adjRoads.length; i++) {
+    				if(roadMap.containsKey(adjRoads[i].getNormalizedLocation()) &&
+    					roadMap.get(adjRoads[i].getNormalizedLocation()).getOwner() ==
+    					buildSettlement.getPlayerIndex()) {
+    						result = true;
+    						break;
+    				}
+    			}    			
+    		}
+    	}
+    	return result;
+    }
 
+    public boolean canBuildCity(BuildCity buildCity) {
+    	VertexLocation vertex = buildCity.getVertexLocation();
+    	
+    	if(communityMap.containsKey(vertex.getNormalizedLocation())) {
+    		VertexObject vertexObj = communityMap.get(vertex.getNormalizedLocation());
+    		if(vertexObj.getType() == PieceType.SETTLEMENT && vertexObj.getOwner() == 
+    				buildCity.getPlayerIndex()) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+
+    
     public List<Hex> getHexes() {
         return hexes;
     }

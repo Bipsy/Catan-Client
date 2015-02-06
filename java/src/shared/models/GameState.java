@@ -136,15 +136,26 @@ public class GameState {
     			map.canBuildRoad(buildRoad);
     }
 
+    /**
+     * Checks that the vertex is not taken, that there are no objects on adjacent
+     * vertices, and that there is a road on an adjacent edge
+     * @param buildSettlement
+     * @return
+     */
     public boolean CanBuildSettlement(BuildSettlement buildSettlement) {
     	return userManager.isCurrentPlayer(buildSettlement.getPlayerIndex()) &&
     			map.canBuildSettlement(buildSettlement);
     }
 
+    /**
+     * Checks that a vertex is taken by the player and that the object is a
+     * settlement
+     * @param buildCity
+     * @return
+     */
     public boolean CanBuildCity(BuildCity buildCity) {
-		// TODO check that the location has a settlement owned by the player at
-        //the specified location
-        return false;
+    	return userManager.isCurrentPlayer(buildCity.getPlayerIndex()) &&
+    			map.canBuildCity(buildCity);
     }
 
     public boolean CanOfferTrade(OfferTrade offerTrade) {
