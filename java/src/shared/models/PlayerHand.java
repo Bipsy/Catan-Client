@@ -5,6 +5,8 @@ import shared.definitions.ResourceType;
 import shared.models.DTO.DevCardListDTO;
 import shared.models.DTO.ResourceListDTO;
 import shared.models.DTO.params.DiscardCards;
+import shared.models.DTO.params.MaritimeTrade;
+import shared.models.DTO.params.OfferTrade;
 
 public class PlayerHand {
 
@@ -88,17 +90,17 @@ public class PlayerHand {
 
     }
 
-	public boolean CanDiscardCards(DiscardCards discardCards) {
+	public boolean CanUpdateResourceCards(ResourceListDTO resourceList) {
 		return (resources.getResourceNumber(ResourceType.BRICK) + 
-				discardCards.getDiscardedCards().getBrick() > 0 &&
+				resourceList.getBrick() < 0 &&
 				resources.getResourceNumber(ResourceType.SHEEP) + 
-				discardCards.getDiscardedCards().getSheep() > 0 &&
+				resourceList.getSheep() < 0 &&
 				resources.getResourceNumber(ResourceType.WOOD) + 
-				discardCards.getDiscardedCards().getWood() > 0 &&
+				resourceList.getWood() < 0 &&
 				resources.getResourceNumber(ResourceType.ORE) + 
-				discardCards.getDiscardedCards().getOre() > 0 &&
+				resourceList.getOre() < 0 &&
 				resources.getResourceNumber(ResourceType.WHEAT) + 
-				discardCards.getDiscardedCards().getWheat() > 0);
+				resourceList.getWheat() < 0);
 	}
 
 	public int getNumResourceCards() {
@@ -115,5 +117,9 @@ public class PlayerHand {
 
 	public void setDevCards(DevCardList devCards) {
 		this.devCards = devCards;
+	}
+
+	public boolean canMTrade(MaritimeTrade maritimeTrade) {
+		return resources.getResourceNumber(maritimeTrade.getInputResource()) >= maritimeTrade.getRatio();
 	}
 }
