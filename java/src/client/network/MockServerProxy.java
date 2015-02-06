@@ -150,7 +150,7 @@ public class MockServerProxy implements iServerProxy {
 //    }
     @Override
 
-    public ClientModelDTO retrieveCurrentState(Integer version) throws IOException {
+    public ClientModelDTO retrieveCurrentState(int version) throws IOException {
         return model;
     }
 

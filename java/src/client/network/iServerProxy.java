@@ -52,7 +52,7 @@ public interface iServerProxy {
      * @param discardedCards
      * @throws IOException
      */
-    ClientModelDTO discardCards(DiscardCards discardedCards) throws IOException; //ResourceList
+    ClientModelDTO discardCards(DiscardCards discardedCards) throws IOException;
 
     /**
      * Sends a request to the server to roll a number
@@ -326,7 +326,7 @@ public interface iServerProxy {
      * @param versionNumber
      * @throws IOException
      */
-    ClientModelDTO retrieveCurrentState(Integer versionNumber) throws IOException;
+    ClientModelDTO retrieveCurrentState(int version) throws IOException;
 
     /**
      * Sends a request to the server to reset a game
