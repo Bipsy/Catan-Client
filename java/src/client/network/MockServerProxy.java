@@ -24,9 +24,9 @@ public class MockServerProxy implements iServerProxy {
     private final ClientModelDTO model;
     private final Serializer serializer;
 
-    public MockServerProxy(Serializer newSerializer, String defaultModel) {
+    public MockServerProxy(Serializer newSerializer, String defaultModel) throws IOException {
         serializer = newSerializer;
-        model = (ClientModelDTO) serializer.deserialize(defaultModel);
+        model = serializer.deserializeModel(defaultModel);
     }
 
     @Override

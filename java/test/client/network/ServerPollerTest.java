@@ -8,13 +8,11 @@ package client.network;
 import client.model.Populator;
 import client.model.Serializer;
 import client.model.iPopulator;
-import java.io.File;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -47,9 +45,10 @@ public class ServerPollerTest {
 
     @Before
     public void setUp() {
-        /*try {
-            Path path = Paths.get("./test-model-1.txt");
-            encoded  = Files.readAllBytes(path);
+        try {
+            RandomAccessFile f = new RandomAccessFile("assets/test-model-1.txt", "r");
+            encoded = new byte[(int)f.length()];
+            f.read(encoded);
             defaultModel = new String(encoded, Charset.defaultCharset());            
             serializer = new Serializer();
             proxy = new MockServerProxy(serializer, defaultModel);
@@ -57,7 +56,7 @@ public class ServerPollerTest {
         } catch (IOException ex) {
             System.err.println("JSON file was not found");
             assertTrue(false);
-        }*/
+        }
     }
 
     @After
@@ -76,16 +75,15 @@ public class ServerPollerTest {
     // public void hello() {}
     @Test
     public void pollNewModelTest() {
-        assertTrue(true);
-        /*
         ServerPoller poller = new ServerPoller(proxy, populator, 0);
         ClientModelDTO model = poller.poll();
-        assertNotNull(model);
-        */        
+        assertNotNull(model);        
     }
     
     @Test
     public void pollOldModelTest() {
-        assertTrue(true);
+        ServerPoller poller = new ServerPoller(proxy, populator, 1);
+        ClientModelDTO model = poller.poll();
+        assertNull(model);
     }
 }
