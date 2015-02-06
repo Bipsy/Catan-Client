@@ -5,6 +5,7 @@ import shared.definitions.ResourceType;
 import shared.models.DTO.DevCardListDTO;
 import shared.models.DTO.ResourceListDTO;
 import shared.models.DTO.params.DiscardCards;
+import shared.models.DTO.params.MaritimeTrade;
 import shared.models.DTO.params.OfferTrade;
 
 public class PlayerHand {
@@ -116,5 +117,9 @@ public class PlayerHand {
 
 	public void setDevCards(DevCardList devCards) {
 		this.devCards = devCards;
+	}
+
+	public boolean canMTrade(MaritimeTrade maritimeTrade) {
+		return resources.getResourceNumber(maritimeTrade.getInputResource()) >= maritimeTrade.getRatio();
 	}
 }

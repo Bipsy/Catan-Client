@@ -162,11 +162,15 @@ public class GameState {
     	return userManager.CanOfferTrade(offerTrade);
     }
 
+    /**
+     * checks that the player is the current player, and that the resource 
+     * requested is available. Does not check that the ratio matches a player's
+     * ownership of a port
+     * @param maritimeTrade
+     * @return
+     */
     public boolean CanMaritimeTrade(MaritimeTrade maritimeTrade) {
-		// TODO check that the player is the current player, the ratio reflects
-        // the player's ownership of ports, the resource offered has the right
-        // ratio, and that the resource requested is available
-        return false;
+    	return userManager.CanMaritimeTrade(maritimeTrade);
     }
 
     public boolean CanBuyDevCard(BuyDevCard buyDevCard) {

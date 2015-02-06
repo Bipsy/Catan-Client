@@ -9,6 +9,7 @@ import java.util.List;
 
 import shared.models.DTO.TurnTrackerDTO;
 import shared.models.DTO.params.DiscardCards;
+import shared.models.DTO.params.MaritimeTrade;
 import shared.models.DTO.params.OfferTrade;
 
 /**
@@ -47,5 +48,10 @@ public class UserManager {
 			return null;
 		}
 		return users.get(index);
+	}
+
+	public boolean CanMaritimeTrade(MaritimeTrade maritimeTrade) {
+		return isCurrentPlayer(maritimeTrade.getPlayerIndex()) &&
+    			users.get(maritimeTrade.getPlayerIndex()).CanOfferMTrade(maritimeTrade);
 	}
 }
