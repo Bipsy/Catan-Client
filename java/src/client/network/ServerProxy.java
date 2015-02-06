@@ -175,7 +175,7 @@ public class ServerProxy implements iServerProxy {
     @Override
     public ClientModelDTO retrieveCurrentState(Integer version) throws IOException {
         try {
-            String params = serializer.serialize(verison);
+            String params = serializer.serialize(version);
             return (ClientModelDTO) serializer.deserialize(doPost("/game/model", params)); ////url
         } catch (IOException e) {
             e.printStackTrace();

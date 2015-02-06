@@ -5,12 +5,10 @@ package client.model;
 
 import static org.junit.Assert.*;
 
-import org.junit.AfterClass;
 import org.junit.Test;
 
-import client.mocks.ModelMock;
 import shared.models.DTO.*;
-
+import client.mocks.ModelMock;
 /**
  * @author Anna Sokolova
  *
