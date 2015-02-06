@@ -1,7 +1,8 @@
 **/bin
-**/lib
 **/.classpath
 **/.project
 **/.DS_Store
 **/.class
 **/.settings
+**/*.txt
+**/*.swp
