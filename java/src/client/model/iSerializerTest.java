@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 import org.junit.AfterClass;
 import org.junit.Test;
 
-import client.test.mocks.ModelMock;
+import client.mocks.ModelMock;
 import shared.models.DTO.*;
 
 /**

@@ -1,4 +1,4 @@
-package client.test.mocks;
+package client.mocks;
 
 /**
  * @author Anna Sokolova
