@@ -196,7 +196,12 @@ public class GameState {
     }
 
     public boolean CanFinishTurn(FinishTurn finishTurn) {
-        // TODO user has rolled dice and discarded if neccesary
-        return false;
+        // TODO track initialization stages ("FirstRound" or "SecondRound")
+    	TurnTracker turnTracker = userManager.turnTracker;
+    	boolean hasRolled = turnTracker.getStatus().toLowerCase() != "rolling";
+    	boolean isTurn = userManager.isCurrentPlayer(finishTurn.getPlayerIndex());
+    	
+    	
+        return isTurn && hasRolled;
     }
 }

@@ -34,4 +34,11 @@ public class UserManager {
 	public boolean isCurrentPlayer(int playerIndex) {
 		return turnTracker.matchesCurrent(playerIndex);
 	}
+	
+	public Player getPlayer(int index) {
+		if (index < 0 || index >= users.size()) {
+			return null;
+		}
+		return users.get(index);
+	}
 }
