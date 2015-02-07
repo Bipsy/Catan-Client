@@ -4,6 +4,9 @@ import static org.junit.Assert.*;
 
 import java.io.IOException;
 
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import shared.locations.*;
@@ -13,11 +16,38 @@ import shared.models.DTO.params.*;
 public class ServerProxyTest {
 	
 	private static ServerProxy proxy;
+	
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
+		proxy = new ServerProxy();
+	}
+	
+	@AfterClass
+	public static void tearDownAfterClass() throws Exception {
+		proxy = null;
+	}
+	
+	@Before
+	public void setUp() throws Exception {
+		UserCredentials user = new UserCredentials("Sam", "sam");
+		try {
+			proxy.login(user);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		JoinGameRequest game = new JoinGameRequest(0, "orange");
+		try {
+			proxy.joinGame(game);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	@Test
 	public void testLogin() {
 		proxy = new ServerProxy();
-		UserCredentials user = new UserCredentials("Sam", "sam");
+		UserCredentials user = new UserCredentials("Pete", "pete");
 		try {
 			proxy.login(user);
 		} catch (IOException e) {
@@ -28,7 +58,7 @@ public class ServerProxyTest {
 	
 	@Test
 	public void testJoinGame() {
-		JoinGameRequest game = new JoinGameRequest(0, "orange");
+		JoinGameRequest game = new JoinGameRequest(0, "red");
 		try {
 			proxy.joinGame(game);
 		} catch (IOException e) {
@@ -136,9 +166,9 @@ public class ServerProxyTest {
 	}
 
 	@Test
-	public void testBuildRoad() {
+	public void testBuildRoad() {		
 		HexLocation loc = new HexLocation(-1, -1);
-		EdgeLocation edge = new EdgeLocation(loc, EdgeDirection.NE);
+		EdgeLocation edge = new EdgeLocation(loc, EdgeDirection.NorthEast);
 		BuildRoad road = new BuildRoad(1, edge, false);
 		try {
 			proxy.buildRoad(road);
