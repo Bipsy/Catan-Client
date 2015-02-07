@@ -159,7 +159,7 @@ public class ServerProxy implements iServerProxy {
     @Override
     public void registerNewUser(UserCredentials user) throws IOException {
         try {
-        	System.out.println("REGISTER");
+        	//System.out.println("REGISTER");
             String params = serializer.serialize(user);
             doPost("/user/register", params);
         } catch (IOException e) {
@@ -174,7 +174,7 @@ public class ServerProxy implements iServerProxy {
         	GameContainerDTO list = new GameContainerDTO();
         	
             List<GameDTO> list2 = (List<GameDTO>) serializer.deserialize(doGet("/games/list"));
-            System.out.println(list2);
+            //System.out.println(list2);
             list.setGames(list2);
             return list;
         } catch (IOException e) {
@@ -245,7 +245,7 @@ public class ServerProxy implements iServerProxy {
     @Override
     public ClientModelDTO rollNumber(RollNumber rollMove) throws IOException {
         try {
-        	System.out.println("ROLL");
+        	//System.out.println("ROLL");
             String params = serializer.serialize(rollMove);
             return serializer.deserializeModel(doPost("/moves/rollNumber", params));
         } catch (IOException e) {
@@ -258,7 +258,7 @@ public class ServerProxy implements iServerProxy {
     public ClientModelDTO buildRoad(BuildRoad roadMove) throws IOException {
         try {
             String params = serializer.serialize(roadMove);
-            System.out.println(params);
+            //System.out.println(params);
             return serializer.deserializeModel(doPost("/moves/buildRoad", params));
         } catch (IOException e) {
             e.printStackTrace();
@@ -401,9 +401,9 @@ public class ServerProxy implements iServerProxy {
     @Override
     public void joinGame(JoinGameRequest game) throws IOException {
         try {
-        	System.out.println("JOIN");
+        	//System.out.println("JOIN");
             String params = serializer.serialize(game);
-        	System.out.println(params);
+        	//System.out.println(params);
             serializer.deserialize(doPost("/games/join", params));
         } catch (IOException e) {
             e.printStackTrace();
