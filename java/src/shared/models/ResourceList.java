@@ -60,6 +60,20 @@ public class ResourceList {
      * @return the number of cards in the list
      */
     public int getResourceNumber(ResourceType type) {
-        return 0;
+    	switch(type) {
+	    	case WOOD:
+	    		return wood;
+	    	case WHEAT:
+	    		return wheat;
+	    	case ORE:
+	    		return ore;
+	    	case SHEEP:
+	    		return sheep;
+	    	case BRICK:
+	    		return brick;
+    		default:
+    			assert false;
+    			return 0;
+    	}
     }
 }

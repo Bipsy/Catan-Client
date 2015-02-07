@@ -1,5 +1,6 @@
 package shared.models.DTO;
 
+import shared.definitions.ResourceType;
 import shared.definitions.ResourceTypeOptional;
 import shared.locations.HexLocation;
 
@@ -22,10 +23,10 @@ public class HexDTO {
      */
     private final Integer chit;
 
-    public HexDTO(HexLocation newLocation, ResourceTypeOptional newResource,
+    public HexDTO(HexLocation newLocation, ResourceTypeOptional resource,
             Integer newChit) {
         location = newLocation;
-        resource = newResource;
+        this.resource = resource;//(resource != null)? ResourceType.valueOf(resource.toUpperCase()): null;
         chit = newChit;
     }
 

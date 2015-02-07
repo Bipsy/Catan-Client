@@ -13,9 +13,11 @@ public class TradeOffer {
     }
 
     public TradeOffer(TradeOfferDTO tradeOffer) {
-        this.setSender(tradeOffer.getSender());
-        this.setReceiver(tradeOffer.getReceiver());
-        this.resources = new ResourceList(tradeOffer.getOffer());
+    	if(tradeOffer != null) {
+    		this.setSender(tradeOffer.getSender());
+    		this.setReceiver(tradeOffer.getReceiver());
+    		this.resources = new ResourceList(tradeOffer.getOffer());    		
+    	}
     }
 
     public ResourceList getResources() {

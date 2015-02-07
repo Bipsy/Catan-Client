@@ -46,7 +46,7 @@ public class ServerProxy implements iServerProxy {
         this.serverHost = serverHost;
         this.serverPort = serverPort;
     }
-
+    
     Serializer serializer = new Serializer();
 
     public String doGet(String urlPath) throws IOException {
@@ -60,16 +60,20 @@ public class ServerProxy implements iServerProxy {
 
             connection.connect();
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-            	System.out.println("getHTTP_OK");
+
+            	//System.out.println("getHTTP_OK");
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 StringBuilder out = new StringBuilder();
                 String line;
                 while ((line = reader.readLine()) != null) {
                     out.append(line);
                 }
-                System.out.println(out.toString());
+
+                //System.out.println(out.toString());
 
                 return out.toString();
+            } else if (connection.getResponseCode() == HttpURLConnection.HTTP_BAD_REQUEST) {
+                return null;
             } else {
                 throw new IOException(String.format("doGet failed: %s (http code %d)",
                         urlPath, connection.getResponseCode()));
@@ -96,9 +100,10 @@ public class ServerProxy implements iServerProxy {
             os.write(outputBytes);
 
             os.close();
-            System.out.println(myCookie);
+
+            //System.out.println(myCookie);
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-            	System.out.println("HTTP_OK");
+            	//System.out.println("HTTP_OK");
                 
                 //Set cookies
                 String headerName = null;
@@ -111,7 +116,8 @@ public class ServerProxy implements iServerProxy {
                             myCookie = split[0] + "=" + finalSplit[0];
                         } else {
                             myCookie = myCookie.concat("; " + split[0] + "=" + finalSplit[0]);
-                        	System.out.println(myCookie);
+
+                        	//System.out.println(myCookie);
                         }
                     }
                 }
@@ -122,12 +128,13 @@ public class ServerProxy implements iServerProxy {
                 while ((line = reader.readLine()) != null) {
                     out.append(line);
                 }
-                System.out.println(out.toString());
+
+                //System.out.println(out.toString());
 
                 return out.toString();
+            } else if (connection.getResponseCode() == HttpURLConnection.HTTP_BAD_REQUEST) {
+                return null;
             } else {
-            	System.out.println("failed. boo.");
-
                 throw new IOException(String.format("doPost failed: %s (http code %d)",
                         urlPath, connection.getResponseCode()));
             }
@@ -140,6 +147,7 @@ public class ServerProxy implements iServerProxy {
     @Override
     public void login(UserCredentials user) throws IOException {
         try {
+        	System.out.println("LOGIN");
             String params = serializer.serialize(user);
             doPost("/user/login", params);
         } catch (IOException e) {
@@ -151,6 +159,7 @@ public class ServerProxy implements iServerProxy {
     @Override
     public void registerNewUser(UserCredentials user) throws IOException {
         try {
+        	System.out.println("REGISTER");
             String params = serializer.serialize(user);
             doPost("/user/register", params);
         } catch (IOException e) {
@@ -188,8 +197,12 @@ public class ServerProxy implements iServerProxy {
     @Override
     public ClientModelDTO retrieveCurrentState(Integer version) throws IOException {
         try {
-            String params = serializer.serialize(version);
-            return serializer.deserializeModel(doPost("/game/model", params));
+            if (version == null) {
+                return serializer.deserializeModel(doPost("/game/model", ""));
+            } else {
+                String params = serializer.serialize(version);
+                return serializer.deserializeModel(doPost("/game/model", params));
+            }
         } catch (IOException e) {
             e.printStackTrace();
             throw new IOException();
@@ -232,6 +245,7 @@ public class ServerProxy implements iServerProxy {
     @Override
     public ClientModelDTO rollNumber(RollNumber rollMove) throws IOException {
         try {
+        	System.out.println("ROLL");
             String params = serializer.serialize(rollMove);
             return serializer.deserializeModel(doPost("/moves/rollNumber", params));
         } catch (IOException e) {
@@ -387,6 +401,7 @@ public class ServerProxy implements iServerProxy {
     @Override
     public void joinGame(JoinGameRequest game) throws IOException {
         try {
+        	System.out.println("JOIN");
             String params = serializer.serialize(game);
         	System.out.println(params);
             serializer.deserialize(doPost("/games/join", params));
@@ -422,11 +437,11 @@ public class ServerProxy implements iServerProxy {
 //    		throw new IOException();
 //    	}
 //    }
-    @SuppressWarnings("unchecked") /////
+   
     @Override
     public List<AddAIRequest> listAITypes() throws IOException {
         try {
-            return (List<AddAIRequest>) serializer.deserialize(doGet("/game/list")); //this url is wrong
+            return (List<AddAIRequest>) serializer.deserialize(doGet("/game/listAI"));
         } catch (IOException e) {
             e.printStackTrace();
             throw new IOException();

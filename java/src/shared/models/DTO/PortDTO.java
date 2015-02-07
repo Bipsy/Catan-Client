@@ -2,6 +2,7 @@ package shared.models.DTO;
 
 import shared.definitions.ResourceType;
 import shared.exceptions.InvalidRatio;
+import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 
 /**
@@ -38,15 +39,19 @@ public class PortDTO {
         this.ratio = 3;
     }
     
-    public PortDTO(ResourceType resource, HexLocation location, String direction, int ratio) {
+    public PortDTO(ResourceType resource, HexLocation hexLocation, String direction, int ratio) {
         this.resource = resource;
-        this.location = location;
+        this.location = hexLocation;
         this.direction = direction;
         this.ratio = ratio;
     }
 
 
-    public ResourceType getResource() {
+    public PortDTO(int ratio,String resource, EdgeLocation edgeLocation) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public ResourceType getResource() {
         return resource;
     }
 

@@ -1,9 +1,6 @@
 package shared.models.DTO;
 
 import shared.locations.HexLocation;
-import shared.definitions.ResourceTypeOptional;
-import shared.locations.EdgeLocation;
-import shared.locations.EdgeDirection;
 
 /**
  * This class stores the information needed to create a JSON string of a map,
@@ -27,8 +24,29 @@ public class MapDTO {
      */
     private int radius;
     private HexLocation robber;
+    
+    public MapDTO() {
+    	hexes = null;
+    	roads = null;
+    	ports = null;
+    	settlements = null;
+    	cities = null;
+    	radius = 0;
+    }
 
-    public HexDTO[] getHexes() {
+    public MapDTO(HexDTO[] hexes, EdgeValueDTO[] roads,
+			VertexObjectDTO[] cities, VertexObjectDTO[] settlements, int radius,
+			PortDTO[] ports, HexLocation robber) {
+		this.hexes = hexes;
+		this.roads = roads;
+		this.cities = cities;
+		this.settlements = settlements;
+		this.radius = radius;
+		this.ports = ports;
+		this.robber = robber;
+	}
+
+	public HexDTO[] getHexes() {
         return hexes;
     }
 

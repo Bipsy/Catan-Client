@@ -7,6 +7,8 @@ import shared.models.DTO.HexDTO;
 
 import java.util.List;
 import java.util.Map;
+
+import shared.definitions.ResourceType;
 import shared.definitions.ResourceTypeOptional;
 
 /**
@@ -18,7 +20,7 @@ public class Hex {
 
     private HexLocation location;
     private ResourceTypeOptional resource;
-    private int chit;
+    private Integer chit;
     private Map<EdgeLocation, Road> roadMap;
     private Harbor harbor;
     private Map<VertexLocation, VertexObject> communityMap;
@@ -99,11 +101,11 @@ public class Hex {
         this.resource = resource;
     }
 
-    public int getChit() {
+    public Integer getChit() {
         return chit;
     }
 
-    public void setChit(int chit) {
+    public void setChit(Integer chit) {
         this.chit = chit;
     }
 

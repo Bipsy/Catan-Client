@@ -7,7 +7,6 @@ package shared.models;
 
 import java.util.List;
 
-import shared.models.DTO.TurnTrackerDTO;
 import shared.models.DTO.params.BuildCity;
 import shared.models.DTO.params.BuildRoad;
 import shared.models.DTO.params.BuildSettlement;

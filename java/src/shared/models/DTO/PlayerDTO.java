@@ -51,8 +51,49 @@ public class PlayerDTO {
     private int settlements;
     private int soldiers;
     private int victoryPoints;
+    
+    public PlayerDTO() {
+    	cities = 4;
+    	color = null;
+    	discarded = false;
+    	monuments = 0;
+    	name = null;
+    	newDevCards = null;
+    	oldDevCards = null;
+    	playerIndex = -1;
+    	playedDevCard = false;
+    	playerID = -1;
+    	resources = null;
+    	roads = 15;
+    	settlements = 5;
+    	soldiers = 0;
+    	victoryPoints = 0;
+    }
 
-    public int getCities() {
+    public PlayerDTO(ResourceListDTO resources,
+			DevCardListDTO oldDevCards, DevCardListDTO newDevCards,
+			int roads, int cities, int settlements, int soldiers, 
+			int victoryPoints, int monuments, boolean playedDevCard, 
+			boolean discarded, int playerID, int playerIndex, String name, 
+			CatanColor color) {
+    	this.resources = resources;
+    	this.oldDevCards = oldDevCards;
+    	this.newDevCards = newDevCards;
+    	this.roads = roads;
+    	this.cities = cities;
+    	this.settlements = settlements;
+    	this.soldiers = soldiers;
+    	this.victoryPoints = victoryPoints;
+    	this.monuments = monuments;
+    	this.playedDevCard = playedDevCard;
+    	this.discarded = discarded;
+    	this.playerID = playerID;
+    	this.playerIndex = playerIndex;
+    	this.name = name;
+    	this.color = color;
+	}
+
+	public int getCities() {
         return cities;
     }
 
