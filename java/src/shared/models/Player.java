@@ -98,7 +98,7 @@ public class Player extends User {
 	/**
      * canUseRoadBuilding
      *
-     * @return True if the player can play road building, false otherwise.
+     * @return True if the player can use road building, false otherwise.
      */
 	public boolean canUseRoadBuilding() {
 		DevCardList devCards = this.resources.getDevCards();
@@ -111,6 +111,21 @@ public class Player extends User {
     	return canPlay;
 	}
 
+	/**
+     * canUseYearOfPlenty
+     *
+     * @return True if the player can user year of plenty, false otherwise.
+     */
+	public boolean canUseYearOfPlenty() {
+		DevCardList devCards = this.resources.getDevCards();
+    	int yop = devCards.getYearOfPlenty();
+    	
+    	boolean canPlay = yop > 0 && 
+    			!this.playedDevCard;
+        
+    	return canPlay;
+	}
+	
     /**
      * Determines if a player can build a road. If the player has the resources
      * and the road structure available then this method returns true, otherwise
@@ -167,7 +182,8 @@ public class Player extends User {
 	
 	public boolean CanOfferMTrade(MaritimeTrade maritimeTrade) {
 		return resources.canMTrade(maritimeTrade);
-
+	}
+		
 	public boolean isPlayedDevCard() {
 		return playedDevCard;
 	}
@@ -231,9 +247,7 @@ public class Player extends User {
 	public void setVictoryPoints(int victoryPoints) {
 		this.victoryPoints = victoryPoints;
 	}
-	}
 
-
-
+	
 
 }

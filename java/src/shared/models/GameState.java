@@ -1,5 +1,6 @@
 package shared.models;
 
+import shared.definitions.ResourceType;
 import shared.models.DTO.params.BuildCity;
 import shared.models.DTO.params.BuildRoad;
 import shared.models.DTO.params.BuildSettlement;
@@ -180,13 +181,21 @@ public class GameState {
     }
 
     public boolean CanUseYearOfPlenty(YearOfPlenty yearOfPlenty) {
-        // TODO is current user, has dev card, hasn't played any other dev cards
-        return false;
+    	int index = yearOfPlenty.getPlayerIndex();
+    	Player player = userManager.getPlayer(index);
+    	ResourceType type1 = yearOfPlenty.getResource1();
+    	ResourceType type2 = yearOfPlenty.getResource1();
+    	boolean isCurrentUser = userManager.isCurrentPlayer(index);
+    	int resource1 = bank.getResources().getResourceNumber(type1);
+    	int resource2 = bank.getResources().getResourceNumber(type2);
+    	
+        return isCurrentUser && 
+        		player.canUseYearOfPlenty() &&
+        		resource1 >= 1 &&
+        		resource2 >= 2;
     }
 
     public boolean CanUseRoadBuilder(RoadBuilding roadBuilding) {
-		// TODO is current user, has dev card, hasn't played any other dev cards
-        // has roads
     	int index = roadBuilding.getPlayerIndex();
     	Player player = userManager.getPlayer(index);
     	boolean isCurrentUser = userManager.isCurrentPlayer(index);
