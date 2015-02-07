@@ -95,17 +95,22 @@ public class ServerProxy implements iServerProxy {
             os.write(outputBytes);
 
             os.close();
+            System.out.println(myCookie);
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+            	System.out.println("HTTP_OK");
+                
                 //Set cookies
                 String headerName = null;
                 for (int i = 1; (headerName = connection.getHeaderFieldKey(i)) != null; i++) {
-                    if (headerName.equals("Set-Cookie")) {
-                        String unsplit = connection.getHeaderField(i);
+                    if (connection.getHeaderField(i).contains("catan")) {
+                    	String unsplit = connection.getHeaderField(i);
                         String[] split = unsplit.split("=");
-                        if (split[0] == "catan.user") {
-                            myCookie = connection.getHeaderField(i);
+                        String[] finalSplit = split[1].split(";");
+                        if (split[0].equals("catan.user")) {
+                            myCookie = split[0] + "=" + finalSplit[0];
                         } else {
-                            myCookie.concat("; " + connection.getHeaderField(i));
+                            myCookie = myCookie.concat("; " + split[0] + "=" + finalSplit[0]);
+                        	System.out.println(myCookie);
                         }
                     }
                 }
@@ -120,6 +125,8 @@ public class ServerProxy implements iServerProxy {
 
                 return out.toString();
             } else {
+            	System.out.println("failed. boo.");
+
                 throw new IOException(String.format("doPost failed: %s (http code %d)",
                         urlPath, connection.getResponseCode()));
             }
@@ -136,7 +143,7 @@ public class ServerProxy implements iServerProxy {
             doPost("/user/login", params);
         } catch (IOException e) {
             e.printStackTrace();
-            throw new IOException();
+            throw new IOException("Did not succeed");
         }
     }
 
@@ -374,6 +381,7 @@ public class ServerProxy implements iServerProxy {
     public void joinGame(JoinGameRequest game) throws IOException {
         try {
             String params = serializer.serialize(game);
+        	System.out.println(params);
             serializer.deserialize(doPost("/games/join", params));
         } catch (IOException e) {
             e.printStackTrace();
@@ -433,6 +441,7 @@ public class ServerProxy implements iServerProxy {
 //    public void changeLogLevel(String logLevel) throws IOException {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 //    }
+    
 //  public static void main(final String[] args) {
 //      ServerProxy test = new ServerProxy();
 //  	try {
