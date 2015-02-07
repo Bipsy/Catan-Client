@@ -92,8 +92,8 @@ public class User {
         this.password = password;
     }
 
-    public User(String color, int playerIndex, int playerID) {
-        this.color = CatanColor.valueOf(color.toUpperCase());
+    public User(CatanColor color, int playerIndex, int playerID) {
+        this.color = color;//CatanColor.valueOf(color.toUpperCase());
         this.index = playerIndex;
         this.ID = playerID;
     }
