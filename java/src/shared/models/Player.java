@@ -2,6 +2,9 @@ package shared.models;
 
 import shared.definitions.CatanColor;
 import shared.models.DTO.PlayerDTO;
+import shared.models.DTO.params.BuildCity;
+import shared.models.DTO.params.BuildRoad;
+import shared.models.DTO.params.BuildSettlement;
 import shared.models.DTO.params.DiscardCards;
 import shared.models.DTO.params.MaritimeTrade;
 import shared.models.DTO.params.OfferTrade;
@@ -183,6 +186,18 @@ public class Player extends User {
 	public boolean CanOfferMTrade(MaritimeTrade maritimeTrade) {
 		return resources.canMTrade(maritimeTrade);
 	}
+
+	public boolean CanBuildRoad(BuildRoad buildRoad) {
+		return resources.canBuildRoad(buildRoad);
+	}
+
+	public boolean CanBuildSettlement(BuildSettlement buildSettlement) {
+		return resources.canBuildSettlement(buildSettlement);
+	}
+
+	public boolean CanBuildCity(BuildCity buildCity) {
+		return resources.canBuildCity(buildCity);
+	}
 		
 	public boolean isPlayedDevCard() {
 		return playedDevCard;
@@ -247,6 +262,7 @@ public class Player extends User {
 	public void setVictoryPoints(int victoryPoints) {
 		this.victoryPoints = victoryPoints;
 	}
+
 
 	
 

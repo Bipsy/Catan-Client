@@ -4,6 +4,9 @@ import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 import shared.models.DTO.DevCardListDTO;
 import shared.models.DTO.ResourceListDTO;
+import shared.models.DTO.params.BuildCity;
+import shared.models.DTO.params.BuildRoad;
+import shared.models.DTO.params.BuildSettlement;
 import shared.models.DTO.params.DiscardCards;
 import shared.models.DTO.params.MaritimeTrade;
 import shared.models.DTO.params.OfferTrade;
@@ -122,4 +125,22 @@ public class PlayerHand {
 	public boolean canMTrade(MaritimeTrade maritimeTrade) {
 		return resources.getResourceNumber(maritimeTrade.getInputResource()) >= maritimeTrade.getRatio();
 	}
+
+	public boolean canBuildRoad(BuildRoad buildRoad) {
+		return resources.getResourceNumber(ResourceType.BRICK) > 0 && 
+		resources.getResourceNumber(ResourceType.WOOD) > 0;
+	}
+
+	public boolean canBuildSettlement(BuildSettlement buildSettlement) {
+		return resources.getResourceNumber(ResourceType.BRICK) > 0 && 
+		resources.getResourceNumber(ResourceType.WOOD) > 0 &&
+		resources.getResourceNumber(ResourceType.SHEEP) > 0 && 
+		resources.getResourceNumber(ResourceType.WHEAT) > 0;
+	}
+
+	public boolean canBuildCity(BuildCity buildCity) {
+		return resources.getResourceNumber(ResourceType.WHEAT) >= 2 && 
+		resources.getResourceNumber(ResourceType.ORE) >= 3;
+	}
+	
 }
