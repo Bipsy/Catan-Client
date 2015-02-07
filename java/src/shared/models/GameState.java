@@ -133,7 +133,7 @@ public class GameState {
      * @return
      */
     public boolean CanBuildRoad(BuildRoad buildRoad) {
-    	return userManager.CanBuildRoad(buildRoad) &&
+    	return (buildRoad.isFree() || userManager.CanBuildRoad(buildRoad)) &&
     			map.canBuildRoad(buildRoad);
     }
 
