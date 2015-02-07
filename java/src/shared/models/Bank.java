@@ -74,4 +74,8 @@ public class Bank {
         return null;
 
     }
+
+	public boolean hasDevCards() {
+		return devCards.getNumDevCards() > 0;
+	}
 }

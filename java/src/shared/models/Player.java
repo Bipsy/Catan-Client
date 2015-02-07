@@ -5,6 +5,7 @@ import shared.models.DTO.PlayerDTO;
 import shared.models.DTO.params.BuildCity;
 import shared.models.DTO.params.BuildRoad;
 import shared.models.DTO.params.BuildSettlement;
+import shared.models.DTO.params.BuyDevCard;
 import shared.models.DTO.params.DiscardCards;
 import shared.models.DTO.params.MaritimeTrade;
 import shared.models.DTO.params.OfferTrade;
@@ -182,6 +183,10 @@ public class Player extends User {
 
 	public boolean CanBuildCity(BuildCity buildCity) {
 		return resources.canBuildCity(buildCity);
+	}
+	
+	public boolean CanBuyDevCard(BuyDevCard buyDevCard) {
+		return resources.canBuyDevCard(buyDevCard);
 	}
 		
 	public boolean isPlayedDevCard() {

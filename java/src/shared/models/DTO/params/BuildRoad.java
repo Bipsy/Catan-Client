@@ -1,7 +1,5 @@
 package shared.models.DTO.params;
 
-import javax.management.relation.Relation;
-
 import shared.locations.EdgeLocation;
 
 public class BuildRoad extends MoveParams {

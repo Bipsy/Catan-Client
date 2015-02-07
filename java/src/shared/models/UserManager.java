@@ -11,6 +11,7 @@ import shared.models.DTO.TurnTrackerDTO;
 import shared.models.DTO.params.BuildCity;
 import shared.models.DTO.params.BuildRoad;
 import shared.models.DTO.params.BuildSettlement;
+import shared.models.DTO.params.BuyDevCard;
 import shared.models.DTO.params.DiscardCards;
 import shared.models.DTO.params.MaritimeTrade;
 import shared.models.DTO.params.OfferTrade;
@@ -55,21 +56,26 @@ public class UserManager {
 
 	public boolean CanMaritimeTrade(MaritimeTrade maritimeTrade) {
 		return isCurrentPlayer(maritimeTrade.getPlayerIndex()) &&
-    			users.get(maritimeTrade.getPlayerIndex()).CanOfferMTrade(maritimeTrade);
+    		users.get(maritimeTrade.getPlayerIndex()).CanOfferMTrade(maritimeTrade);
 	}
 
 	public boolean CanBuildRoad(BuildRoad buildRoad) {
 		return isCurrentPlayer(buildRoad.getPlayerIndex()) &&
-				users.get(buildRoad.getPlayerIndex()).CanBuildRoad(buildRoad);
+			users.get(buildRoad.getPlayerIndex()).CanBuildRoad(buildRoad);
 	}
 
 	public boolean CanBuildSettlement(BuildSettlement buildSettlement) {
 		return isCurrentPlayer(buildSettlement.getPlayerIndex()) &&
-				users.get(buildSettlement.getPlayerIndex()).CanBuildSettlement(buildSettlement);
+			users.get(buildSettlement.getPlayerIndex()).CanBuildSettlement(buildSettlement);
 	}
 
 	public boolean CanBuildCity(BuildCity buildCity) {
 		return isCurrentPlayer(buildCity.getPlayerIndex()) &&
-				users.get(buildCity.getPlayerIndex()).CanBuildCity(buildCity);
+			users.get(buildCity.getPlayerIndex()).CanBuildCity(buildCity);
+	}
+
+	public boolean CanBuyDevCard(BuyDevCard buyDevCard) {
+		return isCurrentPlayer(buyDevCard.getPlayerIndex()) &&
+			users.get(buyDevCard.getPlayerIndex()).CanBuyDevCard(buyDevCard);
 	}
 }

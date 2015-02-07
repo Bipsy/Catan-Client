@@ -101,4 +101,8 @@ public class DevCardList {
 		this.soldier = soldier;
 	}
 
+	public int getNumDevCards() {
+		return monopoly + roadBuilding + yearOfPlenty + soldier + monument;
+	}
+
 }

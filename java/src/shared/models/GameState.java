@@ -174,9 +174,7 @@ public class GameState {
     }
 
     public boolean CanBuyDevCard(BuyDevCard buyDevCard) {
-		// TODO check that the player is the current player, and has the 
-        // necessary resources to buy a dev card
-        return false;
+    	return userManager.CanBuyDevCard(buyDevCard) && bank.hasDevCards();
     }
 
     public boolean CanUseYearOfPlenty(YearOfPlenty yearOfPlenty) {
