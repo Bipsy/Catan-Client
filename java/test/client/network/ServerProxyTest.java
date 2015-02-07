@@ -129,6 +129,7 @@ public class ServerProxyTest {
 	public void testRollNumber() {
 		RollNumber roll = new RollNumber(1,8);
 		try {
+			System.out.println("LLLLLLLLLLLLLL: " + roll);
 			proxy.rollNumber(roll);
 		} catch (IOException e) {
 			fail("Did not succeed");

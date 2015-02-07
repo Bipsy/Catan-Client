@@ -60,14 +60,12 @@ public class ServerProxy implements iServerProxy {
 
             connection.connect();
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-            	System.out.println("getHTTP_OK");
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 StringBuilder out = new StringBuilder();
                 String line;
                 while ((line = reader.readLine()) != null) {
                     out.append(line);
                 }
-                System.out.println(out.toString());
 
                 return out.toString();
             } else {
@@ -96,9 +94,7 @@ public class ServerProxy implements iServerProxy {
             os.write(outputBytes);
 
             os.close();
-            System.out.println(myCookie);
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-            	System.out.println("HTTP_OK");
                 
                 //Set cookies
                 String headerName = null;
@@ -111,7 +107,6 @@ public class ServerProxy implements iServerProxy {
                             myCookie = split[0] + "=" + finalSplit[0];
                         } else {
                             myCookie = myCookie.concat("; " + split[0] + "=" + finalSplit[0]);
-                        	System.out.println(myCookie);
                         }
                     }
                 }
@@ -122,12 +117,9 @@ public class ServerProxy implements iServerProxy {
                 while ((line = reader.readLine()) != null) {
                     out.append(line);
                 }
-                System.out.println(out.toString());
 
                 return out.toString();
             } else {
-            	System.out.println("failed. boo.");
-
                 throw new IOException(String.format("doPost failed: %s (http code %d)",
                         urlPath, connection.getResponseCode()));
             }
@@ -140,6 +132,7 @@ public class ServerProxy implements iServerProxy {
     @Override
     public void login(UserCredentials user) throws IOException {
         try {
+        	System.out.println("LOGIN");
             String params = serializer.serialize(user);
             doPost("/user/login", params);
         } catch (IOException e) {
@@ -151,6 +144,7 @@ public class ServerProxy implements iServerProxy {
     @Override
     public void registerNewUser(UserCredentials user) throws IOException {
         try {
+        	System.out.println("REGISTER");
             String params = serializer.serialize(user);
             doPost("/user/register", params);
         } catch (IOException e) {
@@ -232,6 +226,7 @@ public class ServerProxy implements iServerProxy {
     @Override
     public ClientModelDTO rollNumber(RollNumber rollMove) throws IOException {
         try {
+        	System.out.println("ROLL");
             String params = serializer.serialize(rollMove);
             return serializer.deserializeModel(doPost("/moves/rollNumber", params));
         } catch (IOException e) {
@@ -387,6 +382,7 @@ public class ServerProxy implements iServerProxy {
     @Override
     public void joinGame(JoinGameRequest game) throws IOException {
         try {
+        	System.out.println("JOIN");
             String params = serializer.serialize(game);
         	System.out.println(params);
             serializer.deserialize(doPost("/games/join", params));
