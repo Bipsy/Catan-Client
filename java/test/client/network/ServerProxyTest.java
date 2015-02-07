@@ -188,12 +188,25 @@ public class ServerProxyTest {
 
     @Test
     public void testMaritimeTrade() {
-        fail("Not yet implemented");
+        MaritimeTrade trade = new MaritimeTrade(2, 2, ResourceType.BRICK, ResourceType.ORE);
+        try {
+			proxy.maritimeTrade(trade);
+		} catch (IOException e) {
+            fail("Did not succeed");
+			e.printStackTrace();
+		}
     }
 
     @Test
     public void testRobPlayer() {
-        fail("Not yet implemented");
+        HexLocation hex = new HexLocation(-1, -1);
+        RobPlayer rob = new RobPlayer(2, 0, hex);
+        try {
+			proxy.robPlayer(rob);
+		} catch (IOException e) {
+            fail("Did not succeed");
+			e.printStackTrace();
+		}
     }
 
     @Test
@@ -220,7 +233,13 @@ public class ServerProxyTest {
 
     @Test
     public void testPlaySoldier() {
-        fail("Not yet implemented");
+        Soldier sold = new Soldier(2, 0);
+        try {
+			proxy.playSoldier(sold);
+		} catch (IOException e) {
+            fail("Did not succeed");
+			e.printStackTrace();
+		}
     }
 
     @Test
@@ -273,12 +292,23 @@ public class ServerProxyTest {
 
     @Test
     public void testListAITypes() {
-        fail("Not yet implemented");
+        try {
+			proxy.listAITypes();
+		} catch (IOException e) {
+            fail("Did not succeed");
+			e.printStackTrace();
+		}
     }
 
     @Test
     public void testAddAIPlayer() {
-        AddAIRequest ai = new AddAIRequest();
+        AddAIRequest ai = new AddAIRequest("2");
+        try {
+			proxy.addAIPlayer(ai);
+		} catch (IOException e) {
+            fail("Did not succeed");
+			e.printStackTrace();
+		}
     }
 
 }
