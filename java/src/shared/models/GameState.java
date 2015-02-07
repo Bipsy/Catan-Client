@@ -132,7 +132,7 @@ public class GameState {
      * @return
      */
     public boolean CanBuildRoad(BuildRoad buildRoad) {
-    	return userManager.isCurrentPlayer(buildRoad.getPlayerIndex()) &&
+    	return userManager.CanBuildRoad(buildRoad) &&
     			map.canBuildRoad(buildRoad);
     }
 
@@ -143,7 +143,7 @@ public class GameState {
      * @return
      */
     public boolean CanBuildSettlement(BuildSettlement buildSettlement) {
-    	return userManager.isCurrentPlayer(buildSettlement.getPlayerIndex()) &&
+    	return userManager.CanBuildSettlement(buildSettlement) &&
     			map.canBuildSettlement(buildSettlement);
     }
 
@@ -154,7 +154,7 @@ public class GameState {
      * @return
      */
     public boolean CanBuildCity(BuildCity buildCity) {
-    	return userManager.isCurrentPlayer(buildCity.getPlayerIndex()) &&
+    	return userManager.CanBuildCity(buildCity) &&
     			map.canBuildCity(buildCity);
     }
 
