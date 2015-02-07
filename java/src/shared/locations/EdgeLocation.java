@@ -97,4 +97,39 @@ public class EdgeLocation {
                 return null;
         }
     }
+
+	public EdgeLocation[] getAdjacentEdges() {
+		EdgeLocation[] adjEdges = new EdgeLocation[4];
+		EdgeLocation temp = getNormalizedLocation();
+		switch (temp.getDir()) {
+			case NorthWest:
+				adjEdges[0] = new EdgeLocation(hexLoc, EdgeDirection.North);
+				adjEdges[1] = new EdgeLocation(hexLoc, EdgeDirection.SouthWest);
+				adjEdges[2] = new EdgeLocation(hexLoc.getNeighborLoc(temp.getDir()),
+                        EdgeDirection.South);
+				adjEdges[3] = new EdgeLocation(hexLoc.getNeighborLoc(temp.getDir()),
+                        EdgeDirection.NorthEast);
+				break;
+			case North:
+				adjEdges[0] = new EdgeLocation(hexLoc, EdgeDirection.NorthEast);
+				adjEdges[1] = new EdgeLocation(hexLoc, EdgeDirection.NorthWest);
+				adjEdges[2] = new EdgeLocation(hexLoc.getNeighborLoc(temp.getDir()),
+                        EdgeDirection.SouthWest);
+				adjEdges[3] = new EdgeLocation(hexLoc.getNeighborLoc(temp.getDir()),
+                        EdgeDirection.SouthEast);
+				break;
+			case NorthEast:
+				adjEdges[0] = new EdgeLocation(hexLoc, EdgeDirection.North);
+				adjEdges[1] = new EdgeLocation(hexLoc, EdgeDirection.SouthEast);
+				adjEdges[2] = new EdgeLocation(hexLoc.getNeighborLoc(temp.getDir()),
+                        EdgeDirection.South);
+				adjEdges[3] = new EdgeLocation(hexLoc.getNeighborLoc(temp.getDir()),
+                        EdgeDirection.NorthWest);
+				break;
+			default:
+				assert false;
+				return null;
+		}
+		return adjEdges;		
+	}
 }

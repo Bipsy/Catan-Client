@@ -74,4 +74,24 @@ public class Bank {
         return null;
 
     }
+    
+	public boolean hasDevCards() {
+		return devCards.getNumDevCards() > 0;
+	}
+	
+	public ResourceList getResources() {
+		return resources;
+	}
+
+	public void setResources(ResourceList resources) {
+		this.resources = resources;
+	}
+
+	public DevCardList getDevCards() {
+		return devCards;
+	}
+
+	public void setDevCards(DevCardList devCards) {
+		this.devCards = devCards;
+	}
 }

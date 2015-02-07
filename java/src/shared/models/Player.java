@@ -2,6 +2,13 @@ package shared.models;
 
 import shared.definitions.CatanColor;
 import shared.models.DTO.PlayerDTO;
+import shared.models.DTO.params.BuildCity;
+import shared.models.DTO.params.BuildRoad;
+import shared.models.DTO.params.BuildSettlement;
+import shared.models.DTO.params.BuyDevCard;
+import shared.models.DTO.params.DiscardCards;
+import shared.models.DTO.params.MaritimeTrade;
+import shared.models.DTO.params.OfferTrade;
 
 public class Player extends User {
 
@@ -36,27 +43,93 @@ public class Player extends User {
 
     public Player(PlayerDTO playerDTO) {
         super(playerDTO.getColor(), playerDTO.getPlayerIndex(), playerDTO.getPlayerID());
-        this.cities = playerDTO.getCities();
-        this.roads = playerDTO.getRoads();
-        this.settlements = playerDTO.getSettlements();
-        this.soldiers = playerDTO.getSoldiers();
-        this.newDevCards = new DevCardList(playerDTO.getNewDevCards());
-        this.oldDevCards = new DevCardList(playerDTO.getOldDevCards());
+        this.setCities(playerDTO.getCities());
+        this.setRoads(playerDTO.getRoads());
+        this.setSettlements(playerDTO.getSettlements());
+        this.setSoldiers(playerDTO.getSoldiers());
+        this.setNewDevCards(new DevCardList(playerDTO.getNewDevCards()));
+        this.setOldDevCards(new DevCardList(playerDTO.getOldDevCards()));
         this.resources = new PlayerHand(playerDTO.getResources(), playerDTO.getNewDevCards());
+        this.playedDevCard = playerDTO.isPlayedDevCard();
     }
 
+    
     /**
-     * canPlayDevCard determines if the selected player is able to play a dev
-     * card. If the player does not have a dev card, has already played a dev
-     * card (and couldn't win that turn by playing multiple monument cards),
-     * etc. then this method will return false, otherwise it will return true;
+     * canPlayDevMonument determines if the selected player is able to play a 
+     * monument. If # of monuments player has + current # of victory points
+     * is >= # of points needed to win.
      *
-     * @return True if the player can play the dev card, false otherwise.
+     * @return True if the player can play the monument, false otherwise.
      */
-    public boolean canPlayDevCard() {
-        return false;
+    public boolean canPlayMonument() {
+    	DevCardList devCards = this.resources.getDevCards();
+    	int monuments = devCards.getMonument();
+    	boolean canPlay = monuments + this.victoryPoints >= 10;
+        
+    	return canPlay;
     }
+    
+    /**
+     * canPlayMonopoly determines if the selected player is able to play a 
+     * monument. If user hasn't played another dev card and has a monopoly card
+     * the user may play it.
+     *
+     * @return True if the player can play monopoly, false otherwise.
+     */
+    public boolean canPlayMonopoly() {
+    	DevCardList devCards = this.resources.getDevCards();
+    	int monopoly = devCards.getMonopoly();
+    	
+    	boolean canPlay = monopoly > 0 && !this.playedDevCard;
+        
+    	return canPlay;
+    }
+    
+    /**
+     * canPlaySoldier
+     *
+     * @return True if the player can play soldier, false otherwise.
+     */
+	public boolean canPlaySoldier() {
+		DevCardList devCards = this.resources.getDevCards();
+    	int soldier = devCards.getSoldier();
+    	
+    	boolean canPlay = soldier > 0 && !this.playedDevCard;
+        
+    	return canPlay;
+	}
 
+	/**
+     * canUseRoadBuilding
+     *
+     * @return True if the player can use road building, false otherwise.
+     */
+	public boolean canUseRoadBuilding() {
+		DevCardList devCards = this.resources.getDevCards();
+    	int roadBuild = devCards.getRoadBuilding();
+    	
+    	boolean canPlay = roadBuild > 0 && 
+    			!this.playedDevCard &&
+    			this.roads >= 2;
+        
+    	return canPlay;
+	}
+
+	/**
+     * canUseYearOfPlenty
+     *
+     * @return True if the player can user year of plenty, false otherwise.
+     */
+	public boolean canUseYearOfPlenty() {
+		DevCardList devCards = this.resources.getDevCards();
+    	int yop = devCards.getYearOfPlenty();
+    	
+    	boolean canPlay = yop > 0 && 
+    			!this.playedDevCard;
+        
+    	return canPlay;
+	}
+	
     /**
      * Determines if a player can build a road. If the player has the resources
      * and the road structure available then this method returns true, otherwise
@@ -100,5 +173,102 @@ public class Player extends User {
     public boolean canBuyDevCard() {
         return false;
     }
+
+	public boolean CanDiscardCards(DiscardCards discardCards) {
+		if(discarded || resources.getNumResourceCards() < 7) 
+    		return false;
+    	return resources.CanUpdateResourceCards(discardCards.getDiscardedCards());
+	}
+
+	public boolean CanOfferTrade(OfferTrade offerTrade) {
+		return resources.CanUpdateResourceCards(offerTrade.getOffer());
+	}
+	
+	public boolean CanOfferMTrade(MaritimeTrade maritimeTrade) {
+		return resources.canMTrade(maritimeTrade);
+	}
+
+	public boolean CanBuildRoad(BuildRoad buildRoad) {
+		return resources.canBuildRoad(buildRoad);
+	}
+
+	public boolean CanBuildSettlement(BuildSettlement buildSettlement) {
+		return resources.canBuildSettlement(buildSettlement);
+	}
+
+	public boolean CanBuildCity(BuildCity buildCity) {
+		return resources.canBuildCity(buildCity);
+	}
+	
+	public boolean CanBuyDevCard(BuyDevCard buyDevCard) {
+		return resources.canBuyDevCard(buyDevCard);
+	}
+		
+	public boolean isPlayedDevCard() {
+		return playedDevCard;
+	}
+
+	public void setPlayedDevCard(boolean playedDevCard) {
+		this.playedDevCard = playedDevCard;
+	}
+
+	public DevCardList getOldDevCards() {
+		return oldDevCards;
+	}
+
+	public void setOldDevCards(DevCardList oldDevCards) {
+		this.oldDevCards = oldDevCards;
+	}
+
+	public DevCardList getNewDevCards() {
+		return newDevCards;
+	}
+
+	public void setNewDevCards(DevCardList newDevCards) {
+		this.newDevCards = newDevCards;
+	}
+
+	public int getSoldiers() {
+		return soldiers;
+	}
+
+	public void setSoldiers(int soldiers) {
+		this.soldiers = soldiers;
+	}
+
+	public int getSettlements() {
+		return settlements;
+	}
+
+	public void setSettlements(int settlements) {
+		this.settlements = settlements;
+	}
+
+	public int getRoads() {
+		return roads;
+	}
+
+	public void setRoads(int roads) {
+		this.roads = roads;
+	}
+
+	public int getCities() {
+		return cities;
+	}
+
+	public void setCities(int cities) {
+		this.cities = cities;
+	}
+
+	public int getVictoryPoints() {
+		return victoryPoints;
+	}
+
+	public void setVictoryPoints(int victoryPoints) {
+		this.victoryPoints = victoryPoints;
+	}
+
+
+	
 
 }

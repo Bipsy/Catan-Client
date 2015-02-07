@@ -2,6 +2,7 @@ package shared.models;
 
 import shared.definitions.PieceType;
 import shared.definitions.PortType;
+import shared.locations.VertexLocation;
 import shared.models.DTO.VertexObjectDTO;
 
 /**
@@ -16,9 +17,11 @@ public class VertexObject {
     private PieceType type;
     private int resourceRatio;
     private PortType harbor;
+    private VertexLocation location;
 
     public VertexObject(VertexObjectDTO vertexObjectDTO, PieceType type) {
         this.owner = vertexObjectDTO.getOwner();
+        setLocation(vertexObjectDTO.getLocation());
         this.type = type;
         if (type == PieceType.SETTLEMENT) {
             this.resourceRatio = 2;
@@ -72,4 +75,12 @@ public class VertexObject {
     public void setHarbor(PortType harbor) {
         this.harbor = harbor;
     }
+
+	public VertexLocation getLocation() {
+		return location;
+	}
+
+	public void setLocation(VertexLocation location) {
+		this.location = location;
+	}
 }

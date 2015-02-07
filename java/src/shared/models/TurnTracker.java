@@ -64,4 +64,8 @@ public class TurnTracker {
     public void setLargestArmy(int largestArmy) {
         this.largestArmy = largestArmy;
     }
+
+	public boolean matchesCurrent(int playerIndex) {
+		return playerIndex == this.currentTurn;
+	}
 }

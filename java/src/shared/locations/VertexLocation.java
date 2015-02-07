@@ -107,4 +107,50 @@ public class VertexLocation {
                 return null;
         }
     }
+
+	public VertexLocation[] getAdjacentVertexes() {
+		VertexLocation[] adjEdges = new VertexLocation[3];
+		VertexLocation temp = getNormalizedLocation();
+		switch (temp.getDir()) {
+			case NorthWest:
+				adjEdges[0] = new VertexLocation(hexLoc, VertexDirection.NorthEast);
+				adjEdges[1] = new VertexLocation(hexLoc, VertexDirection.West);
+				adjEdges[2] = new VertexLocation(hexLoc.getNeighborLoc(EdgeDirection.North),
+						VertexDirection.West);
+				break;
+			case NorthEast:
+				adjEdges[0] = new VertexLocation(hexLoc, VertexDirection.NorthWest);
+				adjEdges[1] = new VertexLocation(hexLoc, VertexDirection.East);
+				adjEdges[2] = new VertexLocation(hexLoc.getNeighborLoc(EdgeDirection.North),
+						VertexDirection.East);
+				break;
+			default:
+				assert false;
+				return null;
+		}
+		return adjEdges;	
+	}
+	
+	public EdgeLocation[] getAdjacentEdges() {
+		EdgeLocation[] adjEdges = new EdgeLocation[3];
+		VertexLocation temp = getNormalizedLocation();
+		switch (temp.getDir()) {
+			case NorthWest:
+				adjEdges[0] = new EdgeLocation(hexLoc, EdgeDirection.North);
+				adjEdges[1] = new EdgeLocation(hexLoc, EdgeDirection.NorthWest);
+				adjEdges[2] = new EdgeLocation(hexLoc.getNeighborLoc(EdgeDirection.North),
+						EdgeDirection.SouthWest);
+				break;
+			case NorthEast:
+				adjEdges[0] = new EdgeLocation(hexLoc, EdgeDirection.North);
+				adjEdges[1] = new EdgeLocation(hexLoc, EdgeDirection.NorthEast);
+				adjEdges[2] = new EdgeLocation(hexLoc.getNeighborLoc(EdgeDirection.North),
+						EdgeDirection.SouthEast);
+				break;
+			default:
+				assert false;
+				return null;
+		}
+		return adjEdges;	
+	}
 }

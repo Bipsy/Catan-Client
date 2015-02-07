@@ -1,8 +1,10 @@
 **/bin
+**/build
 **/.classpath
 **/.project
 **/.DS_Store
 **/.class
 **/.settings
-**/*.txt
 **/*.swp
+**/*.txt
+/build/

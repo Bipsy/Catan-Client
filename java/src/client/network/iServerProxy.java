@@ -327,7 +327,7 @@ public interface iServerProxy {
      * @param versionNumber
      * @throws IOException
      */
-    ClientModelDTO retrieveCurrentState(int version) throws IOException;
+    ClientModelDTO retrieveCurrentState(Integer version) throws IOException;
 
     /**
      * Sends a request to the server to reset a game

@@ -26,9 +26,9 @@ public class MockServerProxy implements iServerProxy {
     private final ClientModelDTO model;
     private final Serializer serializer;
 
-    public MockServerProxy(Serializer newSerializer, String defaultModel) {
+    public MockServerProxy(Serializer newSerializer, String defaultModel) throws IOException {
         serializer = newSerializer;
-        model = (ClientModelDTO) serializer.deserialize(defaultModel);
+        model = serializer.deserializeModel(defaultModel);
     }
 
     @Override
@@ -151,9 +151,14 @@ public class MockServerProxy implements iServerProxy {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 //    }
     @Override
-
-    public ClientModelDTO retrieveCurrentState(int version) throws IOException {
-        return model;
+    public ClientModelDTO retrieveCurrentState(Integer version) throws IOException {
+        if (version == null) {
+            return null;
+        } else if (version >= 1) {
+            return null;           
+        } else {
+            return model;
+        }
     }
 
 //    @Override

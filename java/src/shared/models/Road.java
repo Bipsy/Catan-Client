@@ -1,5 +1,6 @@
 package shared.models;
 
+import shared.locations.EdgeLocation;
 import shared.models.DTO.EdgeValueDTO;
 
 /**
@@ -11,6 +12,7 @@ import shared.models.DTO.EdgeValueDTO;
 public class Road {
 
     private int owner;
+    private EdgeLocation location;
 
     public Road(EdgeValueDTO edgeValueDTO) {
         this.owner = edgeValueDTO.getOwner();
@@ -23,5 +25,13 @@ public class Road {
     public void setOwner(int owner) {
         this.owner = owner;
     }
+
+	public EdgeLocation getLocation() {
+		return location;
+	}
+
+	public void setLocation(EdgeLocation location) {
+		this.location = location;
+	}
 
 }

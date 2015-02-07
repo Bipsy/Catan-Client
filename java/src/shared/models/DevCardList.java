@@ -7,7 +7,7 @@ import shared.models.DTO.DevCardListDTO;
 public class DevCardList {
 
     private int monopoly;
-    private int roadBuilding;
+	private int roadBuilding;
     private int yearOfPlenty;
     private int monument;
     private int soldier;
@@ -21,7 +21,7 @@ public class DevCardList {
     }
 
     public DevCardList(DevCardListDTO devCards) {
-        this.monopoly = devCards.getMonopoly();
+        this.setMonopoly(devCards.getMonopoly());
         this.roadBuilding = devCards.getRoadBuilding();
         this.yearOfPlenty = devCards.getYearOfPlenty();
         this.monument = devCards.getMonument();
@@ -60,5 +60,49 @@ public class DevCardList {
     public int getResourceNumber(DevCardType type) {
         return 0;
     }
+
+	public int getMonopoly() {
+		return monopoly;
+	}
+
+	public void setMonopoly(int monopoly) {
+		this.monopoly = monopoly;
+	}
+	
+    public int getRoadBuilding() {
+		return roadBuilding;
+	}
+
+	public void setRoadBuilding(int roadBuilding) {
+		this.roadBuilding = roadBuilding;
+	}
+
+	public int getYearOfPlenty() {
+		return yearOfPlenty;
+	}
+
+	public void setYearOfPlenty(int yearOfPlenty) {
+		this.yearOfPlenty = yearOfPlenty;
+	}
+
+	public int getMonument() {
+		return monument;
+	}
+
+	public void setMonument(int monument) {
+		this.monument = monument;
+	}
+
+	public int getSoldier() {
+		return soldier;
+	}
+
+	public void setSoldier(int soldier) {
+		this.soldier = soldier;
+	}
+
+	public int getNumDevCards() {
+		return monopoly + roadBuilding + yearOfPlenty + soldier + monument;
+	}
 
 }

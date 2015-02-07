@@ -1,14 +1,21 @@
 package shared.models;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import shared.definitions.PieceType;
+import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
+import shared.locations.VertexLocation;
 import shared.models.DTO.EdgeValueDTO;
 import shared.models.DTO.HexDTO;
 import shared.models.DTO.PortDTO;
 import shared.models.DTO.VertexObjectDTO;
+import shared.models.DTO.params.BuildCity;
+import shared.models.DTO.params.BuildRoad;
+import shared.models.DTO.params.BuildSettlement;
 
 /**
  * Model representation of the Catan board
@@ -24,39 +31,15 @@ public class Board {
     private List<VertexObject> cities;
     private int radius;
     private Robber robber;
+    
+
+    private Map<EdgeLocation, Road> roadMap;
+    private Map<VertexLocation, VertexObject> communityMap;
 
     public Board() {
+    	roadMap = new HashMap<EdgeLocation, Road>();
+    	communityMap = new HashMap<VertexLocation, VertexObject>();
 
-    }
-
-    /**
-     * Determines from a hex provided if a road can be built
-     *
-     * @param hex they want to determine if a road can be built on
-     * @return true if they can build. false if they cannot
-     */
-    public boolean canBuildRoad(Hex hex) {
-        return false;
-    }
-
-    /**
-     * Determines from a hex provided if a settlement can be built
-     *
-     * @param hex they want to determine if a settlement can be built on
-     * @return true if they can build. false if they cannot
-     */
-    public boolean canBuildSettlement(Hex hex) {
-        return false;
-    }
-
-    /**
-     * Determines from a hex provided if a city can be built
-     *
-     * @param hex they want to determine if a city can be built on
-     * @return true if they can build. false if they cannot
-     */
-    public boolean canBuildCity(Hex hex) {
-        return false;
     }
 
     /**
@@ -65,10 +48,70 @@ public class Board {
      * @param hex they want to determine if a robber can be moved to
      * @return true if robber can be moved. false if not
      */
-    public boolean canMoveRobber(Hex hex) {
-        return false;
+    public boolean canPlaceRobber(HexLocation hex) {
+    	return robber.isNewLocation(hex);
+    }
+    
+    public boolean canBuildRoad(BuildRoad buildRoad) {
+    	EdgeLocation road = buildRoad.getRoadLocation();
+    	if(roadMap.containsKey(road.getNormalizedLocation())) {
+    		return false;
+    	}
+    	else {
+    		EdgeLocation[] adjRoads = road.getAdjacentEdges();
+    		for (int i = 0; i < adjRoads.length; i++) {
+				if(roadMap.containsKey(adjRoads[i].getNormalizedLocation()) &&
+						roadMap.get(adjRoads[i].getNormalizedLocation()).getOwner() ==
+						buildRoad.getPlayerIndex()) {
+					return true;
+				}
+			}
+    		return false;
+    	}
+    }
+    
+    public boolean canBuildSettlement(BuildSettlement buildSettlement) {
+    	boolean result = false;
+    	VertexLocation vertex = buildSettlement.getVertexLocation();
+    	
+    	if(!communityMap.containsKey(vertex.getNormalizedLocation())) {
+    		VertexLocation[] adjVertex = vertex.getAdjacentVertexes();
+    		boolean found = false;
+    		for (int i = 0; i < adjVertex.length; i++) {
+    			if(communityMap.containsKey(adjVertex[i].getNormalizedLocation())) {
+    				found = true;
+    				break;
+    			}
+    		}
+    		if(!found) {
+    			EdgeLocation[] adjRoads = vertex.getAdjacentEdges();
+    			for (int i = 0; i < adjRoads.length; i++) {
+    				if(roadMap.containsKey(adjRoads[i].getNormalizedLocation()) &&
+    					roadMap.get(adjRoads[i].getNormalizedLocation()).getOwner() ==
+    					buildSettlement.getPlayerIndex()) {
+    						result = true;
+    						break;
+    				}
+    			}    			
+    		}
+    	}
+    	return result;
     }
 
+    public boolean canBuildCity(BuildCity buildCity) {
+    	VertexLocation vertex = buildCity.getVertexLocation();
+    	
+    	if(communityMap.containsKey(vertex.getNormalizedLocation())) {
+    		VertexObject vertexObj = communityMap.get(vertex.getNormalizedLocation());
+    		if(vertexObj.getType() == PieceType.SETTLEMENT && vertexObj.getOwner() == 
+    				buildCity.getPlayerIndex()) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+
+    
     public List<Hex> getHexes() {
         return hexes;
     }
@@ -91,6 +134,9 @@ public class Board {
 
     public void setRoad(List<Road> road) {
         this.roads = road;
+        for (int i = 0; i < road.size(); i++) {
+			roadMap.put(roads.get(i).getLocation().getNormalizedLocation(), roads.get(i));
+		}
     }
 
     public List<VertexObject> getSettlements() {
@@ -99,6 +145,9 @@ public class Board {
 
     public void setSettlements(List<VertexObject> settlements) {
         this.settlements = settlements;
+        for (int i = 0; i < settlements.size(); i++) {
+        	communityMap.put(settlements.get(i).getLocation(), settlements.get(i));
+		}
     }
 
     public List<VertexObject> getCities() {
@@ -107,6 +156,9 @@ public class Board {
 
     public void setCities(List<VertexObject> cities) {
         this.cities = cities;
+        for (int i = 0; i < cities.size(); i++) {
+			communityMap.put(cities.get(i).getLocation(), cities.get(i));
+		}
     }
 
     public int getRadius() {
