@@ -7,6 +7,12 @@ public class YearOfPlenty extends MoveParams {
 	private ResourceType resource1;
 	private ResourceType resource2;
 
+	public YearOfPlenty(int playerIndex, ResourceType resource1, ResourceType resource2) {
+		super("Year_Of_Plenty", playerIndex);
+		this.resource1 = resource1;
+		this.resource2 = resource2;
+	}
+	
 	public YearOfPlenty() {
 		super("Year_of_Plenty");
 	}
