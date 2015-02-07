@@ -187,17 +187,27 @@ public class GameState {
     public boolean CanUseRoadBuilder(RoadBuilding roadBuilding) {
 		// TODO is current user, has dev card, hasn't played any other dev cards
         // has roads
-        return false;
+    	int index = roadBuilding.getPlayerIndex();
+    	Player player = userManager.getPlayer(index);
+    	boolean isCurrentUser = userManager.isCurrentPlayer(index);
+    	
+        return isCurrentUser && player.canUseRoadBuilding();
     }
 
     public boolean CanUseSoldier(Soldier soldier) {
-        // TODO is current user, has dev card, hasn't played any other dev cards
-        return false;
+    	int index = soldier.getPlayerIndex();
+    	Player player = userManager.getPlayer(index);
+    	boolean isCurrentUser = userManager.isCurrentPlayer(index);
+    	
+        return isCurrentUser && player.canPlaySoldier();
     }
 
     public boolean CanUseMonopoly(Monopoly monopoly) {
-        // TODO is current user, has dev card, hasn't played any other dev cards
-        return false;
+    	int index = monopoly.getPlayerIndex();
+    	Player player = userManager.getPlayer(index);
+    	boolean isCurrentUser = userManager.isCurrentPlayer(index);
+    	
+        return isCurrentUser && player.canPlayMonopoly();
     }
 
     public boolean CanUseMonument(Monument monument) {

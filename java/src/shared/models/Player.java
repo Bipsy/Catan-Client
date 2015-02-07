@@ -49,26 +49,16 @@ public class Player extends User {
         this.setNewDevCards(new DevCardList(playerDTO.getNewDevCards()));
         this.setOldDevCards(new DevCardList(playerDTO.getOldDevCards()));
         this.resources = new PlayerHand(playerDTO.getResources(), playerDTO.getNewDevCards());
+        this.playedDevCard = playerDTO.isPlayedDevCard();
     }
 
-    /**
-     * canPlayDevCard determines if the selected player is able to play a dev
-     * card. If the player does not have a dev card, has already played a dev
-     * card (and couldn't win that turn by playing multiple monument cards),
-     * etc. then this method will return false, otherwise it will return true;
-     *
-     * @return True if the player can play the dev card, false otherwise.
-     */
-    public boolean canPlayDevCard() {
-        return false;
-    }
     
     /**
-     * canPlayDevCard determines if the selected player is able to play a 
+     * canPlayDevMonument determines if the selected player is able to play a 
      * monument. If # of monuments player has + current # of victory points
      * is >= # of points needed to win.
      *
-     * @return True if the player can play the dev card, false otherwise.
+     * @return True if the player can play the monument, false otherwise.
      */
     public boolean canPlayMonument() {
     	DevCardList devCards = this.resources.getDevCards();
@@ -78,7 +68,51 @@ public class Player extends User {
     	return canPlay;
     }
     
+    /**
+     * canPlayMonopoly determines if the selected player is able to play a 
+     * monument. If user hasn't played another dev card and has a monopoly card
+     * the user may play it.
+     *
+     * @return True if the player can play monopoly, false otherwise.
+     */
+    public boolean canPlayMonopoly() {
+    	DevCardList devCards = this.resources.getDevCards();
+    	int monopoly = devCards.getMonopoly();
+    	
+    	boolean canPlay = monopoly > 0 && !this.playedDevCard;
+        
+    	return canPlay;
+    }
     
+    /**
+     * canPlaySoldier
+     *
+     * @return True if the player can play soldier, false otherwise.
+     */
+	public boolean canPlaySoldier() {
+		DevCardList devCards = this.resources.getDevCards();
+    	int soldier = devCards.getSoldier();
+    	
+    	boolean canPlay = soldier > 0 && !this.playedDevCard;
+        
+    	return canPlay;
+	}
+
+	/**
+     * canUseRoadBuilding
+     *
+     * @return True if the player can play road building, false otherwise.
+     */
+	public boolean canUseRoadBuilding() {
+		DevCardList devCards = this.resources.getDevCards();
+    	int roadBuild = devCards.getRoadBuilding();
+    	
+    	boolean canPlay = roadBuild > 0 && 
+    			!this.playedDevCard &&
+    			this.roads >= 2;
+        
+    	return canPlay;
+	}
 
     /**
      * Determines if a player can build a road. If the player has the resources
@@ -213,5 +247,8 @@ public class Player extends User {
 	public void setVictoryPoints(int victoryPoints) {
 		this.victoryPoints = victoryPoints;
 	}
+
+
+
 
 }
