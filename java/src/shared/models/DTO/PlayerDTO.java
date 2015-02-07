@@ -27,11 +27,11 @@ public class PlayerDTO {
     /**
      * new dev cards bought this turn
      */
-    private DevCardListDTO newDevCards;
+    private DevCardListDTO newDevCards = new DevCardListDTO();
     /**
      * the cards a player had when the turn started
      */
-    private DevCardListDTO oldDevCards;
+    private DevCardListDTO oldDevCards = new DevCardListDTO();;
     /**
      * a number between 0 and 3
      */
@@ -46,7 +46,7 @@ public class PlayerDTO {
      * implemented yet.
      */
     private int playerID;
-    private ResourceListDTO resources;
+    private ResourceListDTO resources = new ResourceListDTO();
     private int roads;
     private int settlements;
     private int soldiers;

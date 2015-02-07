@@ -37,6 +37,13 @@ public class PortDTO {
         this.direction = null;
         this.ratio = 3;
     }
+    
+    public PortDTO(ResourceType resource, HexLocation location, String direction, int ratio) {
+        this.resource = resource;
+        this.location = location;
+        this.direction = direction;
+        this.ratio = ratio;
+    }
 
     public ResourceType getResource() {
         return resource;
