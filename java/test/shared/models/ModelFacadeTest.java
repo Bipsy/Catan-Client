@@ -12,6 +12,7 @@ import client.mocks.ModelMock;
 import client.model.Populator;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 import shared.models.DTO.ResourceListDTO;
 import shared.models.DTO.params.*;
 
