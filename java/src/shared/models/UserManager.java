@@ -27,6 +27,10 @@ public class UserManager {
     private List<Player> users;
     TurnTracker turnTracker;
 
+    public List<Player> getUsers() {
+		return users;
+	}
+    
     public UserManager(List<Player> userList, TurnTracker turnTracker2) {
         this.users = userList;
         this.turnTracker = turnTracker2;

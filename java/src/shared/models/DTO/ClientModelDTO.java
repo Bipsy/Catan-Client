@@ -10,8 +10,8 @@ package shared.models.DTO;
  */
 public class ClientModelDTO {
 
-    private ResourceListDTO resources;
-    private DevCardListDTO devCards;
+    private ResourceListDTO bank;
+    private DevCardListDTO deck;
     private MessageListDTO chat;
     private MessageListDTO log;
     private MapDTO map;
@@ -42,11 +42,18 @@ public class ClientModelDTO {
     }
 
     public ClientModelDTO() {
-        // TODO Auto-generated constructor stub
+    	bank = new ResourceListDTO();
+        deck = new DevCardListDTO();
+        chat = new MessageListDTO();
+        log = new MessageListDTO();
+        map = new MapDTO();
+        turnTracker = new TurnTrackerDTO();
+        version = 0;
+        winner = -1;    
     }
 
     public void setBank(ResourceListDTO resources) {
-        this.resources = resources;
+        this.bank = resources;
     }
 
     public MessageListDTO getChat() {
@@ -114,19 +121,19 @@ public class ClientModelDTO {
     }
 
     public DevCardListDTO getDevCards() {
-        return devCards;
+        return deck;
     }
 
     public void setDevCards(DevCardListDTO devCards) {
-        this.devCards = devCards;
+        this.deck = devCards;
     }
 
     public ResourceListDTO getResources() {
-        return resources;
+        return bank;
     }
 
     public void setResources(ResourceListDTO resources) {
-        this.resources = resources;
+        this.bank = resources;
     }
 
 }

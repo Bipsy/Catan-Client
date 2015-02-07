@@ -264,7 +264,7 @@ public class ServerProxyTest {
 
 	@Test
 	public void testAddAIPlayer() {
-		AddAIRequest ai = new AddAIRequest()
+		AddAIRequest ai = new AddAIRequest();
 	}
 
 }
