@@ -7,7 +7,8 @@ import shared.models.DTO.HexDTO;
 
 import java.util.List;
 import java.util.Map;
-import shared.definitions.ResourceTypeOptional;
+
+import shared.definitions.ResourceType;
 
 /**
  * Represents a hex on the board.
@@ -17,7 +18,7 @@ import shared.definitions.ResourceTypeOptional;
 public class Hex {
 
     private HexLocation location;
-    private ResourceTypeOptional resource;
+    private ResourceType resource;
     private int chit;
     private Map<EdgeLocation, Road> roadMap;
     private Harbor harbor;
@@ -91,11 +92,11 @@ public class Hex {
         this.location = location;
     }
 
-    public ResourceTypeOptional getResource() {
+    public ResourceType getResource() {
         return resource;
     }
 
-    public void setResource(ResourceTypeOptional resource) {
+    public void setResource(ResourceType resource) {
         this.resource = resource;
     }
 

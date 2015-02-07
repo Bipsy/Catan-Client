@@ -138,7 +138,7 @@ public class ServerProxyTest {
 	@Test
 	public void testBuildRoad() {
 		HexLocation loc = new HexLocation(-1, -1);
-		EdgeLocation edge = new EdgeLocation(loc, EdgeDirection.NE);
+		EdgeLocation edge = new EdgeLocation(loc, EdgeDirection.NorthEast);
 		BuildRoad road = new BuildRoad(1, edge, false);
 		try {
 			proxy.buildRoad(road);

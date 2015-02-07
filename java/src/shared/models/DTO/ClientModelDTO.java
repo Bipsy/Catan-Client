@@ -1,5 +1,7 @@
 package shared.models.DTO;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * This class stores the information needed to create a JSON string of a game's
  * state, and is used to facilitate the transfer of data between the server and
@@ -10,7 +12,10 @@ package shared.models.DTO;
  */
 public class ClientModelDTO {
 
+
+    @SerializedName("bank")
     private ResourceListDTO resources;
+    @SerializedName("deck")
     private DevCardListDTO devCards;
     private MessageListDTO chat;
     private MessageListDTO log;
@@ -45,7 +50,23 @@ public class ClientModelDTO {
         // TODO Auto-generated constructor stub
     }
 
-    public void setBank(ResourceListDTO resources) {
+    public ClientModelDTO(ResourceListDTO resources, DevCardListDTO devCards,
+			MessageListDTO chat, MessageListDTO log, MapDTO map,
+			PlayerDTO[] players, TradeOfferDTO tradeOffer,
+			TurnTrackerDTO turnTracker, int winner, int version) {
+		this.resources = resources;
+		this.devCards = devCards;
+		this.chat = chat;
+		this.log = log;
+		this.map = map;
+		this.players = players;
+		this.tradeOffer = tradeOffer;
+		this.turnTracker = turnTracker;
+		this.winner = winner;
+		this.version = version;
+	}
+
+	public void setBank(ResourceListDTO resources) {
         this.resources = resources;
     }
 

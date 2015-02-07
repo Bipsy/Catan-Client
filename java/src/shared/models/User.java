@@ -38,22 +38,62 @@ public class User {
      * @param playerID Specifies the ID of the player. ID must be unique. If ID
      * is not unique then a unique ID will be generated.
      */
-    public User(CatanColor color, String username, String password,
+    public User(String color, String username, String password,
             int playerIndex, int playerID) {
-        this.color = color;
+        this.color = CatanColor.valueOf(color.toUpperCase());
         this.username = username;
         this.password = password;
         this.index = playerIndex;
         this.ID = playerID;
     }
 
-    public User(String username, String password) {
+    public CatanColor getColor() {
+		return color;
+	}
+
+	public void setColor(CatanColor color) {
+		this.color = color;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
+	}
+
+	public int getID() {
+		return ID;
+	}
+
+	public void setID(int iD) {
+		ID = iD;
+	}
+
+	public User(String username, String password) {
         this.username = username;
         this.password = password;
     }
 
-    public User(CatanColor color2, int playerIndex, int playerID) {
-        this.color = color2;
+    public User(String color, int playerIndex, int playerID) {
+        this.color = CatanColor.valueOf(color.toUpperCase());
         this.index = playerIndex;
         this.ID = playerID;
     }
