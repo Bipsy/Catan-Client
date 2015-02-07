@@ -3,6 +3,7 @@ package client.network;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
+import org.junit.BeforeClass;
 
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -298,5 +299,6 @@ public class ServerProxyTest {
 	public void testAddAIPlayer() {
 		AddAIRequest ai = new AddAIRequest();
 	}
+
 
 }

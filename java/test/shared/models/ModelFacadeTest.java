@@ -10,6 +10,8 @@ import org.junit.Test;
 
 import client.mocks.ModelMock;
 import client.model.Populator;
+import shared.locations.EdgeDirection;
+import shared.locations.EdgeLocation;
 import shared.models.DTO.ResourceListDTO;
 import shared.models.DTO.params.*;
 
@@ -60,8 +62,8 @@ public class ModelFacadeTest {
 
 	@Test
 	public void testCanBuildRoad() {
-		BuildRoad pete = new BuildRoad(2, new EdgeLocation(), false);
-		BuildRoad mark = new BuildRoad();
+		BuildRoad pete = new BuildRoad(2, new EdgeLocation(new HexLocation(0,0), EdgeDirection.NorthEast), false);
+		BuildRoad mark = new BuildRoad(3, new EdgeLocation(new HexLocation(0,0), EdgeDirection.NorthEast), false);
 		assertTrue(modelFacade.CanBuildRoad(pete));
 
 		assertFalse(modelFacade.CanBuildRoad(mark));
