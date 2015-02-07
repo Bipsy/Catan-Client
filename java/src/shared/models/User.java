@@ -18,7 +18,27 @@ public class User {
     private CatanColor color = null;
     private String username;
     private String password;
-    private int index = 0;
+    public CatanColor getColor() {
+		return color;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public int getIndex() {
+		return index;
+	}
+
+	public int getID() {
+		return ID;
+	}
+
+	private int index = 0;
     private int ID = 0;
 
     /**

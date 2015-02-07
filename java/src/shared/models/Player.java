@@ -267,8 +267,6 @@ public class Player extends User {
 	public void setVictoryPoints(int victoryPoints) {
 		this.victoryPoints = victoryPoints;
 	}
-
-
 	
 
 }
