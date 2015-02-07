@@ -7,6 +7,7 @@ import shared.locations.HexLocation;
 import shared.models.Bank;
 import shared.models.Board;
 import shared.models.ChatObject;
+import shared.models.ClientModel;
 import shared.models.DevCardList;
 import shared.models.Harbor;
 import shared.models.Hex;

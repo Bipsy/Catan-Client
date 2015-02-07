@@ -17,22 +17,41 @@ import shared.models.DTO.params.RollNumber;
 import shared.models.DTO.params.Soldier;
 import shared.models.DTO.params.YearOfPlenty;
 
-public class GameState {
+
+/**
+ * Class serves as a wrapper for the model of the game or game instance. It can
+ * be used as the single model instance for the server (iPopulator) and client
+ * facades to write and read.
+ *
+ * @author Mikey Murphy <mikeyamadeo@gmail.com>
+ */
+public class ClientModel {
 
     private Bank bank;
-    private ChatObject chat;
-    private Board map;
+    private Board board;
+    private ChatObject chatObject;
     private UserManager userManager;
     private TradeOffer tradeOffer;
     private int version;
+    //Player index of the game winner
     private int winner;
-
-    public GameState() {
-        // TODO Auto-generated constructor stub
-        winner = -1;
-        version = 0;
+    
+    public ClientModel() {
+    	winner = -1;
+    	version = 0;
+    	bank = null;
+    	board = null;
+    	chatObject = null;
+    	userManager = null;
+    	tradeOffer = null;
     }
 
+    /**
+     * Getters and Setters for model wrapper
+     */
+    /**
+     * BANK
+     */
     public Bank getBank() {
         return bank;
     }
@@ -41,22 +60,31 @@ public class GameState {
         this.bank = bank;
     }
 
-    public ChatObject getChat() {
-        return chat;
+    /**
+     * BOARD (Map)
+     */
+    public Board getBoard() {
+        return board;
     }
 
-    public void setChat(ChatObject chat) {
-        this.chat = chat;
+    public void setBoard(Board board) {
+        this.board = board;
     }
 
-    public Board getMap() {
-        return map;
+    /**
+     * CHAT OBJECT
+     */
+    public ChatObject getChatObject() {
+        return chatObject;
     }
 
-    public void setMap(Board map) {
-        this.map = map;
+    public void setChatObject(ChatObject chatObject) {
+        this.chatObject = chatObject;
     }
 
+    /**
+     * USER MANAGER (player manager)
+     */
     public UserManager getUserManager() {
         return userManager;
     }
@@ -65,6 +93,9 @@ public class GameState {
         this.userManager = userManager;
     }
 
+    /**
+     * TRADE OFFER
+     */
     public TradeOffer getTradeOffer() {
         return tradeOffer;
     }
@@ -73,6 +104,9 @@ public class GameState {
         this.tradeOffer = tradeOffer;
     }
 
+    /**
+     * VERSION
+     */
     public int getVersion() {
         return version;
     }
@@ -81,6 +115,9 @@ public class GameState {
         this.version = version;
     }
 
+    /**
+     * WINNER
+     */
     public int getWinner() {
         return winner;
     }
@@ -88,7 +125,6 @@ public class GameState {
     public void setWinner(int winner) {
         this.winner = winner;
     }
-
     /**
      * This function will check that a player has not already discarded this
      * turn, that the number of cards to be discarded is half of their total
@@ -123,7 +159,7 @@ public class GameState {
     public boolean CanPlaceRobber(RobPlayer robPlayer) {
     	return userManager.isCurrentPlayer(robPlayer.getPlayerIndex()) &&
     			!userManager.isCurrentPlayer(robPlayer.getVictimIndex()) &&
-    			map.canPlaceRobber(robPlayer.getLocation());
+    			board.canPlaceRobber(robPlayer.getLocation());
     }
 
     /**
@@ -134,7 +170,7 @@ public class GameState {
      */
     public boolean CanBuildRoad(BuildRoad buildRoad) {
     	return (buildRoad.isFree() || userManager.CanBuildRoad(buildRoad)) &&
-    			map.canBuildRoad(buildRoad);
+    			board.canBuildRoad(buildRoad);
     }
 
     /**
@@ -145,7 +181,7 @@ public class GameState {
      */
     public boolean CanBuildSettlement(BuildSettlement buildSettlement) {
     	return userManager.CanBuildSettlement(buildSettlement) &&
-    			map.canBuildSettlement(buildSettlement);
+    			board.canBuildSettlement(buildSettlement);
     }
 
     /**
@@ -156,7 +192,7 @@ public class GameState {
      */
     public boolean CanBuildCity(BuildCity buildCity) {
     	return userManager.CanBuildCity(buildCity) &&
-    			map.canBuildCity(buildCity);
+    			board.canBuildCity(buildCity);
     }
 
     public boolean CanOfferTrade(OfferTrade offerTrade) {

@@ -8,14 +8,21 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import shared.models.DTO.params.*;
+
 public class ModelFacadeTest {
+	
+	static private ModelFacade modelFacade;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		// instantiate modelFacade
+		modelFacade = new ModelFacade();
 	}
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
+		modelFacade = null;
 	}
 
 	@Before
@@ -27,93 +34,138 @@ public class ModelFacadeTest {
 	}
 
 	@Test
-	public void testModelFacade() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testModelFacadeGameState() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testUpdateModels() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testCanDiscardCards() {
-		fail("Not yet implemented");
+		DiscardCards pass = new DiscardCards();
+		DiscardCards fail = new DiscardCards();
+		assertTrue(modelFacade.CanDiscardCards(pass));
+
+		assertFalse(modelFacade.CanDiscardCards(fail));
 	}
 
 	@Test
 	public void testCanRollNumber() {
-		fail("Not yet implemented");
+		RollNumber pass = new RollNumber();
+		RollNumber fail = new RollNumber();
+		assertTrue(modelFacade.CanRollNumber(pass));
+
+		assertFalse(modelFacade.CanRollNumber(fail));
 	}
 
 	@Test
 	public void testCanBuildRoad() {
-		fail("Not yet implemented");
+		BuildRoad pass = new BuildRoad();
+		BuildRoad fail = new BuildRoad();
+		assertTrue(modelFacade.CanBuildRoad(pass));
+
+		assertFalse(modelFacade.CanBuildRoad(fail));
 	}
 
 	@Test
 	public void testCanBuildSettlement() {
-		fail("Not yet implemented");
+		BuildSettlement pass = new BuildSettlement();
+		BuildSettlement fail = new BuildSettlement();
+		assertTrue(modelFacade.CanBuildSettlement(pass));
+
+		assertFalse(modelFacade.CanBuildSettlement(fail));
 	}
 
 	@Test
 	public void testCanBuildCity() {
-		fail("Not yet implemented");
+		BuildCity pass = new BuildCity();
+		BuildCity fail = new BuildCity();
+		assertTrue(modelFacade.CanBuildCity(pass));
+
+		assertFalse(modelFacade.CanBuildCity(fail));
 	}
 
 	@Test
 	public void testCanOfferTrade() {
-		fail("Not yet implemented");
+		OfferTrade pass = new OfferTrade();
+		OfferTrade fail = new OfferTrade();
+		assertTrue(modelFacade.CanOfferTrade(pass));
+
+		assertFalse(modelFacade.CanOfferTrade(fail));
 	}
 
 	@Test
 	public void testCanMaritimeTrade() {
-		fail("Not yet implemented");
+		MaritimeTrade pass = new MaritimeTrade();
+		MaritimeTrade fail = new MaritimeTrade();
+		assertTrue(modelFacade.CanMaritimeTrade(pass));
+
+		assertFalse(modelFacade.CanMaritimeTrade(fail));
 	}
 
 	@Test
 	public void testCanFinishTurn() {
-		fail("Not yet implemented");
+		FinishTurn pass = new FinishTurn();
+		FinishTurn fail = new FinishTurn();
+		assertTrue(modelFacade.CanFinishTurn(pass));
+
+		assertFalse(modelFacade.CanFinishTurn(fail));
 	}
 
 	@Test
 	public void testCanBuyDevCard() {
-		fail("Not yet implemented");
+		BuyDevCard pass = new BuyDevCard();
+		BuyDevCard fail = new BuyDevCard();
+		assertTrue(modelFacade.CanBuyDevCard(pass));
+
+		assertFalse(modelFacade.CanBuyDevCard(fail));
 	}
 
 	@Test
 	public void testCanUseYearOfPlenty() {
-		fail("Not yet implemented");
+		YearOfPlenty pass = new YearOfPlenty();
+		YearOfPlenty fail = new YearOfPlenty();
+		assertTrue(modelFacade.CanUseYearOfPlenty(pass));
+
+		assertFalse(modelFacade.CanUseYearOfPlenty(fail));
 	}
 
 	@Test
 	public void testCanUseRoadBuilder() {
-		fail("Not yet implemented");
+		RoadBuilding pass = new RoadBuilding();
+		RoadBuilding fail = new RoadBuilding();
+		assertTrue(modelFacade.CanUseRoadBuilder(pass));
+
+		assertFalse(modelFacade.CanUseRoadBuilder(fail));
 	}
 
 	@Test
 	public void testCanUseSoldier() {
-		fail("Not yet implemented");
+		Soldier pass = new Soldier();
+		Soldier fail = new Soldier();
+		assertTrue(modelFacade.CanUseSoldier(pass));
+
+		assertFalse(modelFacade.CanUseSoldier(fail));
 	}
 
 	@Test
 	public void testCanUseMonopoly() {
-		fail("Not yet implemented");
+		Monopoly pass = new Monopoly();
+		Monopoly fail = new Monopoly();
+		assertTrue(modelFacade.CanUseMonopoly(pass));
+
+		assertFalse(modelFacade.CanUseMonopoly(fail));
 	}
 
 	@Test
 	public void testCanUseMonument() {
-		fail("Not yet implemented");
+		Monument pass = new Monument();
+		Monument fail = new Monument();
+		assertTrue(modelFacade.CanUseMonument(pass));
+
+		assertFalse(modelFacade.CanUseMonument(fail));
 	}
 
 	@Test
 	public void testCanPlaceRobber() {
-		fail("Not yet implemented");
+		RobPlayer pass = new RobPlayer();
+		RobPlayer fail = new RobPlayer();
+		assertTrue(modelFacade.CanPlaceRobber(pass));
+
+		assertFalse(modelFacade.CanPlaceRobber(fail));
 	}
 
 }
