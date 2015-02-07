@@ -6,6 +6,8 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+import shared.locations.*;
+import shared.models.DTO.ResourceListDTO;
 import shared.models.DTO.params.*;
 
 public class ServerProxyTest {
@@ -89,12 +91,19 @@ public class ServerProxyTest {
 
 	@Test
 	public void testOfferTrade() {
-		
+		ResourceListDTO list = new ResourceListDTO(1, 0, 0, 0, 2);
+		OfferTrade trade = new OfferTrade(3, list, 2);
+		try {
+			proxy.offerTrade(trade);
+		} catch (IOException e) {
+			fail("Did no succeed");
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void testAcceptTrade() {
-		AcceptTrade accept = new AcceptTrade(1, true);
+		AcceptTrade accept = new AcceptTrade(2, true);
 		try {
 			proxy.acceptTrade(accept);
 		} catch (IOException e) {
@@ -105,17 +114,38 @@ public class ServerProxyTest {
 
 	@Test
 	public void testDiscardCards() {
-		fail("Not yet implemented");
+		ResourceListDTO list = new ResourceListDTO(0, 1, 1, 3, 0);
+		DiscardCards cards = new DiscardCards(0, list);
+		try {
+			proxy.discardCards(cards);
+		} catch (IOException e) {
+			fail("Did not succeed");
+			e.printStackTrace();
+		}
 	}
 
 	@Test
 	public void testRollNumber() {
-		fail("Not yet implemented");
+		RollNumber roll = new RollNumber(1,8);
+		try {
+			proxy.rollNumber(roll);
+		} catch (IOException e) {
+			fail("Did not succeed");
+			e.printStackTrace();
+		}
 	}
 
 	@Test
 	public void testBuildRoad() {
-		fail("Not yet implemented");
+		HexLocation loc = new HexLocation(-1, -1);
+		EdgeLocation edge = new EdgeLocation(loc, EdgeDirection.NE);
+		BuildRoad road = new BuildRoad(1, edge, false);
+		try {
+			proxy.buildRoad(road);
+		} catch (IOException e) {
+			fail("Did not succeed");
+			e.printStackTrace();
+		}
 	}
 
 	@Test

@@ -5,44 +5,44 @@ package shared.locations;
  */
 public class EdgeLocation {
 
-    private HexLocation hexLoc;
-    private EdgeDirection dir;
+    private HexLocation roadLocation;
+    private EdgeDirection direction;
 
-    public EdgeLocation(HexLocation hexLoc, EdgeDirection dir) {
-        setHexLoc(hexLoc);
-        setDir(dir);
+    public EdgeLocation(HexLocation roadLocation, EdgeDirection direction) {
+        setHexLoc(roadLocation);
+        setDir(direction);
     }
 
     public HexLocation getHexLoc() {
-        return hexLoc;
+        return roadLocation;
     }
 
-    private void setHexLoc(HexLocation hexLoc) {
-        if (hexLoc == null) {
+    private void setHexLoc(HexLocation roadLocation) {
+        if (roadLocation == null) {
             throw new IllegalArgumentException("hexLoc cannot be null");
         }
-        this.hexLoc = hexLoc;
+        this.roadLocation = roadLocation;
     }
 
     public EdgeDirection getDir() {
-        return dir;
+        return direction;
     }
 
-    private void setDir(EdgeDirection dir) {
-        this.dir = dir;
+    private void setDir(EdgeDirection direction) {
+        this.direction = direction;
     }
 
     @Override
     public String toString() {
-        return "EdgeLocation [hexLoc=" + hexLoc + ", dir=" + dir + "]";
+        return "EdgeLocation [roadLocation=" + roadLocation + ", direction=" + direction + "]";
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((dir == null) ? 0 : dir.hashCode());
-        result = prime * result + ((hexLoc == null) ? 0 : hexLoc.hashCode());
+        result = prime * result + ((direction == null) ? 0 : direction.hashCode());
+        result = prime * result + ((roadLocation == null) ? 0 : roadLocation.hashCode());
         return result;
     }
 
@@ -58,14 +58,14 @@ public class EdgeLocation {
             return false;
         }
         EdgeLocation other = (EdgeLocation) obj;
-        if (dir != other.dir) {
+        if (direction != other.direction) {
             return false;
         }
-        if (hexLoc == null) {
-            if (other.hexLoc != null) {
+        if (roadLocation == null) {
+            if (other.roadLocation != null) {
                 return false;
             }
-        } else if (!hexLoc.equals(other.hexLoc)) {
+        } else if (!roadLocation.equals(other.roadLocation)) {
             return false;
         }
         return true;
@@ -82,16 +82,16 @@ public class EdgeLocation {
     public EdgeLocation getNormalizedLocation() {
 
 		// Return an EdgeLocation that has direction NW, N, or NE
-        switch (dir) {
-            case NorthWest:
-            case North:
-            case NorthEast:
+        switch (direction) {
+            case NW:
+            case N:
+            case NE:
                 return this;
-            case SouthWest:
-            case South:
-            case SouthEast:
-                return new EdgeLocation(hexLoc.getNeighborLoc(dir),
-                        dir.getOppositeDirection());
+            case SW:
+            case S:
+            case SE:
+                return new EdgeLocation(roadLocation.getNeighborLoc(direction),
+                		direction.getOppositeDirection());
             default:
                 assert false;
                 return null;
@@ -102,29 +102,29 @@ public class EdgeLocation {
 		EdgeLocation[] adjEdges = new EdgeLocation[4];
 		EdgeLocation temp = getNormalizedLocation();
 		switch (temp.getDir()) {
-			case NorthWest:
-				adjEdges[0] = new EdgeLocation(hexLoc, EdgeDirection.North);
-				adjEdges[1] = new EdgeLocation(hexLoc, EdgeDirection.SouthWest);
-				adjEdges[2] = new EdgeLocation(hexLoc.getNeighborLoc(temp.getDir()),
-                        EdgeDirection.South);
-				adjEdges[3] = new EdgeLocation(hexLoc.getNeighborLoc(temp.getDir()),
-                        EdgeDirection.NorthEast);
+			case NW:
+				adjEdges[0] = new EdgeLocation(roadLocation, EdgeDirection.N);
+				adjEdges[1] = new EdgeLocation(roadLocation, EdgeDirection.SW);
+				adjEdges[2] = new EdgeLocation(roadLocation.getNeighborLoc(temp.getDir()),
+                        EdgeDirection.S);
+				adjEdges[3] = new EdgeLocation(roadLocation.getNeighborLoc(temp.getDir()),
+                        EdgeDirection.NE);
 				break;
-			case North:
-				adjEdges[0] = new EdgeLocation(hexLoc, EdgeDirection.NorthEast);
-				adjEdges[1] = new EdgeLocation(hexLoc, EdgeDirection.NorthWest);
-				adjEdges[2] = new EdgeLocation(hexLoc.getNeighborLoc(temp.getDir()),
-                        EdgeDirection.SouthWest);
-				adjEdges[3] = new EdgeLocation(hexLoc.getNeighborLoc(temp.getDir()),
-                        EdgeDirection.SouthEast);
+			case N:
+				adjEdges[0] = new EdgeLocation(roadLocation, EdgeDirection.NE);
+				adjEdges[1] = new EdgeLocation(roadLocation, EdgeDirection.NW);
+				adjEdges[2] = new EdgeLocation(roadLocation.getNeighborLoc(temp.getDir()),
+                        EdgeDirection.SW);
+				adjEdges[3] = new EdgeLocation(roadLocation.getNeighborLoc(temp.getDir()),
+                        EdgeDirection.SE);
 				break;
-			case NorthEast:
-				adjEdges[0] = new EdgeLocation(hexLoc, EdgeDirection.North);
-				adjEdges[1] = new EdgeLocation(hexLoc, EdgeDirection.SouthEast);
-				adjEdges[2] = new EdgeLocation(hexLoc.getNeighborLoc(temp.getDir()),
-                        EdgeDirection.South);
-				adjEdges[3] = new EdgeLocation(hexLoc.getNeighborLoc(temp.getDir()),
-                        EdgeDirection.NorthWest);
+			case NE:
+				adjEdges[0] = new EdgeLocation(roadLocation, EdgeDirection.N);
+				adjEdges[1] = new EdgeLocation(roadLocation, EdgeDirection.SE);
+				adjEdges[2] = new EdgeLocation(roadLocation.getNeighborLoc(temp.getDir()),
+                        EdgeDirection.S);
+				adjEdges[3] = new EdgeLocation(roadLocation.getNeighborLoc(temp.getDir()),
+                        EdgeDirection.NW);
 				break;
 			default:
 				assert false;
