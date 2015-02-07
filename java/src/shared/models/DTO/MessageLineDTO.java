@@ -13,11 +13,21 @@ public class MessageLineDTO {
     private String message;
     private String source;
 
+    public MessageLineDTO() {
+		this.message = null;
+		this.source = null;
+	}
+
+    public MessageLineDTO(String message, String source) {
+		this.message = message;
+		this.source = source;
+	}
+
     public String getMessage() {
         return message;
     }
 
-    public void setMessage(String message) {
+	public void setMessage(String message) {
         this.message = message;
     }
 

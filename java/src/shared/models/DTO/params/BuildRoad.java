@@ -13,9 +13,9 @@ public class BuildRoad extends MoveParams {
 		// TODO Auto-generated constructor stub
 	}
 
-	public BuildRoad(int playerIndex, EdgeLocation roadLocation, boolean free) {
+	public BuildRoad(int playerIndex, EdgeLocation edgeLocation, boolean free) {
 		super("buildRoad", playerIndex);
-		this.roadLocation = roadLocation;
+		this.roadLocation = edgeLocation;
 		this.free = free;
 	}
 
