@@ -4,18 +4,18 @@ import shared.models.DTO.params.*;
 
 public class ModelFacade {
 	
-	private GameState models;
+	private ClientModel models;
 
 	public ModelFacade() {
 		models = null;
 	}
 	
-	public ModelFacade(GameState gs) {
-		models = gs;
+	public ModelFacade(ClientModel cm) {
+		models = cm;
 	}
 	
-	public void updateModels(GameState gs) {
-		models = gs;
+	public void updateModels(ClientModel cm) {
+		models = cm;
 	}
 	
 	public boolean CanDiscardCards (DiscardCards discardCards) {
@@ -26,15 +26,15 @@ public class ModelFacade {
 		return models != null && models.CanRollNumber(rollNumber);
 	}
 	
-	public boolean CanBuildRoad (BuildRoad buildRoad) {
+	public boolean CanBuildRoad (BuildRoad buildRoad) { // check number of roads
 		return models != null && models.CanBuildRoad(buildRoad);
 	}
 	
-	public boolean CanBuildSettlement (BuildSettlement buildSettlement) {
+	public boolean CanBuildSettlement (BuildSettlement buildSettlement) { // check number of settlements
 		return models != null && models.CanBuildSettlement(buildSettlement);
 	}
 	
-	public boolean CanBuildCity (BuildCity buildCity) {
+	public boolean CanBuildCity (BuildCity buildCity) { // check number of cities
 		return models != null && models.CanBuildCity(buildCity);
 	}
 	

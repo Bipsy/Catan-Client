@@ -71,17 +71,17 @@ public class HexLocation {
 
     public HexLocation getNeighborLoc(EdgeDirection dir) {
         switch (dir) {
-            case NW:
+            case NorthWest:
                 return new HexLocation(x - 1, y);
-            case N:
+            case North:
                 return new HexLocation(x, y - 1);
-            case NE:
+            case NorthEast:
                 return new HexLocation(x + 1, y - 1);
-            case SW:
+            case SouthWest:
                 return new HexLocation(x - 1, y + 1);
-            case S:
+            case South:
                 return new HexLocation(x, y + 1);
-            case SE:
+            case SouthEast:
                 return new HexLocation(x + 1, y);
             default:
                 assert false;
