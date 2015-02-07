@@ -165,16 +165,7 @@ public class ServerProxyTest {
 	public void testBuildCity() {
 		HexLocation hex = new HexLocation(-1, -1);
 		VertexLocation vert = new VertexLocation(hex, VertexDirection.NE);
-		BuildSettlement sett = new BuildSettlement(2, vert, false);
-		try {
-			proxy.buildSettlement(sett);
-		} catch (IOException e) {
-			fail("Did not succeed");
-			e.printStackTrace();
-		}
-		HexLocation hex1 = new HexLocation(-1, -1);
-		VertexLocation vert1 = new VertexLocation(hex1, VertexDirection.NE);
-		BuildCity city = new BuildCity(2, vert1, false);
+		BuildCity city = new BuildCity(2, vert, false);
 		try {
 			proxy.buildCity(city);
 		} catch (IOException e) {
@@ -195,12 +186,24 @@ public class ServerProxyTest {
 
 	@Test
 	public void testFinishTurn() {
-		fail("Not yet implemented");
+		FinishTurn turn = new FinishTurn(2);
+		try {
+			proxy.finishTurn(turn);
+		} catch (IOException e) {
+			fail("Did not succeed");
+			e.printStackTrace();
+		}
 	}
 
 	@Test
 	public void testBuyDevCard() {
-		fail("Not yet implemented");
+		BuyDevCard card = new BuyDevCard(2);
+		try {
+			proxy.buyDevCard(card);
+		} catch (IOException e) {
+			fail("Did not succeed");
+			e.printStackTrace();
+		}
 	}
 
 	@Test
