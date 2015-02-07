@@ -47,7 +47,6 @@ public class PopulatorTest {
 			shared.models.ClientModel m = p.getModel();
 			assertTrue("winner field should be populated correctly", m.getWinner() == ModelMock.getModelDTO().getWinner());
 	        assertTrue("version field should be populated correctly", m.getVersion() == ModelMock.getModelDTO().getVersion());
-	        assertTrue("map radius field should be populated correctly", m.getBoard().getRadius() == ModelMock.getModelDTO().getMap().getRadius());
 	        assertTrue("player's cities field has to be set correctly", m.getUserManager().getUsers().get(0).getCities() == 
 	        		ModelMock.getModelDTO().getPlayers()[0].getCities());
 	        assertTrue("the number of players has to be set correctly", m.getUserManager().getUsers().size() == ModelMock.getModelDTO().getPlayers().length);
