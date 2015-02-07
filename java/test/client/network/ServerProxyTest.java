@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+import shared.definitions.ResourceType;
 import shared.locations.*;
 import shared.models.DTO.ResourceListDTO;
 import shared.models.DTO.params.*;
@@ -150,12 +151,28 @@ public class ServerProxyTest {
 
 	@Test
 	public void testBuildSettlement() {
-		fail("Not yet implemented");
+		HexLocation hex = new HexLocation(-1, -1);
+		VertexLocation vert = new VertexLocation(hex, VertexDirection.NorthEast);
+		BuildSettlement sett = new BuildSettlement(2, vert, false);
+		try {
+			proxy.buildSettlement(sett);
+		} catch (IOException e) {
+			fail("Did not succeed");
+			e.printStackTrace();
+		}
 	}
 
 	@Test
 	public void testBuildCity() {
-		fail("Not yet implemented");
+		HexLocation hex = new HexLocation(-1, -1);
+		VertexLocation vert = new VertexLocation(hex, VertexDirection.NorthEast);
+		BuildCity city = new BuildCity(2, vert, false);
+		try {
+			proxy.buildCity(city);
+		} catch (IOException e) {
+			fail("Did not succeed");
+			e.printStackTrace();
+		}
 	}
 
 	@Test
@@ -170,12 +187,24 @@ public class ServerProxyTest {
 
 	@Test
 	public void testFinishTurn() {
-		fail("Not yet implemented");
+		FinishTurn turn = new FinishTurn(2);
+		try {
+			proxy.finishTurn(turn);
+		} catch (IOException e) {
+			fail("Did not succeed");
+			e.printStackTrace();
+		}
 	}
 
 	@Test
 	public void testBuyDevCard() {
-		fail("Not yet implemented");
+		BuyDevCard card = new BuyDevCard(2);
+		try {
+			proxy.buyDevCard(card);
+		} catch (IOException e) {
+			fail("Did not succeed");
+			e.printStackTrace();
+		}
 	}
 
 	@Test
@@ -185,22 +214,47 @@ public class ServerProxyTest {
 
 	@Test
 	public void testPlayYearOfPlenty() {
-		fail("Not yet implemented");
+		YearOfPlenty card = new YearOfPlenty(3, ResourceType.ORE, ResourceType.SHEEP);
+		try {
+			proxy.playYearOfPlenty(card);
+		} catch (IOException e) {
+			fail("Did not succeed");
+			e.printStackTrace();
+		}
 	}
 
 	@Test
 	public void testPlayRoadBuilding() {
-		fail("Not yet implemented");
-	}
+		HexLocation hex = new HexLocation(0, 0);
+		EdgeLocation edge = new EdgeLocation(hex, "NE");
+		RoadBuilding card = new RoadBuilding(3, edge, false);
+		try {
+			proxy.playRoadBuilding(card);
+		} catch (IOException e) {
+			fail("Did not succeed");
+			e.printStackTrace();
+		}	}
 
 	@Test
 	public void testPlayMonopoly() {
-		fail("Not yet implemented");
+		Monopoly monopoly = new Monopoly(0, ResourceType.BRICK);
+		try {
+			proxy.playMonopoly(monopoly);
+		} catch (IOException e) {
+			fail("Did not succeed");
+			e.printStackTrace();
+		}
 	}
 
 	@Test
 	public void testPlayMonument() {
-		fail("Not yet implemented");
+		Monument monument = new Monument(1);
+		try {
+			proxy.playMonument(monument);
+		} catch (IOException e) {
+			fail("Did not succeed");
+			e.printStackTrace();
+		}
 	}
 
 	@Test
@@ -210,7 +264,7 @@ public class ServerProxyTest {
 
 	@Test
 	public void testAddAIPlayer() {
-		fail("Not yet implemented");
+		AddAIRequest ai = new AddAIRequest()
 	}
 
 }

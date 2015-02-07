@@ -267,7 +267,7 @@ public class ServerProxy implements iServerProxy {
     public ClientModelDTO buildCity(BuildCity cityMove) throws IOException {
         try {
             String params = serializer.serialize(cityMove);
-            return (ClientModelDTO) serializer.deserialize(doPost("/moves/buildCity", params));
+            return serializer.deserializeModel(doPost("/moves/buildCity", params));
         } catch (IOException e) {
             e.printStackTrace();
             throw new IOException();
@@ -300,7 +300,7 @@ public class ServerProxy implements iServerProxy {
     public ClientModelDTO robPlayer(RobPlayer robMove) throws IOException {
         try {
             String params = serializer.serialize(robMove);
-            return (ClientModelDTO) serializer.deserialize(doPost("/moves/robPlayer", params));
+            return serializer.deserializeModel(doPost("/moves/robPlayer", params));
         } catch (IOException e) {
             e.printStackTrace();
             throw new IOException();
@@ -311,7 +311,7 @@ public class ServerProxy implements iServerProxy {
     public ClientModelDTO finishTurn(FinishTurn turn) throws IOException {
         try {
             String params = serializer.serialize(turn);
-            return (ClientModelDTO) serializer.deserialize(doPost("/moves/finishTurn", params));
+            return serializer.deserializeModel(doPost("/moves/finishTurn", params));
         } catch (IOException e) {
             e.printStackTrace();
             throw new IOException();
@@ -322,7 +322,7 @@ public class ServerProxy implements iServerProxy {
     public ClientModelDTO buyDevCard(BuyDevCard card) throws IOException {
         try {
             String params = serializer.serialize(card);
-            return (ClientModelDTO) serializer.deserialize(doPost("/moves/buyDevCard", params));
+            return serializer.deserializeModel(doPost("/moves/buyDevCard", params));
         } catch (IOException e) {
             e.printStackTrace();
             throw new IOException();
@@ -333,7 +333,7 @@ public class ServerProxy implements iServerProxy {
     public ClientModelDTO playSoldier(Soldier soldier) throws IOException {
         try {
             String params = serializer.serialize(soldier);
-            return (ClientModelDTO) serializer.deserialize(doPost("/moves/Soldier", params));
+            return serializer.deserializeModel(doPost("/moves/Soldier", params));
         } catch (IOException e) {
             e.printStackTrace();
             throw new IOException();
@@ -344,7 +344,7 @@ public class ServerProxy implements iServerProxy {
     public ClientModelDTO playYearOfPlenty(YearOfPlenty yearOfPlentyMove) throws IOException {
         try {
             String params = serializer.serialize(yearOfPlentyMove);
-            return (ClientModelDTO) serializer.deserialize(doPost("/moves/Year_of_Plenty", params));
+            return serializer.deserializeModel(doPost("/moves/Year_of_Plenty", params));
         } catch (IOException e) {
             e.printStackTrace();
             throw new IOException();
@@ -355,7 +355,7 @@ public class ServerProxy implements iServerProxy {
     public ClientModelDTO playRoadBuilding(RoadBuilding roadBuildingMove) throws IOException {
         try {
             String params = serializer.serialize(roadBuildingMove);
-            return (ClientModelDTO) serializer.deserialize(doPost("/moves/Road_Building", params));
+            return serializer.deserializeModel(doPost("/moves/Road_Building", params));
         } catch (IOException e) {
             e.printStackTrace();
             throw new IOException();
@@ -366,7 +366,7 @@ public class ServerProxy implements iServerProxy {
     public ClientModelDTO playMonopoly(Monopoly monopoly) throws IOException {
         try {
             String params = serializer.serialize(monopoly);
-            return (ClientModelDTO) serializer.deserialize(doPost("/moves/Monopoly", params));
+            return serializer.deserializeModel(doPost("/moves/Monopoly", params));
         } catch (IOException e) {
             e.printStackTrace();
             throw new IOException();
@@ -377,7 +377,7 @@ public class ServerProxy implements iServerProxy {
     public ClientModelDTO playMonument(Monument monument) throws IOException {
         try {
             String params = serializer.serialize(monument);
-            return (ClientModelDTO) serializer.deserialize(doPost("/moves/Monument", params));
+            return serializer.deserializeModel(doPost("/moves/Monument", params));
         } catch (IOException e) {
             e.printStackTrace();
             throw new IOException();
@@ -426,7 +426,7 @@ public class ServerProxy implements iServerProxy {
     @Override
     public List<AddAIRequest> listAITypes() throws IOException {
         try {
-            return (List<AddAIRequest>) serializer.deserialize(doGet("/game/list"));
+            return (List<AddAIRequest>) serializer.deserialize(doGet("/game/list")); //this url is wrong
         } catch (IOException e) {
             e.printStackTrace();
             throw new IOException();
