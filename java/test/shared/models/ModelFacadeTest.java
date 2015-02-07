@@ -18,48 +18,48 @@ import shared.models.DTO.params.*;
 
 public class ModelFacadeTest {
 	
-	static private ModelFacade modelFacade;
-
-	// In the Model Mock data, I've set it so that Pete (2) will always return a 
-	// truthy value and Mark(3) will always return a falsy value;
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-		Populator pop = new Populator();
-		pop.populateModel(ModelMock.getObj());
-		modelFacade = new ModelFacade(pop.getModel());
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-		modelFacade = null;
-	}
-
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
-
-	@Test
-	public void testCanDiscardCards() {
-		
-		DiscardCards pete = new DiscardCards(2, new ResourceListDTO(0,-2,0,-1,-1));
-		DiscardCards mark = new DiscardCards(3, new ResourceListDTO(-1,-1,-1,-1,-1));
-		assertTrue(modelFacade.CanDiscardCards(pete));
-
-		assertFalse(modelFacade.CanDiscardCards(mark));
-	}
-
-	@Test
-	public void testCanRollNumber() {
-		RollNumber pete = new RollNumber(2, 6);
-		RollNumber mark = new RollNumber(3,8);
-		assertTrue(modelFacade.CanRollNumber(pete));
-
-		assertFalse(modelFacade.CanRollNumber(mark));
-	}
+//	static private ModelFacade modelFacade;
+//
+//	// In the Model Mock data, I've set it so that Pete (2) will always return a 
+//	// truthy value and Mark(3) will always return a falsy value;
+//	@BeforeClass
+//	public static void setUpBeforeClass() throws Exception {
+//		Populator pop = new Populator();
+//		pop.populateModel(ModelMock.getObj());
+//		modelFacade = new ModelFacade(pop.getModel());
+//	}
+//
+//	@AfterClass
+//	public static void tearDownAfterClass() throws Exception {
+//		modelFacade = null;
+//	}
+//
+//	@Before
+//	public void setUp() throws Exception {
+//	}
+//
+//	@After
+//	public void tearDown() throws Exception {
+//	}
+//
+//	@Test
+//	public void testCanDiscardCards() {
+//		
+//		DiscardCards pete = new DiscardCards(2, new ResourceListDTO(0,-2,0,-1,-1));
+//		DiscardCards mark = new DiscardCards(3, new ResourceListDTO(-1,-1,-1,-1,-1));
+//		assertTrue(modelFacade.CanDiscardCards(pete));
+//
+//		assertFalse(modelFacade.CanDiscardCards(mark));
+//	}
+//
+//	@Test
+//	public void testCanRollNumber() {
+//		RollNumber pete = new RollNumber(2, 6);
+//		RollNumber mark = new RollNumber(3,8);
+//		assertTrue(modelFacade.CanRollNumber(pete));
+//
+//		assertFalse(modelFacade.CanRollNumber(mark));
+//	}
 
 //	@Test
 //	public void testCanBuildRoad() {
