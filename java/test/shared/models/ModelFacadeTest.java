@@ -8,25 +8,22 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import client.mocks.ModelMock;
+import client.model.Populator;
+import shared.models.DTO.ResourceListDTO;
 import shared.models.DTO.params.*;
 
 public class ModelFacadeTest {
 	
 	static private ModelFacade modelFacade;
 
+	// In the Model Mock data, I've set it so that Pete (2) will always return a 
+	// truthy value and Mark(3) will always return a falsy value;
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		// instantiate modelFacade
-		Bank bank;
-		Board board;
-		ChatObject chatObject;
-		UserManager userManager;
-		TradeOffer tradeOffer;
-		int version;
-		int winner;
-		ClientModel cm = new ClientModel();
-		modelFacade = new ModelFacade();
-		
+		Populator pop = new Populator();
+		pop.populateModel(ModelMock.getObj());
+		modelFacade = new ModelFacade(pop.getModel());
 	}
 
 	@AfterClass
@@ -44,29 +41,30 @@ public class ModelFacadeTest {
 
 	@Test
 	public void testCanDiscardCards() {
-		DiscardCards pass = new DiscardCards();
-		DiscardCards fail = new DiscardCards();
-		assertTrue(modelFacade.CanDiscardCards(pass));
+		
+		DiscardCards pete = new DiscardCards(2, new ResourceListDTO(0,-2,0,-1,-1));
+		DiscardCards mark = new DiscardCards(3, new ResourceListDTO(-1,-1,-1,-1,-1));
+		assertTrue(modelFacade.CanDiscardCards(pete));
 
-		assertFalse(modelFacade.CanDiscardCards(fail));
+		assertFalse(modelFacade.CanDiscardCards(mark));
 	}
 
 	@Test
 	public void testCanRollNumber() {
-		RollNumber pass = new RollNumber();
-		RollNumber fail = new RollNumber();
-		assertTrue(modelFacade.CanRollNumber(pass));
+		RollNumber pete = new RollNumber(2, 6);
+		RollNumber mark = new RollNumber(3,8);
+		assertTrue(modelFacade.CanRollNumber(pete));
 
-		assertFalse(modelFacade.CanRollNumber(fail));
+		assertFalse(modelFacade.CanRollNumber(mark));
 	}
 
 	@Test
 	public void testCanBuildRoad() {
-		BuildRoad pass = new BuildRoad();
-		BuildRoad fail = new BuildRoad();
-		assertTrue(modelFacade.CanBuildRoad(pass));
+		BuildRoad pete = new BuildRoad(2, new EdgeLocation(), false);
+		BuildRoad mark = new BuildRoad();
+		assertTrue(modelFacade.CanBuildRoad(pete));
 
-		assertFalse(modelFacade.CanBuildRoad(fail));
+		assertFalse(modelFacade.CanBuildRoad(mark));
 	}
 
 	@Test

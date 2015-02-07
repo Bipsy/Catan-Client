@@ -22,10 +22,10 @@ public class HexDTO {
      */
     private final Integer chit;
 
-    public HexDTO(HexLocation newLocation, String string,
+    public HexDTO(HexLocation newLocation, String resource,
             Integer newChit) {
         location = newLocation;
-        resource = ResourceType.valueOf(string);
+        this.resource = (resource != null)? ResourceType.valueOf(resource.toUpperCase()): null;
         chit = newChit;
     }
 

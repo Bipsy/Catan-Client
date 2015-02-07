@@ -141,7 +141,7 @@ public class ModelMock {
     			new PlayerDTO(new ResourceListDTO(1,0,1,0,1), new DevCardListDTO(0,0,0,0,0), 
     					new DevCardListDTO(0,0,0,0,0), 13,4,3,0,2,0,false,false,1,1,"Brooke", "blue"),
 
-    			new PlayerDTO(new ResourceListDTO(0,1,1,1,0), new DevCardListDTO(0,0,0,0,0), 
+    			new PlayerDTO(new ResourceListDTO(1,3,1,2,1), new DevCardListDTO(0,0,0,0,0), 
     					new DevCardListDTO(0,0,0,0,0), 13,4,3,0,2,0,false,false,10,2,"Pete", "red"),
 
     			new PlayerDTO(new ResourceListDTO(0,1,1,0,1), new DevCardListDTO(0,0,0,0,0), 
@@ -184,7 +184,7 @@ public class ModelMock {
         
         TradeOfferDTO tradeOffer = null;
         
-        TurnTrackerDTO turnTracker = new TurnTrackerDTO("Rolling", 0, -1, -1);
+        TurnTrackerDTO turnTracker = new TurnTrackerDTO("Rolling", 2, -1, -1);
         
         ClientModelDTO model = new ClientModelDTO(resources, devCards, chat, log, map, players, tradeOffer, turnTracker, -1, 0);
         return model;

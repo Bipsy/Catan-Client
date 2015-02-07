@@ -256,14 +256,16 @@ public class ServerProxyTest {
 	@Test
 	public void testPlayRoadBuilding() {
 		HexLocation hex = new HexLocation(0, 0);
-		EdgeLocation edge = new EdgeLocation(hex, "NE");
-		RoadBuilding card = new RoadBuilding(3, edge, false);
+		EdgeLocation edge = new EdgeLocation(hex, EdgeDirection.NorthEast);
+		EdgeLocation edge2 = new EdgeLocation(hex, EdgeDirection.North);
+		RoadBuilding card = new RoadBuilding(3, edge, edge2);
 		try {
 			proxy.playRoadBuilding(card);
 		} catch (IOException e) {
 			fail("Did not succeed");
 			e.printStackTrace();
-		}	}
+		}
+	}
 
 	@Test
 	public void testPlayMonopoly() {
@@ -294,7 +296,7 @@ public class ServerProxyTest {
 
 	@Test
 	public void testAddAIPlayer() {
-		AddAIRequest ai = new AddAIRequest()
+		AddAIRequest ai = new AddAIRequest();
 	}
 
 }

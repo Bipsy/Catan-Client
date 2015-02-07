@@ -97,15 +97,15 @@ public class PlayerHand {
 
 	public boolean CanUpdateResourceCards(ResourceListDTO resourceList) {
 		return (resources.getResourceNumber(ResourceType.BRICK) + 
-				resourceList.getBrick() < 0 &&
+				resourceList.getBrick() >= 0 &&
 				resources.getResourceNumber(ResourceType.SHEEP) + 
-				resourceList.getSheep() < 0 &&
+				resourceList.getSheep() >= 0 &&
 				resources.getResourceNumber(ResourceType.WOOD) + 
-				resourceList.getWood() < 0 &&
+				resourceList.getWood() >= 0 &&
 				resources.getResourceNumber(ResourceType.ORE) + 
-				resourceList.getOre() < 0 &&
+				resourceList.getOre() >= 0 &&
 				resources.getResourceNumber(ResourceType.WHEAT) + 
-				resourceList.getWheat() < 0);
+				resourceList.getWheat() >= 0);
 	}
 
 	public int getNumResourceCards() {

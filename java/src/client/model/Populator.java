@@ -41,6 +41,10 @@ import shared.models.DTO.VertexObjectDTO;
 public class Populator implements iPopulator {
 
     private ClientModel model;
+    
+    public Populator() {
+    	model = new ClientModel();
+    }
 
     @Override
     public boolean populateModel(ClientModelDTO container) {
