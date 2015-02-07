@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.util.List;
 
 import shared.models.DTO.ClientModelDTO;
+import shared.models.DTO.GameContainerDTO;
+import shared.models.DTO.GameDTO;
 import shared.models.DTO.params.*;
 
 /**
@@ -126,12 +128,12 @@ public class MockServerProxy implements iServerProxy {
     }
 
     @Override
-    public ClientModelDTO listGames() throws IOException {
+    public GameContainerDTO listGames() throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public ClientModelDTO createGames(CreateGameRequest game) throws IOException {
+    public GameDTO createGames(CreateGameRequest game) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

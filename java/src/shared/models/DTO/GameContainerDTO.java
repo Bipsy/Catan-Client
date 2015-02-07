@@ -13,17 +13,17 @@ import shared.models.Game;
  */
 public class GameContainerDTO {
 
-    private List<Game> games;
+    private List<GameDTO> games;
 
     public GameContainerDTO() {
-        setGames(new ArrayList<Game>());
+        setGames(new ArrayList<GameDTO>());
     }
 
-    public List<Game> getGames() {
+    public List<GameDTO> getGames() {
         return games;
     }
 
-    public void setGames(List<Game> games) {
+    public void setGames(List<GameDTO> games) {
         this.games = games;
     }
 

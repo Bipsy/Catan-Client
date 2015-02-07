@@ -60,6 +60,7 @@ public class ServerProxy implements iServerProxy {
 
             connection.connect();
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+            	System.out.println("getHTTP_OK");
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 StringBuilder out = new StringBuilder();
                 String line;
@@ -159,9 +160,14 @@ public class ServerProxy implements iServerProxy {
     }
 
     @Override
-    public ClientModelDTO listGames() throws IOException {
+    public GameContainerDTO listGames() throws IOException {
         try {
-            return (ClientModelDTO) serializer.deserialize(doGet("/games/list"));
+        	GameContainerDTO list = new GameContainerDTO();
+        	
+            List<GameDTO> list2 = (List<GameDTO>) serializer.deserialize(doGet("/games/list"));
+            System.out.println(list2);
+            list.setGames(list2);
+            return list;
         } catch (IOException e) {
             e.printStackTrace();
             throw new IOException();
@@ -169,10 +175,10 @@ public class ServerProxy implements iServerProxy {
     }
 
     @Override
-    public ClientModelDTO createGames(CreateGameRequest game) throws IOException {
+    public GameDTO createGames(CreateGameRequest game) throws IOException {
         try {
             String params = serializer.serialize(game);
-            return (ClientModelDTO) serializer.deserialize(doPost("/games/create", params));
+            return serializer.deserializeGame(doPost("/games/create", params));
         } catch (IOException e) {
             e.printStackTrace();
             throw new IOException();
@@ -183,7 +189,7 @@ public class ServerProxy implements iServerProxy {
     public ClientModelDTO retrieveCurrentState(int version) throws IOException {
         try {
             String params = serializer.serialize(version);
-            return (ClientModelDTO) serializer.deserialize(doPost("/game/model", params));
+            return serializer.deserializeModel(doPost("/game/model", params));
         } catch (IOException e) {
             e.printStackTrace();
             throw new IOException();
@@ -194,7 +200,7 @@ public class ServerProxy implements iServerProxy {
     public ClientModelDTO sendChat(SendChat message) throws IOException {
         try {
             String params = serializer.serialize(message);
-            return (ClientModelDTO) serializer.deserialize(doPost("/moves/sendChat", params));
+            return serializer.deserializeModel(doPost("/moves/sendChat", params));
         } catch (IOException e) {
             e.printStackTrace();
             throw new IOException();

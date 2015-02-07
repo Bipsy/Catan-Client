@@ -9,7 +9,8 @@ import java.io.IOException;
 import java.util.List;
 
 import shared.models.DTO.ClientModelDTO;
-import shared.models.DTO.params.AcceptTrade;
+import shared.models.DTO.GameContainerDTO;
+import shared.models.DTO.GameDTO;
 import shared.models.DTO.params.*;
 
 /**
@@ -264,7 +265,7 @@ public interface iServerProxy {
      * @return GameContainer
      * @throws IOException
      */
-    ClientModelDTO listGames() throws IOException;
+    GameContainerDTO listGames() throws IOException;
 
     /**
      * Sends a request to the server to create a game
@@ -280,7 +281,7 @@ public interface iServerProxy {
      * @return
      * @throws IOException
      */
-    ClientModelDTO createGames(CreateGameRequest game) throws IOException;
+    GameDTO createGames(CreateGameRequest game) throws IOException;
 
     /**
      * Sends a request to the server to join a game

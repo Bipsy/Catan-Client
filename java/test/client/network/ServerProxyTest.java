@@ -37,37 +37,70 @@ public class ServerProxyTest {
 	
 	@Test
 	public void testRegisterNewUser() {
-		UserCredentials tiger = new UserCredentials("tiger", "shark");
+//		UserCredentials tiger = new UserCredentials("tiger", "shark");
+//		try {
+//			proxy.registerNewUser(tiger);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+	}
+
+	@Test
+	public void testListGames() {
 		try {
-			proxy.registerNewUser(tiger);
+			proxy.listGames();
 		} catch (IOException e) {
+			fail("Did no succeed");
 			e.printStackTrace();
 		}
 	}
 
 	@Test
-	public void testListGames() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testCreateGames() {
-		fail("Not yet implemented");
+		CreateGameRequest game = new CreateGameRequest(true, true, true, "FirstGame");
+		try {
+			proxy.createGames(game);
+		} catch (IOException e) {
+			fail("Did no succeed");	
+			e.printStackTrace();
+		}
 	}
 
 	@Test
 	public void testRetrieveCurrentState() {
-		fail("Not yet implemented");
+		try {
+			proxy.retrieveCurrentState(0);
+		} catch (IOException e) {
+			fail("Did no succeed");
+			e.printStackTrace();
+		}
 	}
 
 	@Test
 	public void testSendChat() {
-		fail("Not yet implemented");
+		SendChat message = new SendChat(0, "chat");
+		try {
+			proxy.sendChat(message);
+		} catch (IOException e) {
+			fail("Did no succeed");
+			e.printStackTrace();
+		}
 	}
 
 	@Test
+	public void testOfferTrade() {
+		
+	}
+	
+	@Test
 	public void testAcceptTrade() {
-		fail("Not yet implemented");
+		AcceptTrade accept = new AcceptTrade(1, true);
+		try {
+			proxy.acceptTrade(accept);
+		} catch (IOException e) {
+			fail("Did not succeed");
+			e.printStackTrace();
+		}
 	}
 
 	@Test
@@ -92,11 +125,6 @@ public class ServerProxyTest {
 
 	@Test
 	public void testBuildCity() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testOfferTrade() {
 		fail("Not yet implemented");
 	}
 
