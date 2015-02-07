@@ -49,22 +49,25 @@ public class Populator implements iPopulator {
     @Override
     public boolean populateModel(ClientModelDTO container) {
 
+    	model = new ClientModel();
         populateBank(container.getResources(), container.getDevCards());
+        System.out.println("I polulated the bank");
 
-        populateBoard(container.getMap());
+        //populateBoard(container.getMap());
+        
 
         //I'm getting a chat and a log but the chatObject only has a list of messages...
         populateChatObject(container.getChat(), container.getLog());
-
         //
         populateUserManager(container.getPlayers(), container.getTurnTracker());
 
-        model.setTradeOffer(new TradeOffer(container.getTradeOffer()));
+        if (container.getTradeOffer() != null)
+        	model.setTradeOffer(new TradeOffer(container.getTradeOffer()));
 
         model.setVersion(container.getVersion());
         model.setWinner(container.getWinner());
 
-        return false;
+        return true;
     }
 
     private void populateUserManager(PlayerDTO[] players,

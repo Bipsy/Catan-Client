@@ -1,5 +1,6 @@
 package shared.models.DTO;
 
+import shared.definitions.CatanColor;
 import shared.exceptions.InvalidPlayerIndex;
 
 /**
@@ -12,7 +13,7 @@ import shared.exceptions.InvalidPlayerIndex;
 public class PlayerDTO {
 
     private int cities;
-    private String color;
+    private CatanColor color;
     /**
      * flag for whether or not a player has discarded cards during a discard
      * phase
@@ -74,7 +75,7 @@ public class PlayerDTO {
 			int roads, int cities, int settlements, int soldiers, 
 			int victoryPoints, int monuments, boolean playedDevCard, 
 			boolean discarded, int playerID, int playerIndex, String name, 
-			String color) {
+			CatanColor color) {
     	this.resources = resources;
     	this.oldDevCards = oldDevCards;
     	this.newDevCards = newDevCards;
@@ -215,11 +216,11 @@ public class PlayerDTO {
         this.victoryPoints = victoryPoints;
     }
 
-    public String getColor() {
+    public CatanColor getColor() {
         return color;
     }
 
-    public void setColor(String color) {
+    public void setColor(CatanColor color) {
         this.color = color;
     }
 

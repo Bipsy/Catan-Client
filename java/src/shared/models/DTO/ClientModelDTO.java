@@ -12,11 +12,8 @@ import com.google.gson.annotations.SerializedName;
  */
 public class ClientModelDTO {
 
-
-    @SerializedName("bank")
-    private ResourceListDTO resources;
-    @SerializedName("deck")
-    private DevCardListDTO devCards;
+    private ResourceListDTO bank;
+    private DevCardListDTO deck;
     private MessageListDTO chat;
     private MessageListDTO log;
     private MapDTO map;
@@ -47,27 +44,18 @@ public class ClientModelDTO {
     }
 
     public ClientModelDTO() {
-        // TODO Auto-generated constructor stub
+    	bank = new ResourceListDTO();
+        deck = new DevCardListDTO();
+        chat = new MessageListDTO();
+        log = new MessageListDTO();
+        map = new MapDTO();
+        turnTracker = new TurnTrackerDTO();
+        version = 0;
+        winner = -1;    
     }
 
-    public ClientModelDTO(ResourceListDTO resources, DevCardListDTO devCards,
-			MessageListDTO chat, MessageListDTO log, MapDTO map,
-			PlayerDTO[] players, TradeOfferDTO tradeOffer,
-			TurnTrackerDTO turnTracker, int winner, int version) {
-		this.resources = resources;
-		this.devCards = devCards;
-		this.chat = chat;
-		this.log = log;
-		this.map = map;
-		this.players = players;
-		this.tradeOffer = tradeOffer;
-		this.turnTracker = turnTracker;
-		this.winner = winner;
-		this.version = version;
-	}
-
-	public void setBank(ResourceListDTO resources) {
-        this.resources = resources;
+    public void setBank(ResourceListDTO resources) {
+        this.bank = resources;
     }
 
     public MessageListDTO getChat() {
@@ -135,19 +123,19 @@ public class ClientModelDTO {
     }
 
     public DevCardListDTO getDevCards() {
-        return devCards;
+        return deck;
     }
 
     public void setDevCards(DevCardListDTO devCards) {
-        this.devCards = devCards;
+        this.deck = devCards;
     }
 
     public ResourceListDTO getResources() {
-        return resources;
+        return bank;
     }
 
     public void setResources(ResourceListDTO resources) {
-        this.resources = resources;
+        this.bank = resources;
     }
 
 }

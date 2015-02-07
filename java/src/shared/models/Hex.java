@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import shared.definitions.ResourceType;
+import shared.definitions.ResourceTypeOptional;
 
 /**
  * Represents a hex on the board.
@@ -18,7 +19,7 @@ import shared.definitions.ResourceType;
 public class Hex {
 
     private HexLocation location;
-    private ResourceType resource;
+    private ResourceTypeOptional resource;
     private Integer chit;
     private Map<EdgeLocation, Road> roadMap;
     private Harbor harbor;
@@ -92,11 +93,11 @@ public class Hex {
         this.location = location;
     }
 
-    public ResourceType getResource() {
+    public ResourceTypeOptional getResource() {
         return resource;
     }
 
-    public void setResource(ResourceType resource) {
+    public void setResource(ResourceTypeOptional resource) {
         this.resource = resource;
     }
 
