@@ -17,7 +17,16 @@ public class ModelFacadeTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		// instantiate modelFacade
+		Bank bank;
+		Board board;
+		ChatObject chatObject;
+		UserManager userManager;
+		TradeOffer tradeOffer;
+		int version;
+		int winner;
+		ClientModel cm = new ClientModel();
 		modelFacade = new ModelFacade();
+		
 	}
 
 	@AfterClass
