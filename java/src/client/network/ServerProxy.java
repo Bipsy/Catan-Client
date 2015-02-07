@@ -267,7 +267,7 @@ public class ServerProxy implements iServerProxy {
     public ClientModelDTO buildCity(BuildCity cityMove) throws IOException {
         try {
             String params = serializer.serialize(cityMove);
-            return (ClientModelDTO) serializer.deserialize(doPost("/moves/buildCity", params));
+            return serializer.deserializeModel(doPost("/moves/buildCity", params));
         } catch (IOException e) {
             e.printStackTrace();
             throw new IOException();
