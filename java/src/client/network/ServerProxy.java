@@ -130,8 +130,6 @@ public class ServerProxy implements iServerProxy {
 
                 //System.out.println(out.toString());
                 return out.toString();
-            } else if (connection.getResponseCode() == HttpURLConnection.HTTP_BAD_REQUEST) {
-                return null;
             } else {
                 throw new IOException(String.format("doPost failed: %s (http code %d)",
                         urlPath, connection.getResponseCode()));
@@ -196,10 +194,10 @@ public class ServerProxy implements iServerProxy {
     public ClientModelDTO retrieveCurrentState(Integer version) throws IOException {
         try {
             if (version == null) {
-                return serializer.deserializeModel(doPost("/game/model", ""));
+                return serializer.deserializeModel(doGet("/game/model"));
             } else {
                 String params = serializer.serialize(version);
-                return serializer.deserializeModel(doPost("/game/model", params));
+                return serializer.deserializeModel(doGet("/game/model"));
             }
         } catch (IOException e) {
             e.printStackTrace();
