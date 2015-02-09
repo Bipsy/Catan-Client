@@ -72,8 +72,8 @@ public class ModelMock {
         		+ "\"cities\": 4, \"settlements\": 5, \"soldiers\": 0, \"victoryPoints\": 0, \"monuments\": 0, "
         		+ "\"playedDevCard\": false, \"discarded\": false, \"playerID\": 11, \"playerIndex\": 3, "
         		+ "\"name\": \"Mark\", \"color\": \"green\" } ], \"log\": { \"lines\": [] }, \"chat\": "
-        		+ "{ \"lines\": [] }, \"bank\": { \"brick\": 24, \"wood\": 24, \"sheep\": 24, \"wheat\": 24, "
-        		+ "\"ore\": 24 }, \"turnTracker\": { \"status\": \"FirstRound\", \"currentTurn\": 0, "
+        		+ "{ \"lines\": [] }, \"bank\": { \"brick\": 23, \"wood\": 21, \"sheep\": 20, \"wheat\": 22, "
+        		+ "\"ore\": 22 }, \"turnTracker\": { \"status\": \"FirstRound\", \"currentTurn\": 0, "
         		+ "\"longestRoad\": -1, \"largestArmy\": -1 }, \"winner\": -1, \"version\": 0 }";
     }
 
