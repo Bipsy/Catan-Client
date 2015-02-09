@@ -57,6 +57,12 @@ public class UserManager {
 		return users.size();
 	}
 	
+	public void setCurrentUser(int index) {
+		if(index >= 0 && index < 4) {
+			turnTracker.setCurrentTurn(index);
+		}
+	}
+	
 	public boolean CanMaritimeTrade(MaritimeTrade maritimeTrade) {
 		return isCurrentPlayer(maritimeTrade.getPlayerIndex()) &&
     		users.get(maritimeTrade.getPlayerIndex()).CanOfferMTrade(maritimeTrade);

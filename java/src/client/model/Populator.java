@@ -53,7 +53,7 @@ public class Populator implements iPopulator {
         populateBank(container.getResources(), container.getDevCards());
         System.out.println("I polulated the bank");
 
-        //populateBoard(container.getMap());
+        populateBoard(container.getMap());
         
 
         //I'm getting a chat and a log but the chatObject only has a list of messages...

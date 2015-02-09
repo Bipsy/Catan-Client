@@ -135,7 +135,8 @@ public class Board {
     public void setRoad(List<Road> road) {
         this.roads = road;
         for (int i = 0; i < road.size(); i++) {
-			roadMap.put(roads.get(i).getLocation().getNormalizedLocation(), roads.get(i));
+        	EdgeLocation temp = road.get(i).getLocation();
+			roadMap.put(road.get(i).getLocation().getNormalizedLocation(), road.get(i));
 		}
     }
 
@@ -198,7 +199,7 @@ public class Board {
         for (int i = 0; i < roadArray.length; i++) {
             temp.add(new Road(roadArray[i]));
         }
-        this.roads = temp;
+        setRoad(temp);
     }
 
     public void setSettlements(VertexObjectDTO[] settlementArray) {
@@ -206,7 +207,7 @@ public class Board {
         for (int i = 0; i < settlementArray.length; i++) {
             temp.add(new VertexObject(settlementArray[i], PieceType.SETTLEMENT));
         }
-        this.settlements = temp;
+        setSettlements(temp);
 
     }
 
@@ -215,7 +216,7 @@ public class Board {
         for (int i = 0; i < cityArray.length; i++) {
             temp.add(new VertexObject(cityArray[i], PieceType.CITY));
         }
-        this.cities = temp;
+        setCities(temp);
 
     }
 

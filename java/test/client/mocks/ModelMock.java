@@ -184,7 +184,7 @@ public class ModelMock {
         
         TradeOfferDTO tradeOffer = null;
         
-        TurnTrackerDTO turnTracker = new TurnTrackerDTO("Rolling", 2, -1, -1);
+        TurnTrackerDTO turnTracker = new TurnTrackerDTO("Rolling", 0, -1, -1);
         
         ClientModelDTO model = new ClientModelDTO(resources, devCards, chat, log, map, players, tradeOffer, turnTracker, -1, 0);
         return model;

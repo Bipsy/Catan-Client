@@ -16,6 +16,7 @@ public class Road {
 
     public Road(EdgeValueDTO edgeValueDTO) {
         this.owner = edgeValueDTO.getOwner();
+        this.location = edgeValueDTO.getLocation();
     }
 
     public int getOwner() {
