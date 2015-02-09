@@ -180,8 +180,8 @@ public class ClientModel {
      * @return
      */
     public boolean CanBuildSettlement(BuildSettlement buildSettlement) {
-    	return userManager.CanBuildSettlement(buildSettlement) &&
-    			board.canBuildSettlement(buildSettlement);
+    	return userManager.CanBuildSettlement(buildSettlement);// &&
+    			//board.canBuildSettlement(buildSettlement);
     }
 
     /**
@@ -264,7 +264,7 @@ public class ClientModel {
     public boolean CanFinishTurn(FinishTurn finishTurn) {
         // TODO track initialization stages ("FirstRound" or "SecondRound")
     	TurnTracker turnTracker = userManager.turnTracker;
-    	boolean hasRolled = turnTracker.getStatus().toLowerCase() != "rolling";
+    	boolean hasRolled = !"rolling".equals(turnTracker.getStatus().toLowerCase());
     	boolean isTurn = userManager.isCurrentPlayer(finishTurn.getPlayerIndex());
     	
     	

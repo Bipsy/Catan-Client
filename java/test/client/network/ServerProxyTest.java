@@ -170,7 +170,7 @@ public class ServerProxyTest {
     public void testBuildSettlement() {
         HexLocation hex = new HexLocation(-1, -1);
         VertexLocation vert = new VertexLocation(hex, VertexDirection.NorthEast);
-        BuildSettlement sett = new BuildSettlement(2, vert, false);
+        BuildSettlement sett = new BuildSettlement(2, vert);
         try {
             proxy.buildSettlement(sett);
         } catch (IOException e) {
@@ -183,7 +183,7 @@ public class ServerProxyTest {
     public void testBuildCity() {
         HexLocation hex = new HexLocation(-1, -1);
         VertexLocation vert = new VertexLocation(hex, VertexDirection.NorthEast);
-        BuildCity city = new BuildCity(2, vert, false);
+        BuildCity city = new BuildCity(2, vert);
         try {
             proxy.buildCity(city);
         } catch (IOException e) {

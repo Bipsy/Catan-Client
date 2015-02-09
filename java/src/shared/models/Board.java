@@ -99,10 +99,10 @@ public class Board {
     }
 
     public boolean canBuildCity(BuildCity buildCity) {
-    	VertexLocation vertex = buildCity.getVertexLocation();
+    	VertexLocation vertex = buildCity.getVertexLocation().getNormalizedLocation();
     	
-    	if(communityMap.containsKey(vertex.getNormalizedLocation())) {
-    		VertexObject vertexObj = communityMap.get(vertex.getNormalizedLocation());
+    	if(communityMap.containsKey(vertex)) {
+    		VertexObject vertexObj = communityMap.get(vertex);
     		if(vertexObj.getType() == PieceType.SETTLEMENT && vertexObj.getOwner() == 
     				buildCity.getPlayerIndex()) {
     			return true;
@@ -147,7 +147,7 @@ public class Board {
     public void setSettlements(List<VertexObject> settlements) {
         this.settlements = settlements;
         for (int i = 0; i < settlements.size(); i++) {
-        	communityMap.put(settlements.get(i).getLocation(), settlements.get(i));
+        	communityMap.put(settlements.get(i).getLocation().getNormalizedLocation(), settlements.get(i));
 		}
     }
 
@@ -158,7 +158,7 @@ public class Board {
     public void setCities(List<VertexObject> cities) {
         this.cities = cities;
         for (int i = 0; i < cities.size(); i++) {
-			communityMap.put(cities.get(i).getLocation(), cities.get(i));
+			communityMap.put(cities.get(i).getLocation().getNormalizedLocation(), cities.get(i));
 		}
     }
 
