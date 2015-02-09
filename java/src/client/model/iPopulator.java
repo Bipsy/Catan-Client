@@ -17,7 +17,4 @@ public interface iPopulator {
 
     public boolean populateModel(ClientModelDTO container);
 
-    public boolean populateModel(UserDTO container);
-
-    public boolean populateModel(GameContainerDTO container);
 }
