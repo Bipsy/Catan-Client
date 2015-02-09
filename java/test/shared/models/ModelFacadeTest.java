@@ -20,7 +20,6 @@ public class ModelFacadeTest {
 	
 	static private ModelFacade modelFacade;
 	private static ClientModel model;
-
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		Populator pop = new Populator();
@@ -179,5 +178,4 @@ public class ModelFacadeTest {
 //
 //		assertFalse(modelFacade.CanPlaceRobber(fail));
 //	}
-
 }

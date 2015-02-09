@@ -1,13 +1,12 @@
 package shared.models;
 
 import shared.definitions.DevCardType;
-import shared.definitions.ResourceType;
 import shared.models.DTO.DevCardListDTO;
 
 public class DevCardList {
 
     private int monopoly;
-	private int roadBuilding;
+    private int roadBuilding;
     private int yearOfPlenty;
     private int monument;
     private int soldier;
@@ -21,7 +20,7 @@ public class DevCardList {
     }
 
     public DevCardList(DevCardListDTO devCards) {
-        this.setMonopoly(devCards.getMonopoly());
+        this.monopoly = devCards.getMonopoly();
         this.roadBuilding = devCards.getRoadBuilding();
         this.yearOfPlenty = devCards.getYearOfPlenty();
         this.monument = devCards.getMonument();
@@ -61,48 +60,48 @@ public class DevCardList {
         return 0;
     }
 
-	public int getMonopoly() {
-		return monopoly;
-	}
+    public int getMonopoly() {
+        return monopoly;
+    }
 
-	public void setMonopoly(int monopoly) {
-		this.monopoly = monopoly;
-	}
-	
+    public void setMonopoly(int monopoly) {
+        this.monopoly = monopoly;
+    }
+
     public int getRoadBuilding() {
-		return roadBuilding;
-	}
+        return roadBuilding;
+    }
 
-	public void setRoadBuilding(int roadBuilding) {
-		this.roadBuilding = roadBuilding;
-	}
+    public void setRoadBuilding(int roadBuilding) {
+        this.roadBuilding = roadBuilding;
+    }
 
-	public int getYearOfPlenty() {
-		return yearOfPlenty;
-	}
+    public int getYearOfPlenty() {
+        return yearOfPlenty;
+    }
 
-	public void setYearOfPlenty(int yearOfPlenty) {
-		this.yearOfPlenty = yearOfPlenty;
-	}
+    public void setYearOfPlenty(int yearOfPlenty) {
+        this.yearOfPlenty = yearOfPlenty;
+    }
 
-	public int getMonument() {
-		return monument;
-	}
+    public int getMonument() {
+        return monument;
+    }
 
-	public void setMonument(int monument) {
-		this.monument = monument;
-	}
+    public void setMonument(int monument) {
+        this.monument = monument;
+    }
 
-	public int getSoldier() {
-		return soldier;
-	}
+    public int getSoldier() {
+        return soldier;
+    }
 
-	public void setSoldier(int soldier) {
-		this.soldier = soldier;
-	}
+    public void setSoldier(int soldier) {
+        this.soldier = soldier;
+    }
 
-	public int getNumDevCards() {
-		return monopoly + roadBuilding + yearOfPlenty + soldier + monument;
-	}
+    public int getNumDevCards() {
+        return monopoly + roadBuilding + yearOfPlenty + soldier + monument;
+    }
 
 }
