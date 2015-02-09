@@ -17,11 +17,11 @@ public class ResourceListDTO {
     private int wood;
 
     public ResourceListDTO() {
-        brick = 0;
-        ore = 0;
-        sheep = 0;
-        wheat = 0;
-        wood = 0;
+        brick = 23;
+        ore = 22;
+        sheep = 20;
+        wheat = 22;
+        wood = 21;
     }
 
     public ResourceListDTO(int brick, int ore, int sheep, int wheat, int wood) {

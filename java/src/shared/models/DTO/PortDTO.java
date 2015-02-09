@@ -3,7 +3,6 @@ package shared.models.DTO;
 import shared.definitions.ResourceType;
 import shared.exceptions.InvalidRatio;
 import shared.locations.EdgeLocation;
-import shared.locations.HexLocation;
 
 /**
  * This class stores the information needed to create a JSON string of a port,
@@ -18,7 +17,7 @@ public class PortDTO {
      * Must be: 'Wood', 'Brick', 'Sheep', 'Wheat', or 'Ore', optional
      */
     private ResourceType resource;
-    private HexLocation location;
+    private EdgeLocation location;
     /**
      * Must be: 'NW', 'N', 'NE', 'SW', 'S', or 'SE'
      */
@@ -38,14 +37,6 @@ public class PortDTO {
         this.direction = null;
         this.ratio = 3;
     }
-    
-    public PortDTO(ResourceType resource, HexLocation hexLocation, String direction, int ratio) {
-        this.resource = resource;
-        this.location = hexLocation;
-        this.direction = direction;
-        this.ratio = ratio;
-    }
-
 
     public PortDTO(int ratio,String resource, EdgeLocation edgeLocation) {
 		// TODO Auto-generated constructor stub
@@ -59,11 +50,11 @@ public class PortDTO {
         this.resource = resource;
     }
 
-    public HexLocation getLocation() {
+    public EdgeLocation getLocation() {
         return location;
     }
 
-    public void setLocation(HexLocation location) {
+    public void setLocation(EdgeLocation location) {
         this.location = location;
     }
 

@@ -26,10 +26,6 @@ public class UserManager {
     private List<Player> users;
     TurnTracker turnTracker;
 
-    public List<Player> getUsers() {
-		return users;
-	}
-    
     public UserManager(List<Player> userList, TurnTracker turnTracker2) {
         this.users = userList;
         this.turnTracker = turnTracker2;
@@ -57,6 +53,10 @@ public class UserManager {
 		return users.get(index);
 	}
 
+	public int getNumPlayers() {
+		return users.size();
+	}
+	
 	public boolean CanMaritimeTrade(MaritimeTrade maritimeTrade) {
 		return isCurrentPlayer(maritimeTrade.getPlayerIndex()) &&
     		users.get(maritimeTrade.getPlayerIndex()).CanOfferMTrade(maritimeTrade);

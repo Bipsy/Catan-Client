@@ -1,11 +1,10 @@
 package client.mocks;
 
-
-import shared.definitions.CatanColor;
-import shared.definitions.ResourceType;
-import shared.definitions.ResourceTypeOptional;
-import shared.exceptions.InvalidPlayerIndex;
+import shared.locations.EdgeDirection;
+import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
+import shared.locations.VertexLocation;
 /**
  * @author Anna Sokolova
  *
@@ -13,12 +12,8 @@ import shared.locations.HexLocation;
 import shared.models.DTO.*;
 
 public class ModelMock {
-	
-	private ClientModelDTO JSONmodel;
 
     public ModelMock() {
-    	createJSONModel();
-    	//createClientModel();
     }
 
     public static String getJSON() {
@@ -83,119 +78,116 @@ public class ModelMock {
     }
 
     public static ClientModelDTO getModelDTO() {
-        ModelMock m = new ModelMock();
-        return m.JSONmodel;
-    }
-    
-    private void createJSONModel() {
-    	
-    	JSONmodel = new ClientModelDTO();
-    	
-        JSONmodel.setWinner(-1);
-        JSONmodel.setVersion(0);
-        JSONmodel.setTradeOffer(null);
-        
-        ResourceListDTO bank = new ResourceListDTO();
-        bank.setBrick(24);
-        bank.setOre(24);
-        bank.setSheep(24);
-        bank.setWheat(24);
-        bank.setWood(24);
-        JSONmodel.setBank(bank);
-                   	    
-        createPlayers();
-        createMap();
-        
-    }
-    
-    private void createMap() {
-    	
-    	MapDTO map = new MapDTO();
-        map.setRadius(3);
-        map.setRobber(new HexLocation(0,-2));
-	    map = initializeHexes(map);
-	    map = initializePorts(map);
-	    JSONmodel.setMap(map);
-    }
+    	DevCardListDTO devCards = new DevCardListDTO(2,2,14,2,5);
+    	HexDTO[] hexes = {
+    			new HexDTO(new HexLocation(0,-2), null, null),
+    			new HexDTO(new HexLocation(1,-2), "brick", 4),
+    			new HexDTO(new HexLocation(2,-2), "wood", 11),
+    			new HexDTO(new HexLocation(-1,-1), "brick", 8),
+    			new HexDTO(new HexLocation(0,-1),"wood", 3),
+    			new HexDTO(new HexLocation(1,-1),"ore", 9),
+    			new HexDTO(new HexLocation(2,-1), "sheep", 12),
+    			new HexDTO(new HexLocation(-2,0), "ore", 5),
+    			new HexDTO(new HexLocation(-1,0), "sheep", 10),
+    			new HexDTO(new HexLocation(0,0), "wheat", 11),
+    			new HexDTO(new HexLocation(1,0),"brick", 5),
+    			new HexDTO(new HexLocation(2,0),"wheat", 6),
+    			new HexDTO(new HexLocation(-2,1),"wheat", 2),
+    			new HexDTO(new HexLocation(-1,1),"sheep", 9),
+    			new HexDTO(new HexLocation(0,1),"wood", 4),
+    			new HexDTO(new HexLocation(1,1),"sheep", 10),
+    			new HexDTO(new HexLocation(-2,2),"wood", 6),
+    			new HexDTO(new HexLocation(-1,2),"ore", 3),
+    			new HexDTO(new HexLocation(0,2),"wheat", 8)		
+    	};
+    	EdgeValueDTO[] roads = {
+    			new EdgeValueDTO(2, new EdgeLocation(new HexLocation(1,-1), EdgeDirection.South)),
+    			new EdgeValueDTO(3, new EdgeLocation(new HexLocation(2,-2), EdgeDirection.SouthWest)),
+    			new EdgeValueDTO(0, new EdgeLocation(new HexLocation(0,1), EdgeDirection.South)),
+    			new EdgeValueDTO(1, new EdgeLocation(new HexLocation(-2,1), EdgeDirection.SouthWest)),
+    			new EdgeValueDTO(2, new EdgeLocation(new HexLocation(0,0), EdgeDirection.South)),
+    			new EdgeValueDTO(0, new EdgeLocation(new HexLocation(2,0), EdgeDirection.SouthWest)),
+    			new EdgeValueDTO(1, new EdgeLocation(new HexLocation(-1,-1), EdgeDirection.South)),
+    			new EdgeValueDTO(3, new EdgeLocation(new HexLocation(-1,1), EdgeDirection.SouthWest))
+    	};
+    	VertexObjectDTO[] cities = new VertexObjectDTO[0];
+    	VertexObjectDTO[] settlements = {
+    			new VertexObjectDTO(3, new VertexLocation(new HexLocation(1,-2), VertexDirection.SouthEast)),
+    			new VertexObjectDTO(2, new VertexLocation(new HexLocation(0,0), VertexDirection.SouthWest)),
+    			new VertexObjectDTO(2, new VertexLocation(new HexLocation(1,-1), VertexDirection.SouthWest)),
+    			new VertexObjectDTO(1, new VertexLocation(new HexLocation(-1,-1), VertexDirection.SouthEast)),
+    			new VertexObjectDTO(0, new VertexLocation(new HexLocation(0,1), VertexDirection.SouthEast)),
+    			new VertexObjectDTO(1, new VertexLocation(new HexLocation(-2,1), VertexDirection.SouthWest)),
+    			new VertexObjectDTO(0, new VertexLocation(new HexLocation(2,0), VertexDirection.SouthWest)),
+    			new VertexObjectDTO(3, new VertexLocation(new HexLocation(-1,1), VertexDirection.SouthWest))
+    	};
+    	PortDTO[] ports = {
+    			new PortDTO(3, null, new EdgeLocation(new HexLocation(3,-3), EdgeDirection.SouthWest)),
+    			new PortDTO(2, "ore", new EdgeLocation(new HexLocation(1,-3), EdgeDirection.South)),
+    			new PortDTO(3, null, new EdgeLocation(new HexLocation(2,1), EdgeDirection.NorthWest)),
+    			new PortDTO(2, "wheat", new EdgeLocation(new HexLocation(-1,-2), EdgeDirection.South)),
+    			new PortDTO(2, "brick", new EdgeLocation(new HexLocation(-2,3), EdgeDirection.NorthEast)),
+    			new PortDTO(2, "wood", new EdgeLocation(new HexLocation(-3,2), EdgeDirection.NorthEast)),
+    			new PortDTO(2, "sheep", new EdgeLocation(new HexLocation(3,-1), EdgeDirection.NorthWest)),
+    			new PortDTO(3, null, new EdgeLocation(new HexLocation(-3,0), EdgeDirection.SouthEast)),
+    			new PortDTO(3, null, new EdgeLocation(new HexLocation(0,3), EdgeDirection.North))
+    	};
+    	HexLocation robber = new HexLocation(0, -2);    	
+    	MapDTO map = new MapDTO(hexes, roads, cities, settlements, 3, ports, robber);
+    	PlayerDTO[] players = {
+    			new PlayerDTO(new ResourceListDTO(0,1,1,1,0), new DevCardListDTO(0,0,0,0,0), 
+    					new DevCardListDTO(0,0,0,0,0), 13,4,3,0,2,0,false,false,0,0,"Sam", "orange"),
 
-	private MapDTO initializeHexes(MapDTO map) {
-		HexDTO[] hexes = new HexDTO[20];
-	    hexes[0] = new HexDTO(new HexLocation(0, -2), ResourceTypeOptional.NONE, null);
-	    hexes[1] = new HexDTO(new HexLocation(1, -2), ResourceTypeOptional.BRICK, 4);
-	    hexes[2] = new HexDTO(new HexLocation(2, -2), ResourceTypeOptional.WOOD, 11);
-	    hexes[3] = new HexDTO(new HexLocation(-1, -1), ResourceTypeOptional.BRICK, 8);
-	    hexes[4] = new HexDTO(new HexLocation(0, -1), ResourceTypeOptional.WOOD, 3);
-	    hexes[5] = new HexDTO(new HexLocation(1, 1), ResourceTypeOptional.ORE, 9);
-	    hexes[6] = new HexDTO(new HexLocation(2, -1), ResourceTypeOptional.SHEEP, 12);
-	    hexes[7] = new HexDTO(new HexLocation(-2, 0), ResourceTypeOptional.ORE, 5);
-	    hexes[8] = new HexDTO(new HexLocation(-1, 0), ResourceTypeOptional.SHEEP, 10);
-	    hexes[9] = new HexDTO(new HexLocation(0, 0), ResourceTypeOptional.WHEAT, 11);
-	    hexes[10] = new HexDTO(new HexLocation(1, 0), ResourceTypeOptional.BRICK, 5);
-	    hexes[11] = new HexDTO(new HexLocation(2, 0), ResourceTypeOptional.WHEAT, 6);
-	    hexes[12] = new HexDTO(new HexLocation(-2, 1), ResourceTypeOptional.WHEAT, 2);
-	    hexes[13] = new HexDTO(new HexLocation(-1, 1), ResourceTypeOptional.SHEEP, 9);
-	    hexes[14] = new HexDTO(new HexLocation(0, 1), ResourceTypeOptional.WOOD, 4);
-	    hexes[15] = new HexDTO(new HexLocation(1, 1), ResourceTypeOptional.SHEEP, 10);
-	    hexes[16] = new HexDTO(new HexLocation(-2, 2), ResourceTypeOptional.WOOD, 6);
-	    hexes[17] = new HexDTO(new HexLocation(-1, 2), ResourceTypeOptional.ORE, 3);
-	    hexes[18] = new HexDTO(new HexLocation(0, 2), ResourceTypeOptional.WHEAT, 8);
-	    hexes[19] = new HexDTO(new HexLocation(0, 0), ResourceTypeOptional.WHEAT, 11);
-	    map.setHexes(hexes);
-	    return map;
-	}
-	
-	private MapDTO initializePorts(MapDTO map) {
-		
-		PortDTO[] ports = new PortDTO[9];
-		ports[0] = new PortDTO(ResourceType.BRICK, new HexLocation(-2,3), "NE", 2);
-		ports[1] = new PortDTO(null, new HexLocation(2,1), "NW", 3);
-		ports[2] = new PortDTO(ResourceType.SHEEP, new HexLocation(3,-1), "NW", 2);
-		ports[3] = new PortDTO(null, new HexLocation(3,-3), "SW", 3);
-		ports[4] = new PortDTO(ResourceType.WOOD, new HexLocation(-3,2), "NE", 2);
-		ports[5] = new PortDTO(ResourceType.ORE, new HexLocation(1,-3), "S", 2);
-		ports[6] = new PortDTO(null, new HexLocation(-3,0), "SE", 3);
-		ports[7] = new PortDTO(null, new HexLocation(0,3), "N", 3);
-		ports[8] = new PortDTO(ResourceType.WHEAT, new HexLocation(-1,-2), "S", 2);
-	    map.setPorts(ports);
-	    return map;
-	}
-    
-    
-    private void createPlayers() {
-    	PlayerDTO[] players = new PlayerDTO[4];
-    	PlayerDTO pl1 = createPlayer(4, CatanColor.ORANGE, false, 0, "Sam", 0, false, 0, 15, 5, 0, 0);
-    	PlayerDTO pl2 = createPlayer(4, CatanColor.BLUE, false, 0, "Brooke", 1, false, 1, 15, 5, 0, 0);
-    	PlayerDTO pl3 = createPlayer(4, CatanColor.RED, false, 0, "Pete", 2, false, 10, 15, 5, 0, 0);
-    	PlayerDTO pl4 = createPlayer(4, CatanColor.GREEN, false, 0, "Mark", 3, false, 11, 15, 5, 0, 0);
-    	players[0] = pl1;
-    	players[1] = pl2;
-    	players[2] = pl3;
-    	players[3] = pl4;
-    	JSONmodel.setPlayers(players);
-    }
+    			new PlayerDTO(new ResourceListDTO(1,0,1,0,1), new DevCardListDTO(0,0,0,0,0), 
+    					new DevCardListDTO(0,0,0,0,0), 13,4,3,0,2,0,false,false,1,1,"Brooke", "blue"),
 
-    private PlayerDTO createPlayer(int cities, CatanColor color, boolean discarded, int monuments, String name, int playerIndex, 
-    		boolean playedDevCard, int playerID, int roads, int settlements, int soldiers, int victoryPoints) {
-    	PlayerDTO pl1 = new PlayerDTO();
-        pl1.setCities(cities);
-    	pl1.setColor(color);
-    	pl1.setDiscarded(discarded);
-    	pl1.setMonuments(monuments);
-    	pl1.setName(name);
-    	try {
-			pl1.setPlayerIndex(playerIndex);
-		} catch (InvalidPlayerIndex e) {
-			e.printStackTrace();
-		}
-    	pl1.setPlayedDevCard(playedDevCard);
-    	pl1.setPlayerID(playerID);
-    	pl1.setRoads(roads);
-    	pl1.setSettlements(settlements);
-    	pl1.setSoldiers(soldiers);
-    	pl1.setVictoryPoints(victoryPoints);
+    			new PlayerDTO(new ResourceListDTO(1,3,1,2,1), new DevCardListDTO(0,0,0,0,0), 
+    					new DevCardListDTO(0,0,0,0,0), 13,4,3,0,2,0,false,false,10,2,"Pete", "red"),
+
+    			new PlayerDTO(new ResourceListDTO(0,1,1,0,1), new DevCardListDTO(0,0,0,0,0), 
+    					new DevCardListDTO(0,0,0,0,0), 13,4,3,0,2,0,false,false,11,3,"Mark", "green")
+    	};
     	
-    	return pl1;
+    	MessageLineDTO[] lines = {
+    		new MessageLineDTO("Sam", "Sam built a road"),
+    		new MessageLineDTO("Sam", "Sam built a settlement"),
+    		new MessageLineDTO("Sam", "Sam's turn just ended"),
+    		new MessageLineDTO("Brooke", "Brooke built a road"),
+    		new MessageLineDTO("Brooke", "Brooke built a settlement"),
+    		new MessageLineDTO("Brooke", "Brooke's turn just ended"),
+    		new MessageLineDTO("Pete", "Pete built a road"),
+    		new MessageLineDTO("Pete", "Pete built a settlement"),
+    		new MessageLineDTO("Pete", "Pete's turn just ended"),
+    		new MessageLineDTO("Mark", "Mark built a road"),
+    		new MessageLineDTO("Mark", "Mark built a settlement"),
+    		new MessageLineDTO("Mark", "Mark's turn just ended"),
+    		new MessageLineDTO("Mark", "Mark built a road"),
+    		new MessageLineDTO("Mark", "Mark built a settlement"),
+    		new MessageLineDTO( "Mark", "Mark's turn just ended"),
+    		new MessageLineDTO("Pete", "Pete built a road"),
+    		new MessageLineDTO("Pete", "Pete built a settlement"),
+    		new MessageLineDTO("Pete", "Pete's turn just ended"),
+    		new MessageLineDTO("Brooke", "Brooke built a road"),
+    		new MessageLineDTO("Brooke", "Brooke built a settlement"),
+    		new MessageLineDTO("Brooke", "Brooke's turn just ended"),
+    		new MessageLineDTO("Sam", "Sam built a road"),
+    		new MessageLineDTO("Sam", "Sam built a settlement"),
+    		new MessageLineDTO("Sam", "Sam's turn just ended")
+    	};
+    	MessageListDTO log = new MessageListDTO();
+    	log.setLines(lines);
+    	
+    	MessageListDTO chat = new MessageListDTO();
+    	chat.setLines(new MessageLineDTO[0]);
+    	
+        ResourceListDTO resources = new ResourceListDTO(23,21,20,22,22);
+        
+        TradeOfferDTO tradeOffer = null;
+        
+        TurnTrackerDTO turnTracker = new TurnTrackerDTO("Rolling", 2, -1, -1);
+        
+        ClientModelDTO model = new ClientModelDTO(resources, devCards, chat, log, map, players, tradeOffer, turnTracker, -1, 0);
+        return model;
     }
-   
 
 }
