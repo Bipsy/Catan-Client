@@ -77,6 +77,8 @@ public class ServerProxy implements iServerProxy {
 
                 //System.out.println(out.toString());
                 return out.toString();
+            } else if (connection.getResponseCode() == HttpURLConnection.HTTP_BAD_REQUEST) {
+                return null;
             } else {
                 throw new IOException(String.format("doGet failed: %s (http code %d)",
                         urlPath, connection.getResponseCode()));
@@ -132,6 +134,8 @@ public class ServerProxy implements iServerProxy {
 
                 //System.out.println(out.toString());
                 return out.toString();
+            } else if (connection.getResponseCode() == HttpURLConnection.HTTP_BAD_REQUEST) {
+                return null;
             } else {
                 throw new IOException(String.format("doPost failed: %s (http code %d)",
                         urlPath, connection.getResponseCode()));

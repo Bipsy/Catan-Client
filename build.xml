@@ -92,8 +92,14 @@
     </target>
     
     <target name="compile" depends="init" description="compile the source " >
-        <javac srcdir="${java.src}" destdir="${java.build}/classes" debug="true" includeantruntime="true">
+        <javac srcdir="${java.src}" destdir="${java.build}" debug="true" includeantruntime="true">
             <classpath refid="java.lib.classpath" />
+        </javac>
+    </target>
+
+    <target name="compile-test" depends="compile" description="compile the test cases">
+        <javac srcdir="${java.test}" destdir="${java.build}" debug="true" includeantruntime="true">
+            <classpath refid="java.lib.classpath"/>
         </javac>
     </target>
     
@@ -148,7 +154,7 @@
         <zip destfile="./tester.zip" basedir="${java.dist}" />
     </target>
 
-    <target name="test">  
+    <target name="test" depends="compile-test">  
         <junit printsummary="on" fork="no">
             <formatter type="plain" usefile="no"/>
             <classpath>
