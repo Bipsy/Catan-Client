@@ -3,36 +3,26 @@ package client.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import shared.locations.HexLocation;
 import shared.models.Bank;
 import shared.models.Board;
 import shared.models.ChatObject;
 import shared.models.ClientModel;
 import shared.models.DevCardList;
-import shared.models.Harbor;
-import shared.models.Hex;
 import shared.models.Player;
 import shared.models.ResourceList;
-import shared.models.Road;
 import shared.models.Robber;
 import shared.models.TradeOffer;
 import shared.models.TurnTracker;
 import shared.models.UserManager;
-import shared.models.VertexObject;
 import shared.models.DTO.DevCardListDTO;
-import shared.models.DTO.EdgeValueDTO;
 import shared.models.DTO.GameContainerDTO;
-import shared.models.DTO.HexDTO;
 import shared.models.DTO.MapDTO;
 import shared.models.DTO.MessageListDTO;
 import shared.models.DTO.PlayerDTO;
-import shared.models.DTO.PortDTO;
 import shared.models.DTO.ResourceListDTO;
-import shared.models.DTO.TradeOfferDTO;
 import shared.models.DTO.TurnTrackerDTO;
 import shared.models.DTO.UserDTO;
 import shared.models.DTO.ClientModelDTO;
-import shared.models.DTO.VertexObjectDTO;
 
 /**
  *
@@ -112,20 +102,6 @@ public class Populator implements iPopulator {
 
         ChatObject chatObject = new ChatObject(chat.getLines(), log.getLines());
         model.setChatObject(chatObject);
-    }
-
-    //Is this needed in the client model? I think no.
-    @Override
-    public boolean populateModel(UserDTO container) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    //Is this needed in the client model? I think no.
-    @Override
-    public boolean populateModel(GameContainerDTO container) {
-        // TODO Auto-generated method stub
-        return false;
     }
 
     /**
