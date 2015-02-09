@@ -55,10 +55,8 @@ public class Populator implements iPopulator {
 
         populateBoard(container.getMap());
         
-
-        //I'm getting a chat and a log but the chatObject only has a list of messages...
         populateChatObject(container.getChat(), container.getLog());
-        //
+
         populateUserManager(container.getPlayers(), container.getTurnTracker());
 
         if (container.getTradeOffer() != null)
@@ -85,22 +83,18 @@ public class Populator implements iPopulator {
 
         Board board = new Board();
 
-        //TODO: Individual hexes have communityMap, roadMap, and Harbor. HexDTO hexes has none of these. how
-        //should we go about this?
         board.setHexes(map.getHexes());
 
         board.setHarbor(map.getPorts());
 
-        //NOTE: DTO provides an edge location that is unused by Road model object
         board.setRoads(map.getRoads());
 
-        //TODO: logic to determine port type
         board.setSettlements(map.getSettlements());
+        
         board.setCities(map.getCities());
 
         board.setRadius(map.getRadius());
 
-        //TODO: logic for robber # property
         board.setRobber(new Robber(map.getRobber()));
 
         model.setBoard(board);
