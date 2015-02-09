@@ -21,9 +21,11 @@ public class ChatObject {
 
     private List<Message> convertToMessages(MessageLineDTO[] lines) {
         List<Message> temp = new ArrayList<Message>();
-
-        for (int i = 0; i < lines.length; i++) {
-            temp.add(new Message(lines[i]));
+        
+        if (lines != null) {
+            for (int i = 0; i < lines.length; i++) {
+                temp.add(new Message(lines[i]));
+            }
         }
 
         return temp;

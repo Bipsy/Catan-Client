@@ -37,9 +37,6 @@
         <fileset dir="${java.lib.dir}">
             <include name="**/*.jar" />
         </fileset>
-        <fileset dir="${java.build}">
-            <include name="**/*.class"/>
-        </fileset>
     </path>
 
     <!-- TARGETS -->
@@ -158,7 +155,7 @@
         <junit printsummary="on" fork="no">
             <formatter type="plain" usefile="no"/>
             <classpath>
-                <pathelement location="${java.build}/classes"/>
+                <pathelement location="${java.build}"/>
                 <pathelement location="${java.lib.dir}"/>
                 <fileset dir="${java.lib.dir}">
                     <include name="**/*.jar"/>
