@@ -51,6 +51,10 @@ public class Player extends User {
         this.resources = new PlayerHand(playerDTO.getResources(), playerDTO.getNewDevCards());
         this.playedDevCard = playerDTO.isPlayedDevCard();
     }
+    
+    public void setDiscarded(Boolean discarded) {
+    	this.playedDevCard = discarded;
+    }
 
     
     /**
@@ -61,9 +65,9 @@ public class Player extends User {
      * @return True if the player can play the monument, false otherwise.
      */
     public boolean canPlayMonument() {
-    	DevCardList devCards = this.resources.getDevCards();
+    	DevCardList devCards = this.oldDevCards;
     	int monuments = devCards.getMonument();
-    	boolean canPlay = monuments + this.victoryPoints >= 10;
+    	boolean canPlay = monuments > 0;// + this.victoryPoints >= 10;
         
     	return canPlay;
     }
@@ -76,7 +80,7 @@ public class Player extends User {
      * @return True if the player can play monopoly, false otherwise.
      */
     public boolean canPlayMonopoly() {
-    	DevCardList devCards = this.resources.getDevCards();
+    	DevCardList devCards = this.oldDevCards;
     	int monopoly = devCards.getMonopoly();
     	
     	boolean canPlay = monopoly > 0 && !this.playedDevCard;
@@ -90,7 +94,7 @@ public class Player extends User {
      * @return True if the player can play soldier, false otherwise.
      */
 	public boolean canPlaySoldier() {
-		DevCardList devCards = this.resources.getDevCards();
+		DevCardList devCards = this.oldDevCards;
     	int soldier = devCards.getSoldier();
     	
     	boolean canPlay = soldier > 0 && !this.playedDevCard;
@@ -104,12 +108,12 @@ public class Player extends User {
      * @return True if the player can use road building, false otherwise.
      */
 	public boolean canUseRoadBuilding() {
-		DevCardList devCards = this.resources.getDevCards();
+		DevCardList devCards = this.oldDevCards;
     	int roadBuild = devCards.getRoadBuilding();
     	
     	boolean canPlay = roadBuild > 0 && 
-    			!this.playedDevCard &&
-    			this.roads >= 2;
+    			!this.playedDevCard;// &&
+    			//this.roads >= 2;
         
     	return canPlay;
 	}
@@ -120,7 +124,7 @@ public class Player extends User {
      * @return True if the player can user year of plenty, false otherwise.
      */
 	public boolean canUseYearOfPlenty() {
-		DevCardList devCards = this.resources.getDevCards();
+		DevCardList devCards = this.oldDevCards;
     	int yop = devCards.getYearOfPlenty();
     	
     	boolean canPlay = yop > 0 && 
@@ -266,8 +270,4 @@ public class Player extends User {
 	public void setVictoryPoints(int victoryPoints) {
 		this.victoryPoints = victoryPoints;
 	}
-
-
-	
-
 }
