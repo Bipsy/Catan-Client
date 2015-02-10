@@ -39,7 +39,11 @@ public class PortDTO {
     }
 
     public PortDTO(int ratio,String resource, EdgeLocation edgeLocation) {
-		// TODO Auto-generated constructor stub
+    	this.ratio = ratio;
+    	this.location = edgeLocation;
+    	if(resource != null) {
+    		this.resource = ResourceType.valueOf(resource.toUpperCase());    		
+    	}
 	}
 
 	public ResourceType getResource() {

@@ -15,13 +15,11 @@ import shared.models.TradeOffer;
 import shared.models.TurnTracker;
 import shared.models.UserManager;
 import shared.models.DTO.DevCardListDTO;
-import shared.models.DTO.GameContainerDTO;
 import shared.models.DTO.MapDTO;
 import shared.models.DTO.MessageListDTO;
 import shared.models.DTO.PlayerDTO;
 import shared.models.DTO.ResourceListDTO;
 import shared.models.DTO.TurnTrackerDTO;
-import shared.models.DTO.UserDTO;
 import shared.models.DTO.ClientModelDTO;
 
 /**
@@ -41,7 +39,6 @@ public class Populator implements iPopulator {
 
     	model = new ClientModel();
         populateBank(container.getResources(), container.getDevCards());
-        System.out.println("I polulated the bank");
 
         populateBoard(container.getMap());
         
