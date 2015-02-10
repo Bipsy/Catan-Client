@@ -58,7 +58,6 @@ public class ServerProxy implements iServerProxy {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             String cookieValue = "catan.user=" + userCookie + "; catan.game=" + gameCookie;
-//            System.out.println(cookieValue);
             connection.setRequestProperty("Cookie", cookieValue);
             connection.setRequestProperty("Accept", "application/json");
             connection.setDoInput(true);
@@ -67,7 +66,6 @@ public class ServerProxy implements iServerProxy {
             connection.connect();
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
 
-                //System.out.println("getHTTP_OK");
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 StringBuilder out = new StringBuilder();
                 String line;
@@ -75,7 +73,6 @@ public class ServerProxy implements iServerProxy {
                     out.append(line);
                 }
 
-                //System.out.println(out.toString());
                 return out.toString();
             } else if (connection.getResponseCode() == HttpURLConnection.HTTP_BAD_REQUEST) {
                 return null;
@@ -94,7 +91,6 @@ public class ServerProxy implements iServerProxy {
             URL url = new URL("http://" + serverHost + ":" + serverPort + urlPath);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             String cookieValue = "catan.user=" + userCookie + "; catan.game=" + gameCookie;
-//            System.out.println(cookieValue);
             connection.setRequestProperty("Cookie", cookieValue);
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json");
@@ -110,18 +106,14 @@ public class ServerProxy implements iServerProxy {
 
             os.close();
 
-            //System.out.println(myCookie);
             if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-            	//System.out.println("HTTP_OK");
                 if (extractCookie) {
                     //Set cookies
                     String cookieField = connection.getHeaderField(COOKIE_HEADER);
                     if (cookieField != null && cookieField.contains("catan.game")) {                        
                         gameCookie = extractGameCookie(cookieField);
-//                        System.out.println(gameCookie);
                     } else if (cookieField != null && cookieField.contains("catan.user")) {
                         userCookie = extractUserCookie(cookieField);
-//                        System.out.println(userCookie);
                     }
                 }
                 
@@ -132,7 +124,6 @@ public class ServerProxy implements iServerProxy {
                     out.append(line);
                 }
 
-                //System.out.println(out.toString());
                 return out.toString();
             } else if (connection.getResponseCode() == HttpURLConnection.HTTP_BAD_REQUEST) {
                 return null;
@@ -149,7 +140,6 @@ public class ServerProxy implements iServerProxy {
     @Override
     public void login(UserCredentials user) throws IOException {
         try {
-//            System.out.println("LOGIN");
             String params = serializer.serialize(user);
             doPost("/user/login", params, true);
         } catch (IOException e) {
@@ -161,7 +151,6 @@ public class ServerProxy implements iServerProxy {
     @Override
     public void registerNewUser(UserCredentials user) throws IOException {
         try {
-            //System.out.println("REGISTER");
             String params = serializer.serialize(user);
             doPost("/user/register", params, false);
         } catch (IOException e) {
@@ -174,9 +163,7 @@ public class ServerProxy implements iServerProxy {
     public GameContainerDTO listGames() throws IOException {
         try {
             GameContainerDTO list = new GameContainerDTO();
-
             List<GameDTO> list2 = (List<GameDTO>) serializer.deserialize(doGet("/games/list"));
-            //System.out.println(list2);
             list.setGames(list2);
             return list;
         } catch (IOException e) {
@@ -198,7 +185,6 @@ public class ServerProxy implements iServerProxy {
 
     @Override
     public ClientModelDTO retrieveCurrentState(Integer version) throws IOException {
-//        System.out.println("MODEL");
         try {
             return serializer.deserializeModel(doGet("/game/model"));
         } catch (IOException e) {
@@ -243,9 +229,7 @@ public class ServerProxy implements iServerProxy {
     @Override
     public ClientModelDTO rollNumber(RollNumber rollMove) throws IOException {
         try {
-            //System.out.println("ROLL");
             String params = serializer.serialize(rollMove);
-//            System.out.println(params);
             return serializer.deserializeModel(doPost("/moves/rollNumber", params, false));
         } catch (IOException e) {
             e.printStackTrace();
@@ -257,7 +241,6 @@ public class ServerProxy implements iServerProxy {
     public ClientModelDTO buildRoad(BuildRoad roadMove) throws IOException {
         try {
             String params = serializer.serialize(roadMove);
-            //System.out.println(params);
             return serializer.deserializeModel(doPost("/moves/buildRoad", params, false));
         } catch (IOException e) {
             e.printStackTrace();
@@ -400,9 +383,7 @@ public class ServerProxy implements iServerProxy {
     @Override
     public void joinGame(JoinGameRequest game) throws IOException {
         try {
-//            System.out.println("JOIN");
             String params = serializer.serialize(game);
-            //System.out.println(params);
             serializer.deserialize(doPost("/games/join", params, true));
         } catch (IOException e) {
             e.printStackTrace();
