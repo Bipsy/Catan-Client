@@ -21,7 +21,7 @@ public class iSerializerTest {
     private iSerializer s = new Serializer();
 
     @Test
-    public void testDeserializeModel() {
+    public void testDeserializeModelDTO() {
         try {
             ClientModelDTO modelObj = s.deserializeModel(ModelMock.getJSON());
             checkModelFields(modelObj);
@@ -31,7 +31,7 @@ public class iSerializerTest {
     }
 
     @Test
-    public void testSerializeModel() {
+    public void testSerializeModelDTO() {
     	
     	JsonParser parser = new JsonParser(); 
     	ClientModelDTO modelObj = ModelMock.getModelDTO(); 
