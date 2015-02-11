@@ -24,29 +24,29 @@ public class MapDTO {
      */
     private int radius;
     private HexLocation robber;
-    
+
     public MapDTO() {
-    	hexes = null;
-    	roads = null;
-    	ports = null;
-    	settlements = null;
-    	cities = null;
-    	radius = 0;
+        hexes = null;
+        roads = null;
+        ports = null;
+        settlements = null;
+        cities = null;
+        radius = 0;
     }
 
     public MapDTO(HexDTO[] hexes, EdgeValueDTO[] roads,
-			VertexObjectDTO[] cities, VertexObjectDTO[] settlements, int radius,
-			PortDTO[] ports, HexLocation robber) {
-		this.hexes = hexes;
-		this.roads = roads;
-		this.cities = cities;
-		this.settlements = settlements;
-		this.radius = radius;
-		this.ports = ports;
-		this.robber = robber;
-	}
+            VertexObjectDTO[] cities, VertexObjectDTO[] settlements, int radius,
+            PortDTO[] ports, HexLocation robber) {
+        this.hexes = hexes;
+        this.roads = roads;
+        this.cities = cities;
+        this.settlements = settlements;
+        this.radius = radius;
+        this.ports = ports;
+        this.robber = robber;
+    }
 
-	public HexDTO[] getHexes() {
+    public HexDTO[] getHexes() {
         return hexes;
     }
 

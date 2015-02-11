@@ -15,18 +15,18 @@ public class VertexObjectDTO {
 
     private int owner;
     private VertexLocation location;
-    
+
     public VertexObjectDTO() {
-    	owner = -1;
-    	location = null;
+        owner = -1;
+        location = null;
     }
 
     public VertexObjectDTO(int owner, VertexLocation location) {
-		this.owner = owner;
-		this.location = location;
-	}
+        this.owner = owner;
+        this.location = location;
+    }
 
-	public int getOwner() {
+    public int getOwner() {
         return owner;
     }
 

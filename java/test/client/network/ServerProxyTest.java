@@ -13,15 +13,13 @@ import org.junit.Test;
 
 import shared.definitions.ResourceType;
 import shared.locations.*;
-import shared.models.ClientModel;
 import shared.models.DTO.ClientModelDTO;
 import shared.models.DTO.GameContainerDTO;
-import shared.models.DTO.GameDTO;
 import shared.models.DTO.ResourceListDTO;
 import shared.models.DTO.params.*;
 
 public class ServerProxyTest {
-	
+
     private static ServerProxy proxy;
 
     @BeforeClass
@@ -37,17 +35,17 @@ public class ServerProxyTest {
 
     @Test
     public void testLogin() {
-    	
+
         UserCredentials user = new UserCredentials("Sam", "sam");
         try {
             proxy.login(user);
-            assertTrue("the user will be logged in", true); 
+            assertTrue("the user will be logged in", true);
         } catch (IOException e) {
             fail("Did not succeed");
             e.printStackTrace();
         }
     }
-    
+
     @Test
     public void testJoinGame() {
         JoinGameRequest game = new JoinGameRequest(0, "orange");
@@ -60,7 +58,6 @@ public class ServerProxyTest {
         }
     }
 
-    
 //    @Test
 //    public void testRegisterNewUser() {
 //        UserCredentials tiger = new UserCredentials("tiger", "shark");
@@ -70,8 +67,6 @@ public class ServerProxyTest {
 //            e.printStackTrace();
 //        }
 //    }
-    
-
     @Test
     public void testListGames() {
         GameContainerDTO game = new GameContainerDTO();
@@ -95,24 +90,23 @@ public class ServerProxyTest {
             e.printStackTrace();
         }
     }
-    
-    
+
     @Test
     public void testRetrieveCurrentState() {
-    	ClientModelDTO model = new ClientModelDTO();
+        ClientModelDTO model = new ClientModelDTO();
         try {
             proxy.retrieveCurrentState(null);
-            assertTrue("Either the model is up to date or the current version" +
-            		"of the model is retrieved", model != null);
+            assertTrue("Either the model is up to date or the current version"
+                    + "of the model is retrieved", model != null);
         } catch (IOException e) {
             fail("Did no succeed");
             e.printStackTrace();
         }
     }
-    
+
     @Test
     public void testSendChat() {
-    	ClientModelDTO model = new ClientModelDTO();
+        ClientModelDTO model = new ClientModelDTO();
         SendChat message = new SendChat(0, "chat");
         try {
             model = proxy.sendChat(message);
@@ -125,7 +119,7 @@ public class ServerProxyTest {
 
     @Test
     public void testOfferTrade() {
-    	ClientModelDTO model = new ClientModelDTO();
+        ClientModelDTO model = new ClientModelDTO();
         ResourceListDTO list = new ResourceListDTO(1, 0, 0, 0, 2);
         OfferTrade trade = new OfferTrade(3, list, 2);
         try {
@@ -139,7 +133,7 @@ public class ServerProxyTest {
 
     @Test
     public void testAcceptTrade() {
-    	ClientModelDTO model = new ClientModelDTO();
+        ClientModelDTO model = new ClientModelDTO();
         AcceptTrade accept = new AcceptTrade(2, true);
         try {
             proxy.acceptTrade(accept);
@@ -152,7 +146,7 @@ public class ServerProxyTest {
 
     @Test
     public void testDiscardCards() {
-    	ClientModelDTO model = new ClientModelDTO();
+        ClientModelDTO model = new ClientModelDTO();
         ResourceListDTO list = new ResourceListDTO(0, 1, 1, 3, 0);
         DiscardCards cards = new DiscardCards(0, list);
         try {
@@ -163,10 +157,10 @@ public class ServerProxyTest {
             e.printStackTrace();
         }
     }
-    
+
     @Test
     public void testRollNumber() {
-    	ClientModelDTO model = new ClientModelDTO();
+        ClientModelDTO model = new ClientModelDTO();
         RollNumber roll = new RollNumber(1, 8);
         try {
             proxy.rollNumber(roll);
@@ -176,10 +170,10 @@ public class ServerProxyTest {
             e.printStackTrace();
         }
     }
-    
+
     @Test
     public void testBuildRoad() {
-    	ClientModelDTO model = new ClientModelDTO();
+        ClientModelDTO model = new ClientModelDTO();
         HexLocation loc = new HexLocation(-1, -1);
         EdgeLocation edge = new EdgeLocation(loc, EdgeDirection.NorthEast);
         BuildRoad road = new BuildRoad(1, edge, false);
@@ -194,7 +188,7 @@ public class ServerProxyTest {
 
     @Test
     public void testBuildSettlement() {
-    	ClientModelDTO model = new ClientModelDTO();
+        ClientModelDTO model = new ClientModelDTO();
         HexLocation hex = new HexLocation(-1, -1);
         VertexLocation vert = new VertexLocation(hex, VertexDirection.NorthEast);
         BuildSettlement sett = new BuildSettlement(2, vert);
@@ -209,7 +203,7 @@ public class ServerProxyTest {
 
     @Test
     public void testBuildCity() {
-    	ClientModelDTO model = new ClientModelDTO();
+        ClientModelDTO model = new ClientModelDTO();
         HexLocation hex = new HexLocation(-1, -1);
         VertexLocation vert = new VertexLocation(hex, VertexDirection.NorthEast);
         BuildCity city = new BuildCity(2, vert);
@@ -224,34 +218,34 @@ public class ServerProxyTest {
 
     @Test
     public void testMaritimeTrade() {
-    	ClientModelDTO model = new ClientModelDTO();
+        ClientModelDTO model = new ClientModelDTO();
         MaritimeTrade trade = new MaritimeTrade(2, 2, ResourceType.BRICK, ResourceType.ORE);
         try {
-			proxy.maritimeTrade(trade);
+            proxy.maritimeTrade(trade);
             assertTrue("A maritime trade has taken place", model != null);
-		} catch (IOException e) {
+        } catch (IOException e) {
             fail("Did not succeed");
-			e.printStackTrace();
-		}
+            e.printStackTrace();
+        }
     }
 
     @Test
     public void testRobPlayer() {
-    	ClientModelDTO model = new ClientModelDTO();
+        ClientModelDTO model = new ClientModelDTO();
         HexLocation hex = new HexLocation(-1, -1);
         RobPlayer rob = new RobPlayer(2, 0, hex);
         try {
-			proxy.robPlayer(rob);
+            proxy.robPlayer(rob);
             assertTrue("The specified player has been robbed", model != null);
-		} catch (IOException e) {
+        } catch (IOException e) {
             fail("Did not succeed");
-			e.printStackTrace();
-		}
+            e.printStackTrace();
+        }
     }
 
     @Test
     public void testFinishTurn() {
-    	ClientModelDTO model = new ClientModelDTO();
+        ClientModelDTO model = new ClientModelDTO();
         FinishTurn turn = new FinishTurn(2);
         try {
             proxy.finishTurn(turn);
@@ -264,7 +258,7 @@ public class ServerProxyTest {
 
     @Test
     public void testBuyDevCard() {
-    	ClientModelDTO model = new ClientModelDTO();
+        ClientModelDTO model = new ClientModelDTO();
         BuyDevCard card = new BuyDevCard(2);
         try {
             proxy.buyDevCard(card);
@@ -277,20 +271,20 @@ public class ServerProxyTest {
 
     @Test
     public void testPlaySoldier() {
-    	ClientModelDTO model = new ClientModelDTO();
+        ClientModelDTO model = new ClientModelDTO();
         Soldier sold = new Soldier(2, 0);
         try {
-			proxy.playSoldier(sold);
+            proxy.playSoldier(sold);
             assertTrue("The Soldier developmetn card has been played", model != null);
-		} catch (IOException e) {
+        } catch (IOException e) {
             fail("Did not succeed");
-			e.printStackTrace();
-		}
+            e.printStackTrace();
+        }
     }
 
     @Test
     public void testPlayYearOfPlenty() {
-    	ClientModelDTO model = new ClientModelDTO();
+        ClientModelDTO model = new ClientModelDTO();
         YearOfPlenty card = new YearOfPlenty(3, ResourceType.ORE, ResourceType.SHEEP);
         try {
             proxy.playYearOfPlenty(card);
@@ -303,7 +297,7 @@ public class ServerProxyTest {
 
     @Test
     public void testPlayRoadBuilding() {
-    	ClientModelDTO model = new ClientModelDTO();
+        ClientModelDTO model = new ClientModelDTO();
         HexLocation hex = new HexLocation(0, 0);
         HexLocation hexTwo = new HexLocation(1, -1);
         EdgeLocation edge = new EdgeLocation(hex, EdgeDirection.NorthEast);
@@ -320,7 +314,7 @@ public class ServerProxyTest {
 
     @Test
     public void testPlayMonopoly() {
-    	ClientModelDTO model = new ClientModelDTO();
+        ClientModelDTO model = new ClientModelDTO();
         Monopoly monopoly = new Monopoly(0, ResourceType.BRICK);
         try {
             proxy.playMonopoly(monopoly);
@@ -333,7 +327,7 @@ public class ServerProxyTest {
 
     @Test
     public void testPlayMonument() {
-    	ClientModelDTO model = new ClientModelDTO();
+        ClientModelDTO model = new ClientModelDTO();
         Monument monument = new Monument(1);
         try {
             proxy.playMonument(monument);
@@ -347,26 +341,25 @@ public class ServerProxyTest {
     @Test
     public void testListAITypes() {
         try {
-			proxy.listAITypes();
+            proxy.listAITypes();
             assertTrue("The list of AI players has been retrieved", true);
-		} catch (IOException e) {
+        } catch (IOException e) {
             fail("Did not succeed");
-			e.printStackTrace();
-		}
+            e.printStackTrace();
+        }
     }
 
     @Test
     public void testAddAIPlayer() {
-    	ClientModelDTO model = new ClientModelDTO();
+        ClientModelDTO model = new ClientModelDTO();
         AddAIRequest ai = new AddAIRequest("2");
         try {
-			proxy.addAIPlayer(ai);
+            proxy.addAIPlayer(ai);
             assertTrue("An AI player has been added", model != null);
-		} catch (IOException e) {
+        } catch (IOException e) {
             fail("Did not succeed");
-			e.printStackTrace();
-		}
+            e.printStackTrace();
+        }
     }
-    
 
 }

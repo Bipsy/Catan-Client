@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public enum VertexDirection {
 
-	@SerializedName("W")
+    @SerializedName("W")
     West,
     @SerializedName("NW")
     NorthWest,

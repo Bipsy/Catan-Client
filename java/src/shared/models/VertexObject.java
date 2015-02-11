@@ -76,11 +76,11 @@ public class VertexObject {
         this.harbor = harbor;
     }
 
-	public VertexLocation getLocation() {
-		return location;
-	}
+    public VertexLocation getLocation() {
+        return location;
+    }
 
-	public void setLocation(VertexLocation location) {
-		this.location = location;
-	}
+    public void setLocation(VertexLocation location) {
+        this.location = location;
+    }
 }

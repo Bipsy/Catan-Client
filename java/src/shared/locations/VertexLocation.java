@@ -81,7 +81,7 @@ public class VertexLocation {
      */
     public VertexLocation getNormalizedLocation() {
 
-		// Return location that has direction NorthWest or NorthEast
+        // Return location that has direction NorthWest or NorthEast
         switch (direction) {
             case NorthWest:
             case NorthEast:
@@ -108,49 +108,49 @@ public class VertexLocation {
         }
     }
 
-	public VertexLocation[] getAdjacentVertexes() {
-		VertexLocation[] adjEdges = new VertexLocation[3];
-		VertexLocation temp = getNormalizedLocation();
-		switch (temp.getDir()) {
-			case NorthWest:
-				adjEdges[0] = new VertexLocation(vertexLocation, VertexDirection.NorthEast);
-				adjEdges[1] = new VertexLocation(vertexLocation, VertexDirection.West);
-				adjEdges[2] = new VertexLocation(vertexLocation.getNeighborLoc(EdgeDirection.North),
-						VertexDirection.West);
-				break;
-			case NorthEast:
-				adjEdges[0] = new VertexLocation(vertexLocation, VertexDirection.NorthWest);
-				adjEdges[1] = new VertexLocation(vertexLocation, VertexDirection.East);
-				adjEdges[2] = new VertexLocation(vertexLocation.getNeighborLoc(EdgeDirection.North),
-						VertexDirection.East);
-				break;
-			default:
-				assert false;
-				return null;
-		}
-		return adjEdges;	
-	}
-	
-	public EdgeLocation[] getAdjacentEdges() {
-		EdgeLocation[] adjEdges = new EdgeLocation[3];
-		VertexLocation temp = getNormalizedLocation();
-		switch (temp.getDir()) {
-			case NorthWest:
-				adjEdges[0] = new EdgeLocation(vertexLocation, EdgeDirection.North);
-				adjEdges[1] = new EdgeLocation(vertexLocation, EdgeDirection.NorthWest);
-				adjEdges[2] = new EdgeLocation(vertexLocation.getNeighborLoc(EdgeDirection.North),
-						EdgeDirection.SouthWest);
-				break;
-			case NorthEast:
-				adjEdges[0] = new EdgeLocation(vertexLocation, EdgeDirection.North);
-				adjEdges[1] = new EdgeLocation(vertexLocation, EdgeDirection.NorthEast);
-				adjEdges[2] = new EdgeLocation(vertexLocation.getNeighborLoc(EdgeDirection.North),
-						EdgeDirection.SouthEast);
-				break;
-			default:
-				assert false;
-				return null;
-		}
-		return adjEdges;	
-	}
+    public VertexLocation[] getAdjacentVertexes() {
+        VertexLocation[] adjEdges = new VertexLocation[3];
+        VertexLocation temp = getNormalizedLocation();
+        switch (temp.getDir()) {
+            case NorthWest:
+                adjEdges[0] = new VertexLocation(vertexLocation, VertexDirection.NorthEast);
+                adjEdges[1] = new VertexLocation(vertexLocation, VertexDirection.West);
+                adjEdges[2] = new VertexLocation(vertexLocation.getNeighborLoc(EdgeDirection.North),
+                        VertexDirection.West);
+                break;
+            case NorthEast:
+                adjEdges[0] = new VertexLocation(vertexLocation, VertexDirection.NorthWest);
+                adjEdges[1] = new VertexLocation(vertexLocation, VertexDirection.East);
+                adjEdges[2] = new VertexLocation(vertexLocation.getNeighborLoc(EdgeDirection.North),
+                        VertexDirection.East);
+                break;
+            default:
+                assert false;
+                return null;
+        }
+        return adjEdges;
+    }
+
+    public EdgeLocation[] getAdjacentEdges() {
+        EdgeLocation[] adjEdges = new EdgeLocation[3];
+        VertexLocation temp = getNormalizedLocation();
+        switch (temp.getDir()) {
+            case NorthWest:
+                adjEdges[0] = new EdgeLocation(vertexLocation, EdgeDirection.North);
+                adjEdges[1] = new EdgeLocation(vertexLocation, EdgeDirection.NorthWest);
+                adjEdges[2] = new EdgeLocation(vertexLocation.getNeighborLoc(EdgeDirection.North),
+                        EdgeDirection.SouthWest);
+                break;
+            case NorthEast:
+                adjEdges[0] = new EdgeLocation(vertexLocation, EdgeDirection.North);
+                adjEdges[1] = new EdgeLocation(vertexLocation, EdgeDirection.NorthEast);
+                adjEdges[2] = new EdgeLocation(vertexLocation.getNeighborLoc(EdgeDirection.North),
+                        EdgeDirection.SouthEast);
+                break;
+            default:
+                assert false;
+                return null;
+        }
+        return adjEdges;
+    }
 }

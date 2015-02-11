@@ -45,8 +45,8 @@ public class Robber {
         this.number = number;
     }
 
-	public boolean isNewLocation(HexLocation hex) {
-		return !location.equals(hex);
-	}
+    public boolean isNewLocation(HexLocation hex) {
+        return !location.equals(hex);
+    }
 
 }

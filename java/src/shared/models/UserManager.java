@@ -31,60 +31,60 @@ public class UserManager {
         this.turnTracker = turnTracker2;
     }
 
-	public boolean CanDiscardCards(DiscardCards discardCards) {
-		// should check that player index is valid
-		return users.get(discardCards.getPlayerIndex()).CanDiscardCards(discardCards);
-	}
-	
-	public boolean CanOfferTrade(OfferTrade offerTrade) {
-    	return isCurrentPlayer(offerTrade.getPlayerIndex()) &&
-    			!isCurrentPlayer(offerTrade.getReceiver()) &&
-    			users.get(offerTrade.getPlayerIndex()).CanOfferTrade(offerTrade);
-	}
+    public boolean CanDiscardCards(DiscardCards discardCards) {
+        // should check that player index is valid
+        return users.get(discardCards.getPlayerIndex()).CanDiscardCards(discardCards);
+    }
 
-	public boolean isCurrentPlayer(int playerIndex) {
-		return turnTracker.matchesCurrent(playerIndex);
-	}
-	
-	public Player getPlayer(int index) {
-		if (index < 0 || index >= users.size()) {
-			return null;
-		}
-		return users.get(index);
-	}
+    public boolean CanOfferTrade(OfferTrade offerTrade) {
+        return isCurrentPlayer(offerTrade.getPlayerIndex())
+                && !isCurrentPlayer(offerTrade.getReceiver())
+                && users.get(offerTrade.getPlayerIndex()).CanOfferTrade(offerTrade);
+    }
 
-	public int getNumPlayers() {
-		return users.size();
-	}
-	
-	public void setCurrentUser(int index) {
-		if(index >= 0 && index < 4) {
-			turnTracker.setCurrentTurn(index);
-		}
-	}
-	
-	public boolean CanMaritimeTrade(MaritimeTrade maritimeTrade) {
-		return isCurrentPlayer(maritimeTrade.getPlayerIndex()) &&
-    		users.get(maritimeTrade.getPlayerIndex()).CanOfferMTrade(maritimeTrade);
-	}
+    public boolean isCurrentPlayer(int playerIndex) {
+        return turnTracker.matchesCurrent(playerIndex);
+    }
 
-	public boolean CanBuildRoad(BuildRoad buildRoad) {
-		return isCurrentPlayer(buildRoad.getPlayerIndex()) &&
-			users.get(buildRoad.getPlayerIndex()).CanBuildRoad(buildRoad);
-	}
+    public Player getPlayer(int index) {
+        if (index < 0 || index >= users.size()) {
+            return null;
+        }
+        return users.get(index);
+    }
 
-	public boolean CanBuildSettlement(BuildSettlement buildSettlement) {
-		return isCurrentPlayer(buildSettlement.getPlayerIndex()) &&
-			users.get(buildSettlement.getPlayerIndex()).CanBuildSettlement(buildSettlement);
-	}
+    public int getNumPlayers() {
+        return users.size();
+    }
 
-	public boolean CanBuildCity(BuildCity buildCity) {
-		return isCurrentPlayer(buildCity.getPlayerIndex()) &&
-			users.get(buildCity.getPlayerIndex()).CanBuildCity(buildCity);
-	}
+    public void setCurrentUser(int index) {
+        if (index >= 0 && index < 4) {
+            turnTracker.setCurrentTurn(index);
+        }
+    }
 
-	public boolean CanBuyDevCard(BuyDevCard buyDevCard) {
-		return isCurrentPlayer(buyDevCard.getPlayerIndex()) &&
-			users.get(buyDevCard.getPlayerIndex()).CanBuyDevCard(buyDevCard);
-	}
+    public boolean CanMaritimeTrade(MaritimeTrade maritimeTrade) {
+        return isCurrentPlayer(maritimeTrade.getPlayerIndex())
+                && users.get(maritimeTrade.getPlayerIndex()).CanOfferMTrade(maritimeTrade);
+    }
+
+    public boolean CanBuildRoad(BuildRoad buildRoad) {
+        return isCurrentPlayer(buildRoad.getPlayerIndex())
+                && users.get(buildRoad.getPlayerIndex()).CanBuildRoad(buildRoad);
+    }
+
+    public boolean CanBuildSettlement(BuildSettlement buildSettlement) {
+        return isCurrentPlayer(buildSettlement.getPlayerIndex())
+                && users.get(buildSettlement.getPlayerIndex()).CanBuildSettlement(buildSettlement);
+    }
+
+    public boolean CanBuildCity(BuildCity buildCity) {
+        return isCurrentPlayer(buildCity.getPlayerIndex())
+                && users.get(buildCity.getPlayerIndex()).CanBuildCity(buildCity);
+    }
+
+    public boolean CanBuyDevCard(BuyDevCard buyDevCard) {
+        return isCurrentPlayer(buyDevCard.getPlayerIndex())
+                && users.get(buyDevCard.getPlayerIndex()).CanBuyDevCard(buyDevCard);
+    }
 }

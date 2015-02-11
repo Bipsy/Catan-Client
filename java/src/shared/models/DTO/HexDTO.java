@@ -25,7 +25,7 @@ public class HexDTO {
     public HexDTO(HexLocation newLocation, String resource,
             Integer newChit) {
         location = newLocation;
-        this.resource = (resource != null)? ResourceType.valueOf(resource.toUpperCase()): null;
+        this.resource = (resource != null) ? ResourceType.valueOf(resource.toUpperCase()) : null;
         chit = newChit;
     }
 

@@ -3,34 +3,35 @@ package shared.models.DTO.params;
 import shared.locations.HexLocation;
 
 public class RobPlayer extends MoveParams {
-	private int victimIndex;
-	private HexLocation location;
 
-	public RobPlayer() {
-		super("robPlayer");
-		victimIndex = -1;
-		location = null;
-	}
+    private int victimIndex;
+    private HexLocation location;
 
-	public RobPlayer(int playerIndex, int victimIndex, HexLocation location) {
-		super("robPlayer", playerIndex);
-		this.victimIndex = victimIndex;
-		this.location = location;
-	}
+    public RobPlayer() {
+        super("robPlayer");
+        victimIndex = -1;
+        location = null;
+    }
 
-	public int getVictimIndex() {
-		return victimIndex;
-	}
+    public RobPlayer(int playerIndex, int victimIndex, HexLocation location) {
+        super("robPlayer", playerIndex);
+        this.victimIndex = victimIndex;
+        this.location = location;
+    }
 
-	public void setVictimIndex(int victimIndex) {
-		this.victimIndex = victimIndex;
-	}
+    public int getVictimIndex() {
+        return victimIndex;
+    }
 
-	public HexLocation getLocation() {
-		return location;
-	}
+    public void setVictimIndex(int victimIndex) {
+        this.victimIndex = victimIndex;
+    }
 
-	public void setLocation(HexLocation location) {
-		this.location = location;
-	}
+    public HexLocation getLocation() {
+        return location;
+    }
+
+    public void setLocation(HexLocation location) {
+        this.location = location;
+    }
 }

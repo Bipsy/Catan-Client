@@ -25,15 +25,15 @@ public class ResourceListDTO {
     }
 
     public ResourceListDTO(int brick, int ore, int sheep, int wheat, int wood) {
-		super();
-		this.brick = brick;
-		this.ore = ore;
-		this.sheep = sheep;
-		this.wheat = wheat;
-		this.wood = wood;
-	}
+        super();
+        this.brick = brick;
+        this.ore = ore;
+        this.sheep = sheep;
+        this.wheat = wheat;
+        this.wood = wood;
+    }
 
-	public int getBrick() {
+    public int getBrick() {
         return brick;
     }
 

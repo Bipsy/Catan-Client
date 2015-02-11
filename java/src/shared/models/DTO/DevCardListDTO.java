@@ -21,25 +21,25 @@ public class DevCardListDTO {
     private static int MAX_SOLDIER = 14;
     private static int MAX_MONUMENT = 5;
     private static int MAX_PROGRESS = 2;
-    
+
     public DevCardListDTO() {
-    	monopoly = 0;
-    	roadBuilding = 0;
-    	yearOfPlenty = 0;
-    	monument = 0;
-    	soldier = 0;
+        monopoly = 0;
+        roadBuilding = 0;
+        yearOfPlenty = 0;
+        monument = 0;
+        soldier = 0;
     }
 
-    public DevCardListDTO(int yearOfPlenty, int monopoly, int soldier, 
-    		int roadBuilding, int monument) {
-    	this.yearOfPlenty = yearOfPlenty;
-    	this.monopoly = monopoly;
-    	this.soldier = soldier;
-    	this.roadBuilding = roadBuilding;
-    	this.monument = monument;
-	}
+    public DevCardListDTO(int yearOfPlenty, int monopoly, int soldier,
+            int roadBuilding, int monument) {
+        this.yearOfPlenty = yearOfPlenty;
+        this.monopoly = monopoly;
+        this.soldier = soldier;
+        this.roadBuilding = roadBuilding;
+        this.monument = monument;
+    }
 
-	public int getMonopoly() {
+    public int getMonopoly() {
         return monopoly;
     }
 

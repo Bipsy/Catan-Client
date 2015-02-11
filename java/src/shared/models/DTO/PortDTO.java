@@ -38,15 +38,15 @@ public class PortDTO {
         this.ratio = 3;
     }
 
-    public PortDTO(int ratio,String resource, EdgeLocation edgeLocation) {
-    	this.ratio = ratio;
-    	this.location = edgeLocation;
-    	if(resource != null) {
-    		this.resource = ResourceType.valueOf(resource.toUpperCase());    		
-    	}
-	}
+    public PortDTO(int ratio, String resource, EdgeLocation edgeLocation) {
+        this.ratio = ratio;
+        this.location = edgeLocation;
+        if (resource != null) {
+            this.resource = ResourceType.valueOf(resource.toUpperCase());
+        }
+    }
 
-	public ResourceType getResource() {
+    public ResourceType getResource() {
         return resource;
     }
 

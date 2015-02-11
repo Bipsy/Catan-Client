@@ -12,7 +12,6 @@ import com.google.gson.annotations.SerializedName;
  */
 public class ClientModelDTO {
 
-
     @SerializedName("bank")
     private ResourceListDTO resources;
     @SerializedName("deck")
@@ -51,22 +50,22 @@ public class ClientModelDTO {
     }
 
     public ClientModelDTO(ResourceListDTO resources, DevCardListDTO devCards,
-			MessageListDTO chat, MessageListDTO log, MapDTO map,
-			PlayerDTO[] players, TradeOfferDTO tradeOffer,
-			TurnTrackerDTO turnTracker, int winner, int version) {
-		this.resources = resources;
-		this.devCards = devCards;
-		this.chat = chat;
-		this.log = log;
-		this.map = map;
-		this.players = players;
-		this.tradeOffer = tradeOffer;
-		this.turnTracker = turnTracker;
-		this.winner = winner;
-		this.version = version;
-	}
+            MessageListDTO chat, MessageListDTO log, MapDTO map,
+            PlayerDTO[] players, TradeOfferDTO tradeOffer,
+            TurnTrackerDTO turnTracker, int winner, int version) {
+        this.resources = resources;
+        this.devCards = devCards;
+        this.chat = chat;
+        this.log = log;
+        this.map = map;
+        this.players = players;
+        this.tradeOffer = tradeOffer;
+        this.turnTracker = turnTracker;
+        this.winner = winner;
+        this.version = version;
+    }
 
-	public void setBank(ResourceListDTO resources) {
+    public void setBank(ResourceListDTO resources) {
         this.resources = resources;
     }
 

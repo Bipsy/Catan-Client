@@ -53,14 +53,15 @@ public class PlayerHand {
 
     /**
      * This function is used to determine if the player can buy a dev card
-     * @param buyDevCard 
+     *
+     * @param buyDevCard
      *
      * @return returns true if the player can, false otherwise
      */
     public boolean canBuyDevCard(BuyDevCard buyDevCard) {
-		return resources.getResourceNumber(ResourceType.WHEAT) > 0 && 
-		resources.getResourceNumber(ResourceType.ORE) > 0 && 
-		resources.getResourceNumber(ResourceType.SHEEP) > 0;
+        return resources.getResourceNumber(ResourceType.WHEAT) > 0
+                && resources.getResourceNumber(ResourceType.ORE) > 0
+                && resources.getResourceNumber(ResourceType.SHEEP) > 0;
     }
 
     /**
@@ -95,54 +96,54 @@ public class PlayerHand {
 
     }
 
-	public boolean CanUpdateResourceCards(ResourceListDTO resourceList) {
-		return (resources.getResourceNumber(ResourceType.BRICK) + 
-				resourceList.getBrick() >= 0 &&
-				resources.getResourceNumber(ResourceType.SHEEP) + 
-				resourceList.getSheep() >= 0 &&
-				resources.getResourceNumber(ResourceType.WOOD) + 
-				resourceList.getWood() >= 0 &&
-				resources.getResourceNumber(ResourceType.ORE) + 
-				resourceList.getOre() >= 0 &&
-				resources.getResourceNumber(ResourceType.WHEAT) + 
-				resourceList.getWheat() >= 0);
-	}
+    public boolean CanUpdateResourceCards(ResourceListDTO resourceList) {
+        return (resources.getResourceNumber(ResourceType.BRICK)
+                + resourceList.getBrick() >= 0
+                && resources.getResourceNumber(ResourceType.SHEEP)
+                + resourceList.getSheep() >= 0
+                && resources.getResourceNumber(ResourceType.WOOD)
+                + resourceList.getWood() >= 0
+                && resources.getResourceNumber(ResourceType.ORE)
+                + resourceList.getOre() >= 0
+                && resources.getResourceNumber(ResourceType.WHEAT)
+                + resourceList.getWheat() >= 0);
+    }
 
-	public int getNumResourceCards() {
-		return resources.getResourceNumber(ResourceType.BRICK) +
-				resources.getResourceNumber(ResourceType.SHEEP) +
-				resources.getResourceNumber(ResourceType.WOOD) +
-				resources.getResourceNumber(ResourceType.ORE) +
-				resources.getResourceNumber(ResourceType.WHEAT);
-	}
+    public int getNumResourceCards() {
+        return resources.getResourceNumber(ResourceType.BRICK)
+                + resources.getResourceNumber(ResourceType.SHEEP)
+                + resources.getResourceNumber(ResourceType.WOOD)
+                + resources.getResourceNumber(ResourceType.ORE)
+                + resources.getResourceNumber(ResourceType.WHEAT);
+    }
 
-	public DevCardList getDevCards() {
-		return devCards;
-	}
+    public DevCardList getDevCards() {
+        return devCards;
+    }
 
-	public void setDevCards(DevCardList devCards) {
-		this.devCards = devCards;
-	}
+    public void setDevCards(DevCardList devCards) {
+        this.devCards = devCards;
+    }
 
-	public boolean canMTrade(MaritimeTrade maritimeTrade) {
-		return resources.getResourceNumber(maritimeTrade.getInputResource()) >= maritimeTrade.getRatio();
-	}
+    public boolean canMTrade(MaritimeTrade maritimeTrade) {
+        return resources.getResourceNumber(maritimeTrade.getInputResource()) >= maritimeTrade.getRatio();
+    }
 
-	public boolean canBuildRoad(BuildRoad buildRoad) {
-		return resources.getResourceNumber(ResourceType.BRICK) > 0 && 
-		resources.getResourceNumber(ResourceType.WOOD) > 0;
-	}
+    public boolean canBuildRoad(BuildRoad buildRoad) {
+        return resources.getResourceNumber(ResourceType.BRICK) > 0
+                && resources.getResourceNumber(ResourceType.WOOD) > 0;
+    }
 
-	public boolean canBuildSettlement(BuildSettlement buildSettlement) {
-		return resources.getResourceNumber(ResourceType.BRICK) > 0 && 
-		resources.getResourceNumber(ResourceType.WOOD) > 0 &&
-		resources.getResourceNumber(ResourceType.SHEEP) > 0 && 
-		resources.getResourceNumber(ResourceType.WHEAT) > 0;
-	}
+    public boolean canBuildSettlement(BuildSettlement buildSettlement) {
+        return resources.getResourceNumber(ResourceType.BRICK) > 0
+                && resources.getResourceNumber(ResourceType.WOOD) > 0
+                && resources.getResourceNumber(ResourceType.SHEEP) > 0
+                && resources.getResourceNumber(ResourceType.WHEAT) > 0;
+    }
 
-	public boolean canBuildCity(BuildCity buildCity) {
-		return resources.getResourceNumber(ResourceType.WHEAT) >= 2 && 
-		resources.getResourceNumber(ResourceType.ORE) >= 3;
-	}
-	
+    public boolean canBuildCity(BuildCity buildCity) {
+        return resources.getResourceNumber(ResourceType.WHEAT) >= 2
+                && resources.getResourceNumber(ResourceType.ORE) >= 3;
+    }
+
 }

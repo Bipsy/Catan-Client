@@ -29,25 +29,26 @@ import shared.models.DTO.ClientModelDTO;
 public class Populator implements iPopulator {
 
     private ClientModel model;
-    
+
     public Populator() {
-    	model = new ClientModel();
+        model = new ClientModel();
     }
 
     @Override
     public boolean populateModel(ClientModelDTO container) {
 
-    	model = new ClientModel();
+        model = new ClientModel();
         populateBank(container.getResources(), container.getDevCards());
 
         populateBoard(container.getMap());
-        
+
         populateChatObject(container.getChat(), container.getLog());
 
         populateUserManager(container.getPlayers(), container.getTurnTracker());
 
-        if (container.getTradeOffer() != null)
-        	model.setTradeOffer(new TradeOffer(container.getTradeOffer()));
+        if (container.getTradeOffer() != null) {
+            model.setTradeOffer(new TradeOffer(container.getTradeOffer()));
+        }
 
         model.setVersion(container.getVersion());
         model.setWinner(container.getWinner());
@@ -77,7 +78,7 @@ public class Populator implements iPopulator {
         board.setRoads(map.getRoads());
 
         board.setSettlements(map.getSettlements());
-        
+
         board.setCities(map.getCities());
 
         board.setRadius(map.getRadius());

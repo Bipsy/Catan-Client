@@ -38,7 +38,7 @@ public class MapController extends Controller implements IMapController {
 
     protected void initFromModel() {
 
-		//<temp>
+        //<temp>
         Random rand = new Random();
 
         for (int x = 0; x <= 3; ++x) {

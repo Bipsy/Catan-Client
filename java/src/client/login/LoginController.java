@@ -71,7 +71,7 @@ public class LoginController extends Controller implements ILoginController {
     @Override
     public void signIn() {
 
-		// TODO: log in user
+        // TODO: log in user
         // If log in succeeded
         getLoginView().closeModal();
         loginAction.execute();
@@ -80,7 +80,7 @@ public class LoginController extends Controller implements ILoginController {
     @Override
     public void register() {
 
-		// TODO: register new user (which, if successful, also logs them in)
+        // TODO: register new user (which, if successful, also logs them in)
         // If register succeeded
         getLoginView().closeModal();
         loginAction.execute();

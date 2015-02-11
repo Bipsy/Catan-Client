@@ -35,13 +35,13 @@ public class TurnTrackerDTO {
     }
 
     public TurnTrackerDTO(String status, int currentTurn, int longestRoad, int largestArmy) {
-		this.status = status;
-		this.currentTurn = currentTurn;
-		this.longestRoad = longestRoad;
-		this.largestArmy = largestArmy;
-	}
+        this.status = status;
+        this.currentTurn = currentTurn;
+        this.longestRoad = longestRoad;
+        this.largestArmy = largestArmy;
+    }
 
-	public int getCurrentTurn() {
+    public int getCurrentTurn() {
         return currentTurn;
     }
 

@@ -27,12 +27,12 @@ public class Road {
         this.owner = owner;
     }
 
-	public EdgeLocation getLocation() {
-		return location;
-	}
+    public EdgeLocation getLocation() {
+        return location;
+    }
 
-	public void setLocation(EdgeLocation location) {
-		this.location = location;
-	}
+    public void setLocation(EdgeLocation location) {
+        this.location = location;
+    }
 
 }

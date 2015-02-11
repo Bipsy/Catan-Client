@@ -34,7 +34,7 @@ public class Catan extends JFrame {
         setVisible(true);
     }
 
-	//
+    //
     // Main
     //
     public static void main(final String[] args) {

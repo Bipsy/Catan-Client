@@ -4,24 +4,24 @@ import shared.models.DTO.ResourceListDTO;
 
 public class DiscardCards extends MoveParams {
 
-	private ResourceListDTO discardedCards;
-	
-	public DiscardCards() {
-		super("discardCards");
-		this.discardedCards = null;
-	}
+    private ResourceListDTO discardedCards;
 
-	public DiscardCards(int playerIndex, ResourceListDTO discardedCards) {
-		super("discardCards", playerIndex);
-		this.discardedCards = discardedCards;
-	}
+    public DiscardCards() {
+        super("discardCards");
+        this.discardedCards = null;
+    }
 
-	public ResourceListDTO getDiscardedCards() {
-		return discardedCards;
-	}
+    public DiscardCards(int playerIndex, ResourceListDTO discardedCards) {
+        super("discardCards", playerIndex);
+        this.discardedCards = discardedCards;
+    }
 
-	public void setDiscardedCards(ResourceListDTO discardedCards) {
-		this.discardedCards = discardedCards;
-	}
+    public ResourceListDTO getDiscardedCards() {
+        return discardedCards;
+    }
+
+    public void setDiscardedCards(ResourceListDTO discardedCards) {
+        this.discardedCards = discardedCards;
+    }
 
 }

@@ -50,7 +50,9 @@ public class ServerPoller implements ActionListener {
      * poll() returns an empty string.
      */
     public ClientModelDTO poll() {
-        if (serverProxy == null) return null;
+        if (serverProxy == null) {
+            return null;
+        }
         try {
             ClientModelDTO newModel = serverProxy.retrieveCurrentState(new Integer(version));
             return newModel;

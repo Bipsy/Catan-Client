@@ -39,11 +39,11 @@ public class Harbor {
         this.ratio = ratio;
     }
 
-	public EdgeLocation getLocation() {
-		return location;
-	}
+    public EdgeLocation getLocation() {
+        return location;
+    }
 
-	public void setLocation(EdgeLocation location) {
-		this.location = location;
-	}
+    public void setLocation(EdgeLocation location) {
+        this.location = location;
+    }
 }

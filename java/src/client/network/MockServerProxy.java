@@ -155,7 +155,7 @@ public class MockServerProxy implements iServerProxy {
         if (version == null) {
             return null;
         } else if (version >= 1) {
-            return null;           
+            return null;
         } else {
             return model;
         }

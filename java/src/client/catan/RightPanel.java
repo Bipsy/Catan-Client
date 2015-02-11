@@ -25,7 +25,7 @@ public class RightPanel extends JPanel {
 
         this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 
-		// Initialize development card views and controller
+        // Initialize development card views and controller
         //
         playCardView = new PlayDevCardView();
         buyCardView = new BuyDevCardView();
@@ -46,14 +46,14 @@ public class RightPanel extends JPanel {
         playCardView.setController(devCardController);
         buyCardView.setController(devCardController);
 
-		// Initialize victory point view and controller
+        // Initialize victory point view and controller
         //
         pointsView = new PointsView();
         finishedView = new GameFinishedView();
         pointsController = new PointsController(pointsView, finishedView);
         pointsView.setController(pointsController);
 
-		// Initialize resource bar view and controller
+        // Initialize resource bar view and controller
         //
         resourceView = new ResourceBarView();
         resourceController = new ResourceBarController(resourceView);

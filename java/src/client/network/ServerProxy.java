@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package client.network;
 
 import java.io.BufferedReader;
@@ -13,10 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import client.model.Serializer;
-import java.net.URLDecoder;
-
 import java.util.List;
-
 import shared.models.DTO.*;
 import shared.models.DTO.params.*;
 
@@ -86,7 +78,7 @@ public class ServerProxy implements iServerProxy {
     }
 
     public String doPost(String urlPath, String jsonString,
-                            boolean extractCookie) throws IOException {
+            boolean extractCookie) throws IOException {
         try {
             URL url = new URL("http://" + serverHost + ":" + serverPort + urlPath);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -110,13 +102,13 @@ public class ServerProxy implements iServerProxy {
                 if (extractCookie) {
                     //Set cookies
                     String cookieField = connection.getHeaderField(COOKIE_HEADER);
-                    if (cookieField != null && cookieField.contains("catan.game")) {                        
+                    if (cookieField != null && cookieField.contains("catan.game")) {
                         gameCookie = extractGameCookie(cookieField);
                     } else if (cookieField != null && cookieField.contains("catan.user")) {
                         userCookie = extractUserCookie(cookieField);
                     }
                 }
-                
+
                 BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 StringBuilder out = new StringBuilder();
                 String line;
@@ -451,7 +443,6 @@ public class ServerProxy implements iServerProxy {
 //          e.printStackTrace();
 //      }
 //  }
-
     private String extractGameCookie(String cookieField) {
         String trimPath = cookieField.replace(";Path=/;", "");
         String trimCatan = trimPath.replace("catan.game=", "");
@@ -461,5 +452,5 @@ public class ServerProxy implements iServerProxy {
     private String extractUserCookie(String cookieField) {
         return cookieField.replace(";Path=/;", "").replace("catan.user=", "");
     }
-    
+
 }

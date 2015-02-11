@@ -81,7 +81,7 @@ public class EdgeLocation {
      */
     public EdgeLocation getNormalizedLocation() {
 
-		// Return an EdgeLocation that has direction NorthWest, North, or NorthEast
+        // Return an EdgeLocation that has direction NorthWest, North, or NorthEast
         switch (direction) {
             case NorthWest:
             case North:
@@ -91,45 +91,45 @@ public class EdgeLocation {
             case South:
             case SouthEast:
                 return new EdgeLocation(roadLocation.getNeighborLoc(direction),
-                		direction.getOppositeDirection());
+                        direction.getOppositeDirection());
             default:
                 assert false;
                 return null;
         }
     }
 
-	public EdgeLocation[] getAdjacentEdges() {
-		EdgeLocation[] adjEdges = new EdgeLocation[4];
-		EdgeLocation temp = getNormalizedLocation();
-		switch (temp.getDir()) {
-			case NorthWest:
-				adjEdges[0] = new EdgeLocation(roadLocation, EdgeDirection.North);
-				adjEdges[1] = new EdgeLocation(roadLocation, EdgeDirection.SouthWest);
-				adjEdges[2] = new EdgeLocation(roadLocation.getNeighborLoc(temp.getDir()),
+    public EdgeLocation[] getAdjacentEdges() {
+        EdgeLocation[] adjEdges = new EdgeLocation[4];
+        EdgeLocation temp = getNormalizedLocation();
+        switch (temp.getDir()) {
+            case NorthWest:
+                adjEdges[0] = new EdgeLocation(roadLocation, EdgeDirection.North);
+                adjEdges[1] = new EdgeLocation(roadLocation, EdgeDirection.SouthWest);
+                adjEdges[2] = new EdgeLocation(roadLocation.getNeighborLoc(temp.getDir()),
                         EdgeDirection.South);
-				adjEdges[3] = new EdgeLocation(roadLocation.getNeighborLoc(temp.getDir()),
+                adjEdges[3] = new EdgeLocation(roadLocation.getNeighborLoc(temp.getDir()),
                         EdgeDirection.NorthEast);
-				break;
-			case North:
-				adjEdges[0] = new EdgeLocation(roadLocation, EdgeDirection.NorthEast);
-				adjEdges[1] = new EdgeLocation(roadLocation, EdgeDirection.NorthWest);
-				adjEdges[2] = new EdgeLocation(roadLocation.getNeighborLoc(temp.getDir()),
+                break;
+            case North:
+                adjEdges[0] = new EdgeLocation(roadLocation, EdgeDirection.NorthEast);
+                adjEdges[1] = new EdgeLocation(roadLocation, EdgeDirection.NorthWest);
+                adjEdges[2] = new EdgeLocation(roadLocation.getNeighborLoc(temp.getDir()),
                         EdgeDirection.SouthWest);
-				adjEdges[3] = new EdgeLocation(roadLocation.getNeighborLoc(temp.getDir()),
+                adjEdges[3] = new EdgeLocation(roadLocation.getNeighborLoc(temp.getDir()),
                         EdgeDirection.SouthEast);
-				break;
-			case NorthEast:
-				adjEdges[0] = new EdgeLocation(roadLocation, EdgeDirection.North);
-				adjEdges[1] = new EdgeLocation(roadLocation, EdgeDirection.SouthEast);
-				adjEdges[2] = new EdgeLocation(roadLocation.getNeighborLoc(temp.getDir()),
+                break;
+            case NorthEast:
+                adjEdges[0] = new EdgeLocation(roadLocation, EdgeDirection.North);
+                adjEdges[1] = new EdgeLocation(roadLocation, EdgeDirection.SouthEast);
+                adjEdges[2] = new EdgeLocation(roadLocation.getNeighborLoc(temp.getDir()),
                         EdgeDirection.South);
-				adjEdges[3] = new EdgeLocation(roadLocation.getNeighborLoc(temp.getDir()),
+                adjEdges[3] = new EdgeLocation(roadLocation.getNeighborLoc(temp.getDir()),
                         EdgeDirection.NorthWest);
-				break;
-			default:
-				assert false;
-				return null;
-		}
-		return adjEdges;		
-	}
+                break;
+            default:
+                assert false;
+                return null;
+        }
+        return adjEdges;
+    }
 }

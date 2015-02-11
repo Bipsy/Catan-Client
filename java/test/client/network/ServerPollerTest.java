@@ -26,6 +26,7 @@ import shared.models.DTO.ClientModelDTO;
  * @author Peter Anderson <anderson.peter@byu.edu>
  */
 public class ServerPollerTest {
+
     private byte[] encoded;
     private String defaultModel;
     private Serializer serializer;
@@ -47,9 +48,9 @@ public class ServerPollerTest {
     public void setUp() {
         try {
             RandomAccessFile f = new RandomAccessFile("assets/test-model-1.txt", "r");
-            encoded = new byte[(int)f.length()];
+            encoded = new byte[(int) f.length()];
             f.read(encoded);
-            defaultModel = new String(encoded, Charset.defaultCharset());            
+            defaultModel = new String(encoded, Charset.defaultCharset());
             serializer = new Serializer();
             proxy = new MockServerProxy(serializer, defaultModel);
             populator = new Populator();
@@ -77,9 +78,9 @@ public class ServerPollerTest {
     public void pollNewModelTest() {
         ServerPoller poller = new ServerPoller(proxy, populator, 0);
         ClientModelDTO model = poller.poll();
-        assertNotNull(model);        
+        assertNotNull(model);
     }
-    
+
     @Test
     public void pollOldModelTest() {
         ServerPoller poller = new ServerPoller(proxy, populator, 1);

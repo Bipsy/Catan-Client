@@ -3,48 +3,48 @@ package shared.models.DTO.params;
 import shared.definitions.ResourceType;
 
 public class MaritimeTrade extends MoveParams {
-	
-	private int ratio;
-	private ResourceType inputResource;
-	private ResourceType outputResource;
 
-	public MaritimeTrade() {
-		super("maritimeTrade");
-		ratio = 0;
-		inputResource = null;
-		outputResource = null;
-	}
+    private int ratio;
+    private ResourceType inputResource;
+    private ResourceType outputResource;
 
-	public MaritimeTrade(int playerIndex, int ratio, 
-			ResourceType inputResource, ResourceType outputResource) {
-		super("maritimeTrade", playerIndex);
-		setRatio(ratio);
-		setInputResource(inputResource);
-		setOutputResource(outputResource);
-	}
+    public MaritimeTrade() {
+        super("maritimeTrade");
+        ratio = 0;
+        inputResource = null;
+        outputResource = null;
+    }
 
-	public int getRatio() {
-		return ratio;
-	}
+    public MaritimeTrade(int playerIndex, int ratio,
+            ResourceType inputResource, ResourceType outputResource) {
+        super("maritimeTrade", playerIndex);
+        setRatio(ratio);
+        setInputResource(inputResource);
+        setOutputResource(outputResource);
+    }
 
-	public void setRatio(int ratio) {
-		this.ratio = ratio;
-	}
+    public int getRatio() {
+        return ratio;
+    }
 
-	public ResourceType getInputResource() {
-		return inputResource;
-	}
+    public void setRatio(int ratio) {
+        this.ratio = ratio;
+    }
 
-	public void setInputResource(ResourceType inputResource) {
-		this.inputResource = inputResource;
-	}
+    public ResourceType getInputResource() {
+        return inputResource;
+    }
 
-	public ResourceType getOutputResource() {
-		return outputResource;
-	}
+    public void setInputResource(ResourceType inputResource) {
+        this.inputResource = inputResource;
+    }
 
-	public void setOutputResource(ResourceType outputResource) {
-		this.outputResource = outputResource;
-	}
+    public ResourceType getOutputResource() {
+        return outputResource;
+    }
+
+    public void setOutputResource(ResourceType outputResource) {
+        this.outputResource = outputResource;
+    }
 
 }

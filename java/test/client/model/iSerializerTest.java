@@ -32,40 +32,39 @@ public class iSerializerTest {
 
     @Test
     public void testSerializeModelDTO() {
-    	
-    	JsonParser parser = new JsonParser(); 
-    	ClientModelDTO modelObj = ModelMock.getModelDTO(); 
-    	String JSON = s.serializeModel(modelObj);
-    	JsonElement jsonEl = parser.parse(JSON);
-    	JsonElement expectedJsonEl = parser.parse(ModelMock.getJSON());
-    	
-    	//compare root level of the client model json to the expected one    	
-    	assertTrue("JSON needs to have a correct version", 
-    			jsonEl.getAsJsonObject().get("version").getAsString().equals(expectedJsonEl.getAsJsonObject().get("version").getAsString()));
-    	assertTrue("JSON needs to have a correct winner", 
-    			jsonEl.getAsJsonObject().get("winner").getAsString().equals(expectedJsonEl.getAsJsonObject().get("winner").getAsString()));    	
-    	assertTrue("JSON needs to have a correct number of players", 
-    			jsonEl.getAsJsonObject().get("players").getAsJsonArray().size() ==
-    			expectedJsonEl.getAsJsonObject().get("players").getAsJsonArray().size());
-    	
-    	//compare players
-    	JsonArray players = jsonEl.getAsJsonObject().get("players").getAsJsonArray();
-    	JsonArray expectedPlayers = expectedJsonEl.getAsJsonObject().get("players").getAsJsonArray();
-    	assertTrue("JSON player has to have a correct name", 
-    			players.get(0).getAsJsonObject().get("name").getAsString().equals(expectedPlayers.get(0).getAsJsonObject().get("name").getAsString()));
-    	assertTrue("JSON player has to have a correct name", 
-    			players.get(2).getAsJsonObject().get("name").getAsString().equals(expectedPlayers.get(2).getAsJsonObject().get("name").getAsString()));
-    	
-    	//compare maps
-    	JsonObject map = jsonEl.getAsJsonObject().get("map").getAsJsonObject();
-    	JsonObject expectedMap = expectedJsonEl.getAsJsonObject().get("map").getAsJsonObject();
-    	assertTrue("Map has to have a correct radius", 
-    			map.get("radius").getAsInt() ==  expectedMap.get("radius").getAsInt());
+
+        JsonParser parser = new JsonParser();
+        ClientModelDTO modelObj = ModelMock.getModelDTO();
+        String JSON = s.serializeModel(modelObj);
+        JsonElement jsonEl = parser.parse(JSON);
+        JsonElement expectedJsonEl = parser.parse(ModelMock.getJSON());
+
+        //compare root level of the client model json to the expected one    	
+        assertTrue("JSON needs to have a correct version",
+                jsonEl.getAsJsonObject().get("version").getAsString().equals(expectedJsonEl.getAsJsonObject().get("version").getAsString()));
+        assertTrue("JSON needs to have a correct winner",
+                jsonEl.getAsJsonObject().get("winner").getAsString().equals(expectedJsonEl.getAsJsonObject().get("winner").getAsString()));
+        assertTrue("JSON needs to have a correct number of players",
+                jsonEl.getAsJsonObject().get("players").getAsJsonArray().size()
+                == expectedJsonEl.getAsJsonObject().get("players").getAsJsonArray().size());
+
+        //compare players
+        JsonArray players = jsonEl.getAsJsonObject().get("players").getAsJsonArray();
+        JsonArray expectedPlayers = expectedJsonEl.getAsJsonObject().get("players").getAsJsonArray();
+        assertTrue("JSON player has to have a correct name",
+                players.get(0).getAsJsonObject().get("name").getAsString().equals(expectedPlayers.get(0).getAsJsonObject().get("name").getAsString()));
+        assertTrue("JSON player has to have a correct name",
+                players.get(2).getAsJsonObject().get("name").getAsString().equals(expectedPlayers.get(2).getAsJsonObject().get("name").getAsString()));
+
+        //compare maps
+        JsonObject map = jsonEl.getAsJsonObject().get("map").getAsJsonObject();
+        JsonObject expectedMap = expectedJsonEl.getAsJsonObject().get("map").getAsJsonObject();
+        assertTrue("Map has to have a correct radius",
+                map.get("radius").getAsInt() == expectedMap.get("radius").getAsInt());
     }
-   
-    
+
     private void checkModelFields(ClientModelDTO modelObj) {
-    	
+
         ClientModelDTO expectedModelObj = ModelMock.getModelDTO();
         assertTrue("winner field should be deserialized correctly", modelObj.getWinner() == expectedModelObj.getWinner());
         assertTrue("version field should be deserialized correctly", modelObj.getVersion() == expectedModelObj.getVersion());
@@ -73,7 +72,6 @@ public class iSerializerTest {
         assertTrue("player's name field has to be set correctly", modelObj.getPlayers()[0].getName().equals(expectedModelObj.getPlayers()[0].getName()));
         assertTrue("the number of players has to be set correctly", modelObj.getPlayers().length == expectedModelObj.getPlayers().length);
         assertTrue("the number of resources has to be set correctly", modelObj.getResources().getBrick() == expectedModelObj.getResources().getBrick());
-
 
     }
 

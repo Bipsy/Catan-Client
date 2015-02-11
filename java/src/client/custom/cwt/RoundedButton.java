@@ -33,12 +33,12 @@ public class RoundedButton extends JButton {
         // Use an HTML color guide to find a desired color.  
         // Last color is alpha, with max 0xFF to make   
         // completely opaque.  
-		// Draw rectangle with rounded corners on top of   
+        // Draw rectangle with rounded corners on top of   
         // button  
         g2.setColor(Color.GRAY);
         g2.fillRoundRect(0, 0, getWidth() - 2, getHeight() - 2, 15, 15);
 
-		// I'm just drawing a border  
+        // I'm just drawing a border  
         //g2d.setColor(getSelectionColor()); 
         this.setBorder(new LineBorder(Color.GRAY, 3, true));
         g2.drawRoundRect(0, 0, getWidth(), getHeight(), 15, 15);

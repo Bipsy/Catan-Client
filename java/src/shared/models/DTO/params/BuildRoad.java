@@ -4,35 +4,36 @@ import shared.locations.EdgeLocation;
 
 public class BuildRoad extends MoveParams {
 
-	private EdgeLocation roadLocation;
-	private boolean free;
-	public BuildRoad() {
-		super("buildRoad");
-		this.roadLocation = null;
-		this.free = false;
-		// TODO Auto-generated constructor stub
-	}
+    private EdgeLocation roadLocation;
+    private boolean free;
 
-	public BuildRoad(int playerIndex, EdgeLocation edgeLocation, boolean free) {
-		super("buildRoad", playerIndex);
-		this.roadLocation = edgeLocation;
-		this.free = free;
-	}
+    public BuildRoad() {
+        super("buildRoad");
+        this.roadLocation = null;
+        this.free = false;
+        // TODO Auto-generated constructor stub
+    }
 
-	public EdgeLocation getRoadLocation() {
-		return roadLocation;
-	}
+    public BuildRoad(int playerIndex, EdgeLocation edgeLocation, boolean free) {
+        super("buildRoad", playerIndex);
+        this.roadLocation = edgeLocation;
+        this.free = free;
+    }
 
-	public void setRoadLocation(EdgeLocation roadLocation) {
-		this.roadLocation = roadLocation;
-	}
+    public EdgeLocation getRoadLocation() {
+        return roadLocation;
+    }
 
-	public boolean isFree() {
-		return free;
-	}
+    public void setRoadLocation(EdgeLocation roadLocation) {
+        this.roadLocation = roadLocation;
+    }
 
-	public void setFree(boolean free) {
-		this.free = free;
-	}
+    public boolean isFree() {
+        return free;
+    }
+
+    public void setFree(boolean free) {
+        this.free = free;
+    }
 
 }

@@ -31,14 +31,13 @@ public class Board {
     private List<VertexObject> cities;
     private int radius;
     private Robber robber;
-    
 
     private Map<EdgeLocation, Road> roadMap;
     private Map<VertexLocation, VertexObject> communityMap;
 
     public Board() {
-    	roadMap = new HashMap<EdgeLocation, Road>();
-    	communityMap = new HashMap<VertexLocation, VertexObject>();
+        roadMap = new HashMap<EdgeLocation, Road>();
+        communityMap = new HashMap<VertexLocation, VertexObject>();
 
     }
 
@@ -49,69 +48,67 @@ public class Board {
      * @return true if robber can be moved. false if not
      */
     public boolean canPlaceRobber(HexLocation hex) {
-    	return robber.isNewLocation(hex);
+        return robber.isNewLocation(hex);
     }
-    
+
     public boolean canBuildRoad(BuildRoad buildRoad) {
-    	EdgeLocation road = buildRoad.getRoadLocation();
-    	if(roadMap.containsKey(road.getNormalizedLocation())) {
-    		return false;
-    	}
-    	else {
-    		EdgeLocation[] adjRoads = road.getAdjacentEdges();
-    		for (int i = 0; i < adjRoads.length; i++) {
-				if(roadMap.containsKey(adjRoads[i].getNormalizedLocation()) &&
-						roadMap.get(adjRoads[i].getNormalizedLocation()).getOwner() ==
-						buildRoad.getPlayerIndex()) {
-					return true;
-				}
-			}
-    		return false;
-    	}
+        EdgeLocation road = buildRoad.getRoadLocation();
+        if (roadMap.containsKey(road.getNormalizedLocation())) {
+            return false;
+        } else {
+            EdgeLocation[] adjRoads = road.getAdjacentEdges();
+            for (int i = 0; i < adjRoads.length; i++) {
+                if (roadMap.containsKey(adjRoads[i].getNormalizedLocation())
+                        && roadMap.get(adjRoads[i].getNormalizedLocation()).getOwner()
+                        == buildRoad.getPlayerIndex()) {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
-    
+
     public boolean canBuildSettlement(BuildSettlement buildSettlement) {
-    	boolean result = false;
-    	VertexLocation vertex = buildSettlement.getVertexLocation();
-    	
-    	if(!communityMap.containsKey(vertex.getNormalizedLocation())) {
-    		VertexLocation[] adjVertex = vertex.getAdjacentVertexes();
-    		boolean found = false;
-    		for (int i = 0; i < adjVertex.length; i++) {
-    			if(communityMap.containsKey(adjVertex[i].getNormalizedLocation())) {
-    				found = true;
-    				break;
-    			}
-    		}
-    		if(!found) {
-    			EdgeLocation[] adjRoads = vertex.getAdjacentEdges();
-    			for (int i = 0; i < adjRoads.length; i++) {
-    				if(roadMap.containsKey(adjRoads[i].getNormalizedLocation()) &&
-    					roadMap.get(adjRoads[i].getNormalizedLocation()).getOwner() ==
-    					buildSettlement.getPlayerIndex()) {
-    						result = true;
-    						break;
-    				}
-    			}    			
-    		}
-    	}
-    	return result;
+        boolean result = false;
+        VertexLocation vertex = buildSettlement.getVertexLocation();
+
+        if (!communityMap.containsKey(vertex.getNormalizedLocation())) {
+            VertexLocation[] adjVertex = vertex.getAdjacentVertexes();
+            boolean found = false;
+            for (int i = 0; i < adjVertex.length; i++) {
+                if (communityMap.containsKey(adjVertex[i].getNormalizedLocation())) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                EdgeLocation[] adjRoads = vertex.getAdjacentEdges();
+                for (int i = 0; i < adjRoads.length; i++) {
+                    if (roadMap.containsKey(adjRoads[i].getNormalizedLocation())
+                            && roadMap.get(adjRoads[i].getNormalizedLocation()).getOwner()
+                            == buildSettlement.getPlayerIndex()) {
+                        result = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return result;
     }
 
     public boolean canBuildCity(BuildCity buildCity) {
-    	VertexLocation vertex = buildCity.getVertexLocation().getNormalizedLocation();
-    	
-    	if(communityMap.containsKey(vertex)) {
-    		VertexObject vertexObj = communityMap.get(vertex);
-    		if(vertexObj.getType() == PieceType.SETTLEMENT && vertexObj.getOwner() == 
-    				buildCity.getPlayerIndex()) {
-    			return true;
-    		}
-    	}
-    	return false;
+        VertexLocation vertex = buildCity.getVertexLocation().getNormalizedLocation();
+
+        if (communityMap.containsKey(vertex)) {
+            VertexObject vertexObj = communityMap.get(vertex);
+            if (vertexObj.getType() == PieceType.SETTLEMENT && vertexObj.getOwner()
+                    == buildCity.getPlayerIndex()) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    
     public List<Hex> getHexes() {
         return hexes;
     }
@@ -135,9 +132,9 @@ public class Board {
     public void setRoad(List<Road> road) {
         this.roads = road;
         for (int i = 0; i < road.size(); i++) {
-        	EdgeLocation temp = road.get(i).getLocation();
-			roadMap.put(road.get(i).getLocation().getNormalizedLocation(), road.get(i));
-		}
+            EdgeLocation temp = road.get(i).getLocation();
+            roadMap.put(road.get(i).getLocation().getNormalizedLocation(), road.get(i));
+        }
     }
 
     public List<VertexObject> getSettlements() {
@@ -147,8 +144,8 @@ public class Board {
     public void setSettlements(List<VertexObject> settlements) {
         this.settlements = settlements;
         for (int i = 0; i < settlements.size(); i++) {
-        	communityMap.put(settlements.get(i).getLocation().getNormalizedLocation(), settlements.get(i));
-		}
+            communityMap.put(settlements.get(i).getLocation().getNormalizedLocation(), settlements.get(i));
+        }
     }
 
     public List<VertexObject> getCities() {
@@ -158,8 +155,8 @@ public class Board {
     public void setCities(List<VertexObject> cities) {
         this.cities = cities;
         for (int i = 0; i < cities.size(); i++) {
-			communityMap.put(cities.get(i).getLocation().getNormalizedLocation(), cities.get(i));
-		}
+            communityMap.put(cities.get(i).getLocation().getNormalizedLocation(), cities.get(i));
+        }
     }
 
     public int getRadius() {

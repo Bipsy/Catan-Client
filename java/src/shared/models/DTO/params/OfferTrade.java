@@ -4,35 +4,35 @@ import shared.models.DTO.ResourceListDTO;
 
 public class OfferTrade extends MoveParams {
 
-	private ResourceListDTO offer;
-	int receiver;
-	
-	public OfferTrade() {
-		super("offerTrade");
-		offer = null;
-		receiver = -1;
-	}
+    private ResourceListDTO offer;
+    int receiver;
 
-	public OfferTrade(int playerIndex, ResourceListDTO offer, int receiver) {
-		super("offerTrade", playerIndex);
-		setOffer(offer);
-		setReceiver(receiver);
-	}
+    public OfferTrade() {
+        super("offerTrade");
+        offer = null;
+        receiver = -1;
+    }
 
-	public int getReceiver() {
-		return receiver;
-	}
+    public OfferTrade(int playerIndex, ResourceListDTO offer, int receiver) {
+        super("offerTrade", playerIndex);
+        setOffer(offer);
+        setReceiver(receiver);
+    }
 
-	public void setReceiver(int receiver) {
-		this.receiver = receiver;
-	}
+    public int getReceiver() {
+        return receiver;
+    }
 
-	public ResourceListDTO getOffer() {
-		return offer;
-	}
+    public void setReceiver(int receiver) {
+        this.receiver = receiver;
+    }
 
-	public void setOffer(ResourceListDTO offer) {
-		this.offer = offer;
-	}
+    public ResourceListDTO getOffer() {
+        return offer;
+    }
+
+    public void setOffer(ResourceListDTO offer) {
+        this.offer = offer;
+    }
 
 }

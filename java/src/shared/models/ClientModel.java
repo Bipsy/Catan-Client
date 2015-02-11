@@ -17,7 +17,6 @@ import shared.models.DTO.params.RollNumber;
 import shared.models.DTO.params.Soldier;
 import shared.models.DTO.params.YearOfPlenty;
 
-
 /**
  * Class serves as a wrapper for the model of the game or game instance. It can
  * be used as the single model instance for the server (iPopulator) and client
@@ -35,15 +34,15 @@ public class ClientModel {
     private int version;
     //Player index of the game winner
     private int winner;
-    
+
     public ClientModel() {
-    	winner = -1;
-    	version = 0;
-    	bank = null;
-    	board = null;
-    	chatObject = null;
-    	userManager = null;
-    	tradeOffer = null;
+        winner = -1;
+        version = 0;
+        bank = null;
+        board = null;
+        chatObject = null;
+        userManager = null;
+        tradeOffer = null;
     }
 
     /**
@@ -125,12 +124,14 @@ public class ClientModel {
     public void setWinner(int winner) {
         this.winner = winner;
     }
+
     /**
      * This function will check that a player has not already discarded this
      * turn, that the number of cards to be discarded is half of their total
      * cards, that they have 7 or more cards in their hand, and that the cards
      * to be discarded is not greater than the number of cards owned for each
      * type
+     *
      * @param discardCards
      * @return
      */
@@ -141,133 +142,138 @@ public class ClientModel {
     /**
      * Checks that the player is the current player and that the roll number is
      * between 2 and 12
+     *
      * @param rollNumber
      * @return
      */
     public boolean CanRollNumber(RollNumber rollNumber) {
-        return rollNumber.getNumber() >= 2 && rollNumber.getNumber() <=  12 && 
-        		userManager.isCurrentPlayer(rollNumber.getPlayerIndex());
+        return rollNumber.getNumber() >= 2 && rollNumber.getNumber() <= 12
+                && userManager.isCurrentPlayer(rollNumber.getPlayerIndex());
     }
 
     /**
      * Checks that the Player is the current player, the victim is a different
      * player and that the location is different than the robber's current
      * location
+     *
      * @param robPlayer
      * @return
      */
     public boolean CanPlaceRobber(RobPlayer robPlayer) {
-    	return userManager.isCurrentPlayer(robPlayer.getPlayerIndex()) &&
-    			!userManager.isCurrentPlayer(robPlayer.getVictimIndex()) &&
-    			board.canPlaceRobber(robPlayer.getLocation());
+        return userManager.isCurrentPlayer(robPlayer.getPlayerIndex())
+                && !userManager.isCurrentPlayer(robPlayer.getVictimIndex())
+                && board.canPlaceRobber(robPlayer.getLocation());
     }
 
     /**
      * Checks that there isn't a road already there. Also checks that there is
      * an adjacent road owned by the player.
+     *
      * @param buildRoad
      * @return
      */
     public boolean CanBuildRoad(BuildRoad buildRoad) {
-    	return (buildRoad.isFree() || userManager.CanBuildRoad(buildRoad)) &&
-    			board.canBuildRoad(buildRoad);
+        return (buildRoad.isFree() || userManager.CanBuildRoad(buildRoad))
+                && board.canBuildRoad(buildRoad);
     }
 
     /**
-     * Checks that the vertex is not taken, that there are no objects on adjacent
-     * vertices, and that there is a road on an adjacent edge
+     * Checks that the vertex is not taken, that there are no objects on
+     * adjacent vertices, and that there is a road on an adjacent edge
+     *
      * @param buildSettlement
      * @return
      */
     public boolean CanBuildSettlement(BuildSettlement buildSettlement) {
-    	return userManager.CanBuildSettlement(buildSettlement);// &&
-    			//board.canBuildSettlement(buildSettlement);
+        return userManager.CanBuildSettlement(buildSettlement);// &&
+        //board.canBuildSettlement(buildSettlement);
     }
 
     /**
      * Checks that a vertex is taken by the player and that the object is a
      * settlement
+     *
      * @param buildCity
      * @return
      */
     public boolean CanBuildCity(BuildCity buildCity) {
-    	return userManager.CanBuildCity(buildCity) &&
-    			board.canBuildCity(buildCity);
+        return userManager.CanBuildCity(buildCity)
+                && board.canBuildCity(buildCity);
     }
 
     public boolean CanOfferTrade(OfferTrade offerTrade) {
-    	return userManager.CanOfferTrade(offerTrade);
+        return userManager.CanOfferTrade(offerTrade);
     }
 
     /**
-     * checks that the player is the current player, and that the resource 
+     * checks that the player is the current player, and that the resource
      * requested is available. Does not check that the ratio matches a player's
      * ownership of a port
+     *
      * @param maritimeTrade
      * @return
      */
     public boolean CanMaritimeTrade(MaritimeTrade maritimeTrade) {
-    	return userManager.CanMaritimeTrade(maritimeTrade);
+        return userManager.CanMaritimeTrade(maritimeTrade);
     }
 
     public boolean CanBuyDevCard(BuyDevCard buyDevCard) {
-    	return userManager.CanBuyDevCard(buyDevCard) && bank.hasDevCards();
+        return userManager.CanBuyDevCard(buyDevCard) && bank.hasDevCards();
     }
 
     public boolean CanUseYearOfPlenty(YearOfPlenty yearOfPlenty) {
-    	int index = yearOfPlenty.getPlayerIndex();
-    	Player player = userManager.getPlayer(index);
-    	ResourceType type1 = yearOfPlenty.getResource1();
-    	ResourceType type2 = yearOfPlenty.getResource1();
-    	boolean isCurrentUser = userManager.isCurrentPlayer(index);
-    	int resource1 = bank.getResources().getResourceNumber(type1);
-    	int resource2 = bank.getResources().getResourceNumber(type2);
-    	
-        return isCurrentUser && 
-        		player.canUseYearOfPlenty() &&
-        		resource1 >= 1 &&
-        		resource2 >= 2;
+        int index = yearOfPlenty.getPlayerIndex();
+        Player player = userManager.getPlayer(index);
+        ResourceType type1 = yearOfPlenty.getResource1();
+        ResourceType type2 = yearOfPlenty.getResource1();
+        boolean isCurrentUser = userManager.isCurrentPlayer(index);
+        int resource1 = bank.getResources().getResourceNumber(type1);
+        int resource2 = bank.getResources().getResourceNumber(type2);
+
+        return isCurrentUser
+                && player.canUseYearOfPlenty()
+                && resource1 >= 1
+                && resource2 >= 2;
     }
 
     public boolean CanUseRoadBuilder(RoadBuilding roadBuilding) {
-    	int index = roadBuilding.getPlayerIndex();
-    	Player player = userManager.getPlayer(index);
-    	boolean isCurrentUser = userManager.isCurrentPlayer(index);
-    	
+        int index = roadBuilding.getPlayerIndex();
+        Player player = userManager.getPlayer(index);
+        boolean isCurrentUser = userManager.isCurrentPlayer(index);
+
         return isCurrentUser && player.canUseRoadBuilding();
     }
 
     public boolean CanUseSoldier(Soldier soldier) {
-    	int index = soldier.getPlayerIndex();
-    	Player player = userManager.getPlayer(index);
-    	boolean isCurrentUser = userManager.isCurrentPlayer(index);
-    	
+        int index = soldier.getPlayerIndex();
+        Player player = userManager.getPlayer(index);
+        boolean isCurrentUser = userManager.isCurrentPlayer(index);
+
         return isCurrentUser && player.canPlaySoldier();
     }
 
     public boolean CanUseMonopoly(Monopoly monopoly) {
-    	int index = monopoly.getPlayerIndex();
-    	Player player = userManager.getPlayer(index);
-    	boolean isCurrentUser = userManager.isCurrentPlayer(index);
-    	
+        int index = monopoly.getPlayerIndex();
+        Player player = userManager.getPlayer(index);
+        boolean isCurrentUser = userManager.isCurrentPlayer(index);
+
         return isCurrentUser && player.canPlayMonopoly();
     }
 
     public boolean CanUseMonument(Monument monument) {
-    	int index = monument.getPlayerIndex();
-    	Player player = userManager.getPlayer(index);
-    	boolean isCurrentUser = userManager.isCurrentPlayer(index);
-    	
-    	return isCurrentUser && player.canPlayMonument();
+        int index = monument.getPlayerIndex();
+        Player player = userManager.getPlayer(index);
+        boolean isCurrentUser = userManager.isCurrentPlayer(index);
+
+        return isCurrentUser && player.canPlayMonument();
     }
 
     public boolean CanFinishTurn(FinishTurn finishTurn) {
         // TODO track initialization stages ("FirstRound" or "SecondRound")
-    	TurnTracker turnTracker = userManager.turnTracker;
-    	boolean hasRolled = !"rolling".equals(turnTracker.getStatus().toLowerCase());
-    	boolean isTurn = userManager.isCurrentPlayer(finishTurn.getPlayerIndex());
-    	
-    	
+        TurnTracker turnTracker = userManager.turnTracker;
+        boolean hasRolled = !"rolling".equals(turnTracker.getStatus().toLowerCase());
+        boolean isTurn = userManager.isCurrentPlayer(finishTurn.getPlayerIndex());
+
         return isTurn && hasRolled;
     }
 }
