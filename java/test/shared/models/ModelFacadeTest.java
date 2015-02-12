@@ -101,11 +101,11 @@ public class ModelFacadeTest {
     @Test
     public void testCanBuildSettlement() {
         model.getUserManager().setCurrentUser(2);
-        BuildSettlement pete = new BuildSettlement(2, new VertexLocation(new HexLocation(0, 0), VertexDirection.SouthWest));
+        BuildSettlement pete = new BuildSettlement(2, new VertexLocation(new HexLocation(0, 0), VertexDirection.SouthWest), false);
         assertTrue("A player can build a settlement if they have enough resources", modelFacade.CanBuildSettlement(pete));
 
         model.getUserManager().setCurrentUser(0);
-        BuildSettlement sam = new BuildSettlement(0, new VertexLocation(new HexLocation(0, 0), VertexDirection.SouthWest));
+        BuildSettlement sam = new BuildSettlement(0, new VertexLocation(new HexLocation(0, 0), VertexDirection.SouthWest), false);
         assertFalse("A player can not build a settlement if they have enough resources", modelFacade.CanBuildSettlement(sam));
     }
 

@@ -25,12 +25,14 @@ public class ServerProxyTest {
     @BeforeClass
     public static void setupClass() {
         proxy = new ServerProxy();
-//        UserCredentials user = new UserCredentials("Sam", "sam");
-//        try {
-//            proxy.login(user);
-//        } catch (IOException e) {
-//            System.err.println("Login Failed");
-//        }
+        JoinGameRequest request = new JoinGameRequest(0, "orange");
+        UserCredentials user = new UserCredentials("Sam", "sam");
+        try {
+            proxy.login(user);
+            proxy.joinGame(request);
+        } catch (IOException e) {
+            System.err.println("Login Failed");
+        }
     }
 
     @Test
@@ -146,11 +148,10 @@ public class ServerProxyTest {
 
     @Test
     public void testDiscardCards() {
-        ClientModelDTO model = new ClientModelDTO();
         ResourceListDTO list = new ResourceListDTO(0, 1, 1, 3, 0);
         DiscardCards cards = new DiscardCards(0, list);
         try {
-            proxy.discardCards(cards);
+            ClientModelDTO model = proxy.discardCards(cards);
             assertTrue("The specified cards are discarded", model != null);
         } catch (IOException e) {
             fail("Did not succeed");
@@ -160,10 +161,9 @@ public class ServerProxyTest {
 
     @Test
     public void testRollNumber() {
-        ClientModelDTO model = new ClientModelDTO();
         RollNumber roll = new RollNumber(1, 8);
         try {
-            proxy.rollNumber(roll);
+            ClientModelDTO model = proxy.rollNumber(roll);
             assertTrue("A number has been rolled", model != null);
         } catch (IOException e) {
             fail("Did not succeed");
@@ -188,12 +188,11 @@ public class ServerProxyTest {
 
     @Test
     public void testBuildSettlement() {
-        ClientModelDTO model = new ClientModelDTO();
         HexLocation hex = new HexLocation(-1, -1);
         VertexLocation vert = new VertexLocation(hex, VertexDirection.NorthEast);
-        BuildSettlement sett = new BuildSettlement(2, vert);
+        BuildSettlement sett = new BuildSettlement(2, vert, false);
         try {
-            proxy.buildSettlement(sett);
+            ClientModelDTO model = proxy.buildSettlement(sett);
             assertTrue("A settlement has been built in the specified location", model != null);
         } catch (IOException e) {
             fail("Did not succeed");
@@ -218,10 +217,9 @@ public class ServerProxyTest {
 
     @Test
     public void testMaritimeTrade() {
-        ClientModelDTO model = new ClientModelDTO();
         MaritimeTrade trade = new MaritimeTrade(2, 2, ResourceType.BRICK, ResourceType.ORE);
         try {
-            proxy.maritimeTrade(trade);
+            ClientModelDTO model = proxy.maritimeTrade(trade);
             assertTrue("A maritime trade has taken place", model != null);
         } catch (IOException e) {
             fail("Did not succeed");
@@ -271,10 +269,10 @@ public class ServerProxyTest {
 
     @Test
     public void testPlaySoldier() {
-        ClientModelDTO model = new ClientModelDTO();
-        Soldier sold = new Soldier(2, 0);
+        HexLocation location = new HexLocation(0, 0);
+        Soldier sold = new Soldier(2, 0, location);
         try {
-            proxy.playSoldier(sold);
+            ClientModelDTO model = proxy.playSoldier(sold);
             assertTrue("The Soldier developmetn card has been played", model != null);
         } catch (IOException e) {
             fail("Did not succeed");
@@ -284,10 +282,9 @@ public class ServerProxyTest {
 
     @Test
     public void testPlayYearOfPlenty() {
-        ClientModelDTO model = new ClientModelDTO();
         YearOfPlenty card = new YearOfPlenty(3, ResourceType.ORE, ResourceType.SHEEP);
         try {
-            proxy.playYearOfPlenty(card);
+            ClientModelDTO model = proxy.playYearOfPlenty(card);
             assertTrue("The Year of Plenty development card has been played", model != null);
         } catch (IOException e) {
             fail("Did not succeed");
@@ -349,17 +346,16 @@ public class ServerProxyTest {
         }
     }
 
-    @Test
-    public void testAddAIPlayer() {
-        ClientModelDTO model = new ClientModelDTO();
-        AddAIRequest ai = new AddAIRequest("2");
-        try {
-            proxy.addAIPlayer(ai);
-            assertTrue("An AI player has been added", model != null);
-        } catch (IOException e) {
-            fail("Did not succeed");
-            e.printStackTrace();
-        }
-    }
-
+    // TODO Place this test in a different file where game is not
+    // already full.
+//    @Test
+//    public void testAddAIPlayer() {
+//        AddAIRequest ai = new AddAIRequest("2");
+//        try {
+//            proxy.addAIPlayer(ai);
+//        } catch (IOException e) {
+//            fail("Did not succeed");
+//            e.printStackTrace();
+//        }
+//    }
 }

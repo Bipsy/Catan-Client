@@ -4,21 +4,22 @@ import shared.definitions.ResourceType;
 
 public class YearOfPlenty extends MoveParams {
 
+    private static final String YEAR_OF_PLENTY = "Year_of_Plenty";
     private ResourceType resource1;
     private ResourceType resource2;
 
     public YearOfPlenty(int playerIndex, ResourceType resource1, ResourceType resource2) {
-        super("Year_Of_Plenty", playerIndex);
+        super(YEAR_OF_PLENTY, playerIndex);
         this.resource1 = resource1;
         this.resource2 = resource2;
     }
 
     public YearOfPlenty() {
-        super("Year_of_Plenty");
+        super(YEAR_OF_PLENTY);
     }
 
     public YearOfPlenty(int playerIndex) {
-        super("Year_of_Plenty", playerIndex);
+        super(YEAR_OF_PLENTY, playerIndex);
     }
 
     public ResourceType getResource1() {
