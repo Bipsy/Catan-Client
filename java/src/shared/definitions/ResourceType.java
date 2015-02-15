@@ -3,14 +3,15 @@ package shared.definitions;
 import com.google.gson.annotations.SerializedName;
 
 public enum ResourceType {
+
     @SerializedName("wood")
-    WOOD, 
+    WOOD,
     @SerializedName("brick")
-    BRICK, 
+    BRICK,
     @SerializedName("sheep")
-    SHEEP, 
+    SHEEP,
     @SerializedName("wheat")
-    WHEAT, 
+    WHEAT,
     @SerializedName("ore")
     ORE
 }

@@ -15,7 +15,7 @@ public class BuildSettlement extends MoveParams {
     }
 
     public BuildSettlement(int playerIndex, VertexLocation vertexLocation,
-                            boolean free) {
+            boolean free) {
         super(BUILD_SETTLEMENT, playerIndex);
         this.vertexLocation = vertexLocation;
         this.free = free;
@@ -24,7 +24,7 @@ public class BuildSettlement extends MoveParams {
     public boolean isFree() {
         return free;
     }
-    
+
     public void setFree(boolean free) {
         this.free = free;
     }
