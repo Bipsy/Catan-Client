@@ -130,12 +130,16 @@ public class ServerProxy implements iServerProxy {
     }
 
     @Override
-    public void login(UserCredentials user) throws IOException {
+    public boolean login(UserCredentials user) throws IOException {
         try {
             String params = serializer.serialize(user);
-            doPost("/user/login", params, true);
+            String message = doPost("/user/login", params, true);
+            if (message.compareTo("Success") == 0) {
+                return true;
+            } else {
+                return false;
+            }
         } catch (IOException e) {
-            e.printStackTrace();
             throw new IOException("Did not succeed");
         }
     }
