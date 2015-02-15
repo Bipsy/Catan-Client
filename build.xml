@@ -26,9 +26,10 @@
     <property name="java.dir" location="java"/>
     <property name="java.src" location="${java.dir}/src"/>
     <property name="java.test" location="${java.dir}/test"/>
-    <property name="java.images" location="${java.dir}/img"/>
+    <property name="java.images" location="${java.dir}/images"/>
     <property name="java.build" location="${java.dir}/build"/>
     <property name="java.dist" location="${java.dir}/dist"/>
+    <property name="java.lib" location="${java.dir}/lib"/>
   
     <!-- CLASSPATHS -->
     <!-- ********** -->
