@@ -74,11 +74,12 @@ public class LoginController extends Controller implements ILoginController {
 
     @Override
     public void signIn() {
+    	Boolean successful = false;
     	String username = ((ILoginView) this.getView()).getLoginUsername();
     	String password = ((ILoginView) this.getView()).getLoginPassword();
     	
     	//TODO: change proxy to return boolean. true == success, false == failure
-    	Boolean successful = proxy.login(new UserCredentials(username, password);
+//    	Boolean successful = proxy.login(new UserCredentials(username, password);
     	
 		if (successful) {
 	        getLoginView().closeModal();
@@ -93,6 +94,7 @@ public class LoginController extends Controller implements ILoginController {
 
     @Override
     public void register() {
+    	Boolean successful = false;
     	String username = ((ILoginView) this.getView()).getLoginUsername();
     	String password1 = ((ILoginView) this.getView()).getLoginPassword();
     	String password2 = ((ILoginView) this.getView()).getLoginPassword();
@@ -106,7 +108,7 @@ public class LoginController extends Controller implements ILoginController {
     		//show errors
     	}
     	
-    	Boolean successful = proxy.login(new UserCredentials(username, password);
+//    	Boolean successful = proxy.login(new UserCredentials(username, password);
     	
     	if (successful) {
 	        getLoginView().closeModal();
