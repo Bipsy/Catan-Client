@@ -7,6 +7,7 @@ package client.network;
 
 import java.io.IOException;
 import java.util.List;
+import org.javatuples.Pair;
 
 import shared.models.DTO.ClientModelDTO;
 import shared.models.DTO.GameContainerDTO;
