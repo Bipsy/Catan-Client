@@ -244,7 +244,7 @@ public interface iServerProxy {
      * @param password
      * @throws IOException
      */
-    boolean login(UserCredentials user) throws IOException;
+    Pair<Boolean, Integer> login(UserCredentials user) throws IOException;
 
     /**
      * Sends a request to the server to register a new user
