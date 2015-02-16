@@ -97,38 +97,36 @@ public class LoginController extends Controller implements ILoginController {
             }
         } catch (IOException ex) {
             // This means that there was an error in getting a response from the
-            // the server (no response code was available).
-            
+            // the server (no response code was available).            
         }
     }
 
     @Override
     public void register() {
-    	Boolean successful = false;
-    	String username = ((ILoginView) this.getView()).getLoginUsername();
-    	String password1 = ((ILoginView) this.getView()).getLoginPassword();
-    	String password2 = ((ILoginView) this.getView()).getLoginPassword();
-    	
-    	if (password1 != password2) {
-    		//show errors
-    	}
-    	
-    	//TODO: check for non approved characters
-    	if (password1.length() < 3 || password1.length() > 7) {
-    		//show errors
-    	}
-    	
+        Boolean successful = false;
+        String username = ((ILoginView) this.getView()).getLoginUsername();
+        String password1 = ((ILoginView) this.getView()).getLoginPassword();
+        String password2 = ((ILoginView) this.getView()).getLoginPassword();
+
+        if (password1 != password2) {
+            //show errors
+        }
+
+        //TODO: check for non approved characters
+        if (password1.length() < 3 || password1.length() > 7) {
+            //show errors
+        }
+
 //    	Boolean successful = proxy.login(new UserCredentials(username, password);
-    	
-    	if (successful) {
-	        getLoginView().closeModal();
-	        loginAction.execute();
-		} else {
-			// tell view to show errors
-			messageView.setTitle("Login Error");
-			messageView.setMessage("Login failed - bad password or username");
-			messageView.showModal();
-		}
+        if (successful) {
+            getLoginView().closeModal();
+            loginAction.execute();
+        } else {
+            // tell view to show errors
+            messageView.setTitle("Login Error");
+            messageView.setMessage("Login failed - bad password or username");
+            messageView.showModal();
+        }
 
     }
 
