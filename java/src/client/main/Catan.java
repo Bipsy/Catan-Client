@@ -22,7 +22,7 @@ public class Catan extends JFrame {
     private CatanPanel catanPanel;
     private Timer timer;
 
-    public Catan() {
+    public Catan(String hostname, int port) {
 
         client.base.OverlayView.setWindow(this);
 
@@ -31,13 +31,13 @@ public class Catan extends JFrame {
 
         catanPanel = new CatanPanel();
         this.setContentPane(catanPanel);
-        initializeNetwork();
+        initializeNetwork(hostname, port);
 
         display();
     }
     
     // TODO get arguments from the command line for hostnamd and port number
-    private void initializeNetwork() {
+    private void initializeNetwork(String hostname, int port) {
         iServerProxy proxy = new ServerProxy();
         iPopulator populator = new Populator();
         ServerPoller poller = new ServerPoller(proxy, populator, 0);
@@ -61,7 +61,7 @@ public class Catan extends JFrame {
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new Catan();
+                new Catan(args[0], Integer.parseInt(args[1]));
 
                 PlayerWaitingView playerWaitingView = new PlayerWaitingView();
                 final PlayerWaitingController playerWaitingController = new PlayerWaitingController(
