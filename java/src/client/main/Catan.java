@@ -7,6 +7,11 @@ import client.login.*;
 import client.join.*;
 import client.misc.*;
 import client.base.*;
+import client.model.Populator;
+import client.model.iPopulator;
+import client.network.ServerPoller;
+import client.network.ServerProxy;
+import client.network.iServerProxy;
 
 /**
  * Main entry point for the Catan program
@@ -15,6 +20,7 @@ import client.base.*;
 public class Catan extends JFrame {
 
     private CatanPanel catanPanel;
+    private Timer timer;
 
     public Catan() {
 
@@ -25,8 +31,17 @@ public class Catan extends JFrame {
 
         catanPanel = new CatanPanel();
         this.setContentPane(catanPanel);
+        initializeNetwork();
 
         display();
+    }
+    
+    // TODO get arguments from the command line for hostnamd and port number
+    private void initializeNetwork() {
+        iServerProxy proxy = new ServerProxy();
+        iPopulator populator = new Populator();
+        ServerPoller poller = new ServerPoller(proxy, populator, 0);
+        timer = new Timer(2000, poller);
     }
 
     private void display() {
@@ -87,6 +102,7 @@ public class Catan extends JFrame {
                 loginView.setController(loginController);
                 loginView.setController(loginController);
 
+                
                 loginController.start();
             }
         });
