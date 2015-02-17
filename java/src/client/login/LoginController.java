@@ -106,9 +106,9 @@ public class LoginController extends Controller implements ILoginController {
     @Override
     public void register() {
         try {
-	        String username = ((ILoginView) this.getView()).getLoginUsername();
-	        String password1 = ((ILoginView) this.getView()).getLoginPassword();
-	        String password2 = ((ILoginView) this.getView()).getLoginPassword();
+	        String username = ((ILoginView) this.getView()).getRegisterUsername();
+	        String password1 = ((ILoginView) this.getView()).getRegisterPassword();
+	        String password2 = ((ILoginView) this.getView()).getRegisterPasswordRepeat();
 	
 	        if (password1 != password2) {
 	            //show errors
