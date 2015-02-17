@@ -8,6 +8,7 @@ package client.network;
 import client.model.Serializer;
 import java.io.IOException;
 import java.util.List;
+import org.javatuples.Pair;
 
 import shared.models.DTO.ClientModelDTO;
 import shared.models.DTO.GameContainerDTO;
@@ -117,7 +118,7 @@ public class MockServerProxy implements iServerProxy {
     }
 
     @Override
-    public boolean login(UserCredentials user) throws IOException {
+    public Pair<Boolean, Integer> login(UserCredentials user) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

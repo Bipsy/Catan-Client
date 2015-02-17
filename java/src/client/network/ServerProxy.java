@@ -9,6 +9,9 @@ import java.net.URL;
 
 import client.model.Serializer;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.javatuples.Pair;
 import shared.models.DTO.*;
 import shared.models.DTO.params.*;
 
@@ -69,8 +72,10 @@ public class ServerProxy implements iServerProxy {
 //            } else if (connection.getResponseCode() == HttpURLConnection.HTTP_BAD_REQUEST) {
 //                return null;
             } else {
-                throw new IOException(String.format("doGet failed: %s (http code %d)",
-                        urlPath, connection.getResponseCode()));
+                throw new ServerProxyException(connection.getResponseCode(),
+                            "GET failed");
+//                throw new IOException(String.format("doGet failed: %s (http code %d)",
+//                        urlPath, connection.getResponseCode()));
             }
         } catch (IOException e) {
             throw new IOException(String.format("doGet failed: %s", e.getMessage()), e);
@@ -78,7 +83,7 @@ public class ServerProxy implements iServerProxy {
     }
 
     public String doPost(String urlPath, String jsonString,
-            boolean extractCookie) throws IOException {
+            boolean extractCookie) throws IOException, ServerProxyException {
         try {
             URL url = new URL("http://" + serverHost + ":" + serverPort + urlPath);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -120,8 +125,10 @@ public class ServerProxy implements iServerProxy {
 //            } else if (connection.getResponseCode() == HttpURLConnection.HTTP_BAD_REQUEST) {
 //                return null;
             } else {
-                throw new IOException(String.format("doPost failed: %s (http code %d)",
-                        urlPath, connection.getResponseCode()));
+                throw new ServerProxyException(connection.getResponseCode(),
+                            "POST failed");
+//                throw new IOException(String.format("doPost failed: %s (http code %d)",
+//                        urlPath, connection.getResponseCode()));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -130,17 +137,17 @@ public class ServerProxy implements iServerProxy {
     }
 
     @Override
-    public boolean login(UserCredentials user) throws IOException {
+    public Pair<Boolean, Integer> login(UserCredentials user) throws IOException {
         try {
             String params = serializer.serialize(user);
             String message = doPost("/user/login", params, true);
             if (message.compareTo("Success") == 0) {
-                return true;
+                return new Pair<>(true, 200);
             } else {
-                return false;
+                return new Pair<>(false, 200);
             }
-        } catch (IOException e) {
-            throw new IOException("Did not succeed");
+        } catch (ServerProxyException e) {
+            return new Pair<>(false, e.HTTP_CODE);
         }
     }
 
