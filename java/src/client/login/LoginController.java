@@ -14,8 +14,10 @@ import shared.models.DTO.params.UserCredentials;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.javatuples.Pair;
 
 /**
@@ -103,30 +105,36 @@ public class LoginController extends Controller implements ILoginController {
 
     @Override
     public void register() {
-        Boolean successful = false;
-        String username = ((ILoginView) this.getView()).getLoginUsername();
-        String password1 = ((ILoginView) this.getView()).getLoginPassword();
-        String password2 = ((ILoginView) this.getView()).getLoginPassword();
-
-        if (password1 != password2) {
-            //show errors
-        }
-
-        //TODO: check for non approved characters
-        if (password1.length() < 3 || password1.length() > 7) {
-            //show errors
-        }
-
-//    	Boolean successful = proxy.login(new UserCredentials(username, password);
-        if (successful) {
-            getLoginView().closeModal();
-            loginAction.execute();
-        } else {
-            // tell view to show errors
-            messageView.setTitle("Login Error");
-            messageView.setMessage("Login failed - bad password or username");
-            messageView.showModal();
-        }
+        try {
+	        String username = ((ILoginView) this.getView()).getLoginUsername();
+	        String password1 = ((ILoginView) this.getView()).getLoginPassword();
+	        String password2 = ((ILoginView) this.getView()).getLoginPassword();
+	
+	        if (password1 != password2) {
+	            //show errors
+	        }
+	
+	        //TODO: check for non approved characters
+	        if (password1.length() < 3 || password1.length() > 7) {
+	            //show errors
+	        }
+		
+			Pair<Boolean, Integer> pair = proxy.login(new UserCredentials(username, password1));		
+			boolean successful = pair.getValue0();
+			
+	        if (successful) {
+	            getLoginView().closeModal();
+	            loginAction.execute();
+	        } else {
+	            // tell view to show errors
+	            messageView.setTitle("Login Error");
+	            messageView.setMessage("Login failed - bad password or username");
+	            messageView.showModal();
+	        }
+        } catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
     }
 
