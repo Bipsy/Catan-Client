@@ -9,4 +9,5 @@
 **/*.swp
 **/*.txt
 **/*.zip
+**/dist
 /build/
