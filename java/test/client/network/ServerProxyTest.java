@@ -50,7 +50,7 @@ public class ServerProxyTest {
 
     @Test
     public void testJoinGame() {
-        JoinGameRequest game = new JoinGameRequest(0, "orange");
+        JoinGameRequest game = new JoinGameRequest(0, "red");
         try {
             proxy.joinGame(game);
             assertTrue("The specified user has been added to a game", true);

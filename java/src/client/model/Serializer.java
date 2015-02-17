@@ -58,14 +58,6 @@ public class Serializer implements iSerializer {
         return gson.toJson(game);
     }
 
-    public CommandContainerDTO deserializeCommandContainer(String JSON) throws IOException {
-        return gson.fromJson(JSON, CommandContainerDTO.class);
-    }
-
-    public String serializeCommandContainer(CommandContainerDTO commands) {
-        return gson.toJson(commands);
-    }
-
     public AITypesContainerDTO deserializeAITypesContainer(String JSON) throws IOException {
         return gson.fromJson(JSON, AITypesContainerDTO.class);
     }
@@ -80,14 +72,6 @@ public class Serializer implements iSerializer {
 
     public String serializeAIPlayer(AIPlayerDTO aIplayer) {
         return gson.toJson(aIplayer);
-    }
-
-    public GameToCreateDTO deserializeGameToCreate(String JSON) throws IOException {
-        return gson.fromJson(JSON, GameToCreateDTO.class);
-    }
-
-    public String serializeGameToCreate(GameToCreateDTO game) {
-        return gson.toJson(game);
     }
 
 }
