@@ -83,14 +83,16 @@ public class LoginController extends Controller implements ILoginController {
         try {
             String username = ((ILoginView) this.getView()).getLoginUsername();
             String password = ((ILoginView) this.getView()).getLoginPassword();
-            
+
             Pair<Boolean, Integer> pair = proxy.login(new UserCredentials(username, password));
             boolean successful = pair.getValue0();
-            
+
             if (successful) {
+                System.out.println("Login Successful");
                 getLoginView().closeModal();
                 loginAction.execute();
             } else {
+                System.out.println("Not Successful");
                 // tell view to show errors
                 int responseCode = pair.getValue1();
                 messageView.setTitle("Login Error");
@@ -98,6 +100,7 @@ public class LoginController extends Controller implements ILoginController {
                 messageView.showModal();
             }
         } catch (IOException ex) {
+            System.out.println("Server error");
             // This means that there was an error in getting a response from the
             // the server (no response code was available).            
         }
@@ -106,35 +109,35 @@ public class LoginController extends Controller implements ILoginController {
     @Override
     public void register() {
         try {
-	        String username = ((ILoginView) this.getView()).getLoginUsername();
-	        String password1 = ((ILoginView) this.getView()).getLoginPassword();
-	        String password2 = ((ILoginView) this.getView()).getLoginPassword();
-	
-	        if (password1 != password2) {
-	            //show errors
-	        }
-	
-	        //TODO: check for non approved characters
-	        if (password1.length() < 3 || password1.length() > 7) {
-	            //show errors
-	        }
-		
-			Pair<Boolean, Integer> pair = proxy.login(new UserCredentials(username, password1));		
-			boolean successful = pair.getValue0();
-			
-	        if (successful) {
-	            getLoginView().closeModal();
-	            loginAction.execute();
-	        } else {
-	            // tell view to show errors
-	            messageView.setTitle("Login Error");
-	            messageView.setMessage("Login failed - bad password or username");
-	            messageView.showModal();
-	        }
+            String username = ((ILoginView) this.getView()).getLoginUsername();
+            String password1 = ((ILoginView) this.getView()).getLoginPassword();
+            String password2 = ((ILoginView) this.getView()).getLoginPassword();
+
+            if (password1 != password2) {
+                //show errors
+            }
+
+            //TODO: check for non approved characters
+            if (password1.length() < 3 || password1.length() > 7) {
+                //show errors
+            }
+
+            Pair<Boolean, Integer> pair = proxy.login(new UserCredentials(username, password1));
+            boolean successful = pair.getValue0();
+
+            if (successful) {
+                getLoginView().closeModal();
+                loginAction.execute();
+            } else {
+                // tell view to show errors
+                messageView.setTitle("Login Error");
+                messageView.setMessage("Login failed - bad password or username");
+                messageView.showModal();
+            }
         } catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
     }
 
