@@ -123,7 +123,7 @@ public class MockServerProxy implements iServerProxy {
     }
 
     @Override
-    public void registerNewUser(UserCredentials user) throws IOException {
+    public Pair<Boolean, Integer> registerNewUser(UserCredentials user) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

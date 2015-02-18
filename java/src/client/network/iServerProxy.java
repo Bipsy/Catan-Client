@@ -257,7 +257,7 @@ public interface iServerProxy {
      * @param password
      * @throws IOException
      */
-    void registerNewUser(UserCredentials user) throws IOException;
+    Pair<Boolean, Integer> registerNewUser(UserCredentials user) throws IOException;
 
     /**
      * Sends a request to the server to list the games
