@@ -134,6 +134,7 @@ public class LoginController extends Controller implements ILoginController {
                 messageView.setMessage("Login failed - bad password or username");
                 messageView.showModal();
             }
+            
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
