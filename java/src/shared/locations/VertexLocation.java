@@ -113,15 +113,15 @@ public class VertexLocation {
         VertexLocation temp = getNormalizedLocation();
         switch (temp.getDir()) {
             case NorthWest:
-                adjEdges[0] = new VertexLocation(vertexLocation, VertexDirection.NorthEast);
-                adjEdges[1] = new VertexLocation(vertexLocation, VertexDirection.West);
-                adjEdges[2] = new VertexLocation(vertexLocation.getNeighborLoc(EdgeDirection.North),
+                adjEdges[0] = new VertexLocation(temp.getHexLoc(), VertexDirection.NorthEast);
+                adjEdges[1] = new VertexLocation(temp.getHexLoc(), VertexDirection.West);
+                adjEdges[2] = new VertexLocation(temp.getHexLoc().getNeighborLoc(EdgeDirection.North),
                         VertexDirection.West);
                 break;
             case NorthEast:
-                adjEdges[0] = new VertexLocation(vertexLocation, VertexDirection.NorthWest);
-                adjEdges[1] = new VertexLocation(vertexLocation, VertexDirection.East);
-                adjEdges[2] = new VertexLocation(vertexLocation.getNeighborLoc(EdgeDirection.North),
+                adjEdges[0] = new VertexLocation(temp.getHexLoc(), VertexDirection.NorthWest);
+                adjEdges[1] = new VertexLocation(temp.getHexLoc(), VertexDirection.East);
+                adjEdges[2] = new VertexLocation(temp.getHexLoc().getNeighborLoc(EdgeDirection.North),
                         VertexDirection.East);
                 break;
             default:
@@ -136,15 +136,15 @@ public class VertexLocation {
         VertexLocation temp = getNormalizedLocation();
         switch (temp.getDir()) {
             case NorthWest:
-                adjEdges[0] = new EdgeLocation(vertexLocation, EdgeDirection.North);
-                adjEdges[1] = new EdgeLocation(vertexLocation, EdgeDirection.NorthWest);
-                adjEdges[2] = new EdgeLocation(vertexLocation.getNeighborLoc(EdgeDirection.North),
+                adjEdges[0] = new EdgeLocation(temp.getHexLoc(), EdgeDirection.North);
+                adjEdges[1] = new EdgeLocation(temp.getHexLoc(), EdgeDirection.NorthWest);
+                adjEdges[2] = new EdgeLocation(temp.getHexLoc().getNeighborLoc(EdgeDirection.North),
                         EdgeDirection.SouthWest);
                 break;
             case NorthEast:
-                adjEdges[0] = new EdgeLocation(vertexLocation, EdgeDirection.North);
-                adjEdges[1] = new EdgeLocation(vertexLocation, EdgeDirection.NorthEast);
-                adjEdges[2] = new EdgeLocation(vertexLocation.getNeighborLoc(EdgeDirection.North),
+                adjEdges[0] = new EdgeLocation(temp.getHexLoc(), EdgeDirection.North);
+                adjEdges[1] = new EdgeLocation(temp.getHexLoc(), EdgeDirection.NorthEast);
+                adjEdges[2] = new EdgeLocation(temp.getHexLoc().getNeighborLoc(EdgeDirection.North),
                         EdgeDirection.SouthEast);
                 break;
             default:

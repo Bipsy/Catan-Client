@@ -190,8 +190,8 @@ public class ClientModel extends Observable {
      * @return
      */
     public boolean CanBuildSettlement(BuildSettlement buildSettlement) {
-        return userManager.CanBuildSettlement(buildSettlement);// &&
-        //board.canBuildSettlement(buildSettlement);
+        return (buildSettlement.isFree() || userManager.CanBuildSettlement(buildSettlement)) &&
+        board.canBuildSettlement(buildSettlement);
     }
 
     /**
