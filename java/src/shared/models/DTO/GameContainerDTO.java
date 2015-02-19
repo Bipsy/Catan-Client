@@ -3,6 +3,7 @@ package shared.models.DTO;
 import java.util.ArrayList;
 import java.util.List;
 
+import client.data.GameInfo;
 import shared.models.Game;
 
 /**
@@ -13,17 +14,17 @@ import shared.models.Game;
  */
 public class GameContainerDTO {
 
-    private List<GameDTO> games;
+    private List<GameInfo> games;
 
     public GameContainerDTO() {
-        setGames(new ArrayList<GameDTO>());
+        setGames(new ArrayList<GameInfo>());
     }
 
-    public List<GameDTO> getGames() {
+    public List<GameInfo> getGames() {
         return games;
     }
 
-    public void setGames(List<GameDTO> games) {
+    public void setGames(List<GameInfo> games) {
         this.games = games;
     }
 

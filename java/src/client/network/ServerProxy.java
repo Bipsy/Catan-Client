@@ -7,9 +7,13 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import client.data.GameInfo;
 import client.model.Serializer;
+
 import java.util.List;
+
 import org.javatuples.Pair;
+
 import shared.models.DTO.*;
 import shared.models.DTO.params.*;
 
@@ -155,12 +159,11 @@ public class ServerProxy implements iServerProxy {
     }
 
     @Override
-    public GameContainerDTO listGames() throws IOException {
+    public List<GameInfo> listGames() throws IOException {
         GameContainerDTO list = new GameContainerDTO();
         Pair<String, Integer> result = doGet("/games/list");
-        List<GameDTO> list2 = (List<GameDTO>) serializer.deserialize(result.getValue0());
-        list.setGames(list2);
-        return list;
+        return (List<GameInfo>) serializer.deserialize(result.getValue0());
+        
 
     }
 

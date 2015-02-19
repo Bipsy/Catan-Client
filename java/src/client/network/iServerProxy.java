@@ -7,8 +7,10 @@ package client.network;
 
 import java.io.IOException;
 import java.util.List;
+
 import org.javatuples.Pair;
 
+import client.data.GameInfo;
 import shared.models.DTO.ClientModelDTO;
 import shared.models.DTO.GameContainerDTO;
 import shared.models.DTO.GameDTO;
@@ -266,7 +268,7 @@ public interface iServerProxy {
      * @return GameContainer
      * @throws IOException
      */
-    GameContainerDTO listGames() throws IOException;
+    List<GameInfo> listGames() throws IOException;
 
     /**
      * Sends a request to the server to create a game
