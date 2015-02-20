@@ -5,7 +5,6 @@ import client.misc.*;
 import client.network.ServerProxy;
 
 import java.io.*;
-
 import shared.models.DTO.params.UserCredentials;
 
 import org.javatuples.Pair;
@@ -17,7 +16,7 @@ public class LoginController extends Controller implements ILoginController {
 
     private IMessageView messageView;
     private IAction loginAction;
-    private ServerProxy proxy = new ServerProxy();
+    private static ServerProxy proxy = ServerProxy.getInstance();
 
     /**
      * LoginController constructor
@@ -84,7 +83,7 @@ public class LoginController extends Controller implements ILoginController {
             } else {
                 System.out.println("Not Successful");
                 // tell view to show errors
-                int responseCode = pair.getValue1();
+//                int responseCode = pair.getValue1();
                 messageView.setTitle("Login Error");
                 messageView.setMessage("Login failed - bad password or username");
                 messageView.showModal();

@@ -1,10 +1,7 @@
 package client.join;
 
 import java.io.IOException;
-import java.util.List;
-
 import shared.definitions.CatanColor;
-import shared.models.DTO.GameContainerDTO;
 import client.base.*;
 import client.data.*;
 import client.misc.*;
@@ -97,7 +94,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     @Override
     public void start() {
     	try {
-    		ServerProxy proxy = new ServerProxy();
+    		ServerProxy proxy = ServerProxy.getInstance();
 
 			GameInfo[] games = (GameInfo[]) proxy.listGames().toArray();
 

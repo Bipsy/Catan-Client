@@ -5,9 +5,7 @@
  */
 package client.model;
 
-import shared.models.DTO.UserDTO;
 import shared.models.DTO.ClientModelDTO;
-import shared.models.DTO.GameContainerDTO;
 
 /**
  *
