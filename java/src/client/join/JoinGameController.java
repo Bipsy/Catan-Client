@@ -97,7 +97,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     @Override
     public void start() {
     	try {
-    		ServerProxy proxy = new ServerProxy();
+    		ServerProxy proxy = ServerProxy.getInstance(null,null);
 
 			GameInfo[] games = (GameInfo[]) proxy.listGames().toArray();
 
