@@ -26,25 +26,29 @@ import shared.models.DTO.params.*;
  */
 public class ServerProxy implements iServerProxy {
 
-    private String serverHost = "localhost";
-    private String serverPort = "8081";
+    private static String serverHost = "localhost";
+    private static String serverPort = "8081";
     private String userCookie = "";
     private String gameCookie = "";
     private final String COOKIE_HEADER = "Set-cookie";
-
-    /**
-     * Class constructor
-     */
-    public ServerProxy() {
-
+    private static ServerProxy instance;
+    
+    public static void init(String host, String port) throws ProxyAlreadyInstantiated {
+    	if(instance == null) {
+    		if(host != null) 
+    			serverHost = host;
+    		if(port != null)
+    			serverPort = port;    		
+    	}
+    	else 
+    		throw new ProxyAlreadyInstantiated();
     }
-
-    /**
-     * Class constructor
-     */
-    public ServerProxy(String serverHost, String serverPort) {
-        this.serverHost = serverHost;
-        this.serverPort = serverPort;
+    
+    public static ServerProxy getInstance() {
+    	if(instance == null) {
+    		instance = new ServerProxy();
+    	}
+    	return instance;
     }
 
     Serializer serializer = new Serializer();
