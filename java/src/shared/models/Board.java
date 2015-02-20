@@ -136,7 +136,6 @@ public class Board {
     public void setRoad(List<Road> road) {
         this.roads = road;
         for (int i = 0; i < road.size(); i++) {
-            EdgeLocation temp = road.get(i).getLocation();
             roadMap.put(road.get(i).getLocation().getNormalizedLocation(), road.get(i));
         }
     }

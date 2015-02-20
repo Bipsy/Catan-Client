@@ -27,7 +27,7 @@ import shared.models.DTO.ClientModelDTO;
  *
  * @author Mikey Murphy <mikeyamadeo@gmail.com>
  */
-public class Populator implements iPopulator  {
+public class Populator extends Observable implements iPopulator  {
 
     private ClientModel model;
 
