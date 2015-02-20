@@ -1,9 +1,11 @@
 package client.join;
 
+import java.io.IOException;
 import shared.definitions.CatanColor;
 import client.base.*;
 import client.data.*;
 import client.misc.*;
+import client.network.ServerProxy;
 
 /**
  * Implementation for the join game controller
@@ -91,8 +93,20 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
     @Override
     public void start() {
+    	try {
+    		ServerProxy proxy = ServerProxy.getInstance();
 
-        getJoinGameView().showModal();
+			GameInfo[] games = (GameInfo[]) proxy.listGames().toArray();
+
+			JoinGameView view = (JoinGameView) this.getView();
+
+			//TOD: proxy.getCookie()
+			view.setGames(games, new PlayerInfo());
+		} catch (IOException e) {
+			
+		} finally {
+			getJoinGameView().showModal();
+		}
     }
 
     @Override

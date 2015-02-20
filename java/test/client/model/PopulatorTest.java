@@ -2,17 +2,11 @@ package client.model;
 
 import static org.junit.Assert.*;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import shared.models.DTO.ClientModelDTO;
 import client.mocks.ModelMock;
 import client.model.Serializer;
 import client.model.Populator;
-import shared.models.*;
 
 public class PopulatorTest {
 

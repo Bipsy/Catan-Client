@@ -2,13 +2,9 @@ package client.network;
 
 import static org.junit.Assert.*;
 
-import java.awt.List;
 import java.io.IOException;
 import org.junit.BeforeClass;
 
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import shared.definitions.ResourceType;
@@ -24,7 +20,7 @@ public class ServerProxyTest {
 
     @BeforeClass
     public static void setupClass() {
-        proxy = new ServerProxy();
+        proxy = ServerProxy.getInstance();
         JoinGameRequest request = new JoinGameRequest(0, "orange");
         UserCredentials user = new UserCredentials("Sam", "sam");
         try {
