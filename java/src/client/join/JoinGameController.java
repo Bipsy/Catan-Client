@@ -96,9 +96,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
     @Override
     public void start() {
-<<<<<<< HEAD
-        getJoinGameView().showModal();
-=======
     	try {
     		ServerProxy proxy = new ServerProxy();
 
@@ -113,7 +110,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		} finally {
 			getJoinGameView().showModal();
 		}
->>>>>>> 64705fd51c4d15fd7b04cb25ef1a6be484dddf79
     }
 
     @Override
