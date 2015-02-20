@@ -34,9 +34,21 @@ public class ServerProxy implements iServerProxy {
     private final String COOKIE_HEADER = "Set-cookie";
     private String username = "";
     private String password = "";
-    private String playerID = "";
+    private int playerID = -1;
 
     private static ServerProxy instance;
+    
+    public String getUsername() {
+        return username;
+    }
+    
+    public String getPassword() {
+        return password;
+    }
+    
+    public int getID() {
+        return playerID;
+    }
     
     public static void init(String host, String port) throws ProxyAlreadyInstantiated {
     	if(instance == null) {
@@ -387,7 +399,7 @@ public class ServerProxy implements iServerProxy {
         String playerIDtemp = split[10];
         String[] IDsplit = playerIDtemp.split(":");
         String[] IDsplit2 = IDsplit[1].split("}");
-        playerID = IDsplit2[0];
+        playerID = Integer.parseInt(IDsplit2[0]);
     }
 
 }
