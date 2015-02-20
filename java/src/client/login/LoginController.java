@@ -3,20 +3,10 @@ package client.login;
 import client.base.*;
 import client.misc.*;
 import client.network.ServerProxy;
-import client.network.ServerProxyException;
 
-import java.net.*;
 import java.io.*;
-import java.util.*;
-import java.lang.reflect.*;
 
 import shared.models.DTO.params.UserCredentials;
-
-import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.javatuples.Pair;
 

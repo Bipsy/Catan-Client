@@ -91,7 +91,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
     @Override
     public void start() {
-
         getJoinGameView().showModal();
     }
 
