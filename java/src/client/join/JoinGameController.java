@@ -1,7 +1,9 @@
 package client.join;
 
 import java.io.IOException;
+
 import shared.definitions.CatanColor;
+import shared.models.DTO.params.CreateGameRequest;
 import client.base.*;
 import client.data.*;
 import client.misc.*;
@@ -16,6 +18,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     private ISelectColorView selectColorView;
     private IMessageView messageView;
     private IAction joinAction;
+    private static ServerProxy proxy = ServerProxy.getInstance();
 
     /**
      * JoinGameController constructor
@@ -123,8 +126,19 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
     @Override
     public void createNewGame() {
-
-        getNewGameView().closeModal();
+    	Boolean tiles = newGameView.getRandomlyPlaceHexes();
+    	Boolean nums = newGameView.getRandomlyPlaceNumbers();
+    	Boolean ports = newGameView.getUseRandomPorts();
+    	String title = newGameView.getTitle();
+    	
+    	try {
+			proxy.createGames(new CreateGameRequest(tiles, nums, ports, title));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			getNewGameView().closeModal();
+		}
     }
 
     @Override
