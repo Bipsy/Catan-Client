@@ -33,32 +33,22 @@ public class ServerProxy implements iServerProxy {
     private final String COOKIE_HEADER = "Set-cookie";
     private static ServerProxy instance;
     
-    public static ServerProxy getInstance(String host, String port) {
+    public static void init(String host, String port) throws ProxyAlreadyInstantiated {
     	if(instance == null) {
-    		if(host != null && port != null)
-    			instance = new ServerProxy(host, port);
+    		if(host != null) 
+    			serverHost = host;
+    		if(port != null)
+    			serverPort = port;    		
+    	}
+    	else 
+    		throw new ProxyAlreadyInstantiated();
+    }
+    
+    public static ServerProxy getInstance() {
+    	if(instance == null) {
     		instance = new ServerProxy();
     	}
-    	else if(host != null && port != null) {
-    		if(!serverHost.equals(host) || !serverPort.equals(port))
-    			instance = new ServerProxy(host, port);
-    	}
     	return instance;
-    }
-
-    /**
-     * Class constructor
-     */
-    private ServerProxy() {
-
-    }
-
-    /**
-     * Class constructor
-     */
-    private ServerProxy(String serverHost, String serverPort) {
-        ServerProxy.serverHost = serverHost;
-        ServerProxy.serverPort = serverPort;
     }
 
     Serializer serializer = new Serializer();
