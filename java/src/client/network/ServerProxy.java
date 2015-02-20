@@ -115,13 +115,7 @@ public class ServerProxy implements iServerProxy {
                     } else if (cookieField != null && cookieField.contains("catan.user")) {
                         userCookie = extractUserCookie(cookieField);
                         String result = URLDecoder.decode(userCookie, "UTF-8");
-                        String[] split = result.split("\"");
-                        username = split[3];
-                        password = split[7];
-                        String playerIDtemp = split[10];
-                        String[] IDsplit = playerIDtemp.split(":");
-                        String[] IDsplit2 = IDsplit[1].split("}");
-                        playerID = IDsplit2[0];
+                        storeCookies(result);
                     }
                 }
 
@@ -378,6 +372,16 @@ public class ServerProxy implements iServerProxy {
 
     private String extractUserCookie(String cookieField) {
         return cookieField.replace(";Path=/;", "").replace("catan.user=", "");
+    }
+    
+    private void storeCookies(String result) {
+        String[] split = result.split("\"");
+        username = split[3];
+        password = split[7];
+        String playerIDtemp = split[10];
+        String[] IDsplit = playerIDtemp.split(":");
+        String[] IDsplit2 = IDsplit[1].split("}");
+        playerID = IDsplit2[0];
     }
 
 }
