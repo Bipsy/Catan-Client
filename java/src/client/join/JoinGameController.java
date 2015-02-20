@@ -1,7 +1,9 @@
 package client.join;
 
 import java.io.IOException;
+
 import shared.definitions.CatanColor;
+import shared.models.DTO.params.CreateGameRequest;
 import client.base.*;
 import client.data.*;
 import client.misc.*;
@@ -16,6 +18,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     private ISelectColorView selectColorView;
     private IMessageView messageView;
     private IAction joinAction;
+    private static ServerProxy proxy = ServerProxy.getInstance();
 
     /**
      * JoinGameController constructor
@@ -93,20 +96,26 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
     @Override
     public void start() {
-    	try {
-    		ServerProxy proxy = ServerProxy.getInstance();
+        try {
+            ServerProxy proxy = ServerProxy.getInstance();
 
-			GameInfo[] games = (GameInfo[]) proxy.listGames().toArray();
+            GameInfo[] games = (GameInfo[]) proxy.listGames().toArray();
 
-			JoinGameView view = (JoinGameView) this.getView();
+            JoinGameView view = (JoinGameView) this.getView();
+            int ID = proxy.getID();
+            int index = -1;
+            String username = proxy.getUsername();
+            CatanColor color = null;
+            
+            PlayerInfo player = new PlayerInfo(ID, index, username, color);
+            
+            //TOD: proxy.getCookie()
+            view.setGames(games, player);
+        } catch (IOException e) {
 
-			//TOD: proxy.getCookie()
-			view.setGames(games, new PlayerInfo());
-		} catch (IOException e) {
-			
-		} finally {
-			getJoinGameView().showModal();
-		}
+        } finally {
+            getJoinGameView().showModal();
+        }
     }
 
     @Override
@@ -123,8 +132,19 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
     @Override
     public void createNewGame() {
-
-        getNewGameView().closeModal();
+    	Boolean tiles = newGameView.getRandomlyPlaceHexes();
+    	Boolean nums = newGameView.getRandomlyPlaceNumbers();
+    	Boolean ports = newGameView.getUseRandomPorts();
+    	String title = newGameView.getTitle();
+    	
+    	try {
+			proxy.createGames(new CreateGameRequest(tiles, nums, ports, title));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			getNewGameView().closeModal();
+		}
     }
 
     @Override
