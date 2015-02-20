@@ -110,7 +110,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
             PlayerInfo player = new PlayerInfo(ID, index, username, color);
             view.setGames(games, player);
         } catch (IOException e) {
-
+        	System.err.println("Error in Starting Game");
         } finally {
             getJoinGameView().showModal();
         }

@@ -186,8 +186,6 @@ public class ServerProxy implements iServerProxy {
     public GameInfo[] listGames() throws IOException {
         Pair<String, Integer> result = doGet("/games/list");
         return serializer.deserializeGameInfo(result.getValue0());
-        
-
     }
 
     @Override
