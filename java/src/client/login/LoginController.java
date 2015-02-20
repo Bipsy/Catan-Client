@@ -27,7 +27,7 @@ public class LoginController extends Controller implements ILoginController {
 
     private IMessageView messageView;
     private IAction loginAction;
-    private static ServerProxy proxy = ServerProxy.getInstance(null,null);
+    private ServerProxy proxy = new ServerProxy();
 
     /**
      * LoginController constructor
