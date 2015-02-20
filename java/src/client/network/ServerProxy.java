@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLDecoder;
 
 import client.data.GameInfo;
 import client.model.Serializer;
@@ -31,6 +32,9 @@ public class ServerProxy implements iServerProxy {
     private String userCookie = "";
     private String gameCookie = "";
     private final String COOKIE_HEADER = "Set-cookie";
+    private String username = "";
+    private String password = "";
+    private String playerID = "";
 
     /**
      * Class constructor
@@ -110,6 +114,14 @@ public class ServerProxy implements iServerProxy {
                         gameCookie = extractGameCookie(cookieField);
                     } else if (cookieField != null && cookieField.contains("catan.user")) {
                         userCookie = extractUserCookie(cookieField);
+                        String result = URLDecoder.decode(userCookie, "UTF-8");
+                        String[] split = result.split("\"");
+                        username = split[3];
+                        password = split[7];
+                        String playerIDtemp = split[10];
+                        String[] IDsplit = playerIDtemp.split(":");
+                        String[] IDsplit2 = IDsplit[1].split("}");
+                        playerID = IDsplit2[0];
                     }
                 }
 
