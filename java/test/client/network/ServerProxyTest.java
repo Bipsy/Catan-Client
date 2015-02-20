@@ -24,7 +24,7 @@ public class ServerProxyTest {
 
     @BeforeClass
     public static void setupClass() {
-        proxy = new ServerProxy();
+        proxy = ServerProxy.getInstance(null, null);
         JoinGameRequest request = new JoinGameRequest(0, "orange");
         UserCredentials user = new UserCredentials("Sam", "sam");
         try {
