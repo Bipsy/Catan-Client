@@ -98,8 +98,9 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     public void start() {
         try {
             ServerProxy proxy = ServerProxy.getInstance();
-
+            
             GameInfo[] games = (GameInfo[]) proxy.listGames().toArray();
+            System.out.println(games.length);
 
             JoinGameView view = (JoinGameView) this.getView();
             int ID = proxy.getID();
@@ -112,7 +113,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
             //TOD: proxy.getCookie()
             view.setGames(games, player);
         } catch (IOException e) {
-
+        	System.err.println("Error in Starting Game");
         } finally {
             getJoinGameView().showModal();
         }
