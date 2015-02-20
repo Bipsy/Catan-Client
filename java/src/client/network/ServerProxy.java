@@ -11,6 +11,7 @@ import java.net.URLDecoder;
 import client.data.GameInfo;
 import client.model.Serializer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.javatuples.Pair;
@@ -181,11 +182,10 @@ public class ServerProxy implements iServerProxy {
         }
     }
 
-    @SuppressWarnings("unchecked")
 	@Override
-    public List<GameInfo> listGames() throws IOException {
+    public GameInfo[] listGames() throws IOException {
         Pair<String, Integer> result = doGet("/games/list");
-        return (List<GameInfo>) serializer.deserialize(result.getValue0());
+        return serializer.deserializeGameInfo(result.getValue0());
         
 
     }

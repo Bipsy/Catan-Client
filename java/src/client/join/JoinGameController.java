@@ -99,7 +99,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
         try {
             ServerProxy proxy = ServerProxy.getInstance();
 
-            GameInfo[] games = (GameInfo[]) proxy.listGames().toArray();
+            GameInfo[] games = proxy.listGames();
 
             JoinGameView view = (JoinGameView) this.getView();
             int ID = proxy.getID();
@@ -108,8 +108,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
             CatanColor color = null;
             
             PlayerInfo player = new PlayerInfo(ID, index, username, color);
-            
-            //TOD: proxy.getCookie()
             view.setGames(games, player);
         } catch (IOException e) {
 

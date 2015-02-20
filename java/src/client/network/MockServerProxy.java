@@ -130,7 +130,7 @@ public class MockServerProxy implements iServerProxy {
     }
 
     @Override
-    public List<GameInfo> listGames() throws IOException {
+    public GameInfo[] listGames() throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

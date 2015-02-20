@@ -3,6 +3,7 @@ package client.model;
 import java.io.IOException;
 
 import shared.models.DTO.*;
+import client.data.GameInfo;
 
 import com.google.gson.*;
 
@@ -72,6 +73,10 @@ public class Serializer implements iSerializer {
 
     public String serializeAIPlayer(AIPlayerDTO aIplayer) {
         return gson.toJson(aIplayer);
+    }
+    
+    public GameInfo[] deserializeGameInfo(String JSON) {
+    	return gson.fromJson(JSON, GameInfo[].class);
     }
 
 }
