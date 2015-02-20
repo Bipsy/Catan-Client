@@ -99,11 +99,11 @@ public class LoginController extends Controller implements ILoginController {
     @Override
     public void register() {
         try {
-            String username = ((ILoginView) this.getView()).getLoginUsername();
-            String password1 = ((ILoginView) this.getView()).getLoginPassword();
-            String password2 = ((ILoginView) this.getView()).getLoginPassword();
+            String username = ((ILoginView) this.getView()).getRegisterUsername();
+            String password1 = ((ILoginView) this.getView()).getRegisterPassword();
+            String password2 = ((ILoginView) this.getView()).getRegisterPasswordRepeat();
 
-            if (password1 != password2) {
+            if (!password1.equals(password2)) {
                 //show errors
             }
 
@@ -112,7 +112,7 @@ public class LoginController extends Controller implements ILoginController {
                 //show errors
             }
 
-            Pair<Boolean, Integer> pair = proxy.login(new UserCredentials(username, password1));
+            Pair<Boolean, Integer> pair = proxy.registerNewUser(new UserCredentials(username, password1));
             boolean successful = pair.getValue0();
 
             if (successful) {

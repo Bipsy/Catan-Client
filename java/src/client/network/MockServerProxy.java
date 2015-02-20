@@ -5,9 +5,12 @@
  */
 package client.network;
 
+import client.data.GameInfo;
 import client.model.Serializer;
+
 import java.io.IOException;
 import java.util.List;
+
 import org.javatuples.Pair;
 
 import shared.models.DTO.ClientModelDTO;
@@ -128,7 +131,7 @@ public class MockServerProxy implements iServerProxy {
     }
 
     @Override
-    public GameContainerDTO listGames() throws IOException {
+    public List<GameInfo> listGames() throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
