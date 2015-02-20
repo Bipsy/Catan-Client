@@ -86,7 +86,7 @@ public class ServerProxy implements iServerProxy {
     }
 
     public Pair<String, Integer> doPost(String urlPath, String jsonString,
-            boolean extractCookie) throws IOException, ServerProxyException {
+            boolean extractCookie) throws IOException {
         try {
             URL url = new URL("http://" + serverHost + ":" + serverPort + urlPath);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -336,7 +336,8 @@ public class ServerProxy implements iServerProxy {
 //    		throw new IOException();
 //    	}
 //    }
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public List<AddAIRequest> listAITypes() throws IOException {
         Pair<String, Integer> result = doGet("/game/listAI");
         return (List<AddAIRequest>) serializer.deserialize(result.getValue0());
