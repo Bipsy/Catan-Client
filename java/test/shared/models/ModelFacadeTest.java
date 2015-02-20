@@ -27,7 +27,7 @@ public class ModelFacadeTest {
 
     /**
      * These tests use the ModelMock to grab a Client state and it is used to
-     * test all the can do functions.
+     * test most of the can do functions. The dev cards are tested in PlayerTest.java
      *
      * @throws Exception
      */
@@ -44,8 +44,10 @@ public class ModelFacadeTest {
     }
 
     /**
-     * In this test, Pete is discarding four cards, all of which he has. Mark is
-     * trying to discard cards that he doesn't own.
+     * Test 0 has less than 7 cards, doesn't need to discard cards
+     * Test 1 number of cards is less than half
+     * test 2 cards being discarded aren't owned
+     * test 3 has more than 7, half are selected, and all are available
      */
     @Test
     public void testCanDiscardCards() {
@@ -54,12 +56,13 @@ public class ModelFacadeTest {
         DiscardCards mark = new DiscardCards(3, new ResourceListDTO(-1, -1, -1, -1, -1));
         assertTrue("A player can discard cards that (s)he owns", modelFacade.CanDiscardCards(pete));
 
-        assertFalse("A player cannot discard cards that (s)he owns", modelFacade.CanDiscardCards(mark));
+        assertFalse("A player cannot discard cards that (s)he doesn'town", modelFacade.CanDiscardCards(mark));
     }
 
     /**
-     * In this test, it is Sam's turn, so he is able to roll the dice. Mark is
-     * trying to roll, but it is not his turn.
+     * Test 0 not turn
+     * Test 1 invalid number
+     * test 2 valid number and is turn
      */
     @Test
     public void testCanRollNumber() {
@@ -223,9 +226,10 @@ public class ModelFacadeTest {
     }
 
     /**
-     * Mark is offering a valid trade.
-     *
-     * Brooke is trying to trade with herself.
+     * Test 0 not turn, can't offer trade
+     * Test 1 Offering invalid resources
+     * Test 2 Trading with self
+     * Test 3 Offering valid trade
      */
     @Test
     public void testCanOfferTrade() {
@@ -239,9 +243,8 @@ public class ModelFacadeTest {
     }
 
     /**
-     * Pete has enough resources to trade at a special maritime trade
-     *
-     * Sam does not have enough resources
+     * Test 0, not turn, cant maritime trade
+     * Has port, correct ratio
      */
     @Test
     public void testCanMaritimeTrade() {
