@@ -172,9 +172,9 @@ public class ServerProxy implements iServerProxy {
         }
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public List<GameInfo> listGames() throws IOException {
-        GameContainerDTO list = new GameContainerDTO();
         Pair<String, Integer> result = doGet("/games/list");
         return (List<GameInfo>) serializer.deserialize(result.getValue0());
         
