@@ -267,7 +267,7 @@ public interface iServerProxy {
      * @return GameContainer
      * @throws IOException
      */
-    GameInfo[] listGames() throws IOException;
+    List<GameInfo> listGames() throws IOException;
 
     /**
      * Sends a request to the server to create a game
@@ -283,7 +283,7 @@ public interface iServerProxy {
      * @return
      * @throws IOException
      */
-    GameDTO createGames(CreateGameRequest game) throws IOException;
+    GameInfo createGames(CreateGameRequest game) throws IOException;
 
     /**
      * Sends a request to the server to join a game
