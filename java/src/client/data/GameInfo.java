@@ -42,7 +42,8 @@ public class GameInfo {
     }
 
     public void addPlayer(PlayerInfo newPlayer) {
-        players.add(newPlayer);
+    	if(newPlayer != null)
+    		players.add(newPlayer);
     }
 
     public List<PlayerInfo> getPlayers() {

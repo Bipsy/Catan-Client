@@ -1,6 +1,7 @@
 package shared.definitions;
 
 import java.awt.Color;
+import java.util.Random;
 
 public enum CatanColor {
 

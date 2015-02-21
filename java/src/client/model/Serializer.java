@@ -1,11 +1,15 @@
 package client.model;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 import shared.models.DTO.*;
 import client.data.GameInfo;
 
 import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
 
 /**
  * @author Anna Sokolova
@@ -75,8 +79,15 @@ public class Serializer implements iSerializer {
         return gson.toJson(aIplayer);
     }
     
-    public GameInfo[] deserializeGameInfo(String JSON) {
-    	return gson.fromJson(JSON, GameInfo[].class);
+    public GameInfo deserializeGameInfo(String JSON) {
+    	return gson.fromJson(JSON, GameInfo.class);
     }
+
+	public List<GameInfo> deserializeGameInfoList(String JSON) {
+		System.out.println(JSON);
+		Type listType = new TypeToken<ArrayList<GameInfo>>() {
+        }.getType();
+        return gson.fromJson(JSON, listType);
+	}
 
 }
