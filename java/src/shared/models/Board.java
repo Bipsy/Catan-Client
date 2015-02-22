@@ -55,19 +55,18 @@ public class Board {
         EdgeLocation road = buildRoad.getRoadLocation();
         if (roadMap.containsKey(road.getNormalizedLocation())) {
             return false;
-        } 
-        else {
-        	if(!buildRoad.isFree()) {
-        		EdgeLocation[] adjRoads = road.getAdjacentEdges();
-        		for (int i = 0; i < adjRoads.length; i++) {
-        			if (roadMap.containsKey(adjRoads[i].getNormalizedLocation())
-        					&& roadMap.get(adjRoads[i].getNormalizedLocation()).getOwner()
-        					== buildRoad.getPlayerIndex()) {
-        				return true;
-        			}
-        		}
-        		return false;        		
-        	}
+        } else {
+            if (!buildRoad.isFree()) {
+                EdgeLocation[] adjRoads = road.getAdjacentEdges();
+                for (int i = 0; i < adjRoads.length; i++) {
+                    if (roadMap.containsKey(adjRoads[i].getNormalizedLocation())
+                            && roadMap.get(adjRoads[i].getNormalizedLocation()).getOwner()
+                            == buildRoad.getPlayerIndex()) {
+                        return true;
+                    }
+                }
+                return false;
+            }
         }
         return true;
     }
@@ -220,9 +219,9 @@ public class Board {
 
     }
 
-	public void addRoad(Road road) {
-		this.roads.add(road);
-		this.roadMap.put(road.getLocation().getNormalizedLocation(), road);
-	}
+    public void addRoad(Road road) {
+        this.roads.add(road);
+        this.roadMap.put(road.getLocation().getNormalizedLocation(), road);
+    }
 
 }

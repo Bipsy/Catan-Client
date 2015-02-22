@@ -78,16 +78,16 @@ public class Serializer implements iSerializer {
     public String serializeAIPlayer(AIPlayerDTO aIplayer) {
         return gson.toJson(aIplayer);
     }
-    
+
     public GameInfo deserializeGameInfo(String JSON) {
-    	return gson.fromJson(JSON, GameInfo.class);
+        return gson.fromJson(JSON, GameInfo.class);
     }
 
-	public List<GameInfo> deserializeGameInfoList(String JSON) {
-		System.out.println(JSON);
-		Type listType = new TypeToken<ArrayList<GameInfo>>() {
+    public List<GameInfo> deserializeGameInfoList(String JSON) {
+        System.out.println(JSON);
+        Type listType = new TypeToken<ArrayList<GameInfo>>() {
         }.getType();
         return gson.fromJson(JSON, listType);
-	}
+    }
 
 }

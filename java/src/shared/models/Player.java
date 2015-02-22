@@ -271,10 +271,10 @@ public class Player extends User {
         this.victoryPoints = victoryPoints;
     }
 
-	public void adjustUserPieces(int r, int s, int c) {
-		this.roads = r;
-		this.settlements = s;
-		this.cities = c;
-		
-	}
+    public void adjustUserPieces(int r, int s, int c) {
+        this.roads = r;
+        this.settlements = s;
+        this.cities = c;
+
+    }
 }

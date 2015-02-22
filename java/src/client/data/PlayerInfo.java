@@ -20,7 +20,7 @@ public class PlayerInfo {
     private int playerIndex;
     private String name;
     private CatanColor color;
-    
+
     public PlayerInfo(int id, int index, String name, CatanColor color) {
         this.id = id;
         this.playerIndex = index;

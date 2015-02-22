@@ -21,7 +21,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     private IMessageView messageView;
     private IAction joinAction;
     private static ServerProxy proxy = ServerProxy.getInstance();
-    
+
     private List<GameInfo> games;
     private PlayerInfo localPlayer;
 
@@ -102,7 +102,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     @Override
     public void start() {
         try {
-            ServerProxy proxy = ServerProxy.getInstance();
 
             games = proxy.listGames();
 
@@ -111,11 +110,11 @@ public class JoinGameController extends Controller implements IJoinGameControlle
             int index = -1;
             String username = proxy.getUsername();
             CatanColor color = CatanColor.RED;
-            
+
             localPlayer = new PlayerInfo(ID, index, username, color);
             view.setGames(games.toArray(new GameInfo[games.size()]), localPlayer);
         } catch (IOException e) {
-        	System.err.println("Error in Starting Game");
+            System.err.println("Error in Starting Game");
         } finally {
             getJoinGameView().showModal();
         }
@@ -135,25 +134,28 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
     @Override
     public void createNewGame() {
-    	Boolean tiles = newGameView.getRandomlyPlaceHexes();
-    	Boolean nums = newGameView.getRandomlyPlaceNumbers();
-    	Boolean ports = newGameView.getUseRandomPorts();
-    	String title = newGameView.getTitle();
+        Boolean tiles = newGameView.getRandomlyPlaceHexes();
+        Boolean nums = newGameView.getRandomlyPlaceNumbers();
+        Boolean ports = newGameView.getUseRandomPorts();
+        String title = newGameView.getTitle();
 
         JoinGameView view = (JoinGameView) this.getView();
-    	
-    	try {
-			GameInfo newGame = proxy.createGames(new CreateGameRequest(tiles, nums, ports, title));
-			JoinGameRequest request = new JoinGameRequest(newGame.getId(), localPlayer.getColor().toString().toLowerCase());
-			proxy.joinGame(request);
-			games = proxy.listGames();
-            view.setGames(games.toArray(new GameInfo[games.size()]), localPlayer);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			getNewGameView().closeModal();
-		}
+
+        try {
+            GameInfo newGame = proxy.createGames(new CreateGameRequest(tiles,
+                    nums, ports, title));
+            JoinGameRequest request = new JoinGameRequest(newGame.getId(),
+                    localPlayer.getColor().toString().toLowerCase());
+            proxy.joinGame(request);
+            games = proxy.listGames();
+            view.setGames(games.toArray(new GameInfo[games.size()]),
+                    localPlayer);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            getNewGameView().closeModal();
+        }
     }
 
     @Override

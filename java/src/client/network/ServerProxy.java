@@ -36,37 +36,44 @@ public class ServerProxy implements iServerProxy {
     private String username = "";
     private String password = "";
     private int playerID = -1;
+    private int gameNum = -1;
 
     private static ServerProxy instance;
-    
+
     public String getUsername() {
         return username;
     }
-    
+
     public String getPassword() {
         return password;
     }
-    
+
     public int getID() {
         return playerID;
     }
-    
-    public static void init(String host, String port) throws ProxyAlreadyInstantiated {
-    	if(instance == null) {
-    		if(host != null) 
-    			serverHost = host;
-    		if(port != null)
-    			serverPort = port;    		
-    	}
-    	else 
-    		throw new ProxyAlreadyInstantiated();
+
+    public int getGameNumber() {
+        return gameNum;
     }
-    
+
+    public static void init(String host, String port) throws ProxyAlreadyInstantiated {
+        if (instance == null) {
+            if (host != null) {
+                serverHost = host;
+            }
+            if (port != null) {
+                serverPort = port;
+            }
+        } else {
+            throw new ProxyAlreadyInstantiated();
+        }
+    }
+
     public static ServerProxy getInstance() {
-    	if(instance == null) {
-    		instance = new ServerProxy();
-    	}
-    	return instance;
+        if (instance == null) {
+            instance = new ServerProxy();
+        }
+        return instance;
     }
 
     Serializer serializer = new Serializer();
@@ -130,6 +137,7 @@ public class ServerProxy implements iServerProxy {
                     String cookieField = connection.getHeaderField(COOKIE_HEADER);
                     if (cookieField != null && cookieField.contains("catan.game")) {
                         gameCookie = extractGameCookie(cookieField);
+                        gameNum = Integer.parseInt(gameCookie);
                     } else if (cookieField != null && cookieField.contains("catan.user")) {
                         userCookie = extractUserCookie(cookieField);
                         String result = URLDecoder.decode(userCookie, "UTF-8");
@@ -182,7 +190,7 @@ public class ServerProxy implements iServerProxy {
         }
     }
 
-	@Override
+    @Override
     public List<GameInfo> listGames() throws IOException {
         Pair<String, Integer> result = doGet("/games/list");
         return serializer.deserializeGameInfoList(result.getValue0());
@@ -353,7 +361,7 @@ public class ServerProxy implements iServerProxy {
 //    	}
 //    }
     @SuppressWarnings("unchecked")
-	@Override
+    @Override
     public List<AddAIRequest> listAITypes() throws IOException {
         Pair<String, Integer> result = doGet("/game/listAI");
         return (List<AddAIRequest>) serializer.deserialize(result.getValue0());
@@ -388,7 +396,7 @@ public class ServerProxy implements iServerProxy {
     private String extractUserCookie(String cookieField) {
         return cookieField.replace(";Path=/;", "").replace("catan.user=", "");
     }
-    
+
     private void storeCookies(String result) {
         String[] split = result.split("\"");
         username = split[3];

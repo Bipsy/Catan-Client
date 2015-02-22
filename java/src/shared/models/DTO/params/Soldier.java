@@ -29,11 +29,11 @@ public class Soldier extends MoveParams {
         this.victimIndex = victimIndex;
     }
 
-	public HexLocation getLocation() {
-		return location;
-	}
+    public HexLocation getLocation() {
+        return location;
+    }
 
-	public void setLocation(HexLocation location) {
-		this.location = location;
-	}
+    public void setLocation(HexLocation location) {
+        this.location = location;
+    }
 }
