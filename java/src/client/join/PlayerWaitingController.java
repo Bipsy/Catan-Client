@@ -37,8 +37,6 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
                 }
             }
             view.setPlayers((PlayerInfo[]) players.toArray());
-
-            getView().showModal();
         } catch (IOException ex) {
             System.out.println("Exception while starting view controller");
             ex.printStackTrace();
@@ -65,13 +63,11 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
         IPlayerWaitingView view = getView();
         setViewPlayers(view, proxy);
         setViewAIs(view, proxy);
+        view.showModal();
     }
 
     @Override
     public void addAI() {
-
-        // TEMPORARY
-        getView().closeModal();
     }
 
 }

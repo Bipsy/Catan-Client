@@ -102,7 +102,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     @Override
     public void start() {
         try {
-
             games = proxy.listGames();
 
             JoinGameView view = (JoinGameView) this.getView();
