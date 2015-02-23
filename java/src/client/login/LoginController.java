@@ -77,21 +77,15 @@ public class LoginController extends Controller implements ILoginController {
             boolean successful = pair.getValue0();
 
             if (successful) {
-                System.out.println("Login Successful");
                 getLoginView().closeModal();
                 loginAction.execute();
             } else {
-                System.out.println("Not Successful");
-                // tell view to show errors
-//                int responseCode = pair.getValue1();
                 messageView.setTitle("Login Error");
                 messageView.setMessage("Login failed - bad password or username");
                 messageView.showModal();
             }
         } catch (IOException ex) {
-            System.out.println("Server error");
-            // This means that there was an error in getting a response from the
-            // the server (no response code was available).            
+            System.out.println("Server error");         
         }
     }
 

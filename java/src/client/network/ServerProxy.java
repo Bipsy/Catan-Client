@@ -137,6 +137,7 @@ public class ServerProxy implements iServerProxy {
                     String cookieField = connection.getHeaderField(COOKIE_HEADER);
                     if (cookieField != null && cookieField.contains("catan.game")) {
                         gameCookie = extractGameCookie(cookieField);
+                        System.out.println(gameCookie);
                         gameNum = Integer.parseInt(gameCookie);
                     } else if (cookieField != null && cookieField.contains("catan.user")) {
                         userCookie = extractUserCookie(cookieField);
@@ -362,9 +363,9 @@ public class ServerProxy implements iServerProxy {
 //    }
     @SuppressWarnings("unchecked")
     @Override
-    public List<AddAIRequest> listAITypes() throws IOException {
+    public List<String> listAITypes() throws IOException {
         Pair<String, Integer> result = doGet("/game/listAI");
-        return (List<AddAIRequest>) serializer.deserialize(result.getValue0());
+         return (List<String>) serializer.deserialize(result.getValue0());
     }
 
     @Override

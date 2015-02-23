@@ -84,7 +84,6 @@ public class Serializer implements iSerializer {
     }
 
     public List<GameInfo> deserializeGameInfoList(String JSON) {
-        System.out.println(JSON);
         Type listType = new TypeToken<ArrayList<GameInfo>>() {
         }.getType();
         return gson.fromJson(JSON, listType);
