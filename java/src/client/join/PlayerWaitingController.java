@@ -29,14 +29,14 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
         try {
             int gameNumber = proxy.getGameNumber();
             List<GameInfo> games = proxy.listGames();
-            List<PlayerInfo> players = new ArrayList();
             for (GameInfo game : games) {
                 if (game.getId() == gameNumber) {
-                    players = game.getPlayers();
+                    List<PlayerInfo> players = game.getPlayers();      
                     view.setPlayers(players.toArray(new PlayerInfo[players.size()]));
+                    return;
                 }
             }
-            view.setPlayers((PlayerInfo[]) players.toArray());
+            view.setPlayers(new PlayerInfo[0]);
         } catch (IOException ex) {
             System.out.println("Exception while starting view controller");
             ex.printStackTrace();
