@@ -159,6 +159,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
     @Override
     public void startJoinGame(GameInfo game) {
+    	// disable colors that are already taken and not local player's color
 
         getSelectColorView().showModal();
     }
@@ -171,10 +172,13 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
     @Override
     public void joinGame(CatanColor color) {
+    	localPlayer.setColor(color);
 
         // If join succeeded
         getSelectColorView().closeModal();
         getJoinGameView().closeModal();
+        
+        // join game to get cookie
         joinAction.execute();
     }
 
