@@ -33,7 +33,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
             for (GameInfo game : games) {
                 if (game.getId() == gameNumber) {
                     players = game.getPlayers();
-                    view.setPlayers((PlayerInfo[]) players.toArray());
+                    view.setPlayers(players.toArray(new PlayerInfo[players.size()]));
                 }
             }
             view.setPlayers((PlayerInfo[]) players.toArray());
