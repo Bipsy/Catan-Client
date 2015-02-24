@@ -47,7 +47,11 @@ public class GameInfo {
         }
     }
 
-    public List<PlayerInfo> getPlayers() {
+    public void setPlayers(List<PlayerInfo> players) {
+		this.players = players;
+	}
+
+	public List<PlayerInfo> getPlayers() {
         return Collections.unmodifiableList(players);
     }
 }

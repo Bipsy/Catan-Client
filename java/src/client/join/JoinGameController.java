@@ -104,13 +104,15 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     @Override
     public void start() {
         try {
-            games = proxy.listGames();
+        	UserCookie uCookie = proxy.getUserCookie();
+        	System.out.println("Player Id" + uCookie.getPlayerID());
+
+        	games = proxy.listGames();
 
             JoinGameView view = (JoinGameView) this.getView();
-            UserCookie uCookie = proxy.getUserCookie();
             CatanColor color = CatanColor.RED;
 
-            localPlayer = new PlayerInfo(uCookie.getPlayerId(), -1, uCookie.getUsername(), color);
+            localPlayer = new PlayerInfo(uCookie.getPlayerID(), -1, uCookie.getUsername(), color);
             view.setGames(games.toArray(new GameInfo[games.size()]), localPlayer);
         } catch (IOException e) {
             System.err.println("Error in Starting Game");
@@ -159,9 +161,17 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
     @Override
     public void startJoinGame(GameInfo game) {
-    	// disable colors that are already taken and not local player's color
-    	localGame = game;
-
+        localGame = game;
+		List<PlayerInfo> players = game.getPlayers();
+        for (PlayerInfo player : players) {
+        	System.out.println(player.getColor().toString() + player.getId() + player.getName() + localPlayer.getId());
+        	if(player.getId() == localPlayer.getId())
+        		continue;
+            CatanColor playerColor = player.getColor();
+            if (playerColor != null) {
+                getSelectColorView().setColorEnabled(playerColor, false);
+            }
+        }
         getSelectColorView().showModal();
     }
 

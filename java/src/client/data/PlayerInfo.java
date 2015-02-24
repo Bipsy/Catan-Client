@@ -29,10 +29,6 @@ public class PlayerInfo {
     }
 
     public PlayerInfo() {
-        setId(-1);
-        setPlayerIndex(-1);
-        setName("");
-        setColor(CatanColor.WHITE);
     }
 
     public int getId() {

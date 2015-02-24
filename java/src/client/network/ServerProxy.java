@@ -389,6 +389,7 @@ public class ServerProxy implements iServerProxy {
     }
 
     private void storeCookies(String result) {
+    	System.out.println(result);
     	uCookie = serializer.deserializeUserCookie(result);
 //        String[] split = result.split("\"");
 //        username = split[3];
