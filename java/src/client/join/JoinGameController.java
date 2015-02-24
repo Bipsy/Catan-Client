@@ -158,9 +158,14 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     }
 
     @Override
-    public void startJoinGame(GameInfo game) {
-    	// disable colors that are already taken and not local player's color
-
+    public void startJoinGame(GameInfo game) {  	
+        List<PlayerInfo> players = game.getPlayers();
+        for (PlayerInfo player : players) {
+            CatanColor playerColor = player.getColor();
+            if (playerColor != null) {
+                getSelectColorView().setColorEnabled(playerColor, false);
+            }
+        }
         getSelectColorView().showModal();
     }
 
