@@ -33,23 +33,13 @@ public class ServerProxy implements iServerProxy {
     private String userCookie = "";
     private String gameCookie = "";
     private final String COOKIE_HEADER = "Set-cookie";
-    private String username = "";
-    private String password = "";
-    private int playerID = -1;
+    private UserCookie uCookie;
     private int gameNum = -1;
 
     private static ServerProxy instance;
 
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public int getID() {
-        return playerID;
+    public UserCookie getUserCookie() {
+    	return uCookie;
     }
 
     public int getGameNumber() {
@@ -399,13 +389,14 @@ public class ServerProxy implements iServerProxy {
     }
 
     private void storeCookies(String result) {
-        String[] split = result.split("\"");
-        username = split[3];
-        password = split[7];
-        String playerIDtemp = split[10];
-        String[] IDsplit = playerIDtemp.split(":");
-        String[] IDsplit2 = IDsplit[1].split("}");
-        playerID = Integer.parseInt(IDsplit2[0]);
+    	uCookie = serializer.deserializeUserCookie(result);
+//        String[] split = result.split("\"");
+//        username = split[3];
+//        password = split[7];
+//        String playerIDtemp = split[10];
+//        String[] IDsplit = playerIDtemp.split(":");
+//        String[] IDsplit2 = IDsplit[1].split("}");
+//        playerID = Integer.parseInt(IDsplit2[0]);
     }
 
 }

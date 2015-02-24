@@ -7,6 +7,7 @@ import java.util.List;
 
 import shared.models.DTO.*;
 import client.data.GameInfo;
+import client.network.UserCookie;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
@@ -88,5 +89,9 @@ public class Serializer implements iSerializer {
         }.getType();
         return gson.fromJson(JSON, listType);
     }
+
+	public UserCookie deserializeUserCookie(String JSON) {
+        return gson.fromJson(JSON, UserCookie.class);
+	}
 
 }

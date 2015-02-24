@@ -5,9 +5,7 @@ import client.data.GameInfo;
 import client.data.PlayerInfo;
 import client.network.ServerProxy;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import shared.models.DTO.params.AddAIRequest;
 
 /**
  * Implementation for the player waiting controller

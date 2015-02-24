@@ -10,6 +10,7 @@ import client.base.*;
 import client.data.*;
 import client.misc.*;
 import client.network.ServerProxy;
+import client.network.UserCookie;
 
 /**
  * Implementation for the join game controller
@@ -24,6 +25,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
     private List<GameInfo> games;
     private PlayerInfo localPlayer;
+    private GameInfo localGame;
 
     /**
      * JoinGameController constructor
@@ -105,12 +107,10 @@ public class JoinGameController extends Controller implements IJoinGameControlle
             games = proxy.listGames();
 
             JoinGameView view = (JoinGameView) this.getView();
-            int ID = proxy.getID();
-            int index = -1;
-            String username = proxy.getUsername();
+            UserCookie uCookie = proxy.getUserCookie();
             CatanColor color = CatanColor.RED;
 
-            localPlayer = new PlayerInfo(ID, index, username, color);
+            localPlayer = new PlayerInfo(uCookie.getPlayerId(), -1, uCookie.getUsername(), color);
             view.setGames(games.toArray(new GameInfo[games.size()]), localPlayer);
         } catch (IOException e) {
             System.err.println("Error in Starting Game");
@@ -160,6 +160,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     @Override
     public void startJoinGame(GameInfo game) {
     	// disable colors that are already taken and not local player's color
+    	localGame = game;
 
         getSelectColorView().showModal();
     }
@@ -173,6 +174,15 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     @Override
     public void joinGame(CatanColor color) {
     	localPlayer.setColor(color);
+    	
+    	JoinGameRequest request = new JoinGameRequest(localGame.getId(),
+                localPlayer.getColor().toString().toLowerCase());
+        try {
+			proxy.joinGame(request);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
         // If join succeeded
         getSelectColorView().closeModal();
