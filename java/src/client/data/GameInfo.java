@@ -42,11 +42,16 @@ public class GameInfo {
     }
 
     public void addPlayer(PlayerInfo newPlayer) {
-    	if(newPlayer != null)
-    		players.add(newPlayer);
+        if (newPlayer != null) {
+            players.add(newPlayer);
+        }
     }
 
-    public List<PlayerInfo> getPlayers() {
+    public void setPlayers(List<PlayerInfo> players) {
+		this.players = players;
+	}
+
+	public List<PlayerInfo> getPlayers() {
         return Collections.unmodifiableList(players);
     }
 }

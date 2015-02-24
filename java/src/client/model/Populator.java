@@ -27,7 +27,7 @@ import shared.models.DTO.ClientModelDTO;
  *
  * @author Mikey Murphy <mikeyamadeo@gmail.com>
  */
-public class Populator extends Observable implements iPopulator  {
+public class Populator extends Observable implements iPopulator {
 
     private ClientModel model;
 
@@ -53,7 +53,7 @@ public class Populator extends Observable implements iPopulator  {
 
         model.setVersion(container.getVersion());
         model.setWinner(container.getWinner());
-        
+
         model.notifyObservers();
 
         return true;

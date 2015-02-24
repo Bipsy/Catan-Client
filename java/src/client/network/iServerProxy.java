@@ -363,7 +363,7 @@ public interface iServerProxy {
      * @post retrieves a list of ai players or an error message
      * @throws IOException
      */
-    List<AddAIRequest> listAITypes() throws IOException;
+    List<String> listAITypes() throws IOException;
 
     /**
      * Sends a request to the server to add an artificial intelligence player
