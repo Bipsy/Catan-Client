@@ -11,6 +11,7 @@ import java.net.URLDecoder;
 import client.data.GameInfo;
 import client.model.Serializer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.javatuples.Pair;
@@ -32,40 +33,37 @@ public class ServerProxy implements iServerProxy {
     private String userCookie = "";
     private String gameCookie = "";
     private final String COOKIE_HEADER = "Set-cookie";
-    private String username = "";
-    private String password = "";
-    private int playerID = -1;
+    private UserCookie uCookie;
+    private int gameNum = -1;
 
     private static ServerProxy instance;
-    
-    public String getUsername() {
-        return username;
+
+    public UserCookie getUserCookie() {
+    	return uCookie;
     }
-    
-    public String getPassword() {
-        return password;
+
+    public int getGameNumber() {
+        return gameNum;
     }
-    
-    public int getID() {
-        return playerID;
-    }
-    
+
     public static void init(String host, String port) throws ProxyAlreadyInstantiated {
-    	if(instance == null) {
-    		if(host != null) 
-    			serverHost = host;
-    		if(port != null)
-    			serverPort = port;    		
-    	}
-    	else 
-    		throw new ProxyAlreadyInstantiated();
+        if (instance == null) {
+            if (host != null) {
+                serverHost = host;
+            }
+            if (port != null) {
+                serverPort = port;
+            }
+        } else {
+            throw new ProxyAlreadyInstantiated();
+        }
     }
-    
+
     public static ServerProxy getInstance() {
-    	if(instance == null) {
-    		instance = new ServerProxy();
-    	}
-    	return instance;
+        if (instance == null) {
+            instance = new ServerProxy();
+        }
+        return instance;
     }
 
     Serializer serializer = new Serializer();
@@ -129,6 +127,8 @@ public class ServerProxy implements iServerProxy {
                     String cookieField = connection.getHeaderField(COOKIE_HEADER);
                     if (cookieField != null && cookieField.contains("catan.game")) {
                         gameCookie = extractGameCookie(cookieField);
+                        System.out.println(gameCookie);
+                        gameNum = Integer.parseInt(gameCookie);
                     } else if (cookieField != null && cookieField.contains("catan.user")) {
                         userCookie = extractUserCookie(cookieField);
                         String result = URLDecoder.decode(userCookie, "UTF-8");
@@ -181,20 +181,17 @@ public class ServerProxy implements iServerProxy {
         }
     }
 
-    @SuppressWarnings("unchecked")
-	@Override
+    @Override
     public List<GameInfo> listGames() throws IOException {
         Pair<String, Integer> result = doGet("/games/list");
-        return (List<GameInfo>) serializer.deserialize(result.getValue0());
-        
-
+        return serializer.deserializeGameInfoList(result.getValue0());
     }
 
     @Override
-    public GameDTO createGames(CreateGameRequest game) throws IOException {
+    public GameInfo createGames(CreateGameRequest game) throws IOException {
         String params = serializer.serialize(game);
         Pair<String, Integer> result = doPost("/games/create", params, false);
-        return serializer.deserializeGame(result.getValue0());
+        return serializer.deserializeGameInfo(result.getValue0());
     }
 
     @Override
@@ -326,7 +323,6 @@ public class ServerProxy implements iServerProxy {
     public void joinGame(JoinGameRequest game) throws IOException {
         String params = serializer.serialize(game);
         Pair<String, Integer> result = doPost("/games/join", params, true);
-        serializer.deserialize(result.getValue0());
     }
 
 //    @Override
@@ -356,10 +352,10 @@ public class ServerProxy implements iServerProxy {
 //    	}
 //    }
     @SuppressWarnings("unchecked")
-	@Override
-    public List<AddAIRequest> listAITypes() throws IOException {
+    @Override
+    public List<String> listAITypes() throws IOException {
         Pair<String, Integer> result = doGet("/game/listAI");
-        return (List<AddAIRequest>) serializer.deserialize(result.getValue0());
+         return (List<String>) serializer.deserialize(result.getValue0());
     }
 
     @Override
@@ -391,15 +387,17 @@ public class ServerProxy implements iServerProxy {
     private String extractUserCookie(String cookieField) {
         return cookieField.replace(";Path=/;", "").replace("catan.user=", "");
     }
-    
+
     private void storeCookies(String result) {
-        String[] split = result.split("\"");
-        username = split[3];
-        password = split[7];
-        String playerIDtemp = split[10];
-        String[] IDsplit = playerIDtemp.split(":");
-        String[] IDsplit2 = IDsplit[1].split("}");
-        playerID = Integer.parseInt(IDsplit2[0]);
+    	System.out.println(result);
+    	uCookie = serializer.deserializeUserCookie(result);
+//        String[] split = result.split("\"");
+//        username = split[3];
+//        password = split[7];
+//        String playerIDtemp = split[10];
+//        String[] IDsplit = playerIDtemp.split(":");
+//        String[] IDsplit2 = IDsplit[1].split("}");
+//        playerID = Integer.parseInt(IDsplit2[0]);
     }
 
 }

@@ -66,8 +66,9 @@ public class DevCardList {
     }
 
     public void setMonopoly(int monopoly) throws ExcessiveDevCards {
-    	if (monopoly > MAX_PROGRESS)
-    		throw new ExcessiveDevCards();
+        if (monopoly > MAX_PROGRESS) {
+            throw new ExcessiveDevCards();
+        }
         this.monopoly = monopoly;
     }
 
@@ -76,8 +77,9 @@ public class DevCardList {
     }
 
     public void setRoadBuilding(int roadBuilding) throws ExcessiveDevCards {
-    	if (roadBuilding > MAX_PROGRESS)
-    		throw new ExcessiveDevCards();
+        if (roadBuilding > MAX_PROGRESS) {
+            throw new ExcessiveDevCards();
+        }
         this.roadBuilding = roadBuilding;
     }
 
@@ -86,8 +88,9 @@ public class DevCardList {
     }
 
     public void setYearOfPlenty(int yearOfPlenty) throws ExcessiveDevCards {
-    	if (yearOfPlenty > MAX_PROGRESS)
-    		throw new ExcessiveDevCards();
+        if (yearOfPlenty > MAX_PROGRESS) {
+            throw new ExcessiveDevCards();
+        }
         this.yearOfPlenty = yearOfPlenty;
     }
 
@@ -96,8 +99,9 @@ public class DevCardList {
     }
 
     public void setMonument(int monument) throws ExcessiveDevCards {
-    	if (monument > MAX_MONUMENT)
-    		throw new ExcessiveDevCards();
+        if (monument > MAX_MONUMENT) {
+            throw new ExcessiveDevCards();
+        }
         this.monument = monument;
     }
 
@@ -106,8 +110,9 @@ public class DevCardList {
     }
 
     public void setSoldier(int soldier) throws ExcessiveDevCards {
-    	if (soldier > MAX_SOLDIER)
-    		throw new ExcessiveDevCards();
+        if (soldier > MAX_SOLDIER) {
+            throw new ExcessiveDevCards();
+        }
         this.soldier = soldier;
     }
 

@@ -36,7 +36,7 @@ public class ServerPollerTest {
     public void setUp() {
         try {
             @SuppressWarnings("resource")
-			RandomAccessFile f = new RandomAccessFile("assets/test-model-1.txt", "r");
+            RandomAccessFile f = new RandomAccessFile("assets/test-model-1.txt", "r");
             encoded = new byte[(int) f.length()];
             f.read(encoded);
             defaultModel = new String(encoded, Charset.defaultCharset());
@@ -61,14 +61,14 @@ public class ServerPollerTest {
     //
     // @Test
     // public void hello() {}
-	@Test
+    @Test
     public void pollNewModelTest() {
         ServerPoller poller = new ServerPoller(proxy, populator, 0);
         ClientModelDTO model = poller.poll();
         assertNotNull(model);
     }
 
-	@Test
+    @Test
     public void pollOldModelTest() {
         ServerPoller poller = new ServerPoller(proxy, populator, 1);
         ClientModelDTO model = poller.poll();

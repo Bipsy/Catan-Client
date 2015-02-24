@@ -88,9 +88,9 @@ public class UserManager {
                 && users.get(buyDevCard.getPlayerIndex()).CanBuyDevCard(buyDevCard);
     }
 
-	public void adjustUserPieces(int i, int r, int s, int c) {
-		users.get(i).adjustUserPieces(r,s,c);
+    public void adjustUserPieces(int i, int r, int s, int c) {
+        users.get(i).adjustUserPieces(r, s, c);
 		// TODO Auto-generated method stub
-		
-	}
+
+    }
 }

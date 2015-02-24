@@ -135,7 +135,7 @@ public class MockServerProxy implements iServerProxy {
     }
 
     @Override
-    public GameDTO createGames(CreateGameRequest game) throws IOException {
+    public GameInfo createGames(CreateGameRequest game) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -176,7 +176,7 @@ public class MockServerProxy implements iServerProxy {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 //    }
     @Override
-    public List<AddAIRequest> listAITypes() throws IOException {
+    public List<String> listAITypes() throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

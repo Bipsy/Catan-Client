@@ -21,4 +21,8 @@ public class AddAIRequest {
         AIType = aIType;
     }
 
+    public String toString() {
+        return AIType;
+    }
+
 }
