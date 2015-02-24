@@ -1,6 +1,6 @@
 package shared.models.DTO;
 
-import shared.definitions.ResourceType;
+import shared.definitions.PortType;
 import shared.exceptions.InvalidRatio;
 import shared.locations.EdgeLocation;
 
@@ -16,7 +16,7 @@ public class PortDTO {
     /**
      * Must be: 'Wood', 'Brick', 'Sheep', 'Wheat', or 'Ore', optional
      */
-    private ResourceType resource;
+    private PortType resource;
     private EdgeLocation location;
     /**
      * Must be: 'NW', 'N', 'NE', 'SW', 'S', or 'SE'
@@ -42,15 +42,15 @@ public class PortDTO {
         this.ratio = ratio;
         this.location = edgeLocation;
         if (resource != null) {
-            this.resource = ResourceType.valueOf(resource.toUpperCase());
+            this.resource = PortType.valueOf(resource.toUpperCase());
         }
     }
 
-    public ResourceType getResource() {
+    public PortType getResource() {
         return resource;
     }
 
-    public void setResource(ResourceType resource) {
+    public void setResource(PortType resource) {
         this.resource = resource;
     }
 
