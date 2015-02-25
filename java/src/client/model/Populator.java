@@ -22,6 +22,7 @@ import shared.models.DTO.PlayerDTO;
 import shared.models.DTO.ResourceListDTO;
 import shared.models.DTO.TurnTrackerDTO;
 import shared.models.DTO.ClientModelDTO;
+import client.storage.*;
 
 /**
  *
@@ -53,6 +54,8 @@ public class Populator extends Observable implements iPopulator {
 
         model.setVersion(container.getVersion());
         model.setWinner(container.getWinner());
+        
+        Data.updateCurrentModel(model);
 
         model.notifyObservers();
 

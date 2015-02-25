@@ -77,4 +77,8 @@ public class ModelFacade {
     public boolean CanPlaceRobber(RobPlayer robPlayer) {
         return models != null && models.CanPlaceRobber(robPlayer);
     }
+    
+    public ClientModel GetModel() {
+    	return models;
+    }
 }
