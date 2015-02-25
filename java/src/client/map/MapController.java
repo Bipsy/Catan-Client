@@ -4,8 +4,11 @@ import java.util.*;
 
 import shared.definitions.*;
 import shared.locations.*;
+import shared.models.*;
 import client.base.*;
 import client.data.*;
+import client.storage.*;
+
 
 /**
  * Implementation for the map controller
@@ -13,11 +16,13 @@ import client.data.*;
 public class MapController extends Controller implements IMapController {
 
     private IRobView robView;
+    private ModelFacade facade;
 
     public MapController(IMapView view, IRobView robView) {
 
         super(view);
-
+        facade = new ModelFacade();
+       
         setRobView(robView);
 
         initFromModel();
@@ -37,8 +42,39 @@ public class MapController extends Controller implements IMapController {
     }
 
     protected void initFromModel() {
+                
+        for (int i = 0; i < facade.NumberOfHexes(); i++) {
+        	Hex hex = facade.GetHexAt(i);
+        	getView().addHex(hex.getLocation(), hex.getResource()); 
+            getView().addNumber(hex.getLocation(), hex.getChit());
 
-        //<temp>
+        }
+        
+        for (int i = 0; i < facade.NumberOfRoads(); i++) {
+        	Road road = facade.GetRoadAt(i);
+        	getView().placeRoad(road.getLocation(), facade.GetPlayerColor(road.getOwner()));
+        }
+        
+        for (int i = 0; i < facade.NumberOfCities(); i++) {
+        	VertexObject city = facade.GetCityAt(i);        	
+            getView().placeCity(city.getLocation(), facade.GetPlayerColor(city.getOwner()));
+        }
+        
+        for (int i = 0; i < facade.NumberOfSettlements(); i++) {
+        	VertexObject settlement = facade.GetSettlementAt(i);
+            getView().placeSettlement(settlement.getLocation(), facade.GetPlayerColor(settlement.getOwner()));
+        }
+        
+        
+        for (int i = 0; i < facade.NumberOfHarbors(); i++) {
+        	Harbor port = facade.GetHarborAt(i); 
+            getView().addPort(port.getLocation(), port.getResource()); 
+        }
+        
+        getView().placeRobber(facade.GetRobber().getLocation());
+        
+        /*
+         * //<temp>
         Random rand = new Random();
 
         for (int x = 0; x <= 3; ++x) {
@@ -100,6 +136,8 @@ public class MapController extends Controller implements IMapController {
         getView().addNumber(new HexLocation(2, 0), 12);
 
         //</temp>
+         */
+
     }
 
     public boolean canPlaceRoad(EdgeLocation edgeLoc) {

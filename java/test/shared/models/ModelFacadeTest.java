@@ -34,8 +34,7 @@ public class ModelFacadeTest {
     public void setUp() throws Exception {
         Populator pop = new Populator();
         pop.populateModel(ModelMock.getModelDTO());
-        model = pop.getModel();
-        modelFacade = new ModelFacade(pop.getModel());
+        modelFacade = new ModelFacade();
     }
 
     @After
