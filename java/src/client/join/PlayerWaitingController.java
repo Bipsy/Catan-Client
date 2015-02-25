@@ -3,18 +3,22 @@ package client.join;
 import client.base.*;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
+import client.main.Catan;
 import client.network.ServerProxy;
 import java.io.IOException;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Implementation for the player waiting controller
  */
-public class PlayerWaitingController extends Controller implements IPlayerWaitingController {
+public class PlayerWaitingController extends Controller 
+    implements IPlayerWaitingController, Observer {
 
     public PlayerWaitingController(IPlayerWaitingView view) {
-
         super(view);
+        Catan.startPoller(2000);
     }
 
     @Override
@@ -32,9 +36,8 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
                 if (game.getId() == gameNumber) {
                     List<PlayerInfo> players = game.getPlayers();
                     for (int i = 0; i < players.size(); i++) {
-						System.out.println(players.get(i).getName() + players.get(i).getColor());
-					}
-                    view.setPlayers(players.toArray(new PlayerInfo[players.size()]));
+                        System.out.println(players.get(i).getName() + players.get(i).getColor());					}
+                        view.setPlayers(players.toArray(new PlayerInfo[players.size()]));
                     break;
                 }
             }
@@ -69,6 +72,12 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
     @Override
     public void addAI() {
+    
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+        
+    }
+    
 }

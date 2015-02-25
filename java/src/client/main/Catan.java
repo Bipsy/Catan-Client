@@ -8,10 +8,9 @@ import client.join.*;
 import client.misc.*;
 import client.base.*;
 import client.model.Populator;
-import client.model.iPopulator;
+import client.network.ProxyAlreadyInstantiated;
 import client.network.ServerPoller;
 import client.network.ServerProxy;
-import client.network.iServerProxy;
 
 /**
  * Main entry point for the Catan program
@@ -20,9 +19,9 @@ import client.network.iServerProxy;
 public class Catan extends JFrame {
 
     private CatanPanel catanPanel;
-    private Timer timer;
+    private static Timer pollerTimer;
 
-    public Catan(String hostname, int port) {
+    public Catan(String hostname, String port) {
 
         client.base.OverlayView.setWindow(this);
 
@@ -36,12 +35,20 @@ public class Catan extends JFrame {
         display();
     }
     
-    // TODO get arguments from the command line for hostnamd and port number
-    private void initializeNetwork(String hostname, int port) {
-        iServerProxy proxy = new ServerProxy();
-        iPopulator populator = new Populator();
+    // TODO initialize pr
+    private void initializeNetwork(String hostname, String port) {
+        try {
+            ServerProxy.init(hostname, port);
+        } catch (ProxyAlreadyInstantiated ex) {
+            System.err.println("Server Proxy was already instantiated");
+        }
+    }
+    
+    public static void startPoller(int millis) {
+        ServerProxy proxy = ServerProxy.getInstance();
+        Populator populator = new Populator();
         ServerPoller poller = new ServerPoller(proxy, populator, 0);
-        timer = new Timer(2000, poller);
+        pollerTimer = new Timer(millis, poller);
     }
 
     private void display() {
@@ -61,8 +68,12 @@ public class Catan extends JFrame {
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new Catan(args[0], Integer.parseInt(args[1]));
-
+                if (args.length > 1) {
+                    new Catan(args[0], args[1]);
+                } else {
+                    new Catan(null, null);
+                }
+                
                 PlayerWaitingView playerWaitingView = new PlayerWaitingView();
                 final PlayerWaitingController playerWaitingController = new PlayerWaitingController(
                         playerWaitingView);

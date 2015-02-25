@@ -37,6 +37,10 @@ public class ServerProxy implements iServerProxy {
     private int gameNum = -1;
 
     private static ServerProxy instance;
+    
+    private ServerProxy() {
+        
+    }
 
     public UserCookie getUserCookie() {
     	return uCookie;
@@ -45,7 +49,7 @@ public class ServerProxy implements iServerProxy {
     public int getGameNumber() {
         return gameNum;
     }
-
+    
     public static void init(String host, String port) throws ProxyAlreadyInstantiated {
         if (instance == null) {
             if (host != null) {
