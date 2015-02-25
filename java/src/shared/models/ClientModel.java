@@ -34,6 +34,7 @@ public class ClientModel extends Observable {
     private UserManager userManager;
     private TradeOffer tradeOffer;
     private int version;
+    private TurnTracker turn;
     //Player index of the game winner
     private int winner;
 
@@ -73,6 +74,10 @@ public class ClientModel extends Observable {
 
     public void setBoard(Board board) {
         this.board = board;
+    }
+    
+    public String getStatus() {
+    	return turn.getStatus();
     }
 
     /**

@@ -36,7 +36,9 @@ public class RollController extends Controller implements IRollController {
 
     @Override
     public void rollDice() {
-
+    	//implement timer
+    	//"Rolling automatically in (timer) seconds"
+    	//
         getResultView().showModal();
     }
 

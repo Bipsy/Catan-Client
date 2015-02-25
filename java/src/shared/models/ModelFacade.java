@@ -17,6 +17,10 @@ public class ModelFacade {
     public void updateModels(ClientModel cm) {
         models = cm;
     }
+    
+    public String getState() {
+    	return models.getStatus();
+    }
 
     public boolean CanDiscardCards(DiscardCards discardCards) {
         return models != null && models.CanDiscardCards(discardCards);
