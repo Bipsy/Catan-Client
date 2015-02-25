@@ -7,8 +7,8 @@ import shared.locations.*;
 import shared.models.*;
 import client.base.*;
 import client.data.*;
+import client.model.ModelFacade;
 import client.model.Populator;
-import shared.models.ModelFacade;
 
 /**
  * Implementation for the map controller
@@ -41,7 +41,7 @@ public class MapController extends Controller
     }
 
     protected void initFromModel(ModelFacade facade) {
-        if (facade == null) return;
+        if (facade == null || !facade.hasModel()) return;
                 
         for (int i = 0; i < facade.NumberOfHexes(); i++) {
         	Hex hex = facade.GetHexAt(i);

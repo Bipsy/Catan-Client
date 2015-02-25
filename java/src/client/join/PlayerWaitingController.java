@@ -3,13 +3,14 @@ package client.join;
 import client.base.*;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
+import client.model.ModelFacade;
 import client.model.Populator;
 import client.network.ServerProxy;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
-import shared.models.ModelFacade;
 
 /**
  * Implementation for the player waiting controller
