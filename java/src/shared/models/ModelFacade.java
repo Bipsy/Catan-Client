@@ -78,6 +78,10 @@ public class ModelFacade {
         return models != null && models.CanPlaceRobber(robPlayer);
     }
     
+    public boolean hasModel() {
+    	return (models != null);
+    }
+    
     //map data getters
     
     public int NumberOfHexes() {

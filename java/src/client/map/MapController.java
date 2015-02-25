@@ -41,7 +41,7 @@ public class MapController extends Controller
     }
 
     protected void initFromModel(ModelFacade facade) {
-        if (facade == null) return;
+        if (facade == null || !facade.hasModel()) return;
                 
         for (int i = 0; i < facade.NumberOfHexes(); i++) {
         	Hex hex = facade.GetHexAt(i);
