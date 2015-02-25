@@ -2,18 +2,22 @@ package client.maritime;
 
 import shared.definitions.*;
 import client.base.*;
+import client.model.Populator;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Implementation for the maritime trade controller
  */
-public class MaritimeTradeController extends Controller implements IMaritimeTradeController {
+public class MaritimeTradeController extends Controller 
+    implements IMaritimeTradeController, Observer {
 
     private IMaritimeTradeOverlay tradeOverlay;
 
     public MaritimeTradeController(IMaritimeTradeView tradeView, IMaritimeTradeOverlay tradeOverlay) {
 
         super(tradeView);
-
+        Populator.getInstance().addObserver(this);
         setTradeOverlay(tradeOverlay);
     }
 
@@ -65,6 +69,11 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 
     @Override
     public void unsetGiveValue() {
+
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
 
     }
 

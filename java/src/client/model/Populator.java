@@ -30,8 +30,16 @@ import shared.models.DTO.ClientModelDTO;
 public class Populator extends Observable implements iPopulator {
 
     private ClientModel model;
+    private static Populator instance;
+    
+    public static Populator getInstance() {
+        if (instance == null) {
+            instance = new Populator();
+        }
+        return instance;
+    }
 
-    public Populator() {
+    private Populator() {
         model = new ClientModel();
     }
 
@@ -54,16 +62,16 @@ public class Populator extends Observable implements iPopulator {
         model.setVersion(container.getVersion());
         model.setWinner(container.getWinner());
 
-        model.notifyObservers();
+        notifyObservers();
 
         return true;
     }
 
     private void populateUserManager(PlayerDTO[] players,
             TurnTrackerDTO turnTracker) {
-        List<Player> users = new ArrayList<Player>();
-        for (int i = 0; i < players.length; i++) {
-            users.add(new Player(players[i]));
+        List<Player> users = new ArrayList<>();
+        for (PlayerDTO player : players) {
+            users.add(new Player(player));
         }
 
         model.setUserManager(new UserManager(users, new TurnTracker(turnTracker)));

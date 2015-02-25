@@ -11,7 +11,6 @@ import java.net.URLDecoder;
 import client.data.GameInfo;
 import client.model.Serializer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.javatuples.Pair;

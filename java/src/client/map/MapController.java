@@ -6,18 +6,20 @@ import shared.definitions.*;
 import shared.locations.*;
 import client.base.*;
 import client.data.*;
+import client.model.Populator;
 
 /**
  * Implementation for the map controller
  */
-public class MapController extends Controller implements IMapController {
+public class MapController extends Controller 
+    implements IMapController, Observer {
 
     private IRobView robView;
 
     public MapController(IMapView view, IRobView robView) {
 
         super(view);
-
+        Populator.getInstance().addObserver(this);
         setRobView(robView);
 
         initFromModel();
@@ -162,6 +164,11 @@ public class MapController extends Controller implements IMapController {
     }
 
     public void robPlayer(RobPlayerInfo victim) {
+
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
 
     }
 
