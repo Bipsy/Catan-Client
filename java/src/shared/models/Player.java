@@ -192,15 +192,15 @@ public class Player extends User {
     }
 
     public boolean CanBuildRoad(BuildRoad buildRoad) {
-        return resources.canBuildRoad(buildRoad);
+        return resources.canBuildRoad(buildRoad) && this.roads > 0;
     }
 
     public boolean CanBuildSettlement(BuildSettlement buildSettlement) {
-        return resources.canBuildSettlement(buildSettlement);
+        return resources.canBuildSettlement(buildSettlement) && this.settlements > 0;
     }
 
     public boolean CanBuildCity(BuildCity buildCity) {
-        return resources.canBuildCity(buildCity);
+        return resources.canBuildCity(buildCity) && this.cities > 0;
     }
 
     public boolean CanBuyDevCard(BuyDevCard buyDevCard) {
@@ -269,5 +269,12 @@ public class Player extends User {
 
     public void setVictoryPoints(int victoryPoints) {
         this.victoryPoints = victoryPoints;
+    }
+
+    public void adjustUserPieces(int r, int s, int c) {
+        this.roads = r;
+        this.settlements = s;
+        this.cities = c;
+
     }
 }

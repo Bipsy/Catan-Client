@@ -11,13 +11,13 @@ public class Soldier extends MoveParams {
     public Soldier() {
         super(SOLDIER);
         victimIndex = -1;
-        location = null;
+        setLocation(null);
     }
 
     public Soldier(int playerIndex, int victimIndex, HexLocation location) {
         super(SOLDIER, playerIndex);
         this.victimIndex = victimIndex;
-        this.location = location;
+        this.setLocation(location);
 
     }
 
@@ -27,5 +27,13 @@ public class Soldier extends MoveParams {
 
     public void setVictimIndex(int victimIndex) {
         this.victimIndex = victimIndex;
+    }
+
+    public HexLocation getLocation() {
+        return location;
+    }
+
+    public void setLocation(HexLocation location) {
+        this.location = location;
     }
 }

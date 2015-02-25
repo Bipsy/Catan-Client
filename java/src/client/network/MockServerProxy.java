@@ -5,13 +5,15 @@
  */
 package client.network;
 
+import client.data.GameInfo;
 import client.model.Serializer;
+
 import java.io.IOException;
 import java.util.List;
+
 import org.javatuples.Pair;
 
 import shared.models.DTO.ClientModelDTO;
-import shared.models.DTO.GameContainerDTO;
 import shared.models.DTO.GameDTO;
 import shared.models.DTO.params.*;
 
@@ -123,17 +125,17 @@ public class MockServerProxy implements iServerProxy {
     }
 
     @Override
-    public void registerNewUser(UserCredentials user) throws IOException {
+    public Pair<Boolean, Integer> registerNewUser(UserCredentials user) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public GameContainerDTO listGames() throws IOException {
+    public List<GameInfo> listGames() throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public GameDTO createGames(CreateGameRequest game) throws IOException {
+    public GameInfo createGames(CreateGameRequest game) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -174,7 +176,7 @@ public class MockServerProxy implements iServerProxy {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 //    }
     @Override
-    public List<AddAIRequest> listAITypes() throws IOException {
+    public List<String> listAITypes() throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

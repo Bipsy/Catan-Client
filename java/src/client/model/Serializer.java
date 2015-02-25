@@ -1,10 +1,17 @@
 package client.model;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 import shared.models.DTO.*;
+import client.data.GameInfo;
+import client.data.PlayerInfo;
+import client.network.UserCookie;
 
 import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
 
 /**
  * @author Anna Sokolova
@@ -58,14 +65,6 @@ public class Serializer implements iSerializer {
         return gson.toJson(game);
     }
 
-    public CommandContainerDTO deserializeCommandContainer(String JSON) throws IOException {
-        return gson.fromJson(JSON, CommandContainerDTO.class);
-    }
-
-    public String serializeCommandContainer(CommandContainerDTO commands) {
-        return gson.toJson(commands);
-    }
-
     public AITypesContainerDTO deserializeAITypesContainer(String JSON) throws IOException {
         return gson.fromJson(JSON, AITypesContainerDTO.class);
     }
@@ -82,12 +81,32 @@ public class Serializer implements iSerializer {
         return gson.toJson(aIplayer);
     }
 
-    public GameToCreateDTO deserializeGameToCreate(String JSON) throws IOException {
-        return gson.fromJson(JSON, GameToCreateDTO.class);
+    public GameInfo deserializeGameInfo(String JSON) {
+        return gson.fromJson(JSON, GameInfo.class);
     }
 
-    public String serializeGameToCreate(GameToCreateDTO game) {
-        return gson.toJson(game);
+    public List<GameInfo> deserializeGameInfoList(String JSON) {
+    	System.out.println(JSON);
+        Type listType = new TypeToken<ArrayList<GameInfo>>() {
+        }.getType();
+        List<GameInfo> games =  gson.fromJson(JSON, listType);
+        for(GameInfo game : games) {
+        	List<PlayerInfo> playerList = game.getPlayers();
+        	List<PlayerInfo> newPlayerList = new ArrayList<PlayerInfo>();
+        	for(PlayerInfo player : playerList) {
+        		if(player.getName() != null) {
+        			System.out.println("Not Null Player" + player.getId() + player.getName() + player.getPlayerIndex());
+        			newPlayerList.add(player);
+        		}
+        	}
+        	game.setPlayers(newPlayerList);
+        	System.out.println("Game " + game.getId() + " Number of Players: " + newPlayerList.size());
+        }
+        return games;
     }
+
+	public UserCookie deserializeUserCookie(String JSON) {
+        return gson.fromJson(JSON, UserCookie.class);
+	}
 
 }

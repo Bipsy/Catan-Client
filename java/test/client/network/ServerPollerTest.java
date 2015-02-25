@@ -8,18 +8,17 @@ package client.network;
 import client.model.Populator;
 import client.model.Serializer;
 import client.model.iPopulator;
+import static org.junit.Assert.*;
+
 import java.io.IOException;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import shared.models.DTO.ClientModelDTO;
 import java.io.RandomAccessFile;
 import java.nio.charset.Charset;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertNull;
-import static junit.framework.Assert.assertTrue;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import shared.models.DTO.ClientModelDTO;
 
 /**
  *
@@ -33,20 +32,10 @@ public class ServerPollerTest {
     private iServerProxy proxy;
     private iPopulator populator;
 
-    public ServerPollerTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
     @Before
     public void setUp() {
         try {
+            @SuppressWarnings("resource")
             RandomAccessFile f = new RandomAccessFile("assets/test-model-1.txt", "r");
             encoded = new byte[(int) f.length()];
             f.read(encoded);
@@ -56,7 +45,6 @@ public class ServerPollerTest {
             populator = new Populator();
         } catch (IOException ex) {
             System.err.println("JSON file was not found");
-            assertTrue(false);
         }
     }
 
@@ -69,7 +57,6 @@ public class ServerPollerTest {
         populator = null;
     }
 
-    // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
     //
     // @Test

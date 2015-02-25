@@ -1,6 +1,7 @@
 package shared.models;
 
 import shared.definitions.DevCardType;
+import shared.exceptions.ExcessiveDevCards;
 import shared.models.DTO.DevCardListDTO;
 
 public class DevCardList {
@@ -64,7 +65,10 @@ public class DevCardList {
         return monopoly;
     }
 
-    public void setMonopoly(int monopoly) {
+    public void setMonopoly(int monopoly) throws ExcessiveDevCards {
+        if (monopoly > MAX_PROGRESS) {
+            throw new ExcessiveDevCards();
+        }
         this.monopoly = monopoly;
     }
 
@@ -72,7 +76,10 @@ public class DevCardList {
         return roadBuilding;
     }
 
-    public void setRoadBuilding(int roadBuilding) {
+    public void setRoadBuilding(int roadBuilding) throws ExcessiveDevCards {
+        if (roadBuilding > MAX_PROGRESS) {
+            throw new ExcessiveDevCards();
+        }
         this.roadBuilding = roadBuilding;
     }
 
@@ -80,7 +87,10 @@ public class DevCardList {
         return yearOfPlenty;
     }
 
-    public void setYearOfPlenty(int yearOfPlenty) {
+    public void setYearOfPlenty(int yearOfPlenty) throws ExcessiveDevCards {
+        if (yearOfPlenty > MAX_PROGRESS) {
+            throw new ExcessiveDevCards();
+        }
         this.yearOfPlenty = yearOfPlenty;
     }
 
@@ -88,7 +98,10 @@ public class DevCardList {
         return monument;
     }
 
-    public void setMonument(int monument) {
+    public void setMonument(int monument) throws ExcessiveDevCards {
+        if (monument > MAX_MONUMENT) {
+            throw new ExcessiveDevCards();
+        }
         this.monument = monument;
     }
 
@@ -96,7 +109,10 @@ public class DevCardList {
         return soldier;
     }
 
-    public void setSoldier(int soldier) {
+    public void setSoldier(int soldier) throws ExcessiveDevCards {
+        if (soldier > MAX_SOLDIER) {
+            throw new ExcessiveDevCards();
+        }
         this.soldier = soldier;
     }
 

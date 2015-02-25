@@ -9,8 +9,10 @@ import java.io.IOException;
 import java.util.List;
 import org.javatuples.Pair;
 
+import org.javatuples.Pair;
+
+import client.data.GameInfo;
 import shared.models.DTO.ClientModelDTO;
-import shared.models.DTO.GameContainerDTO;
 import shared.models.DTO.GameDTO;
 import shared.models.DTO.params.*;
 
@@ -257,7 +259,7 @@ public interface iServerProxy {
      * @param password
      * @throws IOException
      */
-    void registerNewUser(UserCredentials user) throws IOException;
+    Pair<Boolean, Integer> registerNewUser(UserCredentials user) throws IOException;
 
     /**
      * Sends a request to the server to list the games
@@ -266,7 +268,7 @@ public interface iServerProxy {
      * @return GameContainer
      * @throws IOException
      */
-    GameContainerDTO listGames() throws IOException;
+    List<GameInfo> listGames() throws IOException;
 
     /**
      * Sends a request to the server to create a game
@@ -282,7 +284,7 @@ public interface iServerProxy {
      * @return
      * @throws IOException
      */
-    GameDTO createGames(CreateGameRequest game) throws IOException;
+    GameInfo createGames(CreateGameRequest game) throws IOException;
 
     /**
      * Sends a request to the server to join a game
@@ -362,7 +364,7 @@ public interface iServerProxy {
      * @post retrieves a list of ai players or an error message
      * @throws IOException
      */
-    List<AddAIRequest> listAITypes() throws IOException;
+    List<String> listAITypes() throws IOException;
 
     /**
      * Sends a request to the server to add an artificial intelligence player

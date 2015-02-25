@@ -1,5 +1,7 @@
 package shared.models;
 
+import java.util.Observable;
+
 import shared.definitions.ResourceType;
 import shared.models.DTO.params.BuildCity;
 import shared.models.DTO.params.BuildRoad;
@@ -24,7 +26,7 @@ import shared.models.DTO.params.YearOfPlenty;
  *
  * @author Mikey Murphy <mikeyamadeo@gmail.com>
  */
-public class ClientModel {
+public class ClientModel extends Observable {
 
     private Bank bank;
     private Board board;
@@ -43,6 +45,9 @@ public class ClientModel {
         chatObject = null;
         userManager = null;
         tradeOffer = null;
+
+        //TODO: add observers
+        setChanged();
     }
 
     /**
@@ -185,8 +190,8 @@ public class ClientModel {
      * @return
      */
     public boolean CanBuildSettlement(BuildSettlement buildSettlement) {
-        return userManager.CanBuildSettlement(buildSettlement);// &&
-        //board.canBuildSettlement(buildSettlement);
+        return (buildSettlement.isFree() || userManager.CanBuildSettlement(buildSettlement))
+                && board.canBuildSettlement(buildSettlement);
     }
 
     /**

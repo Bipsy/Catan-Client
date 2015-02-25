@@ -56,16 +56,19 @@ public class Board {
         if (roadMap.containsKey(road.getNormalizedLocation())) {
             return false;
         } else {
-            EdgeLocation[] adjRoads = road.getAdjacentEdges();
-            for (int i = 0; i < adjRoads.length; i++) {
-                if (roadMap.containsKey(adjRoads[i].getNormalizedLocation())
-                        && roadMap.get(adjRoads[i].getNormalizedLocation()).getOwner()
-                        == buildRoad.getPlayerIndex()) {
-                    return true;
+            if (!buildRoad.isFree()) {
+                EdgeLocation[] adjRoads = road.getAdjacentEdges();
+                for (int i = 0; i < adjRoads.length; i++) {
+                    if (roadMap.containsKey(adjRoads[i].getNormalizedLocation())
+                            && roadMap.get(adjRoads[i].getNormalizedLocation()).getOwner()
+                            == buildRoad.getPlayerIndex()) {
+                        return true;
+                    }
                 }
+                return false;
             }
-            return false;
         }
+        return true;
     }
 
     public boolean canBuildSettlement(BuildSettlement buildSettlement) {
@@ -132,7 +135,6 @@ public class Board {
     public void setRoad(List<Road> road) {
         this.roads = road;
         for (int i = 0; i < road.size(); i++) {
-            EdgeLocation temp = road.get(i).getLocation();
             roadMap.put(road.get(i).getLocation().getNormalizedLocation(), road.get(i));
         }
     }
@@ -215,6 +217,11 @@ public class Board {
         }
         setCities(temp);
 
+    }
+
+    public void addRoad(Road road) {
+        this.roads.add(road);
+        this.roadMap.put(road.getLocation().getNormalizedLocation(), road);
     }
 
 }

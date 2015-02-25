@@ -2,6 +2,7 @@ package client.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 import shared.models.Bank;
 import shared.models.Board;
@@ -26,7 +27,7 @@ import shared.models.DTO.ClientModelDTO;
  *
  * @author Mikey Murphy <mikeyamadeo@gmail.com>
  */
-public class Populator implements iPopulator {
+public class Populator extends Observable implements iPopulator {
 
     private ClientModel model;
 
@@ -52,6 +53,8 @@ public class Populator implements iPopulator {
 
         model.setVersion(container.getVersion());
         model.setWinner(container.getWinner());
+
+        model.notifyObservers();
 
         return true;
     }

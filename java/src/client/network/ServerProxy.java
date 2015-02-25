@@ -6,12 +6,16 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLDecoder;
 
+import client.data.GameInfo;
 import client.model.Serializer;
+
+import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import org.javatuples.Pair;
+
 import shared.models.DTO.*;
 import shared.models.DTO.params.*;
 
@@ -24,30 +28,47 @@ import shared.models.DTO.params.*;
  */
 public class ServerProxy implements iServerProxy {
 
-    private String serverHost = "localhost";
-    private String serverPort = "8081";
+    private static String serverHost = "localhost";
+    private static String serverPort = "8081";
     private String userCookie = "";
     private String gameCookie = "";
     private final String COOKIE_HEADER = "Set-cookie";
+    private UserCookie uCookie;
+    private int gameNum = -1;
 
-    /**
-     * Class constructor
-     */
-    public ServerProxy() {
+    private static ServerProxy instance;
 
+    public UserCookie getUserCookie() {
+    	return uCookie;
     }
 
-    /**
-     * Class constructor
-     */
-    public ServerProxy(String serverHost, String serverPort) {
-        this.serverHost = serverHost;
-        this.serverPort = serverPort;
+    public int getGameNumber() {
+        return gameNum;
+    }
+
+    public static void init(String host, String port) throws ProxyAlreadyInstantiated {
+        if (instance == null) {
+            if (host != null) {
+                serverHost = host;
+            }
+            if (port != null) {
+                serverPort = port;
+            }
+        } else {
+            throw new ProxyAlreadyInstantiated();
+        }
+    }
+
+    public static ServerProxy getInstance() {
+        if (instance == null) {
+            instance = new ServerProxy();
+        }
+        return instance;
     }
 
     Serializer serializer = new Serializer();
 
-    public String doGet(String urlPath) throws IOException {
+    public Pair<String, Integer> doGet(String urlPath) throws IOException {
         try {
             URL url = new URL("http://" + serverHost + ":" + serverPort + urlPath);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -68,22 +89,19 @@ public class ServerProxy implements iServerProxy {
                     out.append(line);
                 }
 
-                return out.toString();
+                return new Pair<>(out.toString(), HttpURLConnection.HTTP_OK);
 //            } else if (connection.getResponseCode() == HttpURLConnection.HTTP_BAD_REQUEST) {
 //                return null;
             } else {
-                throw new ServerProxyException(connection.getResponseCode(),
-                            "GET failed");
-//                throw new IOException(String.format("doGet failed: %s (http code %d)",
-//                        urlPath, connection.getResponseCode()));
+                return new Pair<>("Error", HttpURLConnection.HTTP_OK);
             }
         } catch (IOException e) {
             throw new IOException(String.format("doGet failed: %s", e.getMessage()), e);
         }
     }
 
-    public String doPost(String urlPath, String jsonString,
-            boolean extractCookie) throws IOException, ServerProxyException {
+    public Pair<String, Integer> doPost(String urlPath, String jsonString,
+            boolean extractCookie) throws IOException {
         try {
             URL url = new URL("http://" + serverHost + ":" + serverPort + urlPath);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -109,8 +127,12 @@ public class ServerProxy implements iServerProxy {
                     String cookieField = connection.getHeaderField(COOKIE_HEADER);
                     if (cookieField != null && cookieField.contains("catan.game")) {
                         gameCookie = extractGameCookie(cookieField);
+                        System.out.println(gameCookie);
+                        gameNum = Integer.parseInt(gameCookie);
                     } else if (cookieField != null && cookieField.contains("catan.user")) {
                         userCookie = extractUserCookie(cookieField);
+                        String result = URLDecoder.decode(userCookie, "UTF-8");
+                        storeCookies(result);
                     }
                 }
 
@@ -121,14 +143,11 @@ public class ServerProxy implements iServerProxy {
                     out.append(line);
                 }
 
-                return out.toString();
+                return new Pair<>(out.toString(), HttpURLConnection.HTTP_OK);
 //            } else if (connection.getResponseCode() == HttpURLConnection.HTTP_BAD_REQUEST) {
 //                return null;
             } else {
-                throw new ServerProxyException(connection.getResponseCode(),
-                            "POST failed");
-//                throw new IOException(String.format("doPost failed: %s (http code %d)",
-//                        urlPath, connection.getResponseCode()));
+                return new Pair<>("Error", HttpURLConnection.HTTP_OK);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -138,260 +157,172 @@ public class ServerProxy implements iServerProxy {
 
     @Override
     public Pair<Boolean, Integer> login(UserCredentials user) throws IOException {
-        try {
-            String params = serializer.serialize(user);
-            String message = doPost("/user/login", params, true);
-            if (message.compareTo("Success") == 0) {
-                return new Pair<>(true, 200);
-            } else {
-                return new Pair<>(false, 200);
-            }
-        } catch (ServerProxyException e) {
-            return new Pair<>(false, e.HTTP_CODE);
+        String params = serializer.serialize(user);
+        Pair<String, Integer> result = doPost("/user/login", params, true);
+        String message = result.getValue0();
+        int code = result.getValue1();
+        if (message.compareTo("Success") == 0) {
+            return new Pair<>(true, code);
+        } else {
+            return new Pair<>(false, code);
         }
     }
 
     @Override
-    public void registerNewUser(UserCredentials user) throws IOException {
-        try {
-            String params = serializer.serialize(user);
-            doPost("/user/register", params, false);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new IOException();
+    public Pair<Boolean, Integer> registerNewUser(UserCredentials user) throws IOException {
+        String params = serializer.serialize(user);
+        Pair<String, Integer> result = doPost("/user/register", params, false);
+        String message = result.getValue0();
+        int code = result.getValue1();
+        if (message.compareTo("Success") == 0) {
+            return new Pair<>(true, code);
+        } else {
+            return new Pair<>(false, code);
         }
     }
 
     @Override
-    public GameContainerDTO listGames() throws IOException {
-        try {
-            GameContainerDTO list = new GameContainerDTO();
-            List<GameDTO> list2 = (List<GameDTO>) serializer.deserialize(doGet("/games/list"));
-            list.setGames(list2);
-            return list;
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new IOException();
-        }
+    public List<GameInfo> listGames() throws IOException {
+        Pair<String, Integer> result = doGet("/games/list");
+        return serializer.deserializeGameInfoList(result.getValue0());
     }
 
     @Override
-    public GameDTO createGames(CreateGameRequest game) throws IOException {
-        try {
-            String params = serializer.serialize(game);
-            return serializer.deserializeGame(doPost("/games/create", params, false));
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new IOException();
-        }
+    public GameInfo createGames(CreateGameRequest game) throws IOException {
+        String params = serializer.serialize(game);
+        Pair<String, Integer> result = doPost("/games/create", params, false);
+        return serializer.deserializeGameInfo(result.getValue0());
     }
 
     @Override
     public ClientModelDTO retrieveCurrentState(Integer version) throws IOException {
-        try {
-            return serializer.deserializeModel(doGet("/game/model"));
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new IOException();
-        }
+        Pair<String, Integer> result = doGet("/game/model");
+        return serializer.deserializeModel(result.getValue0());
     }
 
     @Override
     public ClientModelDTO sendChat(SendChat message) throws IOException {
-        try {
-            String params = serializer.serialize(message);
-            return serializer.deserializeModel(doPost("/moves/sendChat", params, false));
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new IOException();
-        }
+        String params = serializer.serialize(message);
+        Pair<String, Integer> result = doPost("/moves/sendChat", params, false);
+        return serializer.deserializeModel(result.getValue0());
     }
 
     @Override
     public ClientModelDTO acceptTrade(AcceptTrade accept) throws IOException {
-        try {
-            String params = serializer.serialize(accept);
-            return serializer.deserializeModel(doPost("/moves/acceptTrade", params, false));
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new IOException();
-        }
+        String params = serializer.serialize(accept);
+        Pair<String, Integer> result = doPost("/moves/acceptTrade", params, false);
+        return serializer.deserializeModel(result.getValue0());
     }
 
     @Override
     public ClientModelDTO discardCards(DiscardCards discardedCards) throws IOException {
-        try {
-            String params = serializer.serialize(discardedCards);
-            return serializer.deserializeModel(doPost("/moves/discardCards", params, false));
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new IOException();
-        }
+        String params = serializer.serialize(discardedCards);
+        Pair<String, Integer> result = doPost("/moves/discardCards", params, false);
+        return serializer.deserializeModel(result.getValue0());
     }
 
     @Override
     public ClientModelDTO rollNumber(RollNumber rollMove) throws IOException {
-        try {
-            String params = serializer.serialize(rollMove);
-            return serializer.deserializeModel(doPost("/moves/rollNumber", params, false));
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new IOException();
-        }
+        String params = serializer.serialize(rollMove);
+        Pair<String, Integer> result = doPost("/moves/rollNumber", params, false);
+        return serializer.deserializeModel(result.getValue0());
     }
 
     @Override
     public ClientModelDTO buildRoad(BuildRoad roadMove) throws IOException {
-        try {
-            String params = serializer.serialize(roadMove);
-            return serializer.deserializeModel(doPost("/moves/buildRoad", params, false));
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new IOException();
-        }
+        String params = serializer.serialize(roadMove);
+        Pair<String, Integer> result = doPost("/moves/buildRoad", params, false);
+        return serializer.deserializeModel(result.getValue0());
     }
 
     @Override
     public ClientModelDTO buildSettlement(BuildSettlement settlementMove) throws IOException {
-        try {
-            String params = serializer.serialize(settlementMove);
-            return serializer.deserializeModel(doPost("/moves/buildSettlement", params, false));
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new IOException();
-        }
+        String params = serializer.serialize(settlementMove);
+        Pair<String, Integer> result = doPost("/moves/buildSettlement", params, false);
+        return serializer.deserializeModel(result.getValue0());
     }
 
     @Override
     public ClientModelDTO buildCity(BuildCity cityMove) throws IOException {
-        try {
-            String params = serializer.serialize(cityMove);
-            return serializer.deserializeModel(doPost("/moves/buildCity", params, false));
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new IOException();
-        }
+        String params = serializer.serialize(cityMove);
+        Pair<String, Integer> result = doPost("/moves/buildCity", params, false);
+        return serializer.deserializeModel(result.getValue0());
     }
 
     @Override
     public ClientModelDTO offerTrade(OfferTrade tradeOffer) throws IOException {
-        try {
-            String params = serializer.serialize(tradeOffer);
-            return serializer.deserializeModel(doPost("/moves/offerTrade", params, false));
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new IOException();
-        }
+        String params = serializer.serialize(tradeOffer);
+        Pair<String, Integer> result = doPost("/moves/offerTrade", params, false);
+        return serializer.deserializeModel(result.getValue0());
     }
 
     @Override
     public ClientModelDTO maritimeTrade(MaritimeTrade maritimeMove) throws IOException {
-        try {
-            String params = serializer.serialize(maritimeMove);
-            return serializer.deserializeModel(doPost("/moves/maritimeTrade", params, false));
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new IOException();
-        }
+        String params = serializer.serialize(maritimeMove);
+        Pair<String, Integer> result = doPost("/moves/maritimeTrade", params, false);
+        return serializer.deserializeModel(result.getValue0());
     }
 
     @Override
     public ClientModelDTO robPlayer(RobPlayer robMove) throws IOException {
-        try {
-            String params = serializer.serialize(robMove);
-            return serializer.deserializeModel(doPost("/moves/robPlayer", params, false));
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new IOException();
-        }
+        String params = serializer.serialize(robMove);
+        Pair<String, Integer> result = doPost("/moves/robPlayer", params, false);
+        return serializer.deserializeModel(result.getValue0());
     }
 
     @Override
     public ClientModelDTO finishTurn(FinishTurn turn) throws IOException {
-        try {
-            String params = serializer.serialize(turn);
-            return serializer.deserializeModel(doPost("/moves/finishTurn", params, false));
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new IOException();
-        }
+        String params = serializer.serialize(turn);
+        Pair<String, Integer> result = doPost("/moves/finishTurn", params, false);
+        return serializer.deserializeModel(result.getValue0());
     }
 
     @Override
     public ClientModelDTO buyDevCard(BuyDevCard card) throws IOException {
-        try {
-            String params = serializer.serialize(card);
-            return serializer.deserializeModel(doPost("/moves/buyDevCard", params, false));
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new IOException();
-        }
+        String params = serializer.serialize(card);
+        Pair<String, Integer> result = doPost("/moves/buyDevCard", params, false);
+        return serializer.deserializeModel(result.getValue0());
     }
 
     @Override
     public ClientModelDTO playSoldier(Soldier soldier) throws IOException {
-        try {
-            String params = serializer.serialize(soldier);
-            return serializer.deserializeModel(doPost("/moves/Soldier", params, false));
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new IOException();
-        }
+        String params = serializer.serialize(soldier);
+        Pair<String, Integer> result = doPost("/moves/Soldier", params, false);
+        return serializer.deserializeModel(result.getValue0());
     }
 
     @Override
     public ClientModelDTO playYearOfPlenty(YearOfPlenty yearOfPlentyMove) throws IOException {
-        try {
-            String params = serializer.serialize(yearOfPlentyMove);
-            return serializer.deserializeModel(doPost("/moves/Year_of_Plenty", params, false));
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new IOException();
-        }
+        String params = serializer.serialize(yearOfPlentyMove);
+        Pair<String, Integer> result = doPost("/moves/Year_of_Plenty", params, false);
+        return serializer.deserializeModel(result.getValue0());
     }
 
     @Override
     public ClientModelDTO playRoadBuilding(RoadBuilding roadBuildingMove) throws IOException {
-        try {
-            String params = serializer.serialize(roadBuildingMove);
-            return serializer.deserializeModel(doPost("/moves/Road_Building", params, false));
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new IOException();
-        }
+        String params = serializer.serialize(roadBuildingMove);
+        Pair<String, Integer> result = doPost("/moves/Road_Building", params, false);
+        return serializer.deserializeModel(result.getValue0());
     }
 
     @Override
     public ClientModelDTO playMonopoly(Monopoly monopoly) throws IOException {
-        try {
-            String params = serializer.serialize(monopoly);
-            return serializer.deserializeModel(doPost("/moves/Monopoly", params, false));
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new IOException();
-        }
+        String params = serializer.serialize(monopoly);
+        Pair<String, Integer> result = doPost("/moves/Monopoly", params, false);
+        return serializer.deserializeModel(result.getValue0());
     }
 
     @Override
     public ClientModelDTO playMonument(Monument monument) throws IOException {
-        try {
-            String params = serializer.serialize(monument);
-            return serializer.deserializeModel(doPost("/moves/Monument", params, false));
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new IOException();
-        }
+        String params = serializer.serialize(monument);
+        Pair<String, Integer> result = doPost("/moves/Monument", params, false);
+        return serializer.deserializeModel(result.getValue0());
     }
 
     @Override
     public void joinGame(JoinGameRequest game) throws IOException {
-        try {
-            String params = serializer.serialize(game);
-            serializer.deserialize(doPost("/games/join", params, true));
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new IOException();
-        }
+        String params = serializer.serialize(game);
+        Pair<String, Integer> result = doPost("/games/join", params, true);
     }
 
 //    @Override
@@ -420,25 +351,18 @@ public class ServerProxy implements iServerProxy {
 //    		throw new IOException();
 //    	}
 //    }
+    @SuppressWarnings("unchecked")
     @Override
-    public List<AddAIRequest> listAITypes() throws IOException {
-        try {
-            return (List<AddAIRequest>) serializer.deserialize(doGet("/game/listAI"));
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new IOException();
-        }
+    public List<String> listAITypes() throws IOException {
+        Pair<String, Integer> result = doGet("/game/listAI");
+         return (List<String>) serializer.deserialize(result.getValue0());
     }
 
     @Override
     public void addAIPlayer(AddAIRequest player) throws IOException {
-        try {
-            String params = serializer.serialize(player);
-            serializer.deserialize(doPost("/game/addAI", params, false));
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new IOException();
-        }
+        String params = serializer.serialize(player);
+        Pair<String, Integer> result = doPost("/game/addAI", params, false);
+        serializer.deserialize(result.getValue0());
     }
 
 //    @Override
@@ -462,6 +386,18 @@ public class ServerProxy implements iServerProxy {
 
     private String extractUserCookie(String cookieField) {
         return cookieField.replace(";Path=/;", "").replace("catan.user=", "");
+    }
+
+    private void storeCookies(String result) {
+    	System.out.println(result);
+    	uCookie = serializer.deserializeUserCookie(result);
+//        String[] split = result.split("\"");
+//        username = split[3];
+//        password = split[7];
+//        String playerIDtemp = split[10];
+//        String[] IDsplit = playerIDtemp.split(":");
+//        String[] IDsplit2 = IDsplit[1].split("}");
+//        playerID = Integer.parseInt(IDsplit2[0]);
     }
 
 }

@@ -117,32 +117,6 @@ public interface iSerializer {
     String serializeGame(GameDTO game);
 
     /**
-     * Converts a JSON string into <code>CommandContainer</code> Object.
-     *
-     * @pre requires the JSON string to be a valid representation of the
-     * CommandContainer object
-     * @param JSON A valid representation of the CommandContainer object in
-     * JSON.
-     * @return A <code>CommandContainer</code> object. This method will return
-     * null if the the JSON parameter was not valid (null, missing fields, etc).
-     */
-    CommandContainerDTO deserializeCommandContainer(String JSON) throws IOException;
-
-    /**
-     * Converts a Java object representation of the CommandContainer object into
-     * a JSON representation.
-     *
-     * @pre requires the Java object to be a valid representation of the
-     * CommandContainer object
-     * @param user A valid representation of the CommandContainer object in
-     * Java.
-     * @return A JSON string that represents the CommandContainer object using
-     * JSON. This method will return null if the the parameter was not valid
-     * (null, missing fields, etc).
-     */
-    String serializeCommandContainer(CommandContainerDTO commands);
-
-    /**
      * Converts a JSON string into <code>AITypesContainer</code> Object.
      *
      * @pre requires the JSON string to be a valid representation of the
@@ -191,9 +165,5 @@ public interface iSerializer {
      * missing fields, etc).
      */
     String serializeAIPlayer(AIPlayerDTO aIplayer);
-
-    GameToCreateDTO deserializeGameToCreate(String JSON) throws IOException;
-
-    String serializeGameToCreate(GameToCreateDTO game);
 
 }
