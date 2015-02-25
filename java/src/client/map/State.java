@@ -41,7 +41,7 @@ public abstract class State {
 	
 	
 	
-	class Setup extends State {
+	public class Setup extends State {
 		//Show Edit Map
 		void placeRoad(EdgeLocation edgeLoc) {
 			BuildRoad roadMove = new BuildRoad(uCookie.getPlayerID(), edgeLoc, true);
@@ -83,7 +83,7 @@ public abstract class State {
 		//show Normal Map
 	}
 	
-	class Building extends State {
+	class Playing extends State {
 		//show Edit Map
 		
 		boolean canPlaceRoad(EdgeLocation edgeLoc) {

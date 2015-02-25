@@ -29,15 +29,6 @@ public class MapController extends Controller
 
         initFromModel(null);
     }
-    
-    
-
-    public MapController(IMapView view) {
-    	super(view);
-		currState = facade.getState();
-		updateState(currState);
-	}
-
 
 
 	public IMapView getView() {
@@ -231,7 +222,7 @@ public class MapController extends Controller
     			state = new State.MoveRobber();
     			break;
     		case "Playing":
-    			state = new State.Building();
+    			state = new State.Playing();
     			break;
     		case "Discarding":
     			state = new State.Discarding();
@@ -247,7 +238,10 @@ public class MapController extends Controller
         if (o instanceof Populator && arg instanceof ModelFacade) {
             ModelFacade facade = (ModelFacade) arg;
             initFromModel(facade);
+    		currState = facade.getState();
+    		updateState(currState);
         }
+        
     }
 
 }
