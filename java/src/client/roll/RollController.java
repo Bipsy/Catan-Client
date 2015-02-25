@@ -1,10 +1,11 @@
 package client.roll;
 
 import client.base.*;
+import client.model.ModelFacade;
 import client.model.Populator;
+
 import java.util.Observable;
 import java.util.Observer;
-import shared.models.ModelFacade;
 
 /**
  * Implementation for the roll controller

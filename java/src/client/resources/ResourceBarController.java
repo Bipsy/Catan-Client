@@ -3,8 +3,8 @@ package client.resources;
 import java.util.*;
 
 import client.base.*;
+import client.model.ModelFacade;
 import client.model.Populator;
-import shared.models.ModelFacade;
 
 /**
  * Implementation for the resource bar controller

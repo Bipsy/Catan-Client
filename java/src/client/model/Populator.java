@@ -22,7 +22,6 @@ import shared.models.DTO.PlayerDTO;
 import shared.models.DTO.ResourceListDTO;
 import shared.models.DTO.TurnTrackerDTO;
 import shared.models.DTO.ClientModelDTO;
-import shared.models.ModelFacade;
 import client.storage.*;
 
 /**
