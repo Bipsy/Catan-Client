@@ -22,6 +22,7 @@ import shared.models.DTO.PlayerDTO;
 import shared.models.DTO.ResourceListDTO;
 import shared.models.DTO.TurnTrackerDTO;
 import shared.models.DTO.ClientModelDTO;
+import shared.models.ModelFacade;
 
 /**
  *
@@ -31,6 +32,7 @@ public class Populator extends Observable implements iPopulator {
 
     private ClientModel model;
     private static Populator instance;
+    private ModelFacade facade;
     
     public static Populator getInstance() {
         if (instance == null) {
@@ -41,12 +43,12 @@ public class Populator extends Observable implements iPopulator {
 
     private Populator() {
         model = new ClientModel();
+        facade = new ModelFacade(model);
     }
 
     @Override
     public boolean populateModel(ClientModelDTO container) {
 
-        model = new ClientModel();
         populateBank(container.getResources(), container.getDevCards());
 
         populateBoard(container.getMap());
@@ -62,7 +64,7 @@ public class Populator extends Observable implements iPopulator {
         model.setVersion(container.getVersion());
         model.setWinner(container.getWinner());
 
-        notifyObservers();
+        notifyObservers(facade);
 
         return true;
     }

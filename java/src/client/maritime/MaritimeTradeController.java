@@ -5,6 +5,7 @@ import client.base.*;
 import client.model.Populator;
 import java.util.Observable;
 import java.util.Observer;
+import shared.models.ModelFacade;
 
 /**
  * Implementation for the maritime trade controller
@@ -74,7 +75,9 @@ public class MaritimeTradeController extends Controller
 
     @Override
     public void update(Observable o, Object arg) {
-
+        if (o instanceof Populator && arg instanceof ModelFacade) {
+            
+        }
     }
 
 }

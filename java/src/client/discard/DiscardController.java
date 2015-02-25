@@ -6,6 +6,7 @@ import client.misc.*;
 import client.model.Populator;
 import java.util.Observable;
 import java.util.Observer;
+import shared.models.ModelFacade;
 
 /**
  * Discard controller implementation
@@ -55,7 +56,9 @@ public class DiscardController extends Controller
 
     @Override
     public void update(Observable o, Object arg) {
-
+        if (o instanceof Populator && arg instanceof ModelFacade) {
+            
+        }
     }
 
 }

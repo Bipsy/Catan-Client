@@ -6,10 +6,6 @@ public class ModelFacade {
 
     private ClientModel models;
 
-    public ModelFacade() {
-        models = null;
-    }
-
     public ModelFacade(ClientModel cm) {
         models = cm;
     }

@@ -7,6 +7,7 @@ import shared.locations.*;
 import client.base.*;
 import client.data.*;
 import client.model.Populator;
+import shared.models.ModelFacade;
 
 /**
  * Implementation for the map controller
@@ -169,7 +170,9 @@ public class MapController extends Controller
 
     @Override
     public void update(Observable o, Object arg) {
-
+        if (o instanceof Populator && arg instanceof ModelFacade) {
+            
+        }
     }
 
 }

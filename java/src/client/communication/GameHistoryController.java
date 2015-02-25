@@ -6,6 +6,7 @@ import java.util.List;
 import client.base.*;
 import client.model.Populator;
 import shared.definitions.*;
+import shared.models.ModelFacade;
 
 /**
  * Game history controller implementation
@@ -46,7 +47,9 @@ public class GameHistoryController extends Controller
 
     @Override
     public void update(Observable o, Object arg) {
-
+        if (o instanceof Populator && arg instanceof ModelFacade) {
+            
+        }
     }
 
 }

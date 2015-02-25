@@ -2,8 +2,10 @@ package client.turntracker;
 
 import shared.definitions.CatanColor;
 import client.base.*;
+import client.model.Populator;
 import java.util.Observable;
 import java.util.Observer;
+import shared.models.ModelFacade;
 
 /**
  * Implementation for the turn tracker controller
@@ -37,7 +39,9 @@ public class TurnTrackerController extends Controller
 
     @Override
     public void update(Observable o, Object arg) {
-
+        if (o instanceof Populator && arg instanceof ModelFacade) {
+            
+        }
     }
 
 }

@@ -4,6 +4,7 @@ import java.util.*;
 
 import client.base.*;
 import client.model.Populator;
+import shared.models.ModelFacade;
 
 /**
  * Implementation for the resource bar controller
@@ -74,7 +75,9 @@ public class ResourceBarController extends Controller
 
     @Override
     public void update(Observable o, Object arg) {
-        
+        if (o instanceof Populator && arg instanceof ModelFacade) {
+            
+        }
     }
 
 }

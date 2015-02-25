@@ -4,6 +4,7 @@ import client.base.*;
 import client.model.Populator;
 import java.util.Observable;
 import java.util.Observer;
+import shared.models.ModelFacade;
 
 /**
  * Implementation for the points controller
@@ -50,7 +51,9 @@ public class PointsController extends Controller
 
     @Override
     public void update(Observable o, Object arg) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (o instanceof Populator && arg instanceof ModelFacade) {
+            
+        }
     }
 
 }

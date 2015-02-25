@@ -4,6 +4,7 @@ import client.base.*;
 import client.model.Populator;
 import java.util.Observable;
 import java.util.Observer;
+import shared.models.ModelFacade;
 
 /**
  * Chat controller implementation
@@ -28,7 +29,9 @@ public class ChatController extends Controller
 
     @Override
     public void update(Observable o, Object arg) {
-
+        if (o instanceof Populator && arg instanceof ModelFacade) {
+            
+        }
     }
 
 }
