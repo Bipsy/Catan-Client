@@ -1,12 +1,11 @@
 package client.communication;
 
 import java.util.*;
-import java.util.List;
 
 import client.base.*;
+import client.model.ModelFacade;
 import client.model.Populator;
 import shared.definitions.*;
-import shared.models.ModelFacade;
 
 /**
  * Game history controller implementation

@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import client.mocks.ModelMock;
+import client.model.ModelFacade;
 import client.model.Populator;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeDirection;

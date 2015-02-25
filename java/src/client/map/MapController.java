@@ -7,8 +7,8 @@ import shared.locations.*;
 import shared.models.*;
 import client.base.*;
 import client.data.*;
+import client.model.ModelFacade;
 import client.model.Populator;
-import shared.models.ModelFacade;
 
 /**
  * Implementation for the map controller

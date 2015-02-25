@@ -1,5 +1,11 @@
-package shared.models;
+package client.model;
 
+import shared.models.ClientModel;
+import shared.models.Harbor;
+import shared.models.Hex;
+import shared.models.Road;
+import shared.models.Robber;
+import shared.models.VertexObject;
 import shared.models.DTO.params.*;
 import shared.models.DTO.*;
 import shared.definitions.*;
