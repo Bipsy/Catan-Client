@@ -3,8 +3,6 @@ package shared.models;
 import shared.models.DTO.params.*;
 import shared.models.DTO.*;
 import shared.definitions.*;
-import shared.locations.*;
-import shared.models.*;
 import client.storage.Data;
 
 
@@ -12,8 +10,8 @@ public class ModelFacade {
 
     private ClientModel models;
 
-    public ModelFacade(ClientModel cm) {
-        models = cm;
+    public ModelFacade() {
+        models = Data.getCurentModelInstance();
     }
 
     public void updateModels(ClientModel cm) {

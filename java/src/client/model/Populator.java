@@ -43,8 +43,8 @@ public class Populator extends Observable implements iPopulator {
     }
 
     private Populator() {
-        model = new ClientModel();
-        facade = new ModelFacade(model);
+        model = Data.getCurentModelInstance();
+        facade = new ModelFacade();
     }
 
     @Override
@@ -65,8 +65,6 @@ public class Populator extends Observable implements iPopulator {
         model.setVersion(container.getVersion());
         model.setWinner(container.getWinner());
         
-        Data.initModel(model);
-
         notifyObservers(facade);
 
         return true;
