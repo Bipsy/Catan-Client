@@ -5,7 +5,7 @@ import java.io.IOException;
 import client.network.ServerProxy;
 import client.network.UserCookie;
 import shared.locations.*;
-import shared.models.ModelFacade;
+import client.model.ModelFacade;
 import shared.models.DTO.params.*;
 
 public abstract class State {
@@ -41,7 +41,7 @@ public abstract class State {
 	
 	
 	
-	public class Setup extends State {
+	public static class Setup extends State {
 		//Show Edit Map
 		void placeRoad(EdgeLocation edgeLoc) {
 			BuildRoad roadMove = new BuildRoad(uCookie.getPlayerID(), edgeLoc, true);
@@ -62,12 +62,12 @@ public abstract class State {
 		}
 	}
 	
-	class Rolling extends State {
+	public static class Rolling extends State {
 	    //show normal map
 		//show rolling modal
 	}
 	
-	class MoveRobber extends State {
+	public static class MoveRobber extends State {
 		//Show Edit Map
 		
 		boolean canPlaceRobber(HexLocation hexLoc) {
@@ -83,7 +83,7 @@ public abstract class State {
 		//show Normal Map
 	}
 	
-	class Playing extends State {
+	public static class Playing extends State {
 		//show Edit Map
 		
 		boolean canPlaceRoad(EdgeLocation edgeLoc) {
@@ -131,7 +131,7 @@ public abstract class State {
 		//Show normal Updated Map
 	}
 	
-	class Discarding extends State {
+	public static class Discarding extends State {
 		
 	}
 
