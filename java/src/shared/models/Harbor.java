@@ -1,6 +1,6 @@
 package shared.models;
 
-import shared.definitions.ResourceType;
+import shared.definitions.PortType;
 import shared.locations.EdgeLocation;
 import shared.models.DTO.PortDTO;
 
@@ -13,7 +13,7 @@ import shared.models.DTO.PortDTO;
  */
 public class Harbor {
 
-    private ResourceType resource;
+    private PortType resource;
     private int ratio;
     private EdgeLocation location;
 
@@ -23,11 +23,11 @@ public class Harbor {
         this.setLocation(portDTO.getLocation());
     }
 
-    public ResourceType getResource() {
+    public PortType getResource() {
         return resource;
     }
 
-    public void setResource(ResourceType resource) {
+    public void setResource(PortType resource) {
         this.resource = resource;
     }
 
