@@ -7,6 +7,7 @@ import org.junit.Test;
 import client.mocks.ModelMock;
 import client.model.Serializer;
 import client.model.Populator;
+import client.storage.Data;
 
 public class PopulatorTest {
 
@@ -19,12 +20,12 @@ public class PopulatorTest {
     @Test
     public void testModelPopulation() {
         iSerializer s = new Serializer();
-        Populator p = new Populator();
+        Populator p = Populator.getInstance();
         try {
             boolean result = p.populateModel(s.deserializeModel(ModelMock.getJSON()));
 
             assertTrue("populator returned true", result);
-            shared.models.ClientModel m = p.getModel();
+            shared.models.ClientModel m = Data.getCurentModelInstance();
             assertTrue("winner field should be populated correctly", m.getWinner() == ModelMock.getModelDTO().getWinner());
             assertTrue("version field should be populated correctly", m.getVersion() == ModelMock.getModelDTO().getVersion());
             assertTrue("player's cities field has to be set correctly", m.getUserManager().getPlayer(0).getCities()

@@ -4,14 +4,17 @@ import java.util.*;
 
 import shared.definitions.*;
 import shared.locations.*;
-import shared.models.ModelFacade;
+import shared.models.*;
 import client.base.*;
 import client.data.*;
+import client.model.Populator;
+import shared.models.ModelFacade;
 
 /**
  * Implementation for the map controller
  */
-public class MapController extends Controller implements IMapController {
+public class MapController extends Controller 
+    implements IMapController, Observer {
 
     private IRobView robView;
     private State state;
@@ -21,10 +24,10 @@ public class MapController extends Controller implements IMapController {
     public MapController(IMapView view, IRobView robView) {
 
         super(view);
-
+        Populator.getInstance().addObserver(this);
         setRobView(robView);
 
-        initFromModel();
+        initFromModel(null);
     }
     
     
@@ -50,9 +53,41 @@ public class MapController extends Controller implements IMapController {
         this.robView = robView;
     }
 
-    protected void initFromModel() {
+    protected void initFromModel(ModelFacade facade) {
+        if (facade == null) return;
+                
+        for (int i = 0; i < facade.NumberOfHexes(); i++) {
+        	Hex hex = facade.GetHexAt(i);
+        	getView().addHex(hex.getLocation(), hex.getResource()); 
+            getView().addNumber(hex.getLocation(), hex.getChit());
 
-        //<temp>
+        }
+        
+        for (int i = 0; i < facade.NumberOfRoads(); i++) {
+        	Road road = facade.GetRoadAt(i);
+        	getView().placeRoad(road.getLocation(), facade.GetPlayerColor(road.getOwner()));
+        }
+        
+        for (int i = 0; i < facade.NumberOfCities(); i++) {
+        	VertexObject city = facade.GetCityAt(i);        	
+            getView().placeCity(city.getLocation(), facade.GetPlayerColor(city.getOwner()));
+        }
+        
+        for (int i = 0; i < facade.NumberOfSettlements(); i++) {
+        	VertexObject settlement = facade.GetSettlementAt(i);
+            getView().placeSettlement(settlement.getLocation(), facade.GetPlayerColor(settlement.getOwner()));
+        }
+        
+        
+        for (int i = 0; i < facade.NumberOfHarbors(); i++) {
+        	Harbor port = facade.GetHarborAt(i); 
+            getView().addPort(port.getLocation(), port.getResource()); 
+        }
+        
+        getView().placeRobber(facade.GetRobber().getLocation());
+        
+        /*
+         * //<temp>
         Random rand = new Random();
 
         for (int x = 0; x <= 3; ++x) {
@@ -114,6 +149,8 @@ public class MapController extends Controller implements IMapController {
         getView().addNumber(new HexLocation(2, 0), 12);
 
         //</temp>
+         */
+
     }
 
     public boolean canPlaceRoad(EdgeLocation edgeLoc) {
@@ -203,6 +240,14 @@ public class MapController extends Controller implements IMapController {
 				break;
     		
     	}
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if (o instanceof Populator && arg instanceof ModelFacade) {
+            ModelFacade facade = (ModelFacade) arg;
+            initFromModel(facade);
+        }
     }
 
 }

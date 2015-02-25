@@ -3,18 +3,23 @@ package client.join;
 import client.base.*;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
+import client.model.Populator;
 import client.network.ServerProxy;
 import java.io.IOException;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
+import shared.models.ModelFacade;
 
 /**
  * Implementation for the player waiting controller
  */
-public class PlayerWaitingController extends Controller implements IPlayerWaitingController {
+public class PlayerWaitingController extends Controller 
+    implements IPlayerWaitingController, Observer {
 
     public PlayerWaitingController(IPlayerWaitingView view) {
-
         super(view);
+        Populator.getInstance().addObserver(this);
     }
 
     @Override
@@ -69,6 +74,13 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
     @Override
     public void addAI() {
+    }
+    
+        @Override
+    public void update(Observable o, Object arg) {
+        if (o instanceof Populator && arg instanceof ModelFacade) {
+            
+        }
     }
 
 }

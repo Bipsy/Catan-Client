@@ -32,10 +32,9 @@ public class ModelFacadeTest {
      */
     @Before
     public void setUp() throws Exception {
-        Populator pop = new Populator();
+        Populator pop = Populator.getInstance();
         pop.populateModel(ModelMock.getModelDTO());
-        model = pop.getModel();
-        modelFacade = new ModelFacade(pop.getModel());
+        modelFacade = null;
     }
 
     @After
