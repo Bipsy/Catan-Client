@@ -55,7 +55,7 @@ public class Populator extends Observable implements iPopulator {
         model.setVersion(container.getVersion());
         model.setWinner(container.getWinner());
         
-        Data.updateCurrentModel(model);
+        Data.initModel(model);
 
         model.notifyObservers();
 
@@ -106,17 +106,6 @@ public class Populator extends Observable implements iPopulator {
 
         ChatObject chatObject = new ChatObject(chat.getLines(), log.getLines());
         model.setChatObject(chatObject);
-    }
-
-    /**
-     * Getters and Setters
-     */
-    public ClientModel getModel() {
-        return model;
-    }
-
-    public void setModel(ClientModel model) {
-        this.model = model;
     }
 
 }

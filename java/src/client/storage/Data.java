@@ -4,16 +4,16 @@ import shared.models.*;
 
 public class Data {
 	
-	private ClientModel currentModel;
+	private static ClientModel currentModelinstance;
 	
-	
-	public static ClientModel getCurrentModel() {
-		Data data = new Data();
-		return data.currentModel;
-	}
-	
-	public static void updateCurrentModel(ClientModel model) {
-		Data data = new Data();
-		data.currentModel = model;
-	}
+	public static void initModel(ClientModel updatedModel) {
+		currentModelinstance = updatedModel;
+    }
+
+    public static ClientModel getCurentModelInstance() {
+        if (currentModelinstance == null) {
+        	currentModelinstance = new ClientModel();
+        }
+        return currentModelinstance;
+    }
 }
