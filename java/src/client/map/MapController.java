@@ -7,25 +7,24 @@ import shared.locations.*;
 import shared.models.*;
 import client.base.*;
 import client.data.*;
-import client.storage.*;
-
+import client.model.Populator;
+import shared.models.ModelFacade;
 
 /**
  * Implementation for the map controller
  */
-public class MapController extends Controller implements IMapController {
+public class MapController extends Controller 
+    implements IMapController, Observer {
 
     private IRobView robView;
-    private ModelFacade facade;
 
     public MapController(IMapView view, IRobView robView) {
 
         super(view);
-        facade = new ModelFacade();
-       
+        Populator.getInstance().addObserver(this);
         setRobView(robView);
 
-        initFromModel();
+        initFromModel(null);
     }
 
     public IMapView getView() {
@@ -41,7 +40,8 @@ public class MapController extends Controller implements IMapController {
         this.robView = robView;
     }
 
-    protected void initFromModel() {
+    protected void initFromModel(ModelFacade facade) {
+        if (facade == null) return;
                 
         for (int i = 0; i < facade.NumberOfHexes(); i++) {
         	Hex hex = facade.GetHexAt(i);
@@ -201,6 +201,14 @@ public class MapController extends Controller implements IMapController {
 
     public void robPlayer(RobPlayerInfo victim) {
 
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if (o instanceof Populator && arg instanceof ModelFacade) {
+            ModelFacade facade = (ModelFacade) arg;
+            initFromModel(facade);
+        }
     }
 
 }

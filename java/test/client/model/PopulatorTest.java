@@ -20,7 +20,7 @@ public class PopulatorTest {
     @Test
     public void testModelPopulation() {
         iSerializer s = new Serializer();
-        Populator p = new Populator();
+        Populator p = Populator.getInstance();
         try {
             boolean result = p.populateModel(s.deserializeModel(ModelMock.getJSON()));
 

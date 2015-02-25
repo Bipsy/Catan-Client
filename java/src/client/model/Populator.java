@@ -22,6 +22,7 @@ import shared.models.DTO.PlayerDTO;
 import shared.models.DTO.ResourceListDTO;
 import shared.models.DTO.TurnTrackerDTO;
 import shared.models.DTO.ClientModelDTO;
+import shared.models.ModelFacade;
 import client.storage.*;
 
 /**
@@ -31,15 +32,24 @@ import client.storage.*;
 public class Populator extends Observable implements iPopulator {
 
     private ClientModel model;
+    private static Populator instance;
+    private ModelFacade facade;
+    
+    public static Populator getInstance() {
+        if (instance == null) {
+            instance = new Populator();
+        }
+        return instance;
+    }
 
-    public Populator() {
-        model = new ClientModel();
+    private Populator() {
+        model = Data.getCurentModelInstance();
+        facade = new ModelFacade();
     }
 
     @Override
     public boolean populateModel(ClientModelDTO container) {
 
-        model = new ClientModel();
         populateBank(container.getResources(), container.getDevCards());
 
         populateBoard(container.getMap());
@@ -55,18 +65,16 @@ public class Populator extends Observable implements iPopulator {
         model.setVersion(container.getVersion());
         model.setWinner(container.getWinner());
         
-        Data.initModel(model);
-
-        model.notifyObservers();
+        notifyObservers(facade);
 
         return true;
     }
 
     private void populateUserManager(PlayerDTO[] players,
             TurnTrackerDTO turnTracker) {
-        List<Player> users = new ArrayList<Player>();
-        for (int i = 0; i < players.length; i++) {
-            users.add(new Player(players[i]));
+        List<Player> users = new ArrayList<>();
+        for (PlayerDTO player : players) {
+            users.add(new Player(player));
         }
 
         model.setUserManager(new UserManager(users, new TurnTracker(turnTracker)));

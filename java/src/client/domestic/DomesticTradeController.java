@@ -3,11 +3,16 @@ package client.domestic;
 import shared.definitions.*;
 import client.base.*;
 import client.misc.*;
+import client.model.Populator;
+import java.util.Observable;
+import java.util.Observer;
+import shared.models.ModelFacade;
 
 /**
  * Domestic trade controller implementation
  */
-public class DomesticTradeController extends Controller implements IDomesticTradeController {
+public class DomesticTradeController extends Controller 
+    implements IDomesticTradeController, Observer {
 
     private IDomesticTradeOverlay tradeOverlay;
     private IWaitView waitOverlay;
@@ -29,7 +34,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
             IWaitView waitOverlay, IAcceptTradeOverlay acceptOverlay) {
 
         super(tradeView);
-
+        Populator.getInstance().addObserver(this);
         setTradeOverlay(tradeOverlay);
         setWaitOverlay(waitOverlay);
         setAcceptOverlay(acceptOverlay);
@@ -117,6 +122,13 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
     public void acceptTrade(boolean willAccept) {
 
         getAcceptOverlay().closeModal();
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if (o instanceof Populator && arg instanceof ModelFacade) {
+            
+        }
     }
 
 }

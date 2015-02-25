@@ -26,7 +26,7 @@ import shared.models.DTO.params.YearOfPlenty;
  *
  * @author Mikey Murphy <mikeyamadeo@gmail.com>
  */
-public class ClientModel extends Observable {
+public class ClientModel {
 
     private Bank bank;
     private Board board;
@@ -46,8 +46,6 @@ public class ClientModel extends Observable {
         userManager = null;
         tradeOffer = null;
 
-        //TODO: add observers
-        setChanged();
     }
 
     /**
