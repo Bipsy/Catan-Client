@@ -132,10 +132,9 @@ public class Board {
         return roads;
     }
 
-    public void setRoad(List<Road> road) {
-        this.roads = road;
-        for (int i = 0; i < road.size(); i++) {
-            roadMap.put(road.get(i).getLocation().getNormalizedLocation(), road.get(i));
+    public void setRoad(Road road) {
+        if (road != null) {
+            roadMap.put(road.getLocation().getNormalizedLocation(), road);
         }
     }
 
@@ -194,11 +193,11 @@ public class Board {
     }
 
     public void setRoads(EdgeValueDTO[] roadArray) {
-        List<Road> temp = new ArrayList<Road>();
-        for (int i = 0; i < roadArray.length; i++) {
-            temp.add(new Road(roadArray[i]));
+        for (EdgeValueDTO road : roadArray) {
+            Road newRoad = new Road(road);
+            roads.add(newRoad);
+            setRoad(newRoad);
         }
-        setRoad(temp);
     }
 
     public void setSettlements(VertexObjectDTO[] settlementArray) {

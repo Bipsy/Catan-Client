@@ -21,7 +21,6 @@ public class PlayerWaitingController extends Controller
 
     public PlayerWaitingController(IPlayerWaitingView view) {
         super(view);
-        Catan.startPoller(2000);
         Populator.getInstance().addObserver(this);
     }
 
@@ -67,6 +66,7 @@ public class PlayerWaitingController extends Controller
 
     @Override
     public void start() {
+        Catan.startPoller(2000);
         ServerProxy proxy = ServerProxy.getInstance();
         IPlayerWaitingView view = getView();
         setViewPlayers(view, proxy);
@@ -83,6 +83,7 @@ public class PlayerWaitingController extends Controller
     public void update(Observable o, Object arg) {
         	System.out.println("PLayer Joined");
         if (o instanceof Populator && arg instanceof ModelFacade) {
+            System.out.println("I was told to update");
         }
     }
     
