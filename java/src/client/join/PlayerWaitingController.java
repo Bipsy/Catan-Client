@@ -40,8 +40,9 @@ public class PlayerWaitingController extends Controller
                 if (game.getId() == gameNumber) {
                     List<PlayerInfo> players = game.getPlayers();
                     for (int i = 0; i < players.size(); i++) {
-                        System.out.println(players.get(i).getName() + players.get(i).getColor());					}
-                        view.setPlayers(players.toArray(new PlayerInfo[players.size()]));
+                        System.out.println(players.get(i).getName() + players.get(i).getColor());					
+                    }
+                    view.setPlayers(players.toArray(new PlayerInfo[players.size()]));
                     break;
                 }
             }
