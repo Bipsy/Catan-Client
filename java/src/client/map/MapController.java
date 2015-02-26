@@ -48,9 +48,11 @@ public class MapController extends Controller
         if (facade == null || !facade.hasModel()) return;
                 
         for (int i = 0; i < facade.NumberOfHexes(); i++) {
-        	Hex hex = facade.GetHexAt(i);
-        	getView().addHex(hex.getLocation(), hex.getResource()); 
-            getView().addNumber(hex.getLocation(), hex.getChit());
+            Hex hex = facade.GetHexAt(i);
+            if (hex != null) {
+                getView().addHex(hex.getLocation(), hex.getResource()); 
+                getView().addNumber(hex.getLocation(), hex.getChit());
+            }
 
         }
         

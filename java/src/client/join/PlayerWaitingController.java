@@ -3,6 +3,7 @@ package client.join;
 import client.base.*;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
+import client.main.Catan;
 import client.model.ModelFacade;
 import client.model.Populator;
 import client.network.ServerProxy;
@@ -38,14 +39,13 @@ public class PlayerWaitingController extends Controller
                 if (game.getId() == gameNumber) {
                     List<PlayerInfo> players = game.getPlayers();
                     for (int i = 0; i < players.size(); i++) {
-						System.out.println(players.get(i).getName() + players.get(i).getColor());
-					}
+                        System.out.println(players.get(i).getName() + players.get(i).getColor());					
+                    }
                     view.setPlayers(players.toArray(new PlayerInfo[players.size()]));
                     break;
                 }
             }
         } catch (IOException ex) {
-            System.out.println("Exception while starting view controller");
             ex.printStackTrace();
         }
     }
@@ -66,6 +66,7 @@ public class PlayerWaitingController extends Controller
 
     @Override
     public void start() {
+        Catan.startPoller(2000);
         ServerProxy proxy = ServerProxy.getInstance();
         IPlayerWaitingView view = getView();
         setViewPlayers(view, proxy);
@@ -75,13 +76,15 @@ public class PlayerWaitingController extends Controller
 
     @Override
     public void addAI() {
+    
     }
     
         @Override
     public void update(Observable o, Object arg) {
+        	System.out.println("PLayer Joined");
         if (o instanceof Populator && arg instanceof ModelFacade) {
-            
+            System.out.println("I was told to update");
         }
     }
-
+    
 }

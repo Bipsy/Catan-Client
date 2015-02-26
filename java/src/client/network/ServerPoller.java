@@ -22,7 +22,6 @@ import shared.models.DTO.ClientModelDTO;
 public class ServerPoller implements ActionListener {
 
     final private iServerProxy serverProxy;
-
     final private iPopulator modelHandle;
     private int version;
 
@@ -30,13 +29,13 @@ public class ServerPoller implements ActionListener {
      * @param proxy The proxy object that the poller will use to update the
      * client model
      *
-     * @param facade The facade object that will receive the serialized model
+     * @param populator The facade object that will receive the serialized model
      * @param version The initial version of the client model.
      */
-    public ServerPoller(iServerProxy proxy, iPopulator facade, int version) {
+    public ServerPoller(iServerProxy proxy, iPopulator populator, int version) {
 
         this.serverProxy = proxy;
-        this.modelHandle = facade;
+        this.modelHandle = populator;
         this.version = version;
     }
 

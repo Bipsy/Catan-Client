@@ -7,6 +7,10 @@ import client.login.*;
 import client.join.*;
 import client.misc.*;
 import client.base.*;
+import client.model.Populator;
+import client.network.ProxyAlreadyInstantiated;
+import client.network.ServerPoller;
+import client.network.ServerProxy;
 
 /**
  * Main entry point for the Catan program
@@ -15,8 +19,9 @@ import client.base.*;
 public class Catan extends JFrame {
 
     private CatanPanel catanPanel;
+    private static Timer pollerTimer;
 
-    public Catan() {
+    public Catan(String hostname, String port) {
 
         client.base.OverlayView.setWindow(this);
 
@@ -25,8 +30,27 @@ public class Catan extends JFrame {
 
         catanPanel = new CatanPanel();
         this.setContentPane(catanPanel);
+        initializeNetwork(hostname, port);
 
         display();
+    }
+    
+    // TODO initialize pr
+    private void initializeNetwork(String hostname, String port) {
+        try {
+            ServerProxy.init(hostname, port);
+        } catch (ProxyAlreadyInstantiated ex) {
+            System.err.println("Server Proxy was already instantiated");
+        }
+    }
+    
+    public static void startPoller(int millis) {
+        ServerProxy proxy = ServerProxy.getInstance();
+        Populator populator = Populator.getInstance();
+        ServerPoller poller = new ServerPoller(proxy, populator, -1);
+        pollerTimer = new Timer(millis, poller);
+        pollerTimer.setInitialDelay(0);
+        pollerTimer.start();
     }
 
     private void display() {
@@ -46,8 +70,12 @@ public class Catan extends JFrame {
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new Catan();
-
+                if (args.length > 1) {
+                    new Catan(args[0], args[1]);
+                } else {
+                    new Catan(null, null);
+                }
+                
                 PlayerWaitingView playerWaitingView = new PlayerWaitingView();
                 final PlayerWaitingController playerWaitingController = new PlayerWaitingController(
                         playerWaitingView);
@@ -87,6 +115,7 @@ public class Catan extends JFrame {
                 loginView.setController(loginController);
                 loginView.setController(loginController);
 
+                
                 loginController.start();
             }
         });

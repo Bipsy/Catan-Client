@@ -46,8 +46,9 @@ public class ServerProxy implements iServerProxy {
     public int getGameNumber() {
         return gameNum;
     }
-
-    public static void init(String host, String port) throws ProxyAlreadyInstantiated {
+    
+    public static void init(String host, String port) 
+            throws ProxyAlreadyInstantiated {
         if (instance == null) {
             if (host != null) {
                 serverHost = host;
@@ -115,7 +116,6 @@ public class ServerProxy implements iServerProxy {
             connection.setDoOutput(true);
 
             connection.connect();
-//            System.out.println(jsonString);
             byte[] outputBytes = jsonString.getBytes("UTF-8");
             OutputStream os = connection.getOutputStream();
             os.write(outputBytes);
@@ -128,7 +128,6 @@ public class ServerProxy implements iServerProxy {
                     String cookieField = connection.getHeaderField(COOKIE_HEADER);
                     if (cookieField != null && cookieField.contains("catan.game")) {
                         gameCookie = extractGameCookie(cookieField);
-                        System.out.println(gameCookie);
                         gameNum = Integer.parseInt(gameCookie);
                     } else if (cookieField != null && cookieField.contains("catan.user")) {
                         userCookie = extractUserCookie(cookieField);
@@ -172,7 +171,7 @@ public class ServerProxy implements iServerProxy {
     @Override
     public Pair<Boolean, Integer> registerNewUser(UserCredentials user) throws IOException {
         String params = serializer.serialize(user);
-        Pair<String, Integer> result = doPost("/user/register", params, false);
+        Pair<String, Integer> result = doPost("/user/register", params, true);
         String message = result.getValue0();
         int code = result.getValue1();
         if (message.compareTo("Success") == 0) {
@@ -321,9 +320,10 @@ public class ServerProxy implements iServerProxy {
     }
 
     @Override
-    public void joinGame(JoinGameRequest game) throws IOException {
+    public Integer joinGame(JoinGameRequest game) throws IOException {
         String params = serializer.serialize(game);
         Pair<String, Integer> result = doPost("/games/join", params, true);
+        return result.getValue1();
     }
 
 //    @Override
@@ -390,15 +390,7 @@ public class ServerProxy implements iServerProxy {
     }
 
     private void storeCookies(String result) {
-    	System.out.println(result);
     	uCookie = serializer.deserializeUserCookie(result);
-//        String[] split = result.split("\"");
-//        username = split[3];
-//        password = split[7];
-//        String playerIDtemp = split[10];
-//        String[] IDsplit = playerIDtemp.split(":");
-//        String[] IDsplit2 = IDsplit[1].split("}");
-//        playerID = Integer.parseInt(IDsplit2[0]);
     }
 
 }
