@@ -75,6 +75,7 @@ public class ServerPoller implements ActionListener {
 
     private boolean updateModel(ClientModelDTO model) {
         if (model == null) {
+            System.out.println("Model was null");
             return false;
         } else {
             return modelHandle.populateModel(model);

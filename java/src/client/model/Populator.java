@@ -64,6 +64,7 @@ public class Populator extends Observable implements iPopulator {
         model.setVersion(container.getVersion());
         model.setWinner(container.getWinner());
         
+        setChanged();
         notifyObservers(facade);
 
         return true;
