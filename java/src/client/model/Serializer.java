@@ -34,7 +34,8 @@ public class Serializer implements iSerializer {
     }
 
     public ClientModelDTO deserializeModel(String JSON) throws IOException {
-        return gson.fromJson(JSON, ClientModelDTO.class);
+    	ClientModelDTO result = gson.fromJson(JSON, ClientModelDTO.class);
+    	return result;
     }
 
     public String serializeModel(ClientModelDTO container) {
