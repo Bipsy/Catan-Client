@@ -36,6 +36,8 @@ public class ServerProxy implements iServerProxy {
     private int gameNum = -1;
 
     private static ServerProxy instance;
+    
+    private ServerProxy(){}
 
     public UserCookie getUserCookie() {
     	return uCookie;

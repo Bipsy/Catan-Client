@@ -17,6 +17,9 @@ public class MapController extends Controller
     implements IMapController, Observer {
 
     private IRobView robView;
+    private State state;
+    private String currState;
+    private ModelFacade facade = new ModelFacade();
 
     public MapController(IMapView view, IRobView robView) {
 
@@ -27,7 +30,8 @@ public class MapController extends Controller
         initFromModel(null);
     }
 
-    public IMapView getView() {
+
+	public IMapView getView() {
 
         return (IMapView) super.getView();
     }
@@ -142,7 +146,7 @@ public class MapController extends Controller
 
     public boolean canPlaceRoad(EdgeLocation edgeLoc) {
 
-        return true;
+        return state.canPlaceRoad(edgeLoc);
     }
 
     public boolean canPlaceSettlement(VertexLocation vertLoc) {
@@ -202,13 +206,42 @@ public class MapController extends Controller
     public void robPlayer(RobPlayerInfo victim) {
 
     }
+    
+    public void updateState(String currState) {
+    	switch (currState) {
+    		case "FirstRound":
+    			state = new State.Setup();
+    			break;
+    		case "SecondRound":
+    			state = new State.Setup();
+    			break;
+    		case "Rolling":
+    			state = new State.Rolling();
+    			break;
+    		case "Robbing":
+    			state = new State.MoveRobber();
+    			break;
+    		case "Playing":
+    			state = new State.Playing();
+    			break;
+    		case "Discarding":
+    			state = new State.Discarding();
+    			break;
+			default:
+				break;
+    		
+    	}
+    }
 
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof Populator && arg instanceof ModelFacade) {
             ModelFacade facade = (ModelFacade) arg;
             initFromModel(facade);
+    		currState = facade.getState();
+    		updateState(currState);
         }
+        
     }
 
 }
