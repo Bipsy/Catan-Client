@@ -105,7 +105,10 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     public void start() {
         try {
         	UserCookie uCookie = proxy.getUserCookie();
-        	System.out.println("Player Id" + uCookie.getPlayerID());
+        	if(uCookie != null)
+        		System.out.println("Player Id" + uCookie.getPlayerID());
+        	else
+        		System.out.println("Null Player");
 
         	games = proxy.listGames();
 
@@ -164,7 +167,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
         localGame = game;
 		List<PlayerInfo> players = game.getPlayers();
         for (PlayerInfo player : players) {
-        	System.out.println(player.getColor().toString() + player.getId() + player.getName() + localPlayer.getId());
         	if(player.getId() == localPlayer.getId())
         		continue;
             CatanColor playerColor = player.getColor();

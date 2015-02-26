@@ -86,7 +86,6 @@ public class Serializer implements iSerializer {
     }
 
     public List<GameInfo> deserializeGameInfoList(String JSON) {
-    	System.out.println(JSON);
         Type listType = new TypeToken<ArrayList<GameInfo>>() {
         }.getType();
         List<GameInfo> games =  gson.fromJson(JSON, listType);
@@ -95,12 +94,10 @@ public class Serializer implements iSerializer {
         	List<PlayerInfo> newPlayerList = new ArrayList<PlayerInfo>();
         	for(PlayerInfo player : playerList) {
         		if(player.getName() != null) {
-        			System.out.println("Not Null Player" + player.getId() + player.getName() + player.getPlayerIndex());
         			newPlayerList.add(player);
         		}
         	}
         	game.setPlayers(newPlayerList);
-        	System.out.println("Game " + game.getId() + " Number of Players: " + newPlayerList.size());
         }
         return games;
     }

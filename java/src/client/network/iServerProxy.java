@@ -295,9 +295,10 @@ public interface iServerProxy {
      * @post a player is added to the game with the specified color and the
      * model is updated or an error message
      * @param game DTO that specifies the game the user would like to join.
+     * @return 
      * @throws IOException
      */
-    void joinGame(JoinGameRequest game) throws IOException;
+    Integer joinGame(JoinGameRequest game) throws IOException;
 
     /**
      * Sends a request to the server to save a game

@@ -172,7 +172,7 @@ public class ServerProxy implements iServerProxy {
     @Override
     public Pair<Boolean, Integer> registerNewUser(UserCredentials user) throws IOException {
         String params = serializer.serialize(user);
-        Pair<String, Integer> result = doPost("/user/register", params, false);
+        Pair<String, Integer> result = doPost("/user/register", params, true);
         String message = result.getValue0();
         int code = result.getValue1();
         if (message.compareTo("Success") == 0) {
@@ -321,9 +321,10 @@ public class ServerProxy implements iServerProxy {
     }
 
     @Override
-    public void joinGame(JoinGameRequest game) throws IOException {
+    public Integer joinGame(JoinGameRequest game) throws IOException {
         String params = serializer.serialize(game);
         Pair<String, Integer> result = doPost("/games/join", params, true);
+        return result.getValue1();
     }
 
 //    @Override
