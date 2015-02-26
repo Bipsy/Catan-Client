@@ -1,7 +1,8 @@
 package shared.models;
 
-import java.util.Observable;
+import java.util.List;
 
+import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.models.DTO.params.BuildCity;
 import shared.models.DTO.params.BuildRoad;
@@ -31,6 +32,7 @@ public class ClientModel {
     private Bank bank;
     private Board board;
     private ChatObject chatObject;
+    private User user;
     private UserManager userManager;
     private TradeOffer tradeOffer;
     private int version;
@@ -81,8 +83,12 @@ public class ClientModel {
     /**
      * CHAT OBJECT
      */
-    public ChatObject getChatObject() {
-        return chatObject;
+    public List<Message> getLogObject() {
+        return chatObject.log;
+    }
+    
+    public List<Message> getChatObject() {
+    	return chatObject.chat;
     }
 
     public void setChatObject(ChatObject chatObject) {
@@ -284,4 +290,8 @@ public class ClientModel {
 
         return isTurn && hasRolled;
     }
+    
+//    public CatanColor getUserColor(String user) {
+//    	return user.getColor(user);
+//    }
 }

@@ -19,7 +19,6 @@ public class MapController extends Controller
     private IRobView robView;
     private State state;
     private String currState;
-    private ModelFacade facade = new ModelFacade();
 
     public MapController(IMapView view, IRobView robView) {
 
@@ -45,40 +44,40 @@ public class MapController extends Controller
     }
 
     protected void initFromModel(ModelFacade facade) {
-    	System.out.println("I LOVE TACOOOOOOOOOOOSSSSSSSSSS");
-//        if (facade == null || !facade.hasModel()) return;
-//                
-//        for (int i = 0; i < facade.NumberOfHexes(); i++) {
-//        	Hex hex = facade.GetHexAt(i);
-//        	getView().addHex(hex.getLocation(), hex.getResource()); 
-//            getView().addNumber(hex.getLocation(), hex.getChit());
-//
-//        }
-//        
-//        for (int i = 0; i < facade.NumberOfRoads(); i++) {
-//        	Road road = facade.GetRoadAt(i);
-//        	getView().placeRoad(road.getLocation(), facade.GetPlayerColor(road.getOwner()));
-//        }
-//        
-//        for (int i = 0; i < facade.NumberOfCities(); i++) {
-//        	VertexObject city = facade.GetCityAt(i);        	
-//            getView().placeCity(city.getLocation(), facade.GetPlayerColor(city.getOwner()));
-//        }
-//        
-//        for (int i = 0; i < facade.NumberOfSettlements(); i++) {
-//        	VertexObject settlement = facade.GetSettlementAt(i);
-//            getView().placeSettlement(settlement.getLocation(), facade.GetPlayerColor(settlement.getOwner()));
-//        }
-//        
-//        
-//        for (int i = 0; i < facade.NumberOfHarbors(); i++) {
-//        	Harbor port = facade.GetHarborAt(i); 
-//            getView().addPort(port.getLocation(), port.getResource()); 
-//        }
-//        
-//        getView().placeRobber(facade.GetRobber().getLocation());
+        if (facade == null || !facade.hasModel()) return;
+                
+        for (int i = 0; i < facade.NumberOfHexes(); i++) {
+        	Hex hex = facade.GetHexAt(i);
+        	getView().addHex(hex.getLocation(), hex.getResource()); 
+            getView().addNumber(hex.getLocation(), hex.getChit());
+
+        }
         
-         //<temp>
+        for (int i = 0; i < facade.NumberOfRoads(); i++) {
+        	Road road = facade.GetRoadAt(i);
+        	getView().placeRoad(road.getLocation(), facade.GetPlayerColor(road.getOwner()));
+        }
+        
+        for (int i = 0; i < facade.NumberOfCities(); i++) {
+        	VertexObject city = facade.GetCityAt(i);        	
+            getView().placeCity(city.getLocation(), facade.GetPlayerColor(city.getOwner()));
+        }
+        
+        for (int i = 0; i < facade.NumberOfSettlements(); i++) {
+        	VertexObject settlement = facade.GetSettlementAt(i);
+            getView().placeSettlement(settlement.getLocation(), facade.GetPlayerColor(settlement.getOwner()));
+        }
+        
+        
+        for (int i = 0; i < facade.NumberOfHarbors(); i++) {
+        	Harbor port = facade.GetHarborAt(i); 
+            getView().addPort(port.getLocation(), port.getResource()); 
+        }
+        
+        getView().placeRobber(facade.GetRobber().getLocation());
+        
+        /*
+         * //<temp>
         Random rand = new Random();
 
         for (int x = 0; x <= 3; ++x) {
@@ -140,7 +139,7 @@ public class MapController extends Controller
         getView().addNumber(new HexLocation(2, 0), 12);
 
         //</temp>
-       
+         */
 
     }
 

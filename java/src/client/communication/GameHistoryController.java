@@ -17,7 +17,7 @@ public class GameHistoryController extends Controller
 
         super(view);
         Populator.getInstance().addObserver(this);
-        initFromModel();
+        initFromModel(null);
     }
 
     @Override
@@ -26,28 +26,28 @@ public class GameHistoryController extends Controller
         return (IGameHistoryView) super.getView();
     }
 
-    private void initFromModel() {
+    private void initFromModel(ModelFacade facade) {
 
-        //<temp>
         List<LogEntry> entries = new ArrayList<LogEntry>();
-        entries.add(new LogEntry(CatanColor.BROWN, "This is a brown message"));
-        entries.add(new LogEntry(CatanColor.ORANGE, "This is an orange message ss x y z w.  This is an orange message.  This is an orange message.  This is an orange message."));
-        entries.add(new LogEntry(CatanColor.BROWN, "This is a brown message"));
-        entries.add(new LogEntry(CatanColor.ORANGE, "This is an orange message ss x y z w.  This is an orange message.  This is an orange message.  This is an orange message."));
-        entries.add(new LogEntry(CatanColor.BROWN, "This is a brown message"));
-        entries.add(new LogEntry(CatanColor.ORANGE, "This is an orange message ss x y z w.  This is an orange message.  This is an orange message.  This is an orange message."));
-        entries.add(new LogEntry(CatanColor.BROWN, "This is a brown message"));
-        entries.add(new LogEntry(CatanColor.ORANGE, "This is an orange message ss x y z w.  This is an orange message.  This is an orange message.  This is an orange message."));
-
+        
+    	if (facade == null) {
+            entries.add(new LogEntry(CatanColor.BROWN, "There are no messages yet"));
+    	} else {
+	        for (int i=0; i<=facade.getLogObject().size(); i++) {
+	        	//entries.add(new LogEntry(facade.getPlayerColor(facade.getLogObject().get(i).getSource()), facade.getLogObject().get(i).getMessage()));
+	        	entries.add(new LogEntry(CatanColor.ORANGE, "tacos"));
+}
+    	}
+        
         getView().setEntries(entries);
-
-        //</temp>
     }
 
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof Populator && arg instanceof ModelFacade) {
-            
+        	System.out.println("Am I updating the Log model?");
+            ModelFacade facade = (ModelFacade) arg;
+            initFromModel(facade);
         }
     }
 

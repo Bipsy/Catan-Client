@@ -1,13 +1,15 @@
 package client.model;
 
+import java.util.List;
+
 import shared.models.ClientModel;
 import shared.models.Harbor;
 import shared.models.Hex;
+import shared.models.Message;
 import shared.models.Road;
 import shared.models.Robber;
 import shared.models.VertexObject;
 import shared.models.DTO.params.*;
-import shared.models.DTO.*;
 import shared.definitions.*;
 import client.storage.Data;
 
@@ -27,7 +29,19 @@ public class ModelFacade {
     public String getState() {
     	return models.getStatus();
     }
+    
+    public List<Message> getLogObject() {
+    	return models.getLogObject();
+    }
+    
+    public List<Message> getChatObject() {
+    	return models.getChatObject();
+    }
 
+//    public CatanColor getPlayerColor(String user) {
+//    	return models.getUserColor(user);
+//    }
+    
     public boolean CanDiscardCards(DiscardCards discardCards) {
         return models != null && models.CanDiscardCards(discardCards);
     }
