@@ -56,6 +56,10 @@ public class UserManager {
     public int getNumPlayers() {
         return users.size();
     }
+    
+    public String getCurrentTurn() {
+    	return turnTracker.getStatus();
+    }
 
     public void setCurrentUser(int index) {
         if (index >= 0 && index < 4) {

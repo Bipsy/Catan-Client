@@ -15,7 +15,7 @@ public class ChatObject {
     }
 
     public ChatObject(MessageLineDTO[] chat, MessageLineDTO[] log) {
-        this.log = convertToMessages(chat);
+        this.chat = convertToMessages(chat);
         this.log = convertToMessages(log);
     }
 

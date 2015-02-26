@@ -50,6 +50,10 @@ public class User {
     public CatanColor getColor() {
         return color;
     }
+    
+//    public CatanColor getColor(String user) {
+//    	return 
+//    }
 
     public void setColor(CatanColor color) {
         this.color = color;

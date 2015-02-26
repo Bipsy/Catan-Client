@@ -1,6 +1,6 @@
 package shared.models;
 
-import java.util.Observable;
+import java.util.List;
 
 import shared.definitions.ResourceType;
 import shared.models.DTO.params.BuildCity;
@@ -34,7 +34,6 @@ public class ClientModel {
     private UserManager userManager;
     private TradeOffer tradeOffer;
     private int version;
-    private TurnTracker turn;
     //Player index of the game winner
     private int winner;
 
@@ -74,15 +73,21 @@ public class ClientModel {
         this.board = board;
     }
     
-    public String getStatus() {
-    	return turn.getStatus();
-    }
+//    public String getStatus() {
+//    	System.out.println("RETURNING STATUS FROM THE CLIENTMODEL");
+//    	System.out.println(turn.getStatus());
+//    	return turn.getStatus();
+//    }
 
     /**
      * CHAT OBJECT
      */
-    public ChatObject getChatObject() {
-        return chatObject;
+    public List<Message> getLogObject() {
+        return chatObject.log;
+    }
+    
+    public List<Message> getChatObject() {
+    	return chatObject.chat;
     }
 
     public void setChatObject(ChatObject chatObject) {
@@ -98,6 +103,10 @@ public class ClientModel {
 
     public void setUserManager(UserManager userManager) {
         this.userManager = userManager;
+    }
+    
+    public String getStatus() {
+    	return userManager.turnTracker.getStatus();
     }
 
     /**
@@ -284,4 +293,8 @@ public class ClientModel {
 
         return isTurn && hasRolled;
     }
+    
+//    public CatanColor getUserColor(String user) {
+//    	return user.getColor(user);
+//    }
 }
