@@ -99,7 +99,7 @@ public class Populator extends Observable implements iPopulator {
         board.setRoads(map.getRoads());
         System.out.println("Roads placed");
 
-//        board.setSettlements(map.getSettlements());
+        board.setSettlements(map.getSettlements());
         System.out.println("Settlements placed");
 
 //        board.setCities(map.getCities());
