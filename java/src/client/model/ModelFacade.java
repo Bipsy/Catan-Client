@@ -109,7 +109,10 @@ public class ModelFacade {
     //map data getters
     
     public int NumberOfHexes() {
-    	return models.getBoard().getHexes().size();
+    	if (models.getBoard().getHexes() != null)
+    		return models.getBoard().getHexes().size();
+    	else
+    		return 0;
     }
     
     public Hex GetHexAt(int i) {
@@ -120,7 +123,10 @@ public class ModelFacade {
     }
     
     public int NumberOfRoads() {
-    	return models.getBoard().getRoad().size();
+    	if (models.getBoard().getRoad() != null)
+    		return models.getBoard().getRoad().size();
+    	else
+    		return 0;
     }
     
     public Road GetRoadAt(int i) {
@@ -131,7 +137,10 @@ public class ModelFacade {
     }
     
     public int NumberOfSettlements() {
-    	return models.getBoard().getSettlements().size();
+    	if (models.getBoard().getSettlements() != null)
+    		return models.getBoard().getSettlements().size();
+    	else
+    		return 0;
     }
     
     public VertexObject GetSettlementAt(int i) {
@@ -142,7 +151,10 @@ public class ModelFacade {
     }
     
     public int NumberOfCities() {
-    	return models.getBoard().getCities().size();
+    	if (models.getBoard().getCities() != null)
+    		return models.getBoard().getCities().size();
+    	else
+    		return 0;
     }
     
     public VertexObject GetCityAt(int i) {
@@ -157,7 +169,10 @@ public class ModelFacade {
     }
     
     public int NumberOfHarbors() {
-    	return models.getBoard().getHarbor().size();
+    	if (models.getBoard().getHarbor() != null)
+    		return models.getBoard().getHarbor().size();
+    	else 
+    		return 0;
     }
     
     public Harbor GetHarborAt(int i) {

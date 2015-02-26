@@ -55,26 +55,32 @@ public class MapController extends Controller
         
         for (int i = 0; i < facade.NumberOfRoads(); i++) {
         	Road road = facade.GetRoadAt(i);
-        	getView().placeRoad(road.getLocation(), facade.GetPlayerColor(road.getOwner()));
+        	if (road != null)
+        		getView().placeRoad(road.getLocation(), facade.GetPlayerColor(road.getOwner()));
         }
         
         for (int i = 0; i < facade.NumberOfCities(); i++) {
-        	VertexObject city = facade.GetCityAt(i);        	
-            getView().placeCity(city.getLocation(), facade.GetPlayerColor(city.getOwner()));
+        	VertexObject city = facade.GetCityAt(i); 
+        	if (city != null)
+        		getView().placeCity(city.getLocation(), facade.GetPlayerColor(city.getOwner()));
         }
         
         for (int i = 0; i < facade.NumberOfSettlements(); i++) {
         	VertexObject settlement = facade.GetSettlementAt(i);
-            getView().placeSettlement(settlement.getLocation(), facade.GetPlayerColor(settlement.getOwner()));
+        	if (settlement != null)
+        		getView().placeSettlement(settlement.getLocation(), facade.GetPlayerColor(settlement.getOwner()));
         }
         
         
         for (int i = 0; i < facade.NumberOfHarbors(); i++) {
         	Harbor port = facade.GetHarborAt(i); 
-            getView().addPort(port.getLocation(), port.getResource()); 
+        	if (port != null)
+        		getView().addPort(port.getLocation(), port.getResource()); 
         }
         
-        getView().placeRobber(facade.GetRobber().getLocation());
+        Robber robber = facade.GetRobber();
+        if (robber != null)
+        	getView().placeRobber(robber.getLocation());
         
         /*
          * //<temp>
