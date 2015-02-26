@@ -48,6 +48,7 @@ public class Populator extends Observable implements iPopulator {
 
     @Override
     public boolean populateModel(ClientModelDTO container) {
+    	System.out.println("Populating model" + container.toString());
 
         populateBank(container.getResources(), container.getDevCards());
 
@@ -59,12 +60,13 @@ public class Populator extends Observable implements iPopulator {
 
         if (container.getTradeOffer() != null) {
             model.setTradeOffer(new TradeOffer(container.getTradeOffer()));
+        setChanged();
         }
 
         model.setVersion(container.getVersion());
         model.setWinner(container.getWinner());
         
-        setChanged();
+        System.out.println("Updated");
         notifyObservers(facade);
 
         return true;
