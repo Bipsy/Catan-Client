@@ -151,17 +151,17 @@ public class MapController extends Controller
 
     public boolean canPlaceSettlement(VertexLocation vertLoc) {
 
-        return true;
+        return state.canPlaceSettlement(vertLoc);
     }
 
     public boolean canPlaceCity(VertexLocation vertLoc) {
 
-        return true;
+        return state.canPlaceCity(vertLoc);
     }
 
     public boolean canPlaceRobber(HexLocation hexLoc) {
 
-        return true;
+        return state.canPlaceRobber(hexLoc);
     }
 
     public void placeRoad(EdgeLocation edgeLoc) {
