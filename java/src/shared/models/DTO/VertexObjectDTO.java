@@ -14,14 +14,9 @@ import shared.locations.VertexLocation;
 public class VertexObjectDTO {
 
     private int owner;
-    private VertexLocation location;
+    private VertexLocationDTO location;
 
-    public VertexObjectDTO() {
-        owner = -1;
-        location = null;
-    }
-
-    public VertexObjectDTO(int owner, VertexLocation location) {
+    public VertexObjectDTO(int owner, VertexLocationDTO location) {
         this.owner = owner;
         this.location = location;
     }
@@ -44,11 +39,11 @@ public class VertexObjectDTO {
         this.owner = owner;
     }
 
-    public VertexLocation getLocation() {
+    public VertexLocationDTO getLocation() {
         return location;
     }
 
-    public void setLocation(VertexLocation location) {
+    public void setLocation(VertexLocationDTO location) {
         this.location = location;
     }
 

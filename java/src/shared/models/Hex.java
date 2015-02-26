@@ -8,6 +8,8 @@ import shared.models.DTO.HexDTO;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gson.annotations.SerializedName;
+
 import shared.definitions.HexType;
 
 /**
@@ -25,8 +27,13 @@ public class Hex {
     private Map<VertexLocation, VertexObject> communityMap;
 
     public Hex(HexDTO hexDTO) {
+//    	System.out.println(hexDTO.getLocation());
+//    	System.out.println(hexDTO.getNumber());
+//    	System.out.println(hexDTO.getResource());
         this.location = new HexLocation(hexDTO.getLocation());
         this.resource = hexDTO.getResource();
+        if(this.resource == null)
+        	this.resource = HexType.DESERT;
         this.chit = hexDTO.getNumber();
     }
 
@@ -100,12 +107,12 @@ public class Hex {
         this.resource = resource;
     }
 
-    public Integer getChit() {
+    public Integer getNumber() {
         return chit;
     }
 
-    public void setChit(Integer chit) {
-        this.chit = chit;
+    public void setNumber(Integer number) {
+        this.chit = number;
     }
 
     public Map<EdgeLocation, Road> getRoadMap() {

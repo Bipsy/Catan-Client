@@ -15,6 +15,7 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
+import shared.models.DTO.EdgeLocationDTO;
 import shared.models.DTO.EdgeValueDTO;
 import shared.models.DTO.ResourceListDTO;
 import shared.models.DTO.params.*;
@@ -135,8 +136,8 @@ public class ModelFacadeTest {
      */
     @Test
     public void testCanBuildSettlement() {
-        Road peteRoad = new Road(new EdgeValueDTO(2, new EdgeLocation(new HexLocation(-1, -1), EdgeDirection.NorthEast)));
-        Road samRoad = new Road(new EdgeValueDTO(0, new EdgeLocation(new HexLocation(-2, 3), EdgeDirection.NorthEast)));
+        Road peteRoad = new Road(new EdgeValueDTO(2, new EdgeLocationDTO(-1, -1, EdgeDirection.NorthEast)));
+        Road samRoad = new Road(new EdgeValueDTO(0, new EdgeLocationDTO(-2, 3, EdgeDirection.NorthEast)));
         model.getBoard().addRoad(peteRoad);
         model.getBoard().addRoad(samRoad);
 

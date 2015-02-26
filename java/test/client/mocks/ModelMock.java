@@ -101,25 +101,25 @@ public class ModelMock {
             new HexDTO(new HexLocation(0, 2), "wheat", 8)
         };
         EdgeValueDTO[] roads = {
-            new EdgeValueDTO(2, new EdgeLocation(new HexLocation(1, -1), EdgeDirection.South)),
-            new EdgeValueDTO(3, new EdgeLocation(new HexLocation(2, -2), EdgeDirection.SouthWest)),
-            new EdgeValueDTO(0, new EdgeLocation(new HexLocation(0, 1), EdgeDirection.South)),
-            new EdgeValueDTO(1, new EdgeLocation(new HexLocation(-2, 1), EdgeDirection.SouthWest)),
-            new EdgeValueDTO(2, new EdgeLocation(new HexLocation(0, 0), EdgeDirection.South)),
-            new EdgeValueDTO(0, new EdgeLocation(new HexLocation(2, 0), EdgeDirection.SouthWest)),
-            new EdgeValueDTO(1, new EdgeLocation(new HexLocation(-1, -1), EdgeDirection.South)),
-            new EdgeValueDTO(3, new EdgeLocation(new HexLocation(-1, 1), EdgeDirection.SouthWest))
+            new EdgeValueDTO(2, new EdgeLocationDTO(1, -1, EdgeDirection.South)),
+            new EdgeValueDTO(3, new EdgeLocationDTO(2, -2, EdgeDirection.SouthWest)),
+            new EdgeValueDTO(0, new EdgeLocationDTO(0, 1, EdgeDirection.South)),
+            new EdgeValueDTO(1, new EdgeLocationDTO(-2, 1, EdgeDirection.SouthWest)),
+            new EdgeValueDTO(2, new EdgeLocationDTO(0, 0, EdgeDirection.South)),
+            new EdgeValueDTO(0, new EdgeLocationDTO(2, 0, EdgeDirection.SouthWest)),
+            new EdgeValueDTO(1, new EdgeLocationDTO(-1, -1, EdgeDirection.South)),
+            new EdgeValueDTO(3, new EdgeLocationDTO(-1, 1, EdgeDirection.SouthWest))
         };
         VertexObjectDTO[] cities = new VertexObjectDTO[0];
         VertexObjectDTO[] settlements = {
-            new VertexObjectDTO(3, new VertexLocation(new HexLocation(1, -2), VertexDirection.SouthEast)),
-            new VertexObjectDTO(2, new VertexLocation(new HexLocation(0, 0), VertexDirection.SouthWest)),
-            new VertexObjectDTO(2, new VertexLocation(new HexLocation(1, -1), VertexDirection.SouthWest)),
-            new VertexObjectDTO(1, new VertexLocation(new HexLocation(-1, -1), VertexDirection.SouthEast)),
-            new VertexObjectDTO(0, new VertexLocation(new HexLocation(0, 1), VertexDirection.SouthEast)),
-            new VertexObjectDTO(1, new VertexLocation(new HexLocation(-2, 1), VertexDirection.SouthWest)),
-            new VertexObjectDTO(0, new VertexLocation(new HexLocation(2, 0), VertexDirection.SouthWest)),
-            new VertexObjectDTO(3, new VertexLocation(new HexLocation(-1, 1), VertexDirection.SouthWest))
+            new VertexObjectDTO(3, new VertexLocationDTO(1, -2, VertexDirection.SouthEast)),
+            new VertexObjectDTO(2, new VertexLocationDTO(0, 0, VertexDirection.SouthWest)),
+            new VertexObjectDTO(2, new VertexLocationDTO(1, -1, VertexDirection.SouthWest)),
+            new VertexObjectDTO(1, new VertexLocationDTO(-1, -1, VertexDirection.SouthEast)),
+            new VertexObjectDTO(0, new VertexLocationDTO(0, 1, VertexDirection.SouthEast)),
+            new VertexObjectDTO(1, new VertexLocationDTO(-2, 1, VertexDirection.SouthWest)),
+            new VertexObjectDTO(0, new VertexLocationDTO(2, 0, VertexDirection.SouthWest)),
+            new VertexObjectDTO(3, new VertexLocationDTO(-1, 1, VertexDirection.SouthWest))
         };
         PortDTO[] ports = {
             new PortDTO(3, null, new EdgeLocation(new HexLocation(3, -3), EdgeDirection.SouthWest)),

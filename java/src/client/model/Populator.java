@@ -48,7 +48,6 @@ public class Populator extends Observable implements iPopulator {
 
     @Override
     public boolean populateModel(ClientModelDTO container) {
-    	System.out.println("Populating model" + container.toString());
 
         populateBank(container.getResources(), container.getDevCards());
 
@@ -60,13 +59,12 @@ public class Populator extends Observable implements iPopulator {
 
         if (container.getTradeOffer() != null) {
             model.setTradeOffer(new TradeOffer(container.getTradeOffer()));
-        setChanged();
         }
 
         model.setVersion(container.getVersion());
         model.setWinner(container.getWinner());
-        
-        System.out.println("Updated");
+
+        setChanged();
         notifyObservers(facade);
 
         return true;
@@ -89,6 +87,8 @@ public class Populator extends Observable implements iPopulator {
     	System.out.println("Length of map, is it even valid: " + map.getHexes().length);
 
         Board board = new Board();
+        
+        board.setRadius(map.getRadius());
 
         board.setHexes(map.getHexes());
 
@@ -99,8 +99,6 @@ public class Populator extends Observable implements iPopulator {
         board.setSettlements(map.getSettlements());
 
         board.setCities(map.getCities());
-
-        board.setRadius(map.getRadius());
 
         board.setRobber(new Robber(map.getRobber()));
 

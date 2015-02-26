@@ -19,18 +19,15 @@ public class VertexObject {
     private PortType harbor;
     private VertexLocation location;
 
-    public VertexObject(VertexObjectDTO vertexObjectDTO, PieceType type) {
-        this.owner = vertexObjectDTO.getOwner();
-        setLocation(vertexObjectDTO.getLocation());
+    public VertexObject(VertexObjectDTO location, PieceType type) {
+        this.owner = location.getOwner();
+        this.location = new VertexLocation(location.getLocation());
         this.type = type;
         if (type == PieceType.SETTLEMENT) {
             this.resourceRatio = 2;
         } else {
             this.resourceRatio = 1;
         }
-        /**
-         * TODO: logic to determine PortType
-         */
     }
 
     /**

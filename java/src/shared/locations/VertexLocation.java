@@ -1,5 +1,8 @@
 package shared.locations;
 
+import shared.models.DTO.VertexLocationDTO;
+import shared.models.DTO.VertexObjectDTO;
+
 /**
  * Represents the location of a vertex on a hex map
  */
@@ -13,7 +16,12 @@ public class VertexLocation {
         setDir(direction);
     }
 
-    public HexLocation getHexLoc() {
+    public VertexLocation(VertexLocationDTO location) {
+    	this.direction = location.getDirection();
+    	this.vertexLocation = new HexLocation(location.getX(), location.getY());
+	}
+
+	public HexLocation getHexLoc() {
         return vertexLocation;
     }
 

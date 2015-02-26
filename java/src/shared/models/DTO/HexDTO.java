@@ -1,5 +1,7 @@
 package shared.models.DTO;
 
+import com.google.gson.annotations.SerializedName;
+
 import shared.definitions.HexType;
 import shared.locations.HexLocation;
 
@@ -20,6 +22,7 @@ public class HexDTO {
     /**
      * there is no number for desert or water tiles
      */
+    @SerializedName("number")
     private final Integer chit;
 
     public HexDTO(HexLocation newLocation, String resource,

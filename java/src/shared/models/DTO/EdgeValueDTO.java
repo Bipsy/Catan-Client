@@ -1,7 +1,6 @@
 package shared.models.DTO;
 
 import shared.exceptions.InvalidPlayerIndex;
-import shared.locations.EdgeLocation;
 
 /**
  * This class stores the information needed to create a JSON string of an edge
@@ -14,14 +13,14 @@ import shared.locations.EdgeLocation;
 public class EdgeValueDTO {
 
     private int owner;
-    private EdgeLocation location;
+    private EdgeLocationDTO location;
 
     public EdgeValueDTO() {
         owner = -1;
         location = null;
     }
 
-    public EdgeValueDTO(int newOwner, EdgeLocation newLocation) {
+    public EdgeValueDTO(int newOwner, EdgeLocationDTO newLocation) {
         owner = newOwner;
         location = newLocation;
     }
@@ -44,11 +43,11 @@ public class EdgeValueDTO {
         this.owner = owner;
     }
 
-    public EdgeLocation getLocation() {
+    public EdgeLocationDTO getLocation() {
         return location;
     }
 
-    public void setLocation(EdgeLocation location) {
+    public void setLocation(EdgeLocationDTO location) {
         this.location = location;
     }
 
