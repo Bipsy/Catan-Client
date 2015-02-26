@@ -92,6 +92,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		public void run() {
 			if(players < 4) {
 				players = parent.setViewPlayers(parent.getView(), proxy);
+				parent.getView().showModal();
 			}
 			else {
 				parent.getView().closeModal();
