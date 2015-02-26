@@ -50,8 +50,9 @@ public class MapController extends Controller
         for (int i = 0; i < facade.NumberOfHexes(); i++) {
             Hex hex = facade.GetHexAt(i);
             if (hex != null) {
-                getView().addHex(hex.getLocation(), hex.getResource()); 
-                getView().addNumber(hex.getLocation(), hex.getChit());
+                getView().addHex(hex.getLocation(), hex.getResource());
+                if(hex.getNumber() != null)
+                	getView().addNumber(hex.getLocation(), hex.getNumber());
             }
 
         }
@@ -245,6 +246,7 @@ public class MapController extends Controller
     public void update(Observable o, Object arg) {
         if (o instanceof Populator && arg instanceof ModelFacade) {
             ModelFacade facade = (ModelFacade) arg;
+            System.out.println(facade);
             initFromModel(facade);
     		currState = facade.getState();
     		updateState(currState);

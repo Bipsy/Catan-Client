@@ -85,31 +85,22 @@ public class Populator extends Observable implements iPopulator {
     private void populateBoard(MapDTO map) {
 
         Board board = new Board();
-        System.out.println("board initialized");
         
         board.setRadius(map.getRadius());
-        System.out.println("Radius set");
 
         board.setHexes(map.getHexes());
-        System.out.println("Hexes placed");
 
         board.setHarbor(map.getPorts());
-        System.out.println("Ports placed");
 
         board.setRoads(map.getRoads());
-        System.out.println("Roads placed");
 
         board.setSettlements(map.getSettlements());
-        System.out.println("Settlements placed");
 
-//        board.setCities(map.getCities());
-        System.out.println("Cities placed");
+        board.setCities(map.getCities());
 
         board.setRobber(new Robber(map.getRobber()));
-        System.out.println("Robber placed");
 
         model.setBoard(board);
-        System.out.println("board set");
 
     }
 
