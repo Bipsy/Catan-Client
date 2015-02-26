@@ -321,9 +321,10 @@ public class ServerProxy implements iServerProxy {
     }
 
     @Override
-    public void joinGame(JoinGameRequest game) throws IOException {
+    public Integer joinGame(JoinGameRequest game) throws IOException {
         String params = serializer.serialize(game);
         Pair<String, Integer> result = doPost("/games/join", params, true);
+        return result.getValue1();
     }
 
 //    @Override

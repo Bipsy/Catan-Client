@@ -140,7 +140,7 @@ public class MockServerProxy implements iServerProxy {
     }
 
     @Override
-    public void joinGame(JoinGameRequest game) throws IOException {
+    public Integer joinGame(JoinGameRequest game) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
