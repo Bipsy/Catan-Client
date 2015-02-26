@@ -101,14 +101,14 @@ public class ModelMock {
             new HexDTO(new HexLocation(0, 2), "wheat", 8)
         };
         EdgeValueDTO[] roads = {
-            new EdgeValueDTO(2, new EdgeLocation(new HexLocation(1, -1), EdgeDirection.South)),
-            new EdgeValueDTO(3, new EdgeLocation(new HexLocation(2, -2), EdgeDirection.SouthWest)),
-            new EdgeValueDTO(0, new EdgeLocation(new HexLocation(0, 1), EdgeDirection.South)),
-            new EdgeValueDTO(1, new EdgeLocation(new HexLocation(-2, 1), EdgeDirection.SouthWest)),
-            new EdgeValueDTO(2, new EdgeLocation(new HexLocation(0, 0), EdgeDirection.South)),
-            new EdgeValueDTO(0, new EdgeLocation(new HexLocation(2, 0), EdgeDirection.SouthWest)),
-            new EdgeValueDTO(1, new EdgeLocation(new HexLocation(-1, -1), EdgeDirection.South)),
-            new EdgeValueDTO(3, new EdgeLocation(new HexLocation(-1, 1), EdgeDirection.SouthWest))
+            new EdgeValueDTO(2, new EdgeLocationDTO(1, -1, EdgeDirection.South)),
+            new EdgeValueDTO(3, new EdgeLocationDTO(2, -2, EdgeDirection.SouthWest)),
+            new EdgeValueDTO(0, new EdgeLocationDTO(0, 1, EdgeDirection.South)),
+            new EdgeValueDTO(1, new EdgeLocationDTO(-2, 1, EdgeDirection.SouthWest)),
+            new EdgeValueDTO(2, new EdgeLocationDTO(0, 0, EdgeDirection.South)),
+            new EdgeValueDTO(0, new EdgeLocationDTO(2, 0, EdgeDirection.SouthWest)),
+            new EdgeValueDTO(1, new EdgeLocationDTO(-1, -1, EdgeDirection.South)),
+            new EdgeValueDTO(3, new EdgeLocationDTO(-1, 1, EdgeDirection.SouthWest))
         };
         VertexObjectDTO[] cities = new VertexObjectDTO[0];
         VertexObjectDTO[] settlements = {

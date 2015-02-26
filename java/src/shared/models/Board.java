@@ -128,14 +128,24 @@ public class Board {
         this.harbors = harbor;
     }
 
-    public List<Road> getRoad() {
+    public List<Road> getRoads() {
         return roads;
     }
-
-    public void setRoad(Road road) {
-        if (road != null) {
-            roadMap.put(road.getLocation().getNormalizedLocation(), road);
-        }
+    
+    
+    public void setRoads(EdgeValueDTO[] roadArray) {
+    	List<Road> temp = new ArrayList<Road>();
+    	for (int i = 0; i < roadArray.length; i++) {
+    		temp.add(new Road(roadArray[i]));        		
+    	}
+    	setRoads(temp);
+    }
+    
+    public void setRoads(List<Road> road) {
+    	this.roads = road;
+    	for (int i = 0; i < road.size(); i++) {
+    		roadMap.put(road.get(i).getLocation().getNormalizedLocation(), road.get(i));
+    	}
     }
 
     public List<VertexObject> getSettlements() {
@@ -190,14 +200,6 @@ public class Board {
             temp.add(new Harbor(ports[i]));
         }
         this.harbors = temp;
-    }
-
-    public void setRoads(EdgeValueDTO[] roadArray) {
-        for (EdgeValueDTO road : roadArray) {
-            Road newRoad = new Road(road);
-            roads.add(newRoad);
-            setRoad(newRoad);
-        }
     }
 
     public void setSettlements(VertexObjectDTO[] settlementArray) {

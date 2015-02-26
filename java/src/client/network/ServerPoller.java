@@ -54,6 +54,7 @@ public class ServerPoller implements ActionListener {
         }
         try {
             ClientModelDTO newModel = serverProxy.retrieveCurrentState(new Integer(version));
+            System.out.println("new model retrieved");
             return newModel;
         } catch (IOException ex) {
             System.err.println("Error while polling server");

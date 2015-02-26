@@ -48,7 +48,6 @@ public class Populator extends Observable implements iPopulator {
 
     @Override
     public boolean populateModel(ClientModelDTO container) {
-    	System.out.println("Populating model" + container.toString());
 
         populateBank(container.getResources(), container.getDevCards());
 
@@ -60,13 +59,12 @@ public class Populator extends Observable implements iPopulator {
 
         if (container.getTradeOffer() != null) {
             model.setTradeOffer(new TradeOffer(container.getTradeOffer()));
-        setChanged();
         }
 
         model.setVersion(container.getVersion());
         model.setWinner(container.getWinner());
-        
-        System.out.println("Updated");
+
+        setChanged();
         notifyObservers(facade);
 
         return true;
@@ -87,22 +85,31 @@ public class Populator extends Observable implements iPopulator {
     private void populateBoard(MapDTO map) {
 
         Board board = new Board();
+        System.out.println("board initialized");
+        
+        board.setRadius(map.getRadius());
+        System.out.println("Radius set");
 
         board.setHexes(map.getHexes());
+        System.out.println("Hexes placed");
 
         board.setHarbor(map.getPorts());
+        System.out.println("Ports placed");
 
         board.setRoads(map.getRoads());
+        System.out.println("Roads placed");
 
-        board.setSettlements(map.getSettlements());
+//        board.setSettlements(map.getSettlements());
+        System.out.println("Settlements placed");
 
-        board.setCities(map.getCities());
-
-        board.setRadius(map.getRadius());
+//        board.setCities(map.getCities());
+        System.out.println("Cities placed");
 
         board.setRobber(new Robber(map.getRobber()));
+        System.out.println("Robber placed");
 
         model.setBoard(board);
+        System.out.println("board set");
 
     }
 

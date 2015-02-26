@@ -1,5 +1,7 @@
 package shared.locations;
 
+import shared.models.DTO.EdgeLocationDTO;
+
 /**
  * Represents the location of an edge on a hex map
  */
@@ -13,7 +15,12 @@ public class EdgeLocation {
         setDir(direction);
     }
 
-    public HexLocation getHexLoc() {
+    public EdgeLocation(EdgeLocationDTO location) {
+    	roadLocation = new HexLocation(location.getX(), location.getY());
+    	direction = location.getDirection();
+	}
+
+	public HexLocation getHexLoc() {
         return roadLocation;
     }
 

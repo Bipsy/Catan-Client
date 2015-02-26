@@ -106,12 +106,12 @@ public class ModelFacade {
     }
     
     public int NumberOfRoads() {
-    	return models.getBoard().getRoad().size();
+    	return models.getBoard().getRoads().size();
     }
     
     public Road GetRoadAt(int i) {
-    	if (i < models.getBoard().getRoad().size() && i >= 0)
-    		return models.getBoard().getRoad().get(i);
+    	if (i < models.getBoard().getRoads().size() && i >= 0)
+    		return models.getBoard().getRoads().get(i);
     	else
     		return null;
     }
