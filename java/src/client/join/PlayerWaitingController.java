@@ -45,7 +45,6 @@ public class PlayerWaitingController extends Controller
                 }
             }
         } catch (IOException ex) {
-            System.out.println("Exception while starting view controller");
             ex.printStackTrace();
         }
     }
@@ -79,8 +78,8 @@ public class PlayerWaitingController extends Controller
     
         @Override
     public void update(Observable o, Object arg) {
+        	System.out.println("PLayer Joined");
         if (o instanceof Populator && arg instanceof ModelFacade) {
-            
         }
     }
 
