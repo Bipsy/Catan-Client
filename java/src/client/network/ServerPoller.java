@@ -85,6 +85,7 @@ public class ServerPoller implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         ClientModelDTO newModel = poll();
         if (isNew(newModel)) {
+            System.out.println("New model...");
             updateModel(newModel);
         }
     }

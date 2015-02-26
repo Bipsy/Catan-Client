@@ -47,7 +47,8 @@ public class ServerProxy implements iServerProxy {
         return gameNum;
     }
     
-    public static void init(String host, String port) throws ProxyAlreadyInstantiated {
+    public static void init(String host, String port) 
+            throws ProxyAlreadyInstantiated {
         if (instance == null) {
             if (host != null) {
                 serverHost = host;
