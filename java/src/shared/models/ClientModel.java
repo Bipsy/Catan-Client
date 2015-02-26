@@ -2,7 +2,6 @@ package shared.models;
 
 import java.util.List;
 
-import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.models.DTO.params.BuildCity;
 import shared.models.DTO.params.BuildRoad;
@@ -32,11 +31,9 @@ public class ClientModel {
     private Bank bank;
     private Board board;
     private ChatObject chatObject;
-    private User user;
     private UserManager userManager;
     private TradeOffer tradeOffer;
     private int version;
-    private TurnTracker turn;
     //Player index of the game winner
     private int winner;
 
@@ -76,9 +73,11 @@ public class ClientModel {
         this.board = board;
     }
     
-    public String getStatus() {
-    	return turn.getStatus();
-    }
+//    public String getStatus() {
+//    	System.out.println("RETURNING STATUS FROM THE CLIENTMODEL");
+//    	System.out.println(turn.getStatus());
+//    	return turn.getStatus();
+//    }
 
     /**
      * CHAT OBJECT
@@ -104,6 +103,10 @@ public class ClientModel {
 
     public void setUserManager(UserManager userManager) {
         this.userManager = userManager;
+    }
+    
+    public String getStatus() {
+    	return userManager.turnTracker.getStatus();
     }
 
     /**

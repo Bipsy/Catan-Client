@@ -8,8 +8,6 @@ import shared.models.DTO.HexDTO;
 import java.util.List;
 import java.util.Map;
 
-import com.google.gson.annotations.SerializedName;
-
 import shared.definitions.HexType;
 
 /**

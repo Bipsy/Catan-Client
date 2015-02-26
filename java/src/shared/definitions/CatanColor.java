@@ -1,7 +1,6 @@
 package shared.definitions;
 
 import java.awt.Color;
-import java.util.Random;
 
 import com.google.gson.annotations.SerializedName;
 

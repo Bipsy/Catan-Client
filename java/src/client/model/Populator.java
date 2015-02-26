@@ -84,8 +84,6 @@ public class Populator extends Observable implements iPopulator {
 
     private void populateBoard(MapDTO map) {
 
-    	System.out.println("Length of map, is it even valid: " + map.getHexes().length);
-
         Board board = new Board();
         
         board.setRadius(map.getRadius());

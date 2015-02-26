@@ -212,6 +212,7 @@ public class MapController extends Controller
     public void updateState(String currState) {
     	switch (currState) {
     		case "FirstRound":
+    			System.out.println("SWITCH CASES UPDATING");
     			state = new State.Setup();
     			break;
     		case "SecondRound":
@@ -239,9 +240,9 @@ public class MapController extends Controller
     public void update(Observable o, Object arg) {
         if (o instanceof Populator && arg instanceof ModelFacade) {
             ModelFacade facade = (ModelFacade) arg;
-            System.out.println(facade);
             initFromModel(facade);
     		currState = facade.getState();
+    		System.out.println("CURRENT STATE: " + currState);
     		updateState(currState);
         }
         

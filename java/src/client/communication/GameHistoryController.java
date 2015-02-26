@@ -31,11 +31,14 @@ public class GameHistoryController extends Controller
         List<LogEntry> entries = new ArrayList<LogEntry>();
         
     	if (facade == null) {
-            entries.add(new LogEntry(CatanColor.BROWN, "There are no messages yet"));
+           entries.add(new LogEntry(CatanColor.BROWN, "There are no messages yet"));
     	} else {
 	        for (int i=0; i<=facade.getLogObject().size(); i++) {
 	        	//entries.add(new LogEntry(facade.getPlayerColor(facade.getLogObject().get(i).getSource()), facade.getLogObject().get(i).getMessage()));
+
 	        	entries.add(new LogEntry(CatanColor.ORANGE, "tacos"));
+	        	//System.out.println("FACADE LENGTH: " + facade.getLogObject().size());
+	        	//entries.add(new LogEntry(CatanColor.ORANGE, facade.getLogObject().get(i).getMessage()));
 }
     	}
         
@@ -47,6 +50,7 @@ public class GameHistoryController extends Controller
         if (o instanceof Populator && arg instanceof ModelFacade) {
         	System.out.println("Am I updating the Log model?");
             ModelFacade facade = (ModelFacade) arg;
+        	//System.out.println("Facade.toString: " + facade.NumberOfHexes());
             initFromModel(facade);
         }
     }
