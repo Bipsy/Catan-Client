@@ -1,7 +1,6 @@
 package shared.models.DTO;
 
 import shared.exceptions.InvalidPlayerIndex;
-import shared.locations.VertexLocation;
 
 /**
  * This class stores the information needed to create a JSON string of a vertex

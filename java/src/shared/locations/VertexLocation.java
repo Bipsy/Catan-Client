@@ -1,7 +1,6 @@
 package shared.locations;
 
 import shared.models.DTO.VertexLocationDTO;
-import shared.models.DTO.VertexObjectDTO;
 
 /**
  * Represents the location of a vertex on a hex map

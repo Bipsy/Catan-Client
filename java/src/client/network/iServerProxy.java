@@ -9,11 +9,8 @@ import java.io.IOException;
 import java.util.List;
 import org.javatuples.Pair;
 
-import org.javatuples.Pair;
-
 import client.data.GameInfo;
 import shared.models.DTO.ClientModelDTO;
-import shared.models.DTO.GameDTO;
 import shared.models.DTO.params.*;
 
 /**

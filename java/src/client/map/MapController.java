@@ -19,7 +19,6 @@ public class MapController extends Controller
     private IRobView robView;
     private State state;
     private String currState;
-    private ModelFacade facade = new ModelFacade();
 
     public MapController(IMapView view, IRobView robView) {
 
@@ -59,26 +58,26 @@ public class MapController extends Controller
         
         for (int i = 0; i < facade.NumberOfRoads(); i++) {
         	Road road = facade.GetRoadAt(i);
-        	if (road != null)
+        	if (road !=null)
         		getView().placeRoad(road.getLocation(), facade.GetPlayerColor(road.getOwner()));
         }
         
         for (int i = 0; i < facade.NumberOfCities(); i++) {
         	VertexObject city = facade.GetCityAt(i); 
-        	if (city != null)
+        	if (city !=null)       	
         		getView().placeCity(city.getLocation(), facade.GetPlayerColor(city.getOwner()));
         }
         
         for (int i = 0; i < facade.NumberOfSettlements(); i++) {
         	VertexObject settlement = facade.GetSettlementAt(i);
-        	if (settlement != null)
+        	if (settlement !=null)
         		getView().placeSettlement(settlement.getLocation(), facade.GetPlayerColor(settlement.getOwner()));
         }
         
         
         for (int i = 0; i < facade.NumberOfHarbors(); i++) {
         	Harbor port = facade.GetHarborAt(i); 
-        	if (port != null)
+        	if (port !=null)
         		getView().addPort(port.getLocation(), port.getResource()); 
         }
         
@@ -160,17 +159,17 @@ public class MapController extends Controller
 
     public boolean canPlaceSettlement(VertexLocation vertLoc) {
 
-        return true;
+        return state.canPlaceSettlement(vertLoc);
     }
 
     public boolean canPlaceCity(VertexLocation vertLoc) {
 
-        return true;
+        return state.canPlaceCity(vertLoc);
     }
 
     public boolean canPlaceRobber(HexLocation hexLoc) {
 
-        return true;
+        return state.canPlaceRobber(hexLoc);
     }
 
     public void placeRoad(EdgeLocation edgeLoc) {
@@ -246,7 +245,6 @@ public class MapController extends Controller
     public void update(Observable o, Object arg) {
         if (o instanceof Populator && arg instanceof ModelFacade) {
             ModelFacade facade = (ModelFacade) arg;
-            System.out.println(facade);
             initFromModel(facade);
     		currState = facade.getState();
     		updateState(currState);

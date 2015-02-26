@@ -5,7 +5,6 @@ import client.data.GameInfo;
 import client.data.PlayerInfo;
 import client.main.Catan;
 import client.network.ServerProxy;
-import client.network.iServerProxy;
 
 import java.io.IOException;
 import java.util.List;

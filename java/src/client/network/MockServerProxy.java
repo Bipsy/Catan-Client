@@ -14,7 +14,6 @@ import java.util.List;
 import org.javatuples.Pair;
 
 import shared.models.DTO.ClientModelDTO;
-import shared.models.DTO.GameDTO;
 import shared.models.DTO.params.*;
 
 /**
