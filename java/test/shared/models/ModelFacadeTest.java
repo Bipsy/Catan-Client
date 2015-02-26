@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import client.mocks.ModelMock;
+import client.model.ModelFacade;
 import client.model.Populator;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeDirection;
@@ -32,10 +33,9 @@ public class ModelFacadeTest {
      */
     @Before
     public void setUp() throws Exception {
-        Populator pop = new Populator();
+        Populator pop = Populator.getInstance();
         pop.populateModel(ModelMock.getModelDTO());
-        model = pop.getModel();
-        modelFacade = new ModelFacade(pop.getModel());
+        modelFacade = null;
     }
 
     @After

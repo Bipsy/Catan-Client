@@ -2,11 +2,17 @@ package client.devcards;
 
 import shared.definitions.ResourceType;
 import client.base.*;
+import client.model.ModelFacade;
+import client.model.Populator;
+
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * "Dev card" controller implementation
  */
-public class DevCardController extends Controller implements IDevCardController {
+public class DevCardController extends Controller 
+    implements IDevCardController, Observer {
 
     private IBuyDevCardView buyCardView;
     private IAction soldierAction;
@@ -26,7 +32,7 @@ public class DevCardController extends Controller implements IDevCardController 
             IAction soldierAction, IAction roadAction) {
 
         super(view);
-
+        Populator.getInstance().addObserver(this);
         this.buyCardView = buyCardView;
         this.soldierAction = soldierAction;
         this.roadAction = roadAction;
@@ -95,6 +101,13 @@ public class DevCardController extends Controller implements IDevCardController 
     @Override
     public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) {
 
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if (o instanceof Populator && arg instanceof ModelFacade) {
+            
+        }
     }
 
 }

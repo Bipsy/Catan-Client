@@ -11,7 +11,6 @@ import java.net.URLDecoder;
 import client.data.GameInfo;
 import client.model.Serializer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.javatuples.Pair;
@@ -38,9 +37,7 @@ public class ServerProxy implements iServerProxy {
 
     private static ServerProxy instance;
     
-    private ServerProxy() {
-        
-    }
+    private ServerProxy(){}
 
     public UserCookie getUserCookie() {
     	return uCookie;

@@ -4,7 +4,10 @@ import client.base.*;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
 import client.main.Catan;
+import client.model.ModelFacade;
+import client.model.Populator;
 import client.network.ServerProxy;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Observable;
@@ -19,6 +22,7 @@ public class PlayerWaitingController extends Controller
     public PlayerWaitingController(IPlayerWaitingView view) {
         super(view);
         Catan.startPoller(2000);
+        Populator.getInstance().addObserver(this);
     }
 
     @Override
@@ -74,10 +78,12 @@ public class PlayerWaitingController extends Controller
     public void addAI() {
     
     }
-
-    @Override
+    
+        @Override
     public void update(Observable o, Object arg) {
-        
+        if (o instanceof Populator && arg instanceof ModelFacade) {
+            
+        }
     }
     
 }

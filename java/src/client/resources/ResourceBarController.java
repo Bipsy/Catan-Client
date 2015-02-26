@@ -3,18 +3,21 @@ package client.resources;
 import java.util.*;
 
 import client.base.*;
+import client.model.ModelFacade;
+import client.model.Populator;
 
 /**
  * Implementation for the resource bar controller
  */
-public class ResourceBarController extends Controller implements IResourceBarController {
+public class ResourceBarController extends Controller 
+    implements IResourceBarController, Observer {
 
     private Map<ResourceBarElement, IAction> elementActions;
 
     public ResourceBarController(IResourceBarView view) {
 
         super(view);
-
+        Populator.getInstance().addObserver(this);
         elementActions = new HashMap<ResourceBarElement, IAction>();
     }
 
@@ -67,6 +70,13 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 
             IAction action = elementActions.get(element);
             action.execute();
+        }
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if (o instanceof Populator && arg instanceof ModelFacade) {
+            
         }
     }
 

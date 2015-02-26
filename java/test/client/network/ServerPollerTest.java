@@ -42,7 +42,7 @@ public class ServerPollerTest {
             defaultModel = new String(encoded, Charset.defaultCharset());
             serializer = new Serializer();
             proxy = new MockServerProxy(serializer, defaultModel);
-            populator = new Populator();
+            populator = Populator.getInstance();
         } catch (IOException ex) {
             System.err.println("JSON file was not found");
         }

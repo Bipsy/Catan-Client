@@ -26,7 +26,7 @@ import shared.models.DTO.params.YearOfPlenty;
  *
  * @author Mikey Murphy <mikeyamadeo@gmail.com>
  */
-public class ClientModel extends Observable {
+public class ClientModel {
 
     private Bank bank;
     private Board board;
@@ -34,6 +34,7 @@ public class ClientModel extends Observable {
     private UserManager userManager;
     private TradeOffer tradeOffer;
     private int version;
+    private TurnTracker turn;
     //Player index of the game winner
     private int winner;
 
@@ -46,8 +47,6 @@ public class ClientModel extends Observable {
         userManager = null;
         tradeOffer = null;
 
-        //TODO: add observers
-        setChanged();
     }
 
     /**
@@ -73,6 +72,10 @@ public class ClientModel extends Observable {
 
     public void setBoard(Board board) {
         this.board = board;
+    }
+    
+    public String getStatus() {
+    	return turn.getStatus();
     }
 
     /**

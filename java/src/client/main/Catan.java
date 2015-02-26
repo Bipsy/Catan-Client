@@ -46,7 +46,7 @@ public class Catan extends JFrame {
     
     public static void startPoller(int millis) {
         ServerProxy proxy = ServerProxy.getInstance();
-        Populator populator = new Populator();
+        Populator populator = Populator.getInstance();
         ServerPoller poller = new ServerPoller(proxy, populator, 0);
         pollerTimer = new Timer(millis, poller);
     }

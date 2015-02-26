@@ -1,20 +1,22 @@
 package client.communication;
 
 import java.util.*;
-import java.util.List;
 
 import client.base.*;
+import client.model.ModelFacade;
+import client.model.Populator;
 import shared.definitions.*;
 
 /**
  * Game history controller implementation
  */
-public class GameHistoryController extends Controller implements IGameHistoryController {
+public class GameHistoryController extends Controller 
+    implements IGameHistoryController, Observer {
 
     public GameHistoryController(IGameHistoryView view) {
 
         super(view);
-
+        Populator.getInstance().addObserver(this);
         initFromModel();
     }
 
@@ -40,6 +42,13 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
         getView().setEntries(entries);
 
         //</temp>
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if (o instanceof Populator && arg instanceof ModelFacade) {
+            
+        }
     }
 
 }

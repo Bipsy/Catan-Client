@@ -1,11 +1,17 @@
 package client.roll;
 
 import client.base.*;
+import client.model.ModelFacade;
+import client.model.Populator;
+
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Implementation for the roll controller
  */
-public class RollController extends Controller implements IRollController {
+public class RollController extends Controller 
+    implements IRollController, Observer {
 
     private IRollResultView resultView;
 
@@ -36,8 +42,17 @@ public class RollController extends Controller implements IRollController {
 
     @Override
     public void rollDice() {
-
+    	//implement timer
+    	//"Rolling automatically in (timer) seconds"
+    	//
         getResultView().showModal();
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if (o instanceof Populator && arg instanceof ModelFacade) {
+            
+        }
     }
 
 }
