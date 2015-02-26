@@ -238,10 +238,10 @@ public class MapController extends Controller
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof Populator && arg instanceof ModelFacade) {
-//            ModelFacade facade = (ModelFacade) arg;
-//            initFromModel(facade);
-//    		currState = facade.getState();
-//    		updateState(currState);
+            ModelFacade facade = (ModelFacade) arg;
+            initFromModel(facade);
+    		currState = facade.getState();
+    		updateState(currState);
         }
         
     }

@@ -3,6 +3,7 @@ package client.join;
 import client.base.*;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
+import client.main.Catan;
 import client.network.ServerProxy;
 import client.network.iServerProxy;
 
@@ -70,18 +71,21 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
         setViewAIs(view, proxy);
         view.showModal();
         
-        Timer timer = new Timer();
-        timer.schedule(new WaitForPlayersTask(this, proxy), 2000, 2000);
+        final Timer timer = new Timer();
+        final WaitForPlayersTask waiting = new WaitForPlayersTask(this, proxy, timer);
+        timer.schedule(waiting, 0, 2000);
     }
     
     class WaitForPlayersTask extends TimerTask {
     	private PlayerWaitingController parent;
     	private ServerProxy proxy;
+    	private Timer timer;
     	private int players = 0;
     	
-    	public WaitForPlayersTask(PlayerWaitingController parent, ServerProxy proxy) {
+    	public WaitForPlayersTask(PlayerWaitingController parent, ServerProxy proxy, Timer timer) {
     		this.parent = parent;
-    		this.proxy = proxy;    		
+    		this.proxy = proxy;
+    		this.timer = timer;
     	}
 
 		@Override
@@ -91,7 +95,9 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 			}
 			else {
 				parent.getView().closeModal();
-				System.exit(0);
+				Catan.startPoller(2000);
+				timer.cancel();
+				timer.purge();
 			}
 		}
     	
