@@ -146,4 +146,9 @@ public class PlayerHand {
                 && resources.getResourceNumber(ResourceType.ORE) >= 3;
     }
 
+	public int getResourceCount(ResourceType type) {
+		return resources.getResourceNumber(type);
+	}
+
+
 }

@@ -7,6 +7,8 @@ import shared.models.Harbor;
 import shared.models.Hex;
 import shared.models.Message;
 import shared.models.Player;
+import shared.models.PlayerHand;
+import shared.models.ResourceList;
 import shared.models.Road;
 import shared.models.Robber;
 import shared.models.UserManager;
@@ -258,5 +260,12 @@ public class ModelFacade {
 			return models.getLocalPlayerIndex();
 		}
 		return null;
+	}
+
+
+	public int getResourceCount(int playerIndex, ResourceType type) {
+		Player player = models.getPlayer(playerIndex);
+		PlayerHand cards = player.getResources();
+		return cards.getResourceCount(type);
 	}
 }
