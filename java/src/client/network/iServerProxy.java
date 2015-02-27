@@ -7,9 +7,11 @@ package client.network;
 
 import java.io.IOException;
 import java.util.List;
+
 import org.javatuples.Pair;
 
 import client.data.GameInfo;
+import shared.exceptions.NoCookieException;
 import shared.models.DTO.ClientModelDTO;
 import shared.models.DTO.params.*;
 
@@ -385,4 +387,12 @@ public interface iServerProxy {
      * @throws IOException
      */
 	//void changeLogLevel(String logLevel) throws IOException;
+
+
+    /**
+     * Returns the local player's username from the cookie
+     * @return local player's name
+     * @throws NoCookieException cookie is not instantiated
+     */
+	String getLocalPlayerName() throws NoCookieException;
 }

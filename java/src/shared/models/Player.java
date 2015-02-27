@@ -50,6 +50,8 @@ public class Player extends User {
         this.setOldDevCards(new DevCardList(playerDTO.getOldDevCards()));
         this.resources = new PlayerHand(playerDTO.getResources(), playerDTO.getNewDevCards());
         this.playedDevCard = playerDTO.isPlayedDevCard();
+        this.victoryPoints = playerDTO.getVictoryPoints();
+        this.discarded = playerDTO.isDiscarded();
     }
 
     public void setDiscarded(Boolean discarded) {

@@ -6,12 +6,14 @@ import shared.models.ClientModel;
 import shared.models.Harbor;
 import shared.models.Hex;
 import shared.models.Message;
+import shared.models.Player;
 import shared.models.Road;
 import shared.models.Robber;
 import shared.models.UserManager;
 import shared.models.VertexObject;
 import shared.models.DTO.params.*;
 import shared.definitions.*;
+import shared.exceptions.InvalidPlayerIndex;
 import client.storage.Data;
 
 
@@ -213,6 +215,15 @@ public class ModelFacade {
 		return models.CanBuildCity(playerIndex);
 	}
     
+	public Player getPlayer(int index) throws InvalidPlayerIndex {
+		if (index >= 0 && index < 4) {
+			return this.models.getPlayer(index);
+		}
+		else {
+			throw new InvalidPlayerIndex();
+		}
+	}
+	
     public CatanColor GetPlayerColor (String player) {
     	return models.getUserManager().getPlayerColor(player);
     }
@@ -221,4 +232,24 @@ public class ModelFacade {
 		return this.models.getMapRadius();
 	}
     
+	public String getLocalUserName() {
+		return this.models.getLocalPlayerName();
+	}
+	
+	public boolean isCurrentTurn(int index) throws InvalidPlayerIndex {
+		if (index >= 0 && index < 4) {
+			return this.getCurrentPlayerIndex() == index;
+		}
+		else {
+			throw new InvalidPlayerIndex();
+		}
+	}
+
+	public int getLargestArmy() {
+		return this.models.getLargestArmy();
+	}
+
+	public int getlongestRoad() {
+		return this.models.getLongestRoad();
+	}
 }

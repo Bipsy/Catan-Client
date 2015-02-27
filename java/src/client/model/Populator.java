@@ -47,7 +47,9 @@ public class Populator extends Observable implements iPopulator {
     }
 
     @Override
-    public boolean populateModel(ClientModelDTO container) {
+    public boolean populateModel(ClientModelDTO container, String username) {
+    	
+    	model.setLocalPlayerName(username);
 
         populateBank(container.getResources(), container.getDevCards());
 

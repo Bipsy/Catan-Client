@@ -74,7 +74,7 @@ public class UserManager {
     
     public CatanColor getPlayerColor(String player) {
     	for (int i=0; i<users.size(); i++) {
-    		if (player.equals(users.get(i).getUsername())) {
+    		if (users.get(i).getUsername().equals(player)) {
     			Player currUser = users.get(i);
     			return currUser.getColor();
     		}
@@ -123,6 +123,25 @@ public class UserManager {
 	
 	public boolean CanBuildCity(int playerIndex) {
 		return isCurrentPlayer(playerIndex) && users.get(playerIndex).CanBuildCity();
+	}
+
+	public int getLargestArmy() {
+		return this.turnTracker.getLargestArmy();
+	}
+
+	public int getLongestRoad() {
+		return this.turnTracker.getLongestRoad();
+	}
+	
+	public Integer getLocalPlayerIndex(String name) {
+		if(name != null) {
+			for (int i = 0; i < this.users.size(); i++) {
+				if(name.equals(users.get(i).getUsername())) {
+					return users.get(i).getIndex();
+				}
+			}
+		}
+		return null;
 	}
 
 }
