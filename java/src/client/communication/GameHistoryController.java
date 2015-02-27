@@ -31,7 +31,7 @@ public class GameHistoryController extends Controller
         List<LogEntry> entries = new ArrayList<LogEntry>();
         
     	if (facade == null) {
-           entries.add(new LogEntry(CatanColor.BROWN, "There are no messages yet"));
+           entries.add(new LogEntry(CatanColor.WHITE, "There are no messages yet"));
     	} else {
 	        for (int i=1; i<facade.getLogObject().size(); i++) {
 	        	String name = facade.getLogObject().get(i).getSource();
