@@ -2,7 +2,8 @@ package shared.models.DTO;
 
 import shared.definitions.PortType;
 import shared.exceptions.InvalidRatio;
-import shared.locations.EdgeLocation;
+import shared.locations.EdgeDirection;
+import shared.locations.HexLocation;
 
 /**
  * This class stores the information needed to create a JSON string of a port,
@@ -17,11 +18,11 @@ public class PortDTO {
      * Must be: 'Wood', 'Brick', 'Sheep', 'Wheat', or 'Ore', optional
      */
     private PortType resource;
-    private EdgeLocation location;
+    private HexLocation location;
     /**
      * Must be: 'NW', 'N', 'NE', 'SW', 'S', or 'SE'
      */
-    private String direction;
+    private EdgeDirection direction;
     /**
      * either 2 or 3 depending on if there is a resource
      */
@@ -38,9 +39,10 @@ public class PortDTO {
         this.ratio = 3;
     }
 
-    public PortDTO(int ratio, String resource, EdgeLocation edgeLocation) {
+    public PortDTO(int ratio, String resource, HexLocation hexLocation, EdgeDirection direction) {
         this.ratio = ratio;
-        this.location = edgeLocation;
+        this.location = hexLocation;
+        this.direction = direction;
         if (resource != null) {
             this.resource = PortType.valueOf(resource.toUpperCase());
         }
@@ -54,19 +56,19 @@ public class PortDTO {
         this.resource = resource;
     }
 
-    public EdgeLocation getLocation() {
+    public HexLocation getLocation() {
         return location;
     }
 
-    public void setLocation(EdgeLocation location) {
+    public void setLocation(HexLocation location) {
         this.location = location;
     }
 
-    public String getDirection() {
+    public EdgeDirection getDirection() {
         return direction;
     }
 
-    public void setDirection(String direction) {
+    public void setDirection(EdgeDirection direction) {
         this.direction = direction;
     }
 
