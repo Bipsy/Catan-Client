@@ -14,7 +14,6 @@ public class GameHistoryController extends Controller
     implements IGameHistoryController, Observer {
 
     public GameHistoryController(IGameHistoryView view) {
-
         super(view);
         Populator.getInstance().addObserver(this);
         initFromModel(null);
@@ -22,7 +21,6 @@ public class GameHistoryController extends Controller
 
     @Override
     public IGameHistoryView getView() {
-
         return (IGameHistoryView) super.getView();
     }
 
