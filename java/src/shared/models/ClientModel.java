@@ -318,7 +318,8 @@ public class ClientModel {
 
 	public void setLocalPlayerName(String localPlayerName) {
 		this.localPlayerName = localPlayerName;
-		this.localPlayerIndex = userManager.getLocalPlayerIndex(localPlayerName);
+		if(userManager != null)
+			this.localPlayerIndex = userManager.getLocalPlayerIndex(localPlayerName);
 	}
 	
 	public Integer getLocalPlayerIndex() {
