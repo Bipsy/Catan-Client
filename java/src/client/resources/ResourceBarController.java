@@ -77,7 +77,7 @@ public class ResourceBarController extends Controller
 
     @Override
     public void update(Observable o, Object arg) {
-    	System.out.println("observing from resource bar");
+//    	System.out.println("observing from resource bar");
     	
         if (o instanceof Populator && arg instanceof ModelFacade) {
         	ModelFacade model = (ModelFacade) arg;
@@ -89,9 +89,9 @@ public class ResourceBarController extends Controller
 //            boolean canBuyCard = model.hasResourcesForRoad(playerIndex);
 //            boolean canPlayCard = model.hasResourcesForRoad(playerIndex);
 //            boolean canSoldiers = model.hasResourcesForRoad(playerIndex);
-            System.out.println(canBuildRoad);
-            System.out.println(canBuildSettlement);
-            System.out.println(canBuildCity);
+//            System.out.println(canBuildRoad);
+//            System.out.println(canBuildSettlement);
+//            System.out.println(canBuildCity);
 
 			this.getView().setElementEnabled(ResourceBarElement.ROAD, canBuildRoad);
 			this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, canBuildSettlement);

@@ -54,7 +54,7 @@ public class Populator extends Observable implements iPopulator {
         populateBoard(container.getMap());
 
         populateChatObject(container.getChat(), container.getLog());
-
+        
         populateUserManager(container.getPlayers(), container.getTurnTracker());
 
         if (container.getTradeOffer() != null) {

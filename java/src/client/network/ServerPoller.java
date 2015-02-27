@@ -83,7 +83,7 @@ public class ServerPoller implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-    	System.out.println("polling n stuff");
+    	//System.out.println("polling n stuff");
         ClientModelDTO newModel = poll();
         if (isNew(newModel)) {
             updateModel(newModel);

@@ -4,32 +4,33 @@ import java.util.*;
 
 import shared.definitions.*;
 import shared.locations.*;
-import shared.models.Harbor;
-import shared.models.Hex;
-import shared.models.Road;
-import shared.models.Robber;
-import shared.models.VertexObject;
+import shared.models.*;
 import client.base.*;
 import client.data.*;
 import client.model.ModelFacade;
+import client.model.Populator;
 
 /**
  * Implementation for the map controller
  */
-public class MapController extends Controller implements IMapController {
+public class MapController extends Controller 
+    implements IMapController, Observer {
 
     private IRobView robView;
+    private State state;
+    private String currState;
 
     public MapController(IMapView view, IRobView robView) {
 
         super(view);
-
+        Populator.getInstance().addObserver(this);
         setRobView(robView);
 
-        initFromModel();
+        initFromModel(null);
     }
 
-    public IMapView getView() {
+
+	public IMapView getView() {
 
         return (IMapView) super.getView();
     }
@@ -40,11 +41,6 @@ public class MapController extends Controller implements IMapController {
 
     private void setRobView(IRobView robView) {
         this.robView = robView;
-    }
-
-
-    protected void initFromModel() {
-
     }
 
     protected void initFromModel(ModelFacade facade) {
@@ -60,6 +56,19 @@ public class MapController extends Controller implements IMapController {
             }
 
         }
+        
+        //initialize water hexes
+        int radius = facade.getMapRadius();
+        for(int x = 0; x < radius; x++) {
+        	getView().addHex(new HexLocation(-x, radius), HexType.WATER);
+        	getView().addHex(new HexLocation(-radius, radius - x), HexType.WATER);
+        	getView().addHex(new HexLocation(x - radius, - x), HexType.WATER);
+        	getView().addHex(new HexLocation(x, -radius), HexType.WATER);
+        	getView().addHex(new HexLocation(radius, x - radius), HexType.WATER);
+        	getView().addHex(new HexLocation(radius - x, x), HexType.WATER);
+        }
+        
+        // need to draw water tiles
         
         for (int i = 0; i < facade.NumberOfRoads(); i++) {
         	Road road = facade.GetRoadAt(i);
@@ -83,7 +92,6 @@ public class MapController extends Controller implements IMapController {
         for (int i = 0; i < facade.NumberOfHarbors(); i++) {
         	Harbor port = facade.GetHarborAt(i); 
         	if (port !=null) {
-        		System.out.println(port.getResource());
         		getView().addPort(port.getLocation(), port.getResource());
         	}
         }
@@ -92,6 +100,8 @@ public class MapController extends Controller implements IMapController {
         if (robber != null)
         	getView().placeRobber(robber.getLocation());
         
+        /*
+         * //<temp>
         Random rand = new Random();
 
         for (int x = 0; x <= 3; ++x) {
@@ -153,26 +163,28 @@ public class MapController extends Controller implements IMapController {
         getView().addNumber(new HexLocation(2, 0), 12);
 
         //</temp>
+         */
+
     }
 
     public boolean canPlaceRoad(EdgeLocation edgeLoc) {
 
-        return true;
+        return state.canPlaceRoad(edgeLoc);
     }
 
     public boolean canPlaceSettlement(VertexLocation vertLoc) {
 
-        return true;
+        return state.canPlaceSettlement(vertLoc);
     }
 
     public boolean canPlaceCity(VertexLocation vertLoc) {
 
-        return true;
+        return state.canPlaceCity(vertLoc);
     }
 
     public boolean canPlaceRobber(HexLocation hexLoc) {
 
-        return true;
+        return state.canPlaceRobber(hexLoc);
     }
 
     public void placeRoad(EdgeLocation edgeLoc) {
@@ -216,6 +228,43 @@ public class MapController extends Controller implements IMapController {
 
     public void robPlayer(RobPlayerInfo victim) {
 
+    }
+    
+    public void updateState(String currState) {
+    	switch (currState) {
+    		case "FirstRound":
+    			state = new State.Setup();
+    			break;
+    		case "SecondRound":
+    			state = new State.Setup();
+    			break;
+    		case "Rolling":
+    			state = new State.Rolling();
+    			break;
+    		case "Robbing":
+    			state = new State.MoveRobber();
+    			break;
+    		case "Playing":
+    			state = new State.Playing();
+    			break;
+    		case "Discarding":
+    			state = new State.Discarding();
+    			break;
+			default:
+				break;
+    		
+    	}
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if (o instanceof Populator && arg instanceof ModelFacade) {
+            ModelFacade facade = (ModelFacade) arg;
+            initFromModel(facade);
+    		currState = facade.getState();
+    		updateState(currState);
+        }
+        
     }
 
 }

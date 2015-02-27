@@ -7,6 +7,7 @@ package shared.models;
 
 import java.util.List;
 
+import shared.definitions.CatanColor;
 import shared.models.DTO.params.BuildCity;
 import shared.models.DTO.params.BuildRoad;
 import shared.models.DTO.params.BuildSettlement;
@@ -69,6 +70,16 @@ public class UserManager {
         if (index >= 0 && index < 4) {
             turnTracker.setCurrentTurn(index);
         }
+    }
+    
+    public CatanColor getPlayerColor(String player) {
+    	for (int i=0; i<users.size(); i++) {
+    		if (player.equals(users.get(i).getUsername())) {
+    			Player currUser = users.get(i);
+    			return currUser.getColor();
+    		}
+    	}
+		return null;
     }
 
     public boolean CanMaritimeTrade(MaritimeTrade maritimeTrade) {
