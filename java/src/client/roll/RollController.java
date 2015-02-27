@@ -1,15 +1,23 @@
 package client.roll;
 
 import client.base.*;
+import client.model.ModelFacade;
+import client.model.Populator;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Random;
+
 import javax.swing.Timer;
 
 /**
  * Implementation for the roll controller
  */
-public class RollController extends Controller implements IRollController {
+public class RollController extends Controller implements IRollController, Observer {
+	
+	private ModelFacade facade;
 
     private IRollResultView resultView;
     private final String MESSAGE = "Rolling in %d seconds";
@@ -32,6 +40,8 @@ public class RollController extends Controller implements IRollController {
     public RollController(IRollView view, IRollResultView resultView) {
 
         super(view);
+        
+        Populator.getInstance().addObserver(this);
 
         setResultView(resultView);
     }
@@ -50,13 +60,23 @@ public class RollController extends Controller implements IRollController {
 
     @Override
     public void rollDice() {
-        String formattedString = String.format(MESSAGE, rollingCount);
-        getRollView().setMessage(formattedString);
-        Timer rollingTimer = new Timer(rollingCount, timerListener);
-        rollingTimer.setInitialDelay(0);
-        rollingTimer.setRepeats(false);
-        rollingTimer.start();     
-        getResultView().showModal();
+    	if(facade.isLocalPlayerTurn()) {
+    		String formattedString = String.format(MESSAGE, rollingCount);
+    		getRollView().setMessage(formattedString);
+    		Timer rollingTimer = new Timer(rollingCount, timerListener);
+    		rollingTimer.setInitialDelay(0);
+    		rollingTimer.setRepeats(false);
+    		rollingTimer.start();     
+    		getResultView().showModal();    		
+    	}
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+        if (o instanceof Populator && arg instanceof ModelFacade) {
+        	facade = (ModelFacade)arg;
+        	rollDice();
+            
+        }
+    }
 }
