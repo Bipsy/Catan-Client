@@ -193,6 +193,10 @@ public class ClientModel {
         return (buildRoad.isFree() || userManager.CanBuildRoad(buildRoad))
                 && board.canBuildRoad(buildRoad);
     }
+    
+    public boolean hasResourcesForRoad(int playerIndex) {
+        return userManager.CanBuildRoad(playerIndex);
+    }
 
     /**
      * Checks that the vertex is not taken, that there are no objects on
@@ -293,6 +297,20 @@ public class ClientModel {
 
         return isTurn && hasRolled;
     }
+
+	public boolean CanBuildRoad(int playerIndex) {
+		return userManager.CanBuildRoad(playerIndex);
+	}
+
+	public boolean CanBuildSettlement(int playerIndex) {
+		return userManager.CanBuildRoad(playerIndex);
+	}
+
+	public boolean CanBuildCity(int playerIndex) {
+		return userManager.CanBuildCity(playerIndex);
+	}
+
+	
     
 //    public CatanColor getUserColor(String user) {
 //    	return user.getColor(user);

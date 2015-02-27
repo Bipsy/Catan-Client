@@ -129,19 +129,19 @@ public class PlayerHand {
         return resources.getResourceNumber(maritimeTrade.getInputResource()) >= maritimeTrade.getRatio();
     }
 
-    public boolean canBuildRoad(BuildRoad buildRoad) {
+    public boolean canBuildRoad() {
         return resources.getResourceNumber(ResourceType.BRICK) > 0
                 && resources.getResourceNumber(ResourceType.WOOD) > 0;
     }
 
-    public boolean canBuildSettlement(BuildSettlement buildSettlement) {
+    public boolean canBuildSettlement() {
         return resources.getResourceNumber(ResourceType.BRICK) > 0
                 && resources.getResourceNumber(ResourceType.WOOD) > 0
                 && resources.getResourceNumber(ResourceType.SHEEP) > 0
                 && resources.getResourceNumber(ResourceType.WHEAT) > 0;
     }
 
-    public boolean canBuildCity(BuildCity buildCity) {
+    public boolean canBuildCity() {
         return resources.getResourceNumber(ResourceType.WHEAT) >= 2
                 && resources.getResourceNumber(ResourceType.ORE) >= 3;
     }

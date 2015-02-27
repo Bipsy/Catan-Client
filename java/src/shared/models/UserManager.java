@@ -60,6 +60,10 @@ public class UserManager {
     public String getCurrentTurn() {
     	return turnTracker.getStatus();
     }
+    
+    public TurnTracker getTurnTracker() {
+    	return turnTracker;
+    }
 
     public void setCurrentUser(int index) {
         if (index >= 0 && index < 4) {
@@ -74,17 +78,17 @@ public class UserManager {
 
     public boolean CanBuildRoad(BuildRoad buildRoad) {
         return isCurrentPlayer(buildRoad.getPlayerIndex())
-                && users.get(buildRoad.getPlayerIndex()).CanBuildRoad(buildRoad);
+                && users.get(buildRoad.getPlayerIndex()).CanBuildRoad();
     }
 
     public boolean CanBuildSettlement(BuildSettlement buildSettlement) {
         return isCurrentPlayer(buildSettlement.getPlayerIndex())
-                && users.get(buildSettlement.getPlayerIndex()).CanBuildSettlement(buildSettlement);
+                && users.get(buildSettlement.getPlayerIndex()).CanBuildSettlement();
     }
 
     public boolean CanBuildCity(BuildCity buildCity) {
         return isCurrentPlayer(buildCity.getPlayerIndex())
-                && users.get(buildCity.getPlayerIndex()).CanBuildCity(buildCity);
+                && users.get(buildCity.getPlayerIndex()).CanBuildCity();
     }
 
     public boolean CanBuyDevCard(BuyDevCard buyDevCard) {
@@ -97,4 +101,17 @@ public class UserManager {
 		// TODO Auto-generated method stub
 
     }
+
+	public boolean CanBuildRoad(int playerIndex) {
+		return isCurrentPlayer(playerIndex) && users.get(playerIndex).CanBuildRoad();
+	}
+
+	public boolean CanBuildSettlement(int playerIndex) {
+		return isCurrentPlayer(playerIndex) && users.get(playerIndex).CanBuildSettlement();
+	}
+	
+	public boolean CanBuildCity(int playerIndex) {
+		return isCurrentPlayer(playerIndex) && users.get(playerIndex).CanBuildCity();
+	}
+
 }

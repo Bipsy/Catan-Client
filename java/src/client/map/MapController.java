@@ -4,33 +4,26 @@ import java.util.*;
 
 import shared.definitions.*;
 import shared.locations.*;
-import shared.models.*;
 import client.base.*;
 import client.data.*;
-import client.model.ModelFacade;
-import client.model.Populator;
 
 /**
  * Implementation for the map controller
  */
-public class MapController extends Controller 
-    implements IMapController, Observer {
+public class MapController extends Controller implements IMapController {
 
     private IRobView robView;
-    private State state;
-    private String currState;
 
     public MapController(IMapView view, IRobView robView) {
 
         super(view);
-        Populator.getInstance().addObserver(this);
+
         setRobView(robView);
 
-        initFromModel(null);
+        initFromModel();
     }
 
-
-	public IMapView getView() {
+    public IMapView getView() {
 
         return (IMapView) super.getView();
     }
@@ -43,50 +36,9 @@ public class MapController extends Controller
         this.robView = robView;
     }
 
-    protected void initFromModel(ModelFacade facade) {
-        if (facade == null || !facade.hasModel()) return;
-                
-        for (int i = 0; i < facade.NumberOfHexes(); i++) {
-            Hex hex = facade.GetHexAt(i);
-            if (hex != null) {
-                getView().addHex(hex.getLocation(), hex.getResource());
-                if(hex.getNumber() != null)
-                	getView().addNumber(hex.getLocation(), hex.getNumber());
-            }
+    protected void initFromModel() {
 
-        }
-        
-        for (int i = 0; i < facade.NumberOfRoads(); i++) {
-        	Road road = facade.GetRoadAt(i);
-        	if (road !=null)
-        		getView().placeRoad(road.getLocation(), facade.GetPlayerColor(road.getOwner()));
-        }
-        
-        for (int i = 0; i < facade.NumberOfCities(); i++) {
-        	VertexObject city = facade.GetCityAt(i); 
-        	if (city !=null)       	
-        		getView().placeCity(city.getLocation(), facade.GetPlayerColor(city.getOwner()));
-        }
-        
-        for (int i = 0; i < facade.NumberOfSettlements(); i++) {
-        	VertexObject settlement = facade.GetSettlementAt(i);
-        	if (settlement !=null)
-        		getView().placeSettlement(settlement.getLocation(), facade.GetPlayerColor(settlement.getOwner()));
-        }
-        
-        
-        for (int i = 0; i < facade.NumberOfHarbors(); i++) {
-        	Harbor port = facade.GetHarborAt(i); 
-        	if (port !=null)
-        		getView().addPort(port.getLocation(), port.getResource()); 
-        }
-        
-        Robber robber = facade.GetRobber();
-        if (robber != null)
-        	getView().placeRobber(robber.getLocation());
-        
-        /*
-         * //<temp>
+        //<temp>
         Random rand = new Random();
 
         for (int x = 0; x <= 3; ++x) {
@@ -148,28 +100,26 @@ public class MapController extends Controller
         getView().addNumber(new HexLocation(2, 0), 12);
 
         //</temp>
-         */
-
     }
 
     public boolean canPlaceRoad(EdgeLocation edgeLoc) {
 
-        return state.canPlaceRoad(edgeLoc);
+        return true;
     }
 
     public boolean canPlaceSettlement(VertexLocation vertLoc) {
 
-        return state.canPlaceSettlement(vertLoc);
+        return true;
     }
 
     public boolean canPlaceCity(VertexLocation vertLoc) {
 
-        return state.canPlaceCity(vertLoc);
+        return true;
     }
 
     public boolean canPlaceRobber(HexLocation hexLoc) {
 
-        return state.canPlaceRobber(hexLoc);
+        return true;
     }
 
     public void placeRoad(EdgeLocation edgeLoc) {
@@ -213,43 +163,6 @@ public class MapController extends Controller
 
     public void robPlayer(RobPlayerInfo victim) {
 
-    }
-    
-    public void updateState(String currState) {
-    	switch (currState) {
-    		case "FirstRound":
-    			state = new State.Setup();
-    			break;
-    		case "SecondRound":
-    			state = new State.Setup();
-    			break;
-    		case "Rolling":
-    			state = new State.Rolling();
-    			break;
-    		case "Robbing":
-    			state = new State.MoveRobber();
-    			break;
-    		case "Playing":
-    			state = new State.Playing();
-    			break;
-    		case "Discarding":
-    			state = new State.Discarding();
-    			break;
-			default:
-				break;
-    		
-    	}
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        if (o instanceof Populator && arg instanceof ModelFacade) {
-            ModelFacade facade = (ModelFacade) arg;
-            initFromModel(facade);
-    		currState = facade.getState();
-    		updateState(currState);
-        }
-        
     }
 
 }

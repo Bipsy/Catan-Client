@@ -8,6 +8,7 @@ import shared.models.Hex;
 import shared.models.Message;
 import shared.models.Road;
 import shared.models.Robber;
+import shared.models.UserManager;
 import shared.models.VertexObject;
 import shared.models.DTO.params.*;
 import shared.definitions.*;
@@ -115,6 +116,19 @@ public class ModelFacade {
     		return 0;
     }
     
+    public UserManager getUserManager() {
+    	if (models.getUserManager() != null)
+    		return models.getUserManager();
+    	else
+    		return null;
+    }
+    
+    public int getCurrentPlayerIndex() {
+    	UserManager um = this.getUserManager();
+    	int index = um.getTurnTracker().getCurrentTurn();
+    	return index;
+    }
+    
     public Hex GetHexAt(int i) {
     	if (i < models.getBoard().getHexes().size() && i >=0)
     		return models.getBoard().getHexes().get(i);
@@ -191,5 +205,17 @@ public class ModelFacade {
     		return null;
     			
     }
+
+	public boolean canBuildRoad(int playerIndex) {
+		return models.CanBuildRoad(playerIndex);
+	}
+
+	public boolean canBuildSettlement(int playerIndex) {
+		return models.CanBuildSettlement(playerIndex);
+	}
+
+	public boolean canBuildCity(int playerIndex) {
+		return models.CanBuildCity(playerIndex);
+	}
     
 }
