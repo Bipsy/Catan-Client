@@ -5,7 +5,6 @@ import java.util.*;
 import client.base.*;
 import client.model.ModelFacade;
 import client.model.Populator;
-import shared.definitions.*;
 
 /**
  * Game history controller implementation
@@ -14,7 +13,6 @@ public class GameHistoryController extends Controller
     implements IGameHistoryController, Observer {
 
     public GameHistoryController(IGameHistoryView view) {
-
         super(view);
         Populator.getInstance().addObserver(this);
         initFromModel(null);
@@ -22,7 +20,6 @@ public class GameHistoryController extends Controller
 
     @Override
     public IGameHistoryView getView() {
-
         return (IGameHistoryView) super.getView();
     }
 
@@ -30,9 +27,7 @@ public class GameHistoryController extends Controller
 
         List<LogEntry> entries = new ArrayList<LogEntry>();
         
-    	if (facade == null) {
-           entries.add(new LogEntry(CatanColor.BROWN, "There are no messages yet"));
-    	} else {
+        if (facade != null) {
 	        for (int i=1; i<facade.getLogObject().size(); i++) {
 	        	String name = facade.getLogObject().get(i).getSource();
 	        	entries.add(new LogEntry(facade.GetPlayerColor(name), facade.getLogObject().get(i).getMessage()));
