@@ -279,4 +279,8 @@ public class Player extends User {
         this.cities = c;
 
     }
+
+	public PlayerHand getResources() {
+		return this.resources;
+	}
 }
