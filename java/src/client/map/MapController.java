@@ -48,7 +48,6 @@ public class MapController extends Controller
                 
         for (int i = 0; i < facade.NumberOfHexes(); i++) {
             Hex hex = facade.GetHexAt(i);
-            System.out.println(hex);
             if (hex != null) {
                 getView().addHex(hex.getLocation(), hex.getResource());
                 if(hex.getNumber() != null)
