@@ -3,6 +3,7 @@ package client.roll;
 import client.base.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 import javax.swing.Timer;
 
 /**
@@ -16,7 +17,9 @@ public class RollController extends Controller implements IRollController {
     private ActionListener timerListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            getResultView().setRollValue(5);
+            Random random = new Random();
+            int rollValue = random.nextInt(7);
+            getResultView().setRollValue(rollValue);
         }    
     };
 
