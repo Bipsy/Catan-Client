@@ -22,7 +22,7 @@ public class PopulatorTest {
         iSerializer s = new Serializer();
         Populator p = Populator.getInstance();
         try {
-            boolean result = p.populateModel(s.deserializeModel(ModelMock.getJSON()));
+            boolean result = p.populateModel(s.deserializeModel(ModelMock.getJSON()), null);
 
             assertTrue("populator returned true", result);
             shared.models.ClientModel m = Data.getCurentModelInstance();

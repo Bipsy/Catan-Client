@@ -13,6 +13,7 @@ import java.util.List;
 
 import org.javatuples.Pair;
 
+import shared.exceptions.NoCookieException;
 import shared.models.DTO.ClientModelDTO;
 import shared.models.DTO.params.*;
 
@@ -183,6 +184,11 @@ public class MockServerProxy implements iServerProxy {
     public void addAIPlayer(AddAIRequest player) throws IOException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+	@Override
+	public String getLocalPlayerName() throws NoCookieException {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
 
 //    @Override
 //    public void changeLogLevel(String logLevel) throws IOException {

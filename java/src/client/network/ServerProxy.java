@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.javatuples.Pair;
 
+import shared.exceptions.NoCookieException;
 import shared.models.DTO.*;
 import shared.models.DTO.params.*;
 
@@ -392,5 +393,12 @@ public class ServerProxy implements iServerProxy {
     private void storeCookies(String result) {
     	uCookie = serializer.deserializeUserCookie(result);
     }
+
+	@Override
+	public String getLocalPlayerName() throws NoCookieException {
+		if(uCookie == null)
+			throw new NoCookieException();
+		return uCookie.getName();
+	}
 
 }

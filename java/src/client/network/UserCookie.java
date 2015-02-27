@@ -2,14 +2,15 @@ package client.network;
 
 public class UserCookie {
 
-	private String username = "";
+	private String name = "";
 	private String password = "";
 	private int playerID = -1;
-	public String getUsername() {
-		return username;
+	
+	public String getName() {
+		return name;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getPassword() {
 		return password;
