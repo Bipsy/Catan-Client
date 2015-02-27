@@ -18,7 +18,7 @@ public class RollController extends Controller implements IRollController {
         @Override
         public void actionPerformed(ActionEvent e) {
             Random random = new Random();
-            int rollValue = random.nextInt(7);
+            int rollValue = random.nextInt(12) + 1;
             getResultView().setRollValue(rollValue);
         }    
     };
