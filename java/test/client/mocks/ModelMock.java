@@ -1,7 +1,6 @@
 package client.mocks;
 
 import shared.locations.EdgeDirection;
-import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 /**
