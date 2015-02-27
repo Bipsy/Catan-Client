@@ -11,10 +11,15 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import shared.models.DTO.params.AddAIRequest;
+
 /**
  * Implementation for the player waiting controller
  */
 public class PlayerWaitingController extends Controller implements IPlayerWaitingController {
+	
+	private ServerProxy proxy;
+	private IPlayerWaitingView view;
 
     public PlayerWaitingController(IPlayerWaitingView view) {
 
@@ -31,7 +36,6 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
         int numPlayers = 0;
     	try {
             int gameNumber = proxy.getGameNumber();
-            System.out.println("Game ID: " + gameNumber);
             List<GameInfo> games = proxy.listGames();
             for (GameInfo game : games) {
                 if (game.getId() == gameNumber) {
@@ -64,17 +68,34 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
     @Override
     public void start() {
-        ServerProxy proxy = ServerProxy.getInstance();
-        IPlayerWaitingView view = getView();
-        setViewPlayers(view, proxy);
+        this.proxy = ServerProxy.getInstance();
+        this.view = getView();
+        int numPlayers = setViewPlayers(view, proxy);
         setViewAIs(view, proxy);
         view.showModal();
-        
-        final Timer timer = new Timer();
-        final WaitForPlayersTask waiting = new WaitForPlayersTask(this, proxy, timer);
-        timer.schedule(waiting, 0, 2000);
+        if(numPlayers < 4) {
+        	final Timer timer = new Timer();
+        	final WaitForPlayersTask waiting = new WaitForPlayersTask(this, proxy, timer);
+        	timer.schedule(waiting, 0, 2000);        	
+        }
+        else if (numPlayers == 4){
+        	view.closeModal();
+        }
     }
     
+
+    @Override
+    public void addAI() {
+    	AddAIRequest player = new AddAIRequest(view.getSelectedAI());
+    	try {
+			proxy.addAIPlayer(player);
+		} catch (IOException e) {
+			System.err.println("Error creating AIPlayer");
+			e.printStackTrace();
+		}
+    	
+    }
+
     class WaitForPlayersTask extends TimerTask {
     	private PlayerWaitingController parent;
     	private ServerProxy proxy;
@@ -86,25 +107,20 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
     		this.proxy = proxy;
     		this.timer = timer;
     	}
-
-		@Override
-		public void run() {
-			if(players < 4) {
-				players = parent.setViewPlayers(parent.getView(), proxy);
-				parent.getView().showModal();
-			}
-			else {
-				parent.getView().closeModal();
-				Catan.startPoller(2000);
-				timer.cancel();
-				timer.purge();
-			}
-		}
+    	
+    	@Override
+    	public void run() {
+    		if(players < 4) {
+    			players = parent.setViewPlayers(parent.getView(), proxy);
+    			parent.getView().showModal();
+    		}
+    		else {
+    			parent.getView().closeModal();
+    			Catan.startPoller(2000);
+    			timer.cancel();
+    			timer.purge();
+    		}
+    	}
     	
     }
-
-    @Override
-    public void addAI() {
-    }
-
 }

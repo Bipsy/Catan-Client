@@ -105,10 +105,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
     public void start() {
         try {
         	UserCookie uCookie = proxy.getUserCookie();
-        	if(uCookie != null)
-        		System.out.println("Player Id" + uCookie.getPlayerID());
-        	else
-        		System.out.println("Null Player");
 
         	games = proxy.listGames();
 

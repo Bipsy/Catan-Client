@@ -54,7 +54,6 @@ public class ServerPoller implements ActionListener {
         }
         try {
             ClientModelDTO newModel = serverProxy.retrieveCurrentState(new Integer(version));
-            System.out.println("new model retrieved");
             return newModel;
         } catch (IOException ex) {
             System.err.println("Error while polling server");
@@ -76,11 +75,8 @@ public class ServerPoller implements ActionListener {
 
     private boolean updateModel(ClientModelDTO model) {
         if (model == null) {
-        	System.out.println("Model is null");
             return false;
         } else {
-
-        	System.out.println("Model is not null");
             return modelHandle.populateModel(model);
         }
     }
