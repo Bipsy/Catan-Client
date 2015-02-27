@@ -5,12 +5,12 @@ import client.model.ModelFacade;
 import client.model.Populator;
 import client.network.ServerProxy;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import shared.definitions.CatanColor;
 import shared.models.DTO.params.SendChat;
 
 /**
@@ -34,19 +34,21 @@ public class ChatController extends Controller
 
     @Override
     public void sendMessage(String message) {
-    	SendChat chat = new SendChat(message);
-    	proxy.sendChat(chat);
+    	try {
+    		//SendChat chat = new SendChat(proxy.getUserCookie().getPlayerID(), message);
+    		SendChat chat = new SendChat(0, message);
+    		System.out.println("PROXY PLAYER ID: " + proxy.getUserCookie().getPlayerID());
+			proxy.sendChat(chat);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
     private void initFromModel(ModelFacade facade) {
-    	System.out.println("DO I EVEN MAKE IT HERE?");
     	
         List<LogEntry> entries = new ArrayList<LogEntry>();
         
-    	if (facade == null) {
-           entries.add(new LogEntry(CatanColor.WHITE, "There are no messages yet"));
-    	} else {
+    	if (facade != null) {
 	        for (int i=1; i<facade.getChatObject().size(); i++) {
-	        	System.out.println("ChatLog size: " + facade.getChatObject().size());
 	        	String name = facade.getChatObject().get(i).getSource();
 	        	entries.add(new LogEntry(facade.GetPlayerColor(name), facade.getChatObject().get(i).getMessage()));
 	        }
