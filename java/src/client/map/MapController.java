@@ -47,9 +47,10 @@ public class MapController extends Controller
         if (facade == null || !facade.hasModel()) return;
                 
         for (int i = 0; i < facade.NumberOfHexes(); i++) {
+
             Hex hex = facade.GetHexAt(i);
             if (hex != null) {
-                getView().addHex(hex.getLocation(), hex.getResource());
+        		getView().addHex(hex.getLocation(), hex.getResource());
                 if(hex.getNumber() != null)
                 	getView().addNumber(hex.getLocation(), hex.getNumber());
             }
@@ -75,11 +76,11 @@ public class MapController extends Controller
         }
         
         
-        for (int i = 0; i < facade.NumberOfHarbors(); i++) {
-        	Harbor port = facade.GetHarborAt(i); 
-        	if (port !=null)
-        		getView().addPort(port.getLocation(), port.getResource()); 
-        }
+//        for (int i = 0; i < facade.NumberOfHarbors(); i++) {
+//        	Harbor port = facade.GetHarborAt(i); 
+//        	if (port !=null)
+//        		getView().addPort(port.getLocation(), port.getResource()); 
+//        }
         
         Robber robber = facade.GetRobber();
         if (robber != null)

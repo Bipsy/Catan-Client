@@ -89,7 +89,7 @@ public class Populator extends Observable implements iPopulator {
         board.setRadius(map.getRadius());
 
         board.setHexes(map.getHexes());
-
+        
         board.setHarbor(map.getPorts());
 
         board.setRoads(map.getRoads());

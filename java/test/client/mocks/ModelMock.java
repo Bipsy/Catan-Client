@@ -121,15 +121,15 @@ public class ModelMock {
             new VertexObjectDTO(3, new VertexLocationDTO(-1, 1, VertexDirection.SouthWest))
         };
         PortDTO[] ports = {
-            new PortDTO(3, null, new EdgeLocation(new HexLocation(3, -3), EdgeDirection.SouthWest)),
-            new PortDTO(2, "ore", new EdgeLocation(new HexLocation(1, -3), EdgeDirection.South)),
-            new PortDTO(3, null, new EdgeLocation(new HexLocation(2, 1), EdgeDirection.NorthWest)),
-            new PortDTO(2, "wheat", new EdgeLocation(new HexLocation(-1, -2), EdgeDirection.South)),
-            new PortDTO(2, "brick", new EdgeLocation(new HexLocation(-2, 3), EdgeDirection.NorthEast)),
-            new PortDTO(2, "wood", new EdgeLocation(new HexLocation(-3, 2), EdgeDirection.NorthEast)),
-            new PortDTO(2, "sheep", new EdgeLocation(new HexLocation(3, -1), EdgeDirection.NorthWest)),
-            new PortDTO(3, null, new EdgeLocation(new HexLocation(-3, 0), EdgeDirection.SouthEast)),
-            new PortDTO(3, null, new EdgeLocation(new HexLocation(0, 3), EdgeDirection.North))
+//            new PortDTO(3, null, new EdgeLocation(new HexLocation(3, -3), EdgeDirection.SouthWest)),
+//            new PortDTO(2, "ore", new EdgeLocation(new HexLocation(1, -3), EdgeDirection.South)),
+//            new PortDTO(3, null, new EdgeLocation(new HexLocation(2, 1), EdgeDirection.NorthWest)),
+//            new PortDTO(2, "wheat", new EdgeLocation(new HexLocation(-1, -2), EdgeDirection.South)),
+//            new PortDTO(2, "brick", new EdgeLocation(new HexLocation(-2, 3), EdgeDirection.NorthEast)),
+//            new PortDTO(2, "wood", new EdgeLocation(new HexLocation(-3, 2), EdgeDirection.NorthEast)),
+//            new PortDTO(2, "sheep", new EdgeLocation(new HexLocation(3, -1), EdgeDirection.NorthWest)),
+//            new PortDTO(3, null, new EdgeLocation(new HexLocation(-3, 0), EdgeDirection.SouthEast)),
+//            new PortDTO(3, null, new EdgeLocation(new HexLocation(0, 3), EdgeDirection.North))
         };
         HexLocation robber = new HexLocation(0, -2);
         MapDTO map = new MapDTO(hexes, roads, cities, settlements, 3, ports, robber);
