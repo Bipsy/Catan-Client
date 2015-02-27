@@ -19,8 +19,8 @@ public class TurnTracker {
 
     private int currentTurn;
     private String status;
-    private int longestRoad;
-    private int largestArmy;
+    private Integer longestRoad;
+    private Integer largestArmy;
 
     public TurnTracker() {
 
@@ -50,18 +50,20 @@ public class TurnTracker {
     }
 
     public int getLongestRoad() {
-        return longestRoad;
+        return (longestRoad == null)? -1: longestRoad;
     }
 
     public void setLongestRoad(int longestRoad) {
-        this.longestRoad = longestRoad;
+    	if(longestRoad >= 0 && longestRoad < 4)
+    		this.longestRoad = longestRoad;
     }
 
     public int getLargestArmy() {
-        return largestArmy;
+        return (largestArmy == null)? -1: largestArmy;
     }
 
     public void setLargestArmy(int largestArmy) {
+    	if(largestArmy >= 0 && largestArmy < 4)
         this.largestArmy = largestArmy;
     }
 

@@ -6,9 +6,12 @@
 package client.network;
 
 import client.model.iPopulator;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+
+import shared.exceptions.NoCookieException;
 import shared.models.DTO.ClientModelDTO;
 
 /**
@@ -77,12 +80,20 @@ public class ServerPoller implements ActionListener {
         if (model == null) {
             return false;
         } else {
-            return modelHandle.populateModel(model);
+        	String name = null;
+			try {
+				name = serverProxy.getLocalPlayerName();
+			} catch (NoCookieException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            return modelHandle.populateModel(model, name);
         }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+    	//System.out.println("polling n stuff");
         ClientModelDTO newModel = poll();
         if (isNew(newModel)) {
             updateModel(newModel);

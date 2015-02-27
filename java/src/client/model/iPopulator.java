@@ -13,6 +13,6 @@ import shared.models.DTO.ClientModelDTO;
  */
 public interface iPopulator {
 
-    public boolean populateModel(ClientModelDTO container);
+    public boolean populateModel(ClientModelDTO container, String username);
 
 }

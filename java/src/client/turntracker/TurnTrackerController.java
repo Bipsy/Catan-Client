@@ -1,6 +1,8 @@
 package client.turntracker;
 
 import shared.definitions.CatanColor;
+import shared.exceptions.InvalidPlayerIndex;
+import shared.models.Player;
 import client.base.*;
 import client.model.ModelFacade;
 import client.model.Populator;
@@ -17,8 +19,8 @@ public class TurnTrackerController extends Controller
     public TurnTrackerController(ITurnTrackerView view) {
 
         super(view);
-
-        initFromModel();
+        Populator.getInstance().addObserver(this);
+        initFromModel(null);
     }
 
     @Override
@@ -32,16 +34,43 @@ public class TurnTrackerController extends Controller
 
     }
 
-    private void initFromModel() {
+    private void initFromModel(ModelFacade facade) {
+    	
+    	if (facade == null || !facade.hasModel()) return;
+    	
+    	String username = facade.getLocalUserName();
+    	
         //<temp>
-        getView().setLocalPlayerColor(CatanColor.RED);
+    	CatanColor color = facade.GetPlayerColor(username);
+    	
+    	if(color != null)
+    		getView().setLocalPlayerColor(color);
+        boolean currentTurn = false;
+        
+        for (int i = 0; i < 4; i++) {
+			Player player;
+			try {
+				player = facade.getPlayer(i);
+				if(!currentTurn)
+					currentTurn = username.equals(player.getUsername()) && facade.isCurrentTurn(i);
+				getView().initializePlayer(i, player.getUsername(), player.getColor());
+				getView().updatePlayer(i, player.getVictoryPoints(), facade.isCurrentTurn(i), 
+						facade.getLargestArmy() == i, facade.getlongestRoad() == i);
+			} catch (InvalidPlayerIndex e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+        String state = facade.getState();
+        getView().updateGameState(state, currentTurn);
         //</temp>
     }
 
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof Populator && arg instanceof ModelFacade) {
-            
+        	ModelFacade facade = (ModelFacade) arg;
+            initFromModel(facade);
         }
     }
 

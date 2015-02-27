@@ -27,6 +27,9 @@ import shared.models.DTO.params.YearOfPlenty;
  * @author Mikey Murphy <mikeyamadeo@gmail.com>
  */
 public class ClientModel {
+	
+	private String localPlayerName;
+	private Integer localPlayerIndex;
 
     private Bank bank;
     private Board board;
@@ -45,6 +48,7 @@ public class ClientModel {
         chatObject = null;
         userManager = null;
         tradeOffer = null;
+        localPlayerIndex = null;
 
     }
 
@@ -187,6 +191,10 @@ public class ClientModel {
         return (buildRoad.isFree() || userManager.CanBuildRoad(buildRoad))
                 && board.canBuildRoad(buildRoad);
     }
+    
+    public boolean hasResourcesForRoad(int playerIndex) {
+        return userManager.CanBuildRoad(playerIndex);
+    }
 
     /**
      * Checks that the vertex is not taken, that there are no objects on
@@ -288,7 +296,45 @@ public class ClientModel {
         return isTurn && hasRolled;
     }
 
+	public boolean CanBuildRoad(int playerIndex) {
+		return userManager.CanBuildRoad(playerIndex);
+	}
+
+	public boolean CanBuildSettlement(int playerIndex) {
+		return userManager.CanBuildRoad(playerIndex);
+	}
+
+	public boolean CanBuildCity(int playerIndex) {
+		return userManager.CanBuildCity(playerIndex);
+	}
+	
 	public int getMapRadius() {
 		return this.board.getRadius();
+	}
+
+	public String getLocalPlayerName() {
+		return localPlayerName;
+	}
+
+	public void setLocalPlayerName(String localPlayerName) {
+		this.localPlayerName = localPlayerName;
+		if(userManager != null)
+			this.localPlayerIndex = userManager.getLocalPlayerIndex(localPlayerName);
+	}
+	
+	public Integer getLocalPlayerIndex() {
+		return this.localPlayerIndex;
+	}
+	
+	public Player getPlayer(int index) {
+		return this.userManager.getPlayer(index);
+	}
+
+	public int getLargestArmy() {
+		return this.userManager.getLargestArmy();
+	}
+
+	public int getLongestRoad() {
+		return this.userManager.getLongestRoad();
 	}
 }

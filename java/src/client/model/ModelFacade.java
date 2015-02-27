@@ -6,11 +6,16 @@ import shared.models.ClientModel;
 import shared.models.Harbor;
 import shared.models.Hex;
 import shared.models.Message;
+import shared.models.Player;
+import shared.models.PlayerHand;
+import shared.models.ResourceList;
 import shared.models.Road;
 import shared.models.Robber;
+import shared.models.UserManager;
 import shared.models.VertexObject;
 import shared.models.DTO.params.*;
 import shared.definitions.*;
+import shared.exceptions.InvalidPlayerIndex;
 import client.storage.Data;
 
 
@@ -111,6 +116,19 @@ public class ModelFacade {
     		return 0;
     }
     
+    public UserManager getUserManager() {
+    	if (models.getUserManager() != null)
+    		return models.getUserManager();
+    	else
+    		return null;
+    }
+    
+    public int getCurrentPlayerIndex() {
+    	UserManager um = this.getUserManager();
+    	int index = um.getTurnTracker().getCurrentTurn();
+    	return index;
+    }
+    
     public Hex GetHexAt(int i) {
     	if (i < models.getBoard().getHexes().size() && i >=0)
     		return models.getBoard().getHexes().get(i);
@@ -186,7 +204,28 @@ public class ModelFacade {
     	else
     		return null;		
     }
+
+	public boolean canBuildRoad(int playerIndex) {
+		return models.CanBuildRoad(playerIndex);
+	}
+
+	public boolean canBuildSettlement(int playerIndex) {
+		return models.CanBuildSettlement(playerIndex);
+	}
+
+	public boolean canBuildCity(int playerIndex) {
+		return models.CanBuildCity(playerIndex);
+	}
     
+	public Player getPlayer(int index) throws InvalidPlayerIndex {
+		if (index >= 0 && index < 4) {
+			return this.models.getPlayer(index);
+		}
+		else {
+			throw new InvalidPlayerIndex();
+		}
+	}
+	
     public CatanColor GetPlayerColor (String player) {
     	return models.getUserManager().getPlayerColor(player);
     }
@@ -195,4 +234,38 @@ public class ModelFacade {
 		return this.models.getMapRadius();
 	}
     
+	public String getLocalUserName() {
+		return this.models.getLocalPlayerName();
+	}
+	
+	public boolean isCurrentTurn(int index) throws InvalidPlayerIndex {
+		if (index >= 0 && index < 4) {
+			return this.getCurrentPlayerIndex() == index;
+		}
+		else {
+			throw new InvalidPlayerIndex();
+		}
+	}
+
+	public int getLargestArmy() {
+		return this.models.getLargestArmy();
+	}
+
+	public int getlongestRoad() {
+		return this.models.getLongestRoad();
+	}
+	
+	public Integer getLocalPlayerIndex() {
+		if(models != null) {
+			return models.getLocalPlayerIndex();
+		}
+		return null;
+	}
+
+
+	public int getResourceCount(int playerIndex, ResourceType type) {
+		Player player = models.getPlayer(playerIndex);
+		PlayerHand cards = player.getResources();
+		return cards.getResourceCount(type);
+	}
 }
