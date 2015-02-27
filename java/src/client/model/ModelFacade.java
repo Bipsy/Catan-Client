@@ -37,10 +37,6 @@ public class ModelFacade {
     public List<Message> getChatObject() {
     	return models.getChatObject();
     }
-
-//    public CatanColor getPlayerColor(String user) {
-//    	return models.getUserColor(user);
-//    }
     
     public boolean CanDiscardCards(DiscardCards discardCards) {
         return models != null && models.CanDiscardCards(discardCards);
@@ -188,8 +184,11 @@ public class ModelFacade {
     	if (models.getUserManager().getNumPlayers() > playerIndex && 0 <= playerIndex) 
     		return models.getUserManager().getPlayer(playerIndex).getColor();
     	else
-    		return null;
-    			
+    		return null;		
+    }
+    
+    public CatanColor GetPlayerColor (String player) {
+    	return models.getUserManager().getPlayerColor(player);
     }
     
 }

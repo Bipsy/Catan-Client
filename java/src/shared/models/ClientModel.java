@@ -72,12 +72,6 @@ public class ClientModel {
     public void setBoard(Board board) {
         this.board = board;
     }
-    
-//    public String getStatus() {
-//    	System.out.println("RETURNING STATUS FROM THE CLIENTMODEL");
-//    	System.out.println(turn.getStatus());
-//    	return turn.getStatus();
-//    }
 
     /**
      * CHAT OBJECT
@@ -293,8 +287,4 @@ public class ClientModel {
 
         return isTurn && hasRolled;
     }
-    
-//    public CatanColor getUserColor(String user) {
-//    	return user.getColor(user);
-//    }
 }

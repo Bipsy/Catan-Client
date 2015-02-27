@@ -95,10 +95,4 @@ public class User {
         this.username = username;
         this.password = password;
     }
-
-    public User(String color, int playerIndex, int playerID) {
-        this.color = CatanColor.valueOf(color.toUpperCase());
-        this.index = playerIndex;
-        this.ID = playerID;
-    }
 }
