@@ -1,19 +1,24 @@
 package client.roll;
 
 import client.base.*;
-import client.model.ModelFacade;
-import client.model.Populator;
-
-import java.util.Observable;
-import java.util.Observer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.Timer;
 
 /**
  * Implementation for the roll controller
  */
-public class RollController extends Controller 
-    implements IRollController, Observer {
+public class RollController extends Controller implements IRollController {
 
     private IRollResultView resultView;
+    private final String MESSAGE = "Rolling in %d seconds";
+    private final int rollingCount = 3;
+    private ActionListener timerListener = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            getResultView().setRollValue(5);
+        }    
+    };
 
     /**
      * RollController constructor
@@ -42,17 +47,13 @@ public class RollController extends Controller
 
     @Override
     public void rollDice() {
-    	//implement timer
-    	//"Rolling automatically in (timer) seconds"
-    	//
+        String formattedString = String.format(MESSAGE, rollingCount);
+        getRollView().setMessage(formattedString);
+        Timer rollingTimer = new Timer(rollingCount, timerListener);
+        rollingTimer.setInitialDelay(0);
+        rollingTimer.setRepeats(false);
+        rollingTimer.start();     
         getResultView().showModal();
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        if (o instanceof Populator && arg instanceof ModelFacade) {
-            
-        }
     }
 
 }
