@@ -80,6 +80,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
         }
         else if (numPlayers == 4){
         	view.closeModal();
+			Catan.startPoller(2000);
         }
     }
     
