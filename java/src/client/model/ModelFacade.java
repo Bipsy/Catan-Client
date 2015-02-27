@@ -190,5 +190,9 @@ public class ModelFacade {
     public CatanColor GetPlayerColor (String player) {
     	return models.getUserManager().getPlayerColor(player);
     }
+
+	public int getMapRadius() {
+		return this.models.getMapRadius();
+	}
     
 }

@@ -57,6 +57,19 @@ public class MapController extends Controller
 
         }
         
+        //initialize water hexes
+        int radius = facade.getMapRadius();
+        for(int x = 0; x < radius; x++) {
+        	getView().addHex(new HexLocation(-x, radius), HexType.WATER);
+        	getView().addHex(new HexLocation(-radius, radius - x), HexType.WATER);
+        	getView().addHex(new HexLocation(x - radius, - x), HexType.WATER);
+        	getView().addHex(new HexLocation(x, -radius), HexType.WATER);
+        	getView().addHex(new HexLocation(radius, x - radius), HexType.WATER);
+        	getView().addHex(new HexLocation(radius - x, x), HexType.WATER);
+        }
+        
+        // need to draw water tiles
+        
         for (int i = 0; i < facade.NumberOfRoads(); i++) {
         	Road road = facade.GetRoadAt(i);
         	if (road !=null)
