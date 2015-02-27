@@ -20,7 +20,7 @@ public class Harbor {
     public Harbor(PortDTO portDTO) {
         this.resource = portDTO.getResource();
         this.ratio = portDTO.getRatio();
-        this.setLocation(portDTO.getLocation());
+        this.location = new EdgeLocation(portDTO.getLocation(), portDTO.getDirection());
     }
 
     public PortType getResource() {

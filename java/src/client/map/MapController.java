@@ -4,8 +4,13 @@ import java.util.*;
 
 import shared.definitions.*;
 import shared.locations.*;
+import shared.models.Hex;
+import shared.models.Road;
+import shared.models.Robber;
+import shared.models.VertexObject;
 import client.base.*;
 import client.data.*;
+import client.model.ModelFacade;
 
 /**
  * Implementation for the map controller
@@ -36,9 +41,54 @@ public class MapController extends Controller implements IMapController {
         this.robView = robView;
     }
 
+
     protected void initFromModel() {
 
-        //<temp>
+    }
+
+    protected void initFromModel(ModelFacade facade) {
+        if (facade == null || !facade.hasModel()) return;
+                
+        for (int i = 0; i < facade.NumberOfHexes(); i++) {
+
+            Hex hex = facade.GetHexAt(i);
+            if (hex != null) {
+        		getView().addHex(hex.getLocation(), hex.getResource());
+                if(hex.getNumber() != null)
+                	getView().addNumber(hex.getLocation(), hex.getNumber());
+            }
+
+        }
+        
+        for (int i = 0; i < facade.NumberOfRoads(); i++) {
+        	Road road = facade.GetRoadAt(i);
+        	if (road !=null)
+        		getView().placeRoad(road.getLocation(), facade.GetPlayerColor(road.getOwner()));
+        }
+        
+        for (int i = 0; i < facade.NumberOfCities(); i++) {
+        	VertexObject city = facade.GetCityAt(i); 
+        	if (city !=null)       	
+        		getView().placeCity(city.getLocation(), facade.GetPlayerColor(city.getOwner()));
+        }
+        
+        for (int i = 0; i < facade.NumberOfSettlements(); i++) {
+        	VertexObject settlement = facade.GetSettlementAt(i);
+        	if (settlement !=null)
+        		getView().placeSettlement(settlement.getLocation(), facade.GetPlayerColor(settlement.getOwner()));
+        }
+        
+        
+//        for (int i = 0; i < facade.NumberOfHarbors(); i++) {
+//        	Harbor port = facade.GetHarborAt(i); 
+//        	if (port !=null)
+//        		getView().addPort(port.getLocation(), port.getResource()); 
+//        }
+        
+        Robber robber = facade.GetRobber();
+        if (robber != null)
+        	getView().placeRobber(robber.getLocation());
+        
         Random rand = new Random();
 
         for (int x = 0; x <= 3; ++x) {
