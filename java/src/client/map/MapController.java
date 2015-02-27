@@ -76,11 +76,13 @@ public class MapController extends Controller
         }
         
         
-//        for (int i = 0; i < facade.NumberOfHarbors(); i++) {
-//        	Harbor port = facade.GetHarborAt(i); 
-//        	if (port !=null)
-//        		getView().addPort(port.getLocation(), port.getResource()); 
-//        }
+        for (int i = 0; i < facade.NumberOfHarbors(); i++) {
+        	Harbor port = facade.GetHarborAt(i); 
+        	if (port !=null) {
+        		System.out.println(port.getResource());
+        		getView().addPort(port.getLocation(), port.getResource());
+        	}
+        }
         
         Robber robber = facade.GetRobber();
         if (robber != null)
