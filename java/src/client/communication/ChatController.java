@@ -20,6 +20,7 @@ public class ChatController extends Controller
     implements IChatController, Observer {
 
 	ServerProxy proxy = ServerProxy.getInstance();
+	private int localIndex;
 
     public ChatController(IChatView view) {
         super(view);
@@ -37,13 +38,18 @@ public class ChatController extends Controller
     	try {
     		//SendChat chat = new SendChat(proxy.getUserCookie().getPlayerID(), message);
     		SendChat chat = new SendChat(0, message);
+        	System.out.println("sendMessage: " + localIndex);
     		System.out.println("PROXY PLAYER ID: " + proxy.getUserCookie().getPlayerID());
+    		
 			proxy.sendChat(chat);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
     }
     private void initFromModel(ModelFacade facade) {
+    	
+    	localIndex = facade.getLocalPlayerIndex();
+    	System.out.println("initFromModel: " + localIndex);
     	
         List<LogEntry> entries = new ArrayList<LogEntry>();
         
