@@ -85,7 +85,7 @@ public class LoginController extends Controller implements ILoginController {
                 messageView.showModal();
             }
         } catch (IOException ex) {
-            System.out.println("Server error");         
+            System.err.println("Server error");         
         }
     }
 

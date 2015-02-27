@@ -46,7 +46,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
                 }
             }
         } catch (IOException ex) {
-            System.out.println("Exception while starting view controller");
+            System.err.println("Exception while starting view controller");
             ex.printStackTrace();
         }
     	return numPlayers;
