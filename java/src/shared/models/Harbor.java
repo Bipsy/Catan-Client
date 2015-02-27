@@ -18,6 +18,9 @@ public class Harbor {
     private EdgeLocation location;
 
     public Harbor(PortDTO portDTO) {
+    	if(portDTO.getResource() == null) {
+    		portDTO.setResource(PortType.THREE);
+    	}
         this.resource = portDTO.getResource();
         this.ratio = portDTO.getRatio();
         this.location = new EdgeLocation(portDTO.getLocation(), portDTO.getDirection());
