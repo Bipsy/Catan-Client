@@ -44,14 +44,13 @@ public class ChatController extends Controller
     }
     private void initFromModel(ModelFacade facade) {
     	
-    	
         List<LogEntry> entries = new ArrayList<LogEntry>();
         
     	if (facade != null) {
     		if (facade.getLocalPlayerIndex() != null) {
 	        	localIndex = facade.getLocalPlayerIndex();
     		}
-	        for (int i=1; i<facade.getChatObject().size(); i++) {
+	        for (int i=0; i<facade.getChatObject().size(); i++) {
 	        	String name = facade.getChatObject().get(i).getSource();
 	        	entries.add(new LogEntry(facade.GetPlayerColor(name), facade.getChatObject().get(i).getMessage()));
 	        }
