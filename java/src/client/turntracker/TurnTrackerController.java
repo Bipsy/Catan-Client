@@ -51,7 +51,8 @@ public class TurnTrackerController extends Controller
 			Player player;
 			try {
 				player = facade.getPlayer(i);
-				currentTurn = username.equals(player.getUsername()) && facade.isCurrentTurn(i);
+				if(!currentTurn)
+					currentTurn = username.equals(player.getUsername()) && facade.isCurrentTurn(i);
 				getView().initializePlayer(i, player.getUsername(), player.getColor());
 				getView().updatePlayer(i, player.getVictoryPoints(), facade.isCurrentTurn(i), 
 						facade.getLargestArmy() == i, facade.getlongestRoad() == i);
