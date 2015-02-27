@@ -25,9 +25,6 @@ public class Hex {
     private Map<VertexLocation, VertexObject> communityMap;
 
     public Hex(HexDTO hexDTO) {
-//    	System.out.println(hexDTO.getLocation());
-//    	System.out.println(hexDTO.getNumber());
-//    	System.out.println(hexDTO.getResource());
         this.location = new HexLocation(hexDTO.getLocation());
         this.resource = hexDTO.getResource();
         if(this.resource == null)

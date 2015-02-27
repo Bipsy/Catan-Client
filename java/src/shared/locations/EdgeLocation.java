@@ -20,6 +20,10 @@ public class EdgeLocation {
     	direction = location.getDirection();
 	}
 
+	public EdgeLocation() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public HexLocation getHexLoc() {
         return roadLocation;
     }

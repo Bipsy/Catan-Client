@@ -191,16 +191,16 @@ public class Player extends User {
         return resources.canMTrade(maritimeTrade);
     }
 
-    public boolean CanBuildRoad(BuildRoad buildRoad) {
-        return resources.canBuildRoad(buildRoad) && this.roads > 0;
+    public boolean CanBuildRoad() {
+        return resources.canBuildRoad() && this.roads > 0;
     }
 
-    public boolean CanBuildSettlement(BuildSettlement buildSettlement) {
-        return resources.canBuildSettlement(buildSettlement) && this.settlements > 0;
+    public boolean CanBuildSettlement() {
+        return resources.canBuildSettlement() && this.settlements > 0;
     }
 
-    public boolean CanBuildCity(BuildCity buildCity) {
-        return resources.canBuildCity(buildCity) && this.cities > 0;
+    public boolean CanBuildCity() {
+        return resources.canBuildCity() && this.cities > 0;
     }
 
     public boolean CanBuyDevCard(BuyDevCard buyDevCard) {
