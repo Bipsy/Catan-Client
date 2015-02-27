@@ -4,6 +4,7 @@ import java.util.*;
 
 import shared.definitions.*;
 import shared.locations.*;
+import shared.models.Harbor;
 import shared.models.Hex;
 import shared.models.Road;
 import shared.models.Robber;
