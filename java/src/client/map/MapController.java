@@ -57,6 +57,8 @@ public class MapController extends Controller
 
         }
         
+        // need to draw water tiles
+        
         for (int i = 0; i < facade.NumberOfRoads(); i++) {
         	Road road = facade.GetRoadAt(i);
         	if (road !=null)

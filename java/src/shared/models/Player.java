@@ -41,7 +41,7 @@ public class Player extends User {
     }
 
     public Player(PlayerDTO playerDTO) {
-        super(playerDTO.getColor(), playerDTO.getPlayerIndex(), playerDTO.getPlayerID());
+        super(playerDTO.getColor(), playerDTO.getName(), null, playerDTO.getPlayerIndex(), playerDTO.getPlayerID());
         this.setCities(playerDTO.getCities());
         this.setRoads(playerDTO.getRoads());
         this.setSettlements(playerDTO.getSettlements());

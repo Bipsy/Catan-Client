@@ -54,7 +54,7 @@ public class Populator extends Observable implements iPopulator {
         populateBoard(container.getMap());
 
         populateChatObject(container.getChat(), container.getLog());
-
+        
         populateUserManager(container.getPlayers(), container.getTurnTracker());
 
         if (container.getTradeOffer() != null) {
@@ -74,6 +74,7 @@ public class Populator extends Observable implements iPopulator {
             TurnTrackerDTO turnTracker) {
         List<Player> users = new ArrayList<>();
         for (PlayerDTO player : players) {
+        	System.out.println("Populating" + player.getName());
         	if(player != null)
         		users.add(new Player(player));
         }
