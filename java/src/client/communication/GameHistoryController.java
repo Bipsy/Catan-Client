@@ -48,9 +48,7 @@ public class GameHistoryController extends Controller
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof Populator && arg instanceof ModelFacade) {
-        	System.out.println("Am I updating the Log model?");
             ModelFacade facade = (ModelFacade) arg;
-        	//System.out.println("Facade.toString: " + facade.NumberOfHexes());
             initFromModel(facade);
         }
     }
