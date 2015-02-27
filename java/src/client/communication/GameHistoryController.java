@@ -33,13 +33,10 @@ public class GameHistoryController extends Controller
     	if (facade == null) {
            entries.add(new LogEntry(CatanColor.BROWN, "There are no messages yet"));
     	} else {
-	        for (int i=0; i<=facade.getLogObject().size(); i++) {
-	        	//entries.add(new LogEntry(facade.getPlayerColor(facade.getLogObject().get(i).getSource()), facade.getLogObject().get(i).getMessage()));
-
-	        	entries.add(new LogEntry(CatanColor.ORANGE, "tacos"));
-	        	//System.out.println("FACADE LENGTH: " + facade.getLogObject().size());
-	        	//entries.add(new LogEntry(CatanColor.ORANGE, facade.getLogObject().get(i).getMessage()));
-}
+	        for (int i=1; i<facade.getLogObject().size(); i++) {
+	        	String name = facade.getLogObject().get(i).getSource();
+	        	entries.add(new LogEntry(facade.GetPlayerColor(name), facade.getLogObject().get(i).getMessage()));
+	        }
     	}
         
         getView().setEntries(entries);
