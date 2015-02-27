@@ -267,7 +267,6 @@ public class ModelFacade {
 			try {
 				return isCurrentTurn(models.getLocalPlayerIndex());
 			} catch (InvalidPlayerIndex e) {
-				// TODO Auto-generated catch block
 				System.err.println(e.toString());
 			}
 		}
