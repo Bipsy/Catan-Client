@@ -287,4 +287,8 @@ public class ClientModel {
 
         return isTurn && hasRolled;
     }
+
+	public int getMapRadius() {
+		return this.board.getRadius();
+	}
 }
