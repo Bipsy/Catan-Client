@@ -257,6 +257,7 @@ public class ModelFacade {
 		if(models != null) {
 			return models.getLocalPlayerIndex();
 		}
+		System.out.println("RETURNS NULL");
 		return null;
 	}
 }

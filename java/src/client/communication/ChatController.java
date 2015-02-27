@@ -36,11 +36,7 @@ public class ChatController extends Controller
     @Override
     public void sendMessage(String message) {
     	try {
-    		//SendChat chat = new SendChat(proxy.getUserCookie().getPlayerID(), message);
-    		SendChat chat = new SendChat(0, message);
-        	System.out.println("sendMessage: " + localIndex);
-    		System.out.println("PROXY PLAYER ID: " + proxy.getUserCookie().getPlayerID());
-    		
+    		SendChat chat = new SendChat(localIndex, message);
 			proxy.sendChat(chat);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -48,12 +44,13 @@ public class ChatController extends Controller
     }
     private void initFromModel(ModelFacade facade) {
     	
-    	localIndex = facade.getLocalPlayerIndex();
-    	System.out.println("initFromModel: " + localIndex);
     	
         List<LogEntry> entries = new ArrayList<LogEntry>();
         
     	if (facade != null) {
+    		if (facade.getLocalPlayerIndex() != null) {
+	        	localIndex = facade.getLocalPlayerIndex();
+    		}
 	        for (int i=1; i<facade.getChatObject().size(); i++) {
 	        	String name = facade.getChatObject().get(i).getSource();
 	        	entries.add(new LogEntry(facade.GetPlayerColor(name), facade.getChatObject().get(i).getMessage()));
