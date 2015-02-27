@@ -28,7 +28,7 @@ public class GameHistoryController extends Controller
         List<LogEntry> entries = new ArrayList<LogEntry>();
         
         if (facade != null) {
-	        for (int i=1; i<facade.getLogObject().size(); i++) {
+	        for (int i=0; i<facade.getLogObject().size(); i++) {
 	        	String name = facade.getLogObject().get(i).getSource();
 	        	entries.add(new LogEntry(facade.GetPlayerColor(name), facade.getLogObject().get(i).getMessage()));
 	        }
