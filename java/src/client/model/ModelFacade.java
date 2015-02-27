@@ -252,4 +252,11 @@ public class ModelFacade {
 	public int getlongestRoad() {
 		return this.models.getLongestRoad();
 	}
+	
+	public Integer getLocalPlayerIndex() {
+		if(models != null) {
+			return models.getLocalPlayerIndex();
+		}
+		return null;
+	}
 }
