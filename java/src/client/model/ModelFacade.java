@@ -286,7 +286,6 @@ public class ModelFacade {
 		}
 		return winner;
 	}
-<<<<<<< Updated upstream
 	
 	public boolean canBuyDevCard(int playerIndex) {
 		return models.CanBuyDevCard(playerIndex);
@@ -296,6 +295,4 @@ public class ModelFacade {
 		Player player = models.getPlayer(playerIndex);
 		return player.getSoldiers();
 	}
-=======
->>>>>>> Stashed changes
 }
