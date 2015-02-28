@@ -104,7 +104,7 @@ public class UserManager {
 
     public boolean CanBuyDevCard(BuyDevCard buyDevCard) {
         return isCurrentPlayer(buyDevCard.getPlayerIndex())
-                && users.get(buyDevCard.getPlayerIndex()).CanBuyDevCard(buyDevCard);
+                && users.get(buyDevCard.getPlayerIndex()).CanBuyDevCard();
     }
 
     public void adjustUserPieces(int i, int r, int s, int c) {
@@ -125,6 +125,10 @@ public class UserManager {
 		return isCurrentPlayer(playerIndex) && users.get(playerIndex).CanBuildCity();
 	}
 
+	public boolean CanBuyDevCard(int playerIndex) {
+		return isCurrentPlayer(playerIndex) && users.get(playerIndex).CanBuyDevCard();
+	}
+	
 	public int getLargestArmy() {
 		return this.turnTracker.getLargestArmy();
 	}
@@ -143,5 +147,6 @@ public class UserManager {
 		}
 		return null;
 	}
+
 
 }
