@@ -205,8 +205,8 @@ public class Player extends User {
         return resources.canBuildCity() && this.cities > 0;
     }
 
-    public boolean CanBuyDevCard(BuyDevCard buyDevCard) {
-        return resources.canBuyDevCard(buyDevCard);
+    public boolean CanBuyDevCard() {
+        return resources.canBuyDevCard();
     }
 
     public boolean isPlayedDevCard() {
