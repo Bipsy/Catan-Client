@@ -58,7 +58,7 @@ public class PlayerHand {
      *
      * @return returns true if the player can, false otherwise
      */
-    public boolean canBuyDevCard(BuyDevCard buyDevCard) {
+    public boolean canBuyDevCard() {
         return resources.getResourceNumber(ResourceType.WHEAT) > 0
                 && resources.getResourceNumber(ResourceType.ORE) > 0
                 && resources.getResourceNumber(ResourceType.SHEEP) > 0;

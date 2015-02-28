@@ -286,4 +286,13 @@ public class ModelFacade {
 		}
 		return winner;
 	}
+	
+	public boolean canBuyDevCard(int playerIndex) {
+		return models.CanBuyDevCard(playerIndex);
+	}
+
+	public int soldierCount(int playerIndex) {
+		Player player = models.getPlayer(playerIndex);
+		return player.getSoldiers();
+	}
 }
