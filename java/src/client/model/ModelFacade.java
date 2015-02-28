@@ -8,7 +8,6 @@ import shared.models.Hex;
 import shared.models.Message;
 import shared.models.Player;
 import shared.models.PlayerHand;
-import shared.models.ResourceList;
 import shared.models.Road;
 import shared.models.Robber;
 import shared.models.UserManager;

@@ -36,6 +36,7 @@ public class ChatController extends Controller
     @Override
     public void sendMessage(String message) {
     	try {
+			System.out.println("sendMessage");
     		SendChat chat = new SendChat(localIndex, message);
 			proxy.sendChat(chat);
 		} catch (IOException e) {
@@ -48,10 +49,13 @@ public class ChatController extends Controller
         
     	if (facade != null) {
     		if (facade.getLocalPlayerIndex() != null) {
+    			System.out.println("getLocalPlayer != null");
 	        	localIndex = facade.getLocalPlayerIndex();
     		}
 	        for (int i=0; i<facade.getChatObject().size(); i++) {
+    			System.out.println("for loop");
 	        	String name = facade.getChatObject().get(i).getSource();
+	        	System.out.println("color: " + facade.GetPlayerColor(name));
 	        	entries.add(new LogEntry(facade.GetPlayerColor(name), facade.getChatObject().get(i).getMessage()));
 	        }
     	}
@@ -64,6 +68,10 @@ public class ChatController extends Controller
         if (o instanceof Populator && arg instanceof ModelFacade) {
             ModelFacade facade = (ModelFacade) arg;
             initFromModel(facade);
+    		if (facade.getLocalPlayerIndex() != null) {
+    			System.out.println("getLocalPlayer != null");
+	        	localIndex = facade.getLocalPlayerIndex();
+    		}
         }
     }
 

@@ -8,7 +8,7 @@ import shared.locations.*;
 import client.model.ModelFacade;
 import shared.models.DTO.params.*;
 
-public abstract class State {
+public abstract class MapState {
 	
 	ServerProxy proxy = ServerProxy.getInstance();
 	UserCookie uCookie = proxy.getUserCookie();
@@ -41,7 +41,7 @@ public abstract class State {
 	
 	
 	
-	public static class Setup extends State {
+	public static class Setup extends MapState {
 		//Show Edit Map
 		void placeRoad(EdgeLocation edgeLoc) {
 			BuildRoad roadMove = new BuildRoad(uCookie.getPlayerID(), edgeLoc, true);
@@ -62,12 +62,12 @@ public abstract class State {
 		}
 	}
 	
-	public static class Rolling extends State {
+	public static class Rolling extends MapState {
 	    //show normal map
 		//show rolling modal
 	}
 	
-	public static class MoveRobber extends State {
+	public static class MoveRobber extends MapState {
 		//Show Edit Map
 		
 		boolean canPlaceRobber(HexLocation hexLoc) {
@@ -83,7 +83,7 @@ public abstract class State {
 		//show Normal Map
 	}
 	
-	public static class Playing extends State {
+	public static class Playing extends MapState {
 		//show Edit Map
 		
 		boolean canPlaceRoad(EdgeLocation edgeLoc) {
@@ -131,7 +131,7 @@ public abstract class State {
 		//Show normal Updated Map
 	}
 	
-	public static class Discarding extends State {
+	public static class Discarding extends MapState {
 		
 	}
 
