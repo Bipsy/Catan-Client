@@ -76,7 +76,10 @@ public class TurnTrackerController extends Controller
         if(!currentTurn) {
         	state = "Waiting for Other Players";
         }
-        getView().updateGameState((state.equals("Playing")?"Finish Turn":state), currentTurn && state.equals("Playing"));
+        
+        boolean enable = currentTurn && (state.equals("Playing") || 
+        			state.equals("FirstRound") || state.equals("SecondRound"));
+        getView().updateGameState((state.equals("Playing")?"Finish Turn":state), enable);
     }
 
     @Override
