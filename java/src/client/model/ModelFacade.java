@@ -294,4 +294,34 @@ public class ModelFacade {
 		Player player = models.getPlayer(playerIndex);
 		return player.getSoldiers();
 	}
+
+	public boolean canPlaySoldier(int playerIndex) {
+		Player player = models.getPlayer(playerIndex);
+		
+		return player.canPlaySoldier();
+	}
+
+	public boolean canUseYearOfPlenty(int playerIndex) {
+		Player player = models.getPlayer(playerIndex);
+		
+		return player.canUseYearOfPlenty();
+	}
+
+	public boolean canPlayMonopoly(int playerIndex) {
+		Player player = models.getPlayer(playerIndex);
+		
+		return player.canPlayMonopoly();
+	}
+	
+	public boolean canPlayMonument(int playerIndex) {
+		Player player = models.getPlayer(playerIndex);
+		
+		return player.canPlayMonument();
+	}
+
+	public boolean canUseRoadBuilding(int playerIndex) {
+		Player player = models.getPlayer(playerIndex);
+		
+		return player.canUseRoadBuilding();
+	}
 }
