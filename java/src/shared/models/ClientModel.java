@@ -322,7 +322,9 @@ public class ClientModel {
 			this.localPlayerIndex = userManager.getLocalPlayerIndex(localPlayerName);
 	}
 	
-	public Integer getLocalPlayerIndex() {
+	public int getLocalPlayerIndex() {
+		if(this.localPlayerIndex == null)
+			return -1;
 		return this.localPlayerIndex;
 	}
 	
