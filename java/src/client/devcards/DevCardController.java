@@ -1,5 +1,6 @@
 package client.devcards;
 
+import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 import client.base.*;
 import client.model.ModelFacade;
@@ -48,7 +49,7 @@ public class DevCardController extends Controller
 
     @Override
     public void startBuyCard() {
-
+    	
         getBuyCardView().showModal();
     }
 
@@ -66,8 +67,24 @@ public class DevCardController extends Controller
 
     @Override
     public void startPlayCard() {
-
-        getPlayCardView().showModal();
+    	IPlayDevCardView view = getPlayCardView();
+    	ModelFacade model = new ModelFacade();
+    	int playerIndex = model.getCurrentPlayerIndex();
+    	
+    	boolean canPlaySoldierCard = model.canPlaySoldier(playerIndex);
+    	boolean canUseYearOfPlenty = model.canUseYearOfPlenty(playerIndex);
+    	boolean canPlayMonopoly = model.canPlayMonopoly(playerIndex);
+    	boolean canUseRoadBuilding = model.canUseRoadBuilding(playerIndex);
+    	boolean canPlayMonument = model.canPlayMonument(playerIndex);
+    	
+    	view.setCardEnabled(DevCardType.SOLDIER, canPlaySoldierCard);
+    	view.setCardEnabled(DevCardType.YEAR_OF_PLENTY, canUseYearOfPlenty);
+    	view.setCardEnabled(DevCardType.MONOPOLY, canPlayMonopoly);
+    	view.setCardEnabled(DevCardType.ROAD_BUILD, canUseRoadBuilding);
+    	view.setCardEnabled(DevCardType.MONUMENT, canPlayMonument);
+    	
+    	
+    	view.showModal();
     }
 
     @Override
