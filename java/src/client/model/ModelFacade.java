@@ -262,7 +262,17 @@ public class ModelFacade {
 		return null;
 	}
 
-
+	public boolean isLocalPlayerTurn() {
+		if(models != null) {
+			try {
+				return isCurrentTurn(models.getLocalPlayerIndex());
+			} catch (InvalidPlayerIndex e) {
+				System.err.println(e.toString());
+			}
+		}
+		return false;
+	}
+	
 	public int getResourceCount(int playerIndex, ResourceType type) {
 		Player player = models.getPlayer(playerIndex);
 		PlayerHand cards = player.getResources();
