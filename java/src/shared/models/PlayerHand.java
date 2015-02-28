@@ -4,9 +4,6 @@ import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 import shared.models.DTO.DevCardListDTO;
 import shared.models.DTO.ResourceListDTO;
-import shared.models.DTO.params.BuildCity;
-import shared.models.DTO.params.BuildRoad;
-import shared.models.DTO.params.BuildSettlement;
 import shared.models.DTO.params.BuyDevCard;
 import shared.models.DTO.params.MaritimeTrade;
 
