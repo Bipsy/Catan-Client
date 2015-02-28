@@ -18,7 +18,7 @@ import java.util.Observer;
  */
 public class TurnTrackerController extends Controller 
     implements ITurnTrackerController, Observer {
-	
+
 	private ServerProxy proxy = ServerProxy.getInstance();
 	private ModelFacade facade;
 

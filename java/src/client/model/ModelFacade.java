@@ -2,6 +2,7 @@ package client.model;
 
 import java.util.List;
 
+import shared.locations.HexLocation;
 import shared.models.ClientModel;
 import shared.models.Harbor;
 import shared.models.Hex;
@@ -16,6 +17,7 @@ import shared.models.DTO.params.*;
 import shared.definitions.*;
 import shared.exceptions.InvalidPlayerIndex;
 import client.storage.Data;
+import client.network.ServerProxy;
 
 
 public class ModelFacade {
@@ -277,7 +279,25 @@ public class ModelFacade {
 		PlayerHand cards = player.getResources();
 		return cards.getResourceCount(type);
 	}
+	
+	public int getObjectCount(int playerIndex, String objectType) throws Exception {
+		switch (objectType) {
+			case "Road" : 
+				return (15 - models.getUserManager().getPlayer(playerIndex).getRoads());
+			case "Settlement" :
+				return (5 - models.getUserManager().getPlayer(playerIndex).getSettlements());
+			case "City" :
+				return (4 - models.getUserManager().getPlayer(playerIndex).getCities());
+		}
+		throw new Exception("invalid object type");
+	}
+	
+	public int[] getPlayersAtHex(Hex hex) {
+		//TODO:
+		return null;
 
+	}
+	
 	public int getWinner() {
 		int winner = -1;
 		if(models != null) {
