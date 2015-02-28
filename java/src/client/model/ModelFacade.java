@@ -277,4 +277,13 @@ public class ModelFacade {
 		PlayerHand cards = player.getResources();
 		return cards.getResourceCount(type);
 	}
+
+	public boolean canBuyDevCard(int playerIndex) {
+		return models.CanBuyDevCard(playerIndex);
+	}
+
+	public int soldierCount(int playerIndex) {
+		Player player = models.getPlayer(playerIndex);
+		return player.getSoldiers();
+	}
 }
