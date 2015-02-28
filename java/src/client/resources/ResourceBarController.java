@@ -102,9 +102,9 @@ public class ResourceBarController extends Controller
             this.getView().setElementAmount(ResourceBarElement.WHEAT, wheatAmount);
             this.getView().setElementAmount(ResourceBarElement.ORE, oreAmount);
 
-			this.getView().setElementEnabled(ResourceBarElement.ROAD, true);//canBuildRoad);
-			this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, true);//canBuildSettlement);
-			this.getView().setElementEnabled(ResourceBarElement.CITY, true);//canBuildCity);
+			this.getView().setElementEnabled(ResourceBarElement.ROAD, canBuildRoad);
+			this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, canBuildSettlement);
+			this.getView().setElementEnabled(ResourceBarElement.CITY, canBuildCity);
 			this.getView().setElementEnabled(ResourceBarElement.BUY_CARD, canBuyCard);
 			this.getView().setElementAmount(ResourceBarElement.SOLDIERS, soliderCount);
         }

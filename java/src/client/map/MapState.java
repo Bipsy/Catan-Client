@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import client.network.ServerProxy;
 import client.network.UserCookie;
+import shared.definitions.PieceType;
 import shared.locations.*;
 import client.model.ModelFacade;
 import shared.models.DTO.params.*;
@@ -39,33 +40,33 @@ public abstract class MapState {
 	void placeCity(VertexLocation vertLoc) {}
 	
 	void robPlayer(RobPlayerInfo victim) {}
+	void showMapOverlay(IMapView view) {}
 	
 
 	public static class Setup1 extends MapState {
 		
-		@Override
-		boolean canPlaceRoad(EdgeLocation edgeLoc) {
-
+		void showMapOverlay(IMapView view) {
 			try {
-				return (facade.getObjectCount(facade.getLocalPlayerIndex(), "Road") == 0);
+				if ((facade.getObjectCount(facade.getLocalPlayerIndex(), "Road")) == 0)
+					view.startDrop(PieceType.ROAD,facade.GetPlayerColor(facade.getLocalPlayerIndex()), true);
+				else if (facade.getObjectCount(facade.getLocalPlayerIndex(), "Road") == 1 &&
+							facade.getObjectCount(facade.getLocalPlayerIndex(), "Settlement") == 0) {
+					view.startDrop(PieceType.SETTLEMENT,facade.GetPlayerColor(facade.getLocalPlayerIndex()), true);
+				}
 			}
 			catch(Exception e) {
 				e.printStackTrace(System.out);
-				return false;
-			}
+			}				
+		}
+
+		@Override
+		boolean canPlaceRoad(EdgeLocation edgeLoc) {
+			return facade.CanBuildRoad(new BuildRoad(facade.getLocalPlayerIndex(), edgeLoc, true));
 		}
 		
 		@Override
 		boolean canPlaceSettlement(VertexLocation vertLoc) {
-			try {
-				return (facade.getObjectCount(facade.getLocalPlayerIndex(), "Road") == 1 &&
-						facade.getObjectCount(facade.getLocalPlayerIndex(), "Settlement") == 0 &&
-						facade.CanBuildSettlement(new BuildSettlement(facade.getLocalPlayerIndex(), vertLoc, true)));
-			}
-			catch(Exception e) {
-				e.printStackTrace(System.out);
-				return false;
-			}		
+			return facade.CanBuildSettlement(new BuildSettlement(facade.getLocalPlayerIndex(), vertLoc, true));
 		}
 		
 		void placeRoad(EdgeLocation edgeLoc) {
@@ -85,54 +86,23 @@ public abstract class MapState {
 				e.printStackTrace();
 			}
 		}
-
 	}
 	
-public static class Setup2 extends MapState {
+public static class Setup2 extends Setup1 {
 		
-		@Override
-		boolean canPlaceRoad(EdgeLocation edgeLoc) {
+		void showMapOverlay(IMapView view) {
 			try {
-				return (facade.getObjectCount(facade.getLocalPlayerIndex(), "Road") == 1 &&
-						facade.CanBuildRoad(new BuildRoad(facade.getLocalPlayerIndex(), edgeLoc, true)));
+				if ((facade.getObjectCount(facade.getLocalPlayerIndex(), "Road")) == 1)
+					view.startDrop(PieceType.ROAD,facade.GetPlayerColor(facade.getLocalPlayerIndex()), true);
+				else if (facade.getObjectCount(facade.getLocalPlayerIndex(), "Road") == 2 &&
+							facade.getObjectCount(facade.getLocalPlayerIndex(), "Settlement") == 1) {
+					view.startDrop(PieceType.SETTLEMENT,facade.GetPlayerColor(facade.getLocalPlayerIndex()), true);
+				}
 			}
 			catch(Exception e) {
 				e.printStackTrace(System.out);
-				return false;
-			}
+			}				
 		}
-		
-		@Override
-		boolean canPlaceSettlement(VertexLocation vertLoc) {
-			try {
-				return (facade.getObjectCount(facade.getLocalPlayerIndex(), "Road") == 2 &&
-						facade.getObjectCount(facade.getLocalPlayerIndex(), "Settlement") == 1 &&
-						facade.CanBuildSettlement(new BuildSettlement(facade.getLocalPlayerIndex(), vertLoc, true)));
-			}
-			catch(Exception e) {
-				e.printStackTrace(System.out);
-				return false;
-			}		
-		}
-		
-		void placeRoad(EdgeLocation edgeLoc) {
-			BuildRoad roadMove = new BuildRoad(facade.getLocalPlayerIndex(), edgeLoc, true);
-			try {
-				proxy.buildRoad(roadMove);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		void placeSettlement(VertexLocation vertLoc) {
-			BuildSettlement settlementMove = new BuildSettlement(facade.getLocalPlayerIndex(), vertLoc, true);
-			try {
-				proxy.buildSettlement(settlementMove);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-
 	}
 	
 	public static class Rolling extends MapState {
