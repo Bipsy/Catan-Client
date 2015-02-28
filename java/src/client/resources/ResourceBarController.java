@@ -3,8 +3,6 @@ package client.resources;
 import java.util.*;
 
 import shared.definitions.ResourceType;
-import shared.locations.EdgeLocation;
-import shared.models.DTO.params.BuildRoad;
 import client.base.*;
 import client.model.ModelFacade;
 import client.model.Populator;
@@ -87,9 +85,8 @@ public class ResourceBarController extends Controller
             boolean canBuildRoad = model.canBuildRoad(playerIndex);
             boolean canBuildSettlement = model.canBuildSettlement(playerIndex);
             boolean canBuildCity = model.canBuildCity(playerIndex);
-//            boolean canBuyCard = model.hasResourcesForRoad(playerIndex);
-//            boolean canPlayCard = model.hasResourcesForRoad(playerIndex);
-//            boolean canSoldiers = model.hasResourcesForRoad(playerIndex);
+            boolean canBuyCard = model.canBuyDevCard(playerIndex);
+            
 
 
             int woodAmount = model.getResourceCount(playerIndex, ResourceType.WOOD);
@@ -97,18 +94,19 @@ public class ResourceBarController extends Controller
             int sheepAmount = model.getResourceCount(playerIndex, ResourceType.SHEEP);
             int wheatAmount = model.getResourceCount(playerIndex, ResourceType.WHEAT);
             int oreAmount = model.getResourceCount(playerIndex, ResourceType.ORE);
+            int soliderCount = model.soldierCount(playerIndex);
             
             this.getView().setElementAmount(ResourceBarElement.WOOD, woodAmount);
             this.getView().setElementAmount(ResourceBarElement.BRICK, brickAmount);
             this.getView().setElementAmount(ResourceBarElement.SHEEP, sheepAmount);
             this.getView().setElementAmount(ResourceBarElement.WHEAT, wheatAmount);
             this.getView().setElementAmount(ResourceBarElement.ORE, oreAmount);
-			this.getView().setElementEnabled(ResourceBarElement.ROAD, true);//canBuildRoad);
-			this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, true);//canBuildSettlement);
-			this.getView().setElementEnabled(ResourceBarElement.CITY, true);//canBuildCity);
-			this.getView().setElementEnabled(ResourceBarElement.BUY_CARD, true);
-			this.getView().setElementEnabled(ResourceBarElement.PLAY_CARD, true);
-			this.getView().setElementEnabled(ResourceBarElement.SOLDIERS, true);
+
+			this.getView().setElementEnabled(ResourceBarElement.ROAD, canBuildRoad);
+			this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, canBuildSettlement);
+			this.getView().setElementEnabled(ResourceBarElement.CITY, canBuildCity);
+			this.getView().setElementEnabled(ResourceBarElement.BUY_CARD, canBuyCard);
+			this.getView().setElementAmount(ResourceBarElement.SOLDIERS, soliderCount);
         }
     }
 

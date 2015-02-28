@@ -7,6 +7,9 @@ import client.model.Populator;
 import java.util.Observable;
 import java.util.Observer;
 
+import shared.exceptions.InvalidPlayerIndex;
+import shared.models.Player;
+
 /**
  * Implementation for the points controller
  */
@@ -14,6 +17,8 @@ public class PointsController extends Controller
     implements IPointsController, Observer {
 
     private IGameFinishedView finishedView;
+    
+    private ModelFacade facade;
 
     /**
      * PointsController constructor
@@ -45,15 +50,34 @@ public class PointsController extends Controller
     }
 
     private void initFromModel() {
-        //<temp>		
-        getPointsView().setPoints(5);
-        //</temp>
+    	if(facade == null || !facade.hasModel())
+    		return;
+    	int winnerIndex = facade.getWinner();
+    	if(winnerIndex != -1) {
+    		Player winner;
+			try {
+				winner = facade.getPlayer(winnerIndex);
+				finishedView.setWinner(winner.getUsername(), facade.getLocalPlayerIndex() == winnerIndex);
+				finishedView.showModal();
+			} catch (InvalidPlayerIndex e) {
+				System.err.println(e.toString());
+			}
+    	}
+    	int points = 0;
+    	try {
+			Player player = facade.getPlayer(facade.getLocalPlayerIndex());
+			points = player.getVictoryPoints();
+		} catch (InvalidPlayerIndex e) {
+			System.err.println(e.toString());
+		}
+        getPointsView().setPoints(points);
     }
 
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof Populator && arg instanceof ModelFacade) {
-            
+            facade = (ModelFacade)arg;
+            initFromModel();
         }
     }
 

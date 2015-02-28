@@ -9,7 +9,6 @@ import shared.models.Hex;
 import shared.models.Message;
 import shared.models.Player;
 import shared.models.PlayerHand;
-import shared.models.ResourceList;
 import shared.models.Road;
 import shared.models.Robber;
 import shared.models.UserManager;
@@ -296,5 +295,23 @@ public class ModelFacade {
 	public int[] getPlayersAtHex(Hex hex) {
 		//TODO:
 		return null;
+
+	}
+	
+	public int getWinner() {
+		int winner = -1;
+		if(models != null) {
+			winner = models.getWinner();
+		}
+		return winner;
+	}
+	
+	public boolean canBuyDevCard(int playerIndex) {
+		return models.CanBuyDevCard(playerIndex);
+	}
+
+	public int soldierCount(int playerIndex) {
+		Player player = models.getPlayer(playerIndex);
+		return player.getSoldiers();
 	}
 }

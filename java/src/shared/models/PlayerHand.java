@@ -4,9 +4,6 @@ import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 import shared.models.DTO.DevCardListDTO;
 import shared.models.DTO.ResourceListDTO;
-import shared.models.DTO.params.BuildCity;
-import shared.models.DTO.params.BuildRoad;
-import shared.models.DTO.params.BuildSettlement;
 import shared.models.DTO.params.BuyDevCard;
 import shared.models.DTO.params.MaritimeTrade;
 
@@ -58,7 +55,7 @@ public class PlayerHand {
      *
      * @return returns true if the player can, false otherwise
      */
-    public boolean canBuyDevCard(BuyDevCard buyDevCard) {
+    public boolean canBuyDevCard() {
         return resources.getResourceNumber(ResourceType.WHEAT) > 0
                 && resources.getResourceNumber(ResourceType.ORE) > 0
                 && resources.getResourceNumber(ResourceType.SHEEP) > 0;

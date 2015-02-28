@@ -339,8 +339,8 @@ public class ClientModel {
 	public int getLongestRoad() {
 		return this.userManager.getLongestRoad();
 	}
-	
-	public void RobPlayer(RobPlayer robMove) {
-		
+
+	public boolean CanBuyDevCard(int playerIndex) {
+		return userManager.CanBuyDevCard(playerIndex) && bank.hasDevCards();
 	}
 }

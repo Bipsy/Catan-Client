@@ -17,7 +17,7 @@ public class MapController extends Controller
     implements IMapController, Observer {
 
     private IRobView robView;
-    private State state;
+    private MapState state;
     private String currState;
     private ModelFacade facade;
 
@@ -173,22 +173,23 @@ public class MapController extends Controller
     	
     	switch (currState) {
     		case "FirstRound":
-    			state = new State.Setup1();
+    			state = new MapState.Setup1();
     			break;
     		case "SecondRound":
-    			state = new State.Setup2();
+    			state = new MapState.Setup2();
+
     			break;
     		case "Rolling":
-    			state = new State.Rolling();
+    			state = new MapState.Rolling();
     			break;
     		case "Robbing":
-    			state = new State.MoveRobber();
+    			state = new MapState.MoveRobber();
     			break;
     		case "Playing":
-    			state = new State.Playing();
+    			state = new MapState.Playing();
     			break;
     		case "Discarding":
-    			state = new State.Discarding();
+    			state = new MapState.Discarding();
     			break;
 			default:
 				break;

@@ -9,6 +9,7 @@ import client.model.ModelFacade;
 import client.model.Populator;
 import client.network.ServerProxy;
 
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -17,7 +18,8 @@ import java.util.Observer;
  */
 public class TurnTrackerController extends Controller 
     implements ITurnTrackerController, Observer {
-	
+
+	private ServerProxy proxy = ServerProxy.getInstance();
 	private ModelFacade facade;
 
     public TurnTrackerController(ITurnTrackerView view) {
@@ -35,12 +37,12 @@ public class TurnTrackerController extends Controller
 
     @Override
     public void endTurn() {
+    	FinishTurn endTurn = new FinishTurn(facade.getLocalPlayerIndex());
     	try {
-    		ServerProxy.getInstance().finishTurn(new FinishTurn(facade.getCurrentPlayerIndex()));
-    	}
-    	catch (Exception e) {
-    		e.printStackTrace(System.out);
-    	}
+			proxy.finishTurn(endTurn);
+		} catch (IOException e) {
+			System.err.println(e.toString());
+		}
     }
 
     private void initFromModel(ModelFacade facade) {
@@ -74,15 +76,13 @@ public class TurnTrackerController extends Controller
         if(!currentTurn) {
         	state = "Waiting for Other Players";
         }
-        getView().updateGameState(state, currentTurn);
-        //</temp>
+        getView().updateGameState((state.equals("Playing")?"Finish Turn":state), currentTurn && state.equals("Playing"));
     }
 
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof Populator && arg instanceof ModelFacade) {
-        	ModelFacade facade = (ModelFacade) arg;
-        	this.facade = facade;
+        	facade = (ModelFacade) arg;
             initFromModel(facade);
         }
     }
