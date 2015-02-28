@@ -278,4 +278,12 @@ public class ModelFacade {
 		PlayerHand cards = player.getResources();
 		return cards.getResourceCount(type);
 	}
+
+	public int getWinner() {
+		int winner = -1;
+		if(models != null) {
+			winner = models.getWinner();
+		}
+		return winner;
+	}
 }

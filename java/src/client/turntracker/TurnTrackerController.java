@@ -66,7 +66,6 @@ public class TurnTrackerController extends Controller
         	state = "Waiting for Other Players";
         }
         getView().updateGameState(state, currentTurn);
-        //</temp>
     }
 
     @Override
