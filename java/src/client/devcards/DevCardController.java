@@ -2,10 +2,13 @@ package client.devcards;
 
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
+import shared.models.DTO.params.BuyDevCard;
 import client.base.*;
 import client.model.ModelFacade;
 import client.model.Populator;
+import client.network.ServerProxy;
 
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -61,7 +64,16 @@ public class DevCardController extends Controller
 
     @Override
     public void buyCard() {
-
+//    	ModelFacade model = new ModelFacade();
+//    	ServerProxy proxy = ServerProxy.getInstance();
+//    	int playerIndex = model.getCurrentPlayerIndex();
+//    	BuyDevCard buyDevCard = new BuyDevCard(playerIndex);
+//    	try {
+//			proxy.buyDevCard(buyDevCard);
+//		} catch (IOException e) {
+//
+//			e.printStackTrace();
+//		}
         getBuyCardView().closeModal();
     }
 
@@ -77,11 +89,23 @@ public class DevCardController extends Controller
     	boolean canUseRoadBuilding = model.canUseRoadBuilding(playerIndex);
     	boolean canPlayMonument = model.canPlayMonument(playerIndex);
     	
+    	int soldierCount = model.getSoldierCount(playerIndex);
+    	int yopCount = model.getYearOfPlentyCount(playerIndex);
+    	int monopolyCount = model.getMonopolyCount(playerIndex);
+    	int rodBuildCount = model.getRoadBuildCount(playerIndex);
+    	int monumentCount = model.getMonumentCount(playerIndex);
+    	
     	view.setCardEnabled(DevCardType.SOLDIER, canPlaySoldierCard);
     	view.setCardEnabled(DevCardType.YEAR_OF_PLENTY, canUseYearOfPlenty);
     	view.setCardEnabled(DevCardType.MONOPOLY, canPlayMonopoly);
     	view.setCardEnabled(DevCardType.ROAD_BUILD, canUseRoadBuilding);
     	view.setCardEnabled(DevCardType.MONUMENT, canPlayMonument);
+    	
+    	view.setCardAmount(DevCardType.SOLDIER, soldierCount);
+    	view.setCardAmount(DevCardType.YEAR_OF_PLENTY, yopCount);
+    	view.setCardAmount(DevCardType.MONOPOLY, monopolyCount);
+    	view.setCardAmount(DevCardType.ROAD_BUILD, rodBuildCount);
+    	view.setCardAmount(DevCardType.MONUMENT, monumentCount);
     	
     	
     	view.showModal();
