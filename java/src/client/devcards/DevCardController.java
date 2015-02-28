@@ -3,6 +3,7 @@ package client.devcards;
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 import shared.models.DTO.params.BuyDevCard;
+import shared.models.DTO.params.Monument;
 import client.base.*;
 import client.model.ModelFacade;
 import client.model.Populator;
@@ -75,9 +76,7 @@ public class DevCardController extends Controller
 		} catch (IOException e) {
 
 			e.printStackTrace();
-		} finally {
-			
-		}
+		} 
         getBuyCardView().closeModal();
     }
 
@@ -128,7 +127,19 @@ public class DevCardController extends Controller
 
     @Override
     public void playMonumentCard() {
+    	ModelFacade model = new ModelFacade();
+    	ServerProxy proxy = ServerProxy.getInstance();
+    	int playerIndex = model.getCurrentPlayerIndex();
+    	Monument monument = new Monument(playerIndex);
+    	
+    	try {
+			proxy.playMonument(monument);
+			System.out.println("played monument");
+		} catch (IOException e) {
 
+			e.printStackTrace();
+		} 
+    	getPlayCardView().closeModal();
     }
 
     @Override

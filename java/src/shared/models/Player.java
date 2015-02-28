@@ -65,7 +65,7 @@ public class Player extends User {
     public boolean canPlayMonument() {
         DevCardList devCards = this.oldDevCards;
         int monuments = devCards.getMonument();
-        boolean canPlay = monuments > 0;// + this.victoryPoints >= 10;
+        boolean canPlay = monuments + this.victoryPoints >= 10;
 
         return canPlay;
     }
