@@ -31,7 +31,7 @@ public class TurnTrackerController extends Controller
 
     @Override
     public void endTurn() {
-
+    	System.out.println("Clicked");
     }
 
     private void initFromModel(ModelFacade facade) {
@@ -65,7 +65,7 @@ public class TurnTrackerController extends Controller
         if(!currentTurn) {
         	state = "Waiting for Other Players";
         }
-        getView().updateGameState(state, currentTurn);
+        getView().updateGameState((state.equals("Playing")?"Finish Turn":state), currentTurn && state.equals("Playing"));
     }
 
     @Override
