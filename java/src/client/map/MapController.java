@@ -19,6 +19,7 @@ public class MapController extends Controller
     private IRobView robView;
     private State state;
     private String currState;
+    private ModelFacade facade;
 
     public MapController(IMapView view, IRobView robView) {
 
@@ -122,55 +123,60 @@ public class MapController extends Controller
     }
 
     public void placeRoad(EdgeLocation edgeLoc) {
+    	
+		state.placeRoad(edgeLoc);
+		//getView().placeRoad(edgeLoc, facade.GetPlayerColor(facade.getLocalPlayerIndex()));
 
-        getView().placeRoad(edgeLoc, CatanColor.ORANGE);
     }
 
     public void placeSettlement(VertexLocation vertLoc) {
 
-        getView().placeSettlement(vertLoc, CatanColor.ORANGE);
+		state.placeSettlement(vertLoc);
+		//getView().placeSettlement(vertLoc, facade.GetPlayerColor(facade.getLocalPlayerIndex()));
     }
 
     public void placeCity(VertexLocation vertLoc) {
 
-        getView().placeCity(vertLoc, CatanColor.ORANGE);
+    	state.placeCity(vertLoc);
+    	//getView().placeCity(vertLoc, facade.GetPlayerColor(facade.getLocalPlayerIndex()));
+
     }
 
     public void placeRobber(HexLocation hexLoc) {
 
         getView().placeRobber(hexLoc);
-
         getRobView().showModal();
     }
 
     public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {
 
-        getView().startDrop(pieceType, CatanColor.ORANGE, true);
+        getView().startDrop(pieceType, facade.GetPlayerColor(facade.getLocalPlayerIndex()), true);
     }
 
     public void cancelMove() {
-
+    	//TODO: 
     }
 
     public void playSoldierCard() {
-
+    	//TODO: 
     }
 
     public void playRoadBuildingCard() {
-
+    	//TODO: 
     }
 
     public void robPlayer(RobPlayerInfo victim) {
-
+    	state.robPlayer(victim);
     }
     
     public void updateState(String currState) {
+    	
     	switch (currState) {
     		case "FirstRound":
-    			state = new State.Setup();
+    			state = new State.Setup1();
     			break;
     		case "SecondRound":
-    			state = new State.Setup();
+    			state = new State.Setup2();
     			break;
     		case "Rolling":
     			state = new State.Rolling();
@@ -194,6 +200,7 @@ public class MapController extends Controller
     public void update(Observable o, Object arg) {
         if (o instanceof Populator && arg instanceof ModelFacade) {
             ModelFacade facade = (ModelFacade) arg;
+            this.facade = facade;
             initFromModel(facade);
     		currState = facade.getState();
     		updateState(currState);

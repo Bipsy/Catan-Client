@@ -7,6 +7,7 @@ import client.network.UserCookie;
 import shared.locations.*;
 import client.model.ModelFacade;
 import shared.models.DTO.params.*;
+import client.data.*;
 
 public abstract class State {
 	
@@ -31,107 +32,150 @@ public abstract class State {
 		return false;
 	}
 	
-	void placeRoad(EdgeLocation edgeLoc) {}
+	void placeRoad(EdgeLocation edgeLoc) {
+		BuildRoad roadMove = new BuildRoad(facade.getLocalPlayerIndex(), edgeLoc, true);
+		try {
+			proxy.buildRoad(roadMove);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
-	void placeSettlement(VertexLocation vertLoc) {}
+	void placeSettlement(VertexLocation vertLoc) {
+		BuildSettlement settlementMove = new BuildSettlement(facade.getLocalPlayerIndex(), vertLoc, true);
+		try {
+			proxy.buildSettlement(settlementMove);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	void placeCity(VertexLocation vertLoc) {}
 	
-	void placeRobber(HexLocation hexLoc) {}
+	void robPlayer(RobPlayerInfo victim) {}
 	
 	
 	
-	public static class Setup extends State {
-		//Show Edit Map
-		void placeRoad(EdgeLocation edgeLoc) {
-			BuildRoad roadMove = new BuildRoad(uCookie.getPlayerID(), edgeLoc, true);
+	public static class Setup1 extends State {
+		
+		@Override
+		boolean canPlaceRoad(EdgeLocation edgeLoc) {
 			try {
-				proxy.buildRoad(roadMove);
-			} catch (IOException e) {
-				e.printStackTrace();
+				return (facade.getObjectCount(facade.getLocalPlayerIndex(), "Road") == 0);
+			}
+			catch(Exception e) {
+				e.printStackTrace(System.out);
+				return false;
 			}
 		}
 		
-		void placeSettlement(VertexLocation vertLoc) {
-			BuildSettlement settlementMove = new BuildSettlement(uCookie.getPlayerID(), vertLoc, true);
+		@Override
+		boolean canPlaceSettlement(VertexLocation vertLoc) {
 			try {
-				proxy.buildSettlement(settlementMove);
-			} catch (IOException e) {
-				e.printStackTrace();
+				return (facade.getObjectCount(facade.getLocalPlayerIndex(), "Road") == 1 &&
+						facade.getObjectCount(facade.getLocalPlayerIndex(), "Settlement") == 0 &&
+						facade.CanBuildSettlement(new BuildSettlement(facade.getLocalPlayerIndex(), vertLoc, true)));
+			}
+			catch(Exception e) {
+				e.printStackTrace(System.out);
+				return false;
+			}		
+		}
+
+	}
+	
+public static class Setup2 extends State {
+		
+		@Override
+		boolean canPlaceRoad(EdgeLocation edgeLoc) {
+			try {
+				return (facade.getObjectCount(facade.getLocalPlayerIndex(), "Road") == 1);
+			}
+			catch(Exception e) {
+				e.printStackTrace(System.out);
+				return false;
 			}
 		}
+		
+		@Override
+		boolean canPlaceSettlement(VertexLocation vertLoc) {
+			try {
+				return (facade.getObjectCount(facade.getLocalPlayerIndex(), "Road") == 2 &&
+						facade.getObjectCount(facade.getLocalPlayerIndex(), "Settlement") == 1 &&
+						facade.CanBuildSettlement(new BuildSettlement(facade.getLocalPlayerIndex(), vertLoc, true)));
+			}
+			catch(Exception e) {
+				e.printStackTrace(System.out);
+				return false;
+			}		
+		}
+
 	}
 	
 	public static class Rolling extends State {
-	    //show normal map
-		//show rolling modal
+		
+		void placeRoad(EdgeLocation edgeLoc) {}
+		
+		void placeSettlement(VertexLocation vertLoc) {}
+		
 	}
 	
 	public static class MoveRobber extends State {
-		//Show Edit Map
+		//TODO:
 		
 		boolean canPlaceRobber(HexLocation hexLoc) {
 			//NEED VICTIM INDEX
-			RobPlayer robPlayer = new RobPlayer(uCookie.getPlayerID(), 0, hexLoc);
+			RobPlayer robPlayer = new RobPlayer(facade.getLocalPlayerIndex(), 0, hexLoc);
 			return facade.CanPlaceRobber(robPlayer);
 		}
 		
-		void placeRobber(HexLocation hexLoc) {
-			RobPlayer robPlayer = new RobPlayer(uCookie.getPlayerID(), 0, hexLoc);
-			facade.CanPlaceRobber(robPlayer);
+		void robPlayer(RobPlayerInfo victim) {
+			RobPlayer robPlayer = new RobPlayer(facade.getLocalPlayerIndex(), victim.getPlayerIndex(), null);
+			try {
+				proxy.robPlayer(robPlayer);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-		//show Normal Map
+		
+		void placeRoad(EdgeLocation edgeLoc) {}
+		
+		void placeSettlement(VertexLocation vertLoc) {}
+		
 	}
 	
 	public static class Playing extends State {
-		//show Edit Map
 		
 		boolean canPlaceRoad(EdgeLocation edgeLoc) {
-			BuildRoad road = new BuildRoad(uCookie.getPlayerID(), edgeLoc, false);
+			BuildRoad road = new BuildRoad(facade.getLocalPlayerIndex(), edgeLoc, false);
 			return facade.CanBuildRoad(road);
 		}
 		
 		boolean canPlaceSettlement(VertexLocation vertLoc) {
-			BuildSettlement settlement = new BuildSettlement(uCookie.getPlayerID(), vertLoc, false);
+			BuildSettlement settlement = new BuildSettlement(facade.getLocalPlayerIndex(), vertLoc, false);
 			return facade.CanBuildSettlement(settlement);
 		}
 		
 		boolean canPlaceCity(VertexLocation vertLoc) {
-			BuildCity city = new BuildCity(uCookie.getPlayerID(), vertLoc);
+			BuildCity city = new BuildCity(facade.getLocalPlayerIndex(), vertLoc);
 			return facade.CanBuildCity(city);
-		}
-
-		void placeRoad(EdgeLocation edgeLoc) {
-			BuildRoad roadMove = new BuildRoad(uCookie.getPlayerID(), edgeLoc, false);
-			try {
-				proxy.buildRoad(roadMove);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		void placeSettlement(VertexLocation vertLoc) {
-			BuildSettlement settlementMove = new BuildSettlement(uCookie.getPlayerID(), vertLoc, false);
-			try {
-				proxy.buildSettlement(settlementMove);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
 		}
 		
 		void placeCity(VertexLocation vertLoc) {
-			BuildCity cityMove = new BuildCity(uCookie.getPlayerID(), vertLoc);
+			BuildCity cityMove = new BuildCity(facade.getLocalPlayerIndex(), vertLoc);
 			try {
 				proxy.buildCity(cityMove);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}  
-		
-		//Show normal Updated Map
+		}  		
 	}
 	
 	public static class Discarding extends State {
+		
+		void placeRoad(EdgeLocation edgeLoc) {}
+		
+		void placeSettlement(VertexLocation vertLoc) {}		
 		
 	}
 

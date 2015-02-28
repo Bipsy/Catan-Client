@@ -224,5 +224,14 @@ public class Board {
         this.roads.add(road);
         this.roadMap.put(road.getLocation().getNormalizedLocation(), road);
     }
+    
+    /*
+    public List<VertexObject> getBuildingsAt(Hex hex) {
+    	List<VertexObject> buildings = new ArrayList<VertexObject>();
+    	for (VertexLocation vertex : hex.getAdjacentVertices()) {
+    		if (communityMap[vertex])
+    	}
+    }
+    */
 
 }
