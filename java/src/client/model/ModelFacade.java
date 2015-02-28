@@ -279,6 +279,14 @@ public class ModelFacade {
 		return cards.getResourceCount(type);
 	}
 
+	public int getWinner() {
+		int winner = -1;
+		if(models != null) {
+			winner = models.getWinner();
+		}
+		return winner;
+	}
+	
 	public boolean canBuyDevCard(int playerIndex) {
 		return models.CanBuyDevCard(playerIndex);
 	}
