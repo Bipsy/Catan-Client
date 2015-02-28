@@ -174,10 +174,11 @@ public class MapController extends Controller
     	switch (currState) {
     		case "FirstRound":
     			state = new MapState.Setup1();
+    			state.showMapOverlay(getView());
     			break;
     		case "SecondRound":
     			state = new MapState.Setup2();
-
+    			state.showMapOverlay(getView());
     			break;
     		case "Rolling":
     			state = new MapState.Rolling();

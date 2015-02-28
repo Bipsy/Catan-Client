@@ -127,8 +127,6 @@ public class TurnTrackerView extends PanelView implements ITurnTrackerView {
 
     @Override
     public void updateGameState(String stateMessage, boolean enable) {
-
-    	enable = true; //temp
         gameStatePanel.updateGameState(stateMessage, enable);
     }
 
