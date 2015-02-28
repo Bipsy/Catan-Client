@@ -62,6 +62,9 @@ public class TurnTrackerController extends Controller
 			}
 		}
         String state = facade.getState();
+        if(!currentTurn) {
+        	state = "Waiting for Other Players";
+        }
         getView().updateGameState(state, currentTurn);
         //</temp>
     }
