@@ -64,16 +64,20 @@ public class DevCardController extends Controller
 
     @Override
     public void buyCard() {
-//    	ModelFacade model = new ModelFacade();
-//    	ServerProxy proxy = ServerProxy.getInstance();
-//    	int playerIndex = model.getCurrentPlayerIndex();
-//    	BuyDevCard buyDevCard = new BuyDevCard(playerIndex);
-//    	try {
-//			proxy.buyDevCard(buyDevCard);
-//		} catch (IOException e) {
-//
-//			e.printStackTrace();
-//		}
+    	ModelFacade model = new ModelFacade();
+    	ServerProxy proxy = ServerProxy.getInstance();
+    	int playerIndex = model.getCurrentPlayerIndex();
+    	BuyDevCard buyDevCard = new BuyDevCard(playerIndex);
+    	
+    	try {
+			proxy.buyDevCard(buyDevCard);
+			System.out.println("hi");
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		} finally {
+			
+		}
         getBuyCardView().closeModal();
     }
 
