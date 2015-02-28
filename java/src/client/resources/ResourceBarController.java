@@ -3,8 +3,6 @@ package client.resources;
 import java.util.*;
 
 import shared.definitions.ResourceType;
-import shared.locations.EdgeLocation;
-import shared.models.DTO.params.BuildRoad;
 import client.base.*;
 import client.model.ModelFacade;
 import client.model.Populator;
