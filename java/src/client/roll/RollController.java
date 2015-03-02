@@ -14,7 +14,6 @@ import java.util.Random;
 
 import javax.swing.Timer;
 
-import shared.exceptions.NoCookieException;
 import shared.models.DTO.params.RollNumber;
 
 /**
@@ -38,9 +37,7 @@ public class RollController extends Controller implements IRollController, Obser
         		getRollView().setMessage(String.format(MESSAGE, --countDown));
         		getRollView().showModal();
         		if(countDown == 0) {
-        			System.out.println("Roll from timer");
 	        		rollDice();
-	        		System.out.println("Finished Timer");
         		}
         	}
         }    
@@ -87,34 +84,27 @@ public class RollController extends Controller implements IRollController, Obser
     }
     
     protected void showRollModal() {
-    	System.out.println("Showing roll modal");
 
 		getRollView().setMessage(String.format(MESSAGE, countDown));
 		getRollView().showModal();
-		rollingTimer = new Timer(1000, timerListener);
-		rollingTimer.setInitialDelay(1000);
-		rollingTimer.setRepeats(true);
-		rollingTimer.start();
+//		rollingTimer = new Timer(1000, timerListener);
+//		rollingTimer.setInitialDelay(1000);
+//		rollingTimer.setRepeats(true);
+//		rollingTimer.start();
     }
 
     @Override
     public void rollDice() {
-    	rollingTimer.stop();
+//    	rollingTimer.stop();
 		countDown = 3;
     	int rollValue = rollDice(6,2);
-    	do {
-    		rollValue = rollDice(6,2);
-    	} while (rollValue == 7);
+		getResultView().setRollValue(rollValue);
+		getResultView().showModal();
 		RollNumber request = new RollNumber(facade.getLocalPlayerIndex(), rollValue);
-		getRollView().closeModal();
 		try {
-			Populator.getInstance().populateModel(proxy.rollNumber(request), proxy.getLocalPlayerName());
-		} catch (IOException | NoCookieException e) {
+			proxy.rollNumber(request);
+		} catch (IOException e) {
 			System.err.println(e.toString());
-		}
-		finally {
-			getResultView().setRollValue(rollValue);
-			getResultView().showModal();			
 		}
     }
 

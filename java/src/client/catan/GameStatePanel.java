@@ -32,7 +32,6 @@ public class GameStatePanel extends JPanel {
     }
 
     public void updateGameState(String stateMessage, boolean enable) {
-    	System.out.println("Enabled: " + enable);
         button.setText(stateMessage);
         button.setEnabled(enable);
     }
@@ -46,7 +45,6 @@ public class GameStatePanel extends JPanel {
         ActionListener actionListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	System.out.println("Execute");
                 action.execute();
             }
         };

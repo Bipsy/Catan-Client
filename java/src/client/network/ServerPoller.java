@@ -52,7 +52,6 @@ public class ServerPoller implements ActionListener {
      * poll() returns an empty string.
      */
     public ClientModelDTO poll() {
-    	System.out.println("Polling");
         if (serverProxy == null) {
             return null;
         }
@@ -94,7 +93,6 @@ public class ServerPoller implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-    	//System.out.println("polling n stuff");
         ClientModelDTO newModel = poll();
         if (isNew(newModel)) {
             updateModel(newModel);

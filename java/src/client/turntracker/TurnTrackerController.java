@@ -38,7 +38,6 @@ public class TurnTrackerController extends Controller
 
     @Override
     public void endTurn() {
-    	System.out.println("Finish turn");
     	FinishTurn endTurn = new FinishTurn(facade.getLocalPlayerIndex());
     	try {
     		Populator.getInstance().populateModel(proxy.finishTurn(endTurn), proxy.getLocalPlayerName());
@@ -48,7 +47,6 @@ public class TurnTrackerController extends Controller
     }
 
     private void initFromModel(ModelFacade facade) {
-    	System.out.println("Init turn tracker from model");
     	
     	if (facade == null || !facade.hasModel()) return;
     	
@@ -132,7 +130,6 @@ public class TurnTrackerController extends Controller
 		default:
 			state = "Waiting for Other Players";
 			enabled = false;
-			System.out.println("Default state called");
 			break;
 		}
         
