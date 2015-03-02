@@ -342,4 +342,29 @@ public class ModelFacade {
 		
 		return player.canUseRoadBuilding();
 	}
+
+	public int getSoldierCount(int playerIndex) {
+		Player player = models.getPlayer(playerIndex);
+		return player.getSoldierCount();
+	}
+	
+	public int getMonumentCount(int playerIndex) {
+		Player player = models.getPlayer(playerIndex);
+		return player.getMonumentCount();
+	}
+	
+	public int getMonopolyCount(int playerIndex) {
+		Player player = models.getPlayer(playerIndex);
+		return player.getMonopolyCount();
+	}
+
+	public int getRoadBuildCount(int playerIndex) {
+		Player player = models.getPlayer(playerIndex);
+		return player.getRoadBuildCount();
+	}
+
+	public int getYearOfPlentyCount(int playerIndex) {
+		Player player = models.getPlayer(playerIndex);
+		return player.getYearOfPlentyCount();
+	}
 }

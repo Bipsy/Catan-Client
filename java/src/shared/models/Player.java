@@ -64,11 +64,17 @@ public class Player extends User {
     public boolean canPlayMonument() {
         DevCardList devCards = this.oldDevCards;
         int monuments = devCards.getMonument();
-        boolean canPlay = monuments > 0;// + this.victoryPoints >= 10;
+        boolean canPlay = monuments + this.victoryPoints >= 10;
 
         return canPlay;
     }
 
+    public int getMonumentCount() {
+        DevCardList devCards = this.oldDevCards;
+
+        return devCards.getMonument();
+    }
+    
     /**
      * canPlayMonopoly determines if the selected player is able to play a
      * monument. If user hasn't played another dev card and has a monopoly card
@@ -85,6 +91,13 @@ public class Player extends User {
         return canPlay;
     }
 
+    
+    public int getMonopolyCount() {
+        DevCardList devCards = this.oldDevCards;
+
+        return devCards.getMonopoly();
+    }
+    
     /**
      * canPlaySoldier
      *
@@ -98,6 +111,14 @@ public class Player extends User {
 
         return canPlay;
     }
+    
+    public int getSoldierCount() {
+        DevCardList devCards = this.oldDevCards;
+
+        return devCards.getSoldier();
+    }
+    
+    
 
     /**
      * canUseRoadBuilding
@@ -114,6 +135,12 @@ public class Player extends User {
 
         return canPlay;
     }
+    
+    public int getRoadBuildCount() {
+        DevCardList devCards = this.oldDevCards;
+
+        return devCards.getRoadBuilding();
+    }
 
     /**
      * canUseYearOfPlenty
@@ -128,6 +155,12 @@ public class Player extends User {
                 && !this.playedDevCard;
 
         return canPlay;
+    }
+    
+    public int getYearOfPlentyCount() {
+        DevCardList devCards = this.oldDevCards;
+
+        return devCards.getYearOfPlenty();
     }
 
     /**
