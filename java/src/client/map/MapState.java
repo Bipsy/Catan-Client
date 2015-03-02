@@ -45,7 +45,6 @@ public abstract class MapState {
 		
 		@Override
 		boolean canPlaceRoad(EdgeLocation edgeLoc) {
-
 			try {
 				return (facade.getObjectCount(facade.getLocalPlayerIndex(), "Road") == 0);
 			}

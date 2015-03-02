@@ -2,7 +2,6 @@ package client.model;
 
 import java.util.List;
 
-import shared.locations.HexLocation;
 import shared.models.ClientModel;
 import shared.models.Harbor;
 import shared.models.Hex;
@@ -17,7 +16,6 @@ import shared.models.DTO.params.*;
 import shared.definitions.*;
 import shared.exceptions.InvalidPlayerIndex;
 import client.storage.Data;
-import client.network.ServerProxy;
 
 
 public class ModelFacade {

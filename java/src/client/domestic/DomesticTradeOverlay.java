@@ -47,6 +47,10 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
 
         this.buildView();
     }
+    
+    public DomesticTradeOverlay(PlayerInfo[] listOfPlayers) {
+    	this.buildView();
+    }
 
     private void buildView() {
         this.resourceSelectionPanels = new ArrayList<JPanel>();
@@ -131,6 +135,12 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
         this.playerButtons = new ArrayList<JToggleButton>();
         this.toggleButtonGroup = new ButtonGroup();
 
+        //System.out.println(players[1].toString());
+        
+        
+        if (players == null) 
+        	System.out.println("HONEYMOON AVENUE");
+        
         JToggleButton noneToggle = new JToggleButton("None");
         noneToggle.setSelected(true);
         noneToggle.addActionListener(new ActionListener() {

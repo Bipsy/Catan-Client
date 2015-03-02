@@ -1,11 +1,16 @@
 package client.domestic;
 
 import shared.definitions.*;
+import shared.exceptions.InvalidPlayerIndex;
+import shared.models.Player;
 import client.base.*;
+import client.data.PlayerInfo;
 import client.misc.*;
 import client.model.ModelFacade;
 import client.model.Populator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -16,8 +21,14 @@ public class DomesticTradeController extends Controller
     implements IDomesticTradeController, Observer {
 
     private IDomesticTradeOverlay tradeOverlay;
+    private DomesticTradeState state;
     private IWaitView waitOverlay;
     private IAcceptTradeOverlay acceptOverlay;
+    private PlayerInfo localPlayer;
+    private PlayerInfo[] listOfPlayers;
+
+    private String currState;
+    private ModelFacade facade;
 
     /**
      * DomesticTradeController constructor
@@ -72,18 +83,37 @@ public class DomesticTradeController extends Controller
 
     @Override
     public void startTrade() {
-
-        getTradeOverlay().showModal();
+    	System.out.println("showing modal");
+    	
+    	listOfPlayers = new PlayerInfo[4];
+    	for (int i=0; i<4; i++) {
+    		try {
+    			System.out.println(facade.getPlayer(i).getID());
+    			System.out.println(i);
+    			System.out.println(facade.getPlayer(i).getUsername());
+    			System.out.println(facade.GetPlayerColor(i));
+    			listOfPlayers[i] = new PlayerInfo(facade.getPlayer(i).getID(), i, facade.getPlayer(i).getUsername(), facade.GetPlayerColor(i));
+			} catch (InvalidPlayerIndex e) {
+				e.printStackTrace();
+			}
+    	}
+    	
+    	if (currState.equals("Playing")) {
+    		System.out.println("currstate equals playing");
+    		getTradeOverlay().showModal();
+    		
+    	}
+    	//state.startTrade();
     }
 
     @Override
     public void decreaseResourceAmount(ResourceType resource) {
-
+    	
     }
 
     @Override
     public void increaseResourceAmount(ResourceType resource) {
-
+    	
     }
 
     @Override
@@ -95,7 +125,7 @@ public class DomesticTradeController extends Controller
 
     @Override
     public void setPlayerToTradeWith(int playerIndex) {
-
+    	
     }
 
     @Override
@@ -125,10 +155,27 @@ public class DomesticTradeController extends Controller
         getAcceptOverlay().closeModal();
     }
 
+    public void updateState(String currState) {
+    	
+    	switch (currState) {
+    		case "Playing":
+    			state = new DomesticTradeState.Playing();
+    			break;
+			default:
+				break;
+    		
+    	}
+    }
+    
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof Populator && arg instanceof ModelFacade) {
-            
+        	ModelFacade facade = (ModelFacade) arg;
+            this.facade = facade;
+            if (this.facade == null) {
+            }
+    		currState = facade.getState();
+    		updateState(currState);
         }
     }
 

@@ -177,7 +177,6 @@ public class MapController extends Controller
     			break;
     		case "SecondRound":
     			state = new MapState.Setup2();
-
     			break;
     		case "Rolling":
     			state = new MapState.Rolling();
