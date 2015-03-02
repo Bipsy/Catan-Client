@@ -1,14 +1,18 @@
 package client.map;
 
+import java.io.IOException;
 import java.util.*;
 
 import shared.definitions.*;
 import shared.locations.*;
 import shared.models.*;
+import shared.models.DTO.params.Soldier;
+import shared.models.DTO.params.YearOfPlenty;
 import client.base.*;
 import client.data.*;
 import client.model.ModelFacade;
 import client.model.Populator;
+import client.network.ServerProxy;
 
 /**
  * Implementation for the map controller
@@ -120,7 +124,7 @@ public class MapController extends Controller
     }
 
     public boolean canPlaceRobber(HexLocation hexLoc) {
-
+    	System.out.println("I'm in the canPlaceRobber in mapController");
         return state.canPlaceRobber(hexLoc);
     }
 
@@ -137,7 +141,7 @@ public class MapController extends Controller
     }
 
     public void placeRobber(HexLocation hexLoc) {
-
+    	System.out.println("I'm in the placeRobber function in mapController");
         getView().placeRobber(hexLoc);
         getRobView().showModal();
     }
@@ -152,7 +156,22 @@ public class MapController extends Controller
     }
 
     public void playSoldierCard() {
-    	//TODO: 
+    	getView().startDrop(PieceType.ROBBER, facade.GetPlayerColor(facade.getLocalPlayerIndex()), true);
+//    	getRobView().showModal();
+    	System.out.println("I'm in the playSoldierCard function");
+    	ModelFacade model = new ModelFacade();
+    	ServerProxy proxy = ServerProxy.getInstance();
+    	int playerIndex = model.getCurrentPlayerIndex();
+    	//victim index
+    	//hex location
+//    	Soldier soldier = new Soldier(playerIndex);
+    	
+//    	try {
+//			proxy.playSoldier(soldier);
+//		} catch (IOException e) {
+//
+//			e.printStackTrace();
+//		} 
     }
 
     public void playRoadBuildingCard() {
