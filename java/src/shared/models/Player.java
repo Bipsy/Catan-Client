@@ -51,8 +51,12 @@ public class Player extends User {
         this.discarded = playerDTO.isDiscarded();
     }
 
-    public void setDiscarded(Boolean discarded) {
-        this.playedDevCard = discarded;
+    public void setPlayedDevCard(Boolean playedDevCard) {
+        this.playedDevCard = playedDevCard;
+    }
+    
+    public boolean getDiscarded() {
+        return discarded;
     }
 
     /**

@@ -11,8 +11,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
+import shared.exceptions.InvalidPlayerIndex;
 import shared.models.DTO.ResourceListDTO;
 import shared.models.DTO.params.DiscardCards;
+import shared.models.Player;
 import shared.models.PlayerHand;
 
 /**
@@ -25,6 +27,7 @@ public class DiscardController extends Controller
     private final Map<ResourceType, Integer> discardSet;
     private final Map<ResourceType, Integer> hand;
     private boolean discarding;
+    private boolean discarded;
     private final String discardMessage = "%d/%d";
 
     /**
@@ -52,6 +55,7 @@ public class DiscardController extends Controller
         hand.put(ResourceType.WHEAT, 0);
         hand.put(ResourceType.WOOD, 0);
         discarding = false;
+        getDiscardView().setDiscardButtonEnabled(false);
     }
 
     public IDiscardView getDiscardView() {
@@ -155,7 +159,9 @@ public class DiscardController extends Controller
             proxy.discardCards(discardingSet);
             updateDiscarding();
             discarding = false;
-            getDiscardView().closeModal();
+            if (getDiscardView().isModalShowing()) {
+                getDiscardView().closeModal();
+            }
         } catch (IOException ex) {
             System.err.println("Error while tring to discard cards");
         }
@@ -243,18 +249,28 @@ public class DiscardController extends Controller
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof Populator && arg instanceof ModelFacade) {
-            ModelFacade facade = (ModelFacade) arg;
-            PlayerHand playerHand = facade.getResources(facade.getCurrentPlayerIndex());
-            updateHand(playerHand);
-            System.out.println(facade.getState());
-            if (facade.getState().equals("Discarding") &&
-                    playerHand.getNumResourceCards() > 7) {
-                if (!discarding) {
-                    discarding = true;
-                    updateView();
-                    initArrows();
-                    getDiscardView().showModal();
+            try {
+                ModelFacade facade = (ModelFacade) arg;
+                int localIndex = facade.getLocalPlayerIndex();
+                Player localPlayer = facade.getPlayer(localIndex);
+                PlayerHand playerHand = facade.getResources(localIndex);
+                updateHand(playerHand);
+                System.out.println(facade.getState());
+                if (facade.getState().equals("Discarding") 
+                        && playerHand.getNumResourceCards() > 7
+                        && localPlayer.getDiscarded() == false) {
+                            if (!discarding) {
+                                discarding = true;
+                                updateView();
+                                initArrows();
+                            }
+                            if (getDiscardView().isModalShowing() == false) {
+                                getDiscardView().showModal();
+                            }
                 }
+            } catch (InvalidPlayerIndex ex) {
+               System.out.println("Error while obtaining player index");
+               ex.printStackTrace();
             }
         }
     }
