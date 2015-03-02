@@ -38,6 +38,7 @@ public class RollController extends Controller implements IRollController, Obser
         		getRollView().setMessage(String.format(MESSAGE, --countDown));
         		getRollView().showModal();
         		if(countDown == 0) {
+        			System.out.println("Roll from timer");
 	        		rollDice();
         		}
         	}
@@ -85,6 +86,7 @@ public class RollController extends Controller implements IRollController, Obser
     }
     
     protected void showRollModal() {
+    	System.out.println("Showing roll modal");
 
 		getRollView().setMessage(String.format(MESSAGE, countDown));
 		getRollView().showModal();
@@ -96,14 +98,27 @@ public class RollController extends Controller implements IRollController, Obser
 
     @Override
     public void rollDice() {
+    	System.out.println("rolling dice");
+    	getRollView().closeModal();
+    	System.out.println("close modal");
     	rollingTimer.stop();
+    	System.out.println("stop timer");
 		countDown = 3;
+    	System.out.println("reinit count");
     	int rollValue = rollDice(6,2);
+    	do {
+    		rollValue = rollDice(6,2);
+    	} while (rollValue == 7);
+    	System.out.println("roll dice");
 		getResultView().setRollValue(rollValue);
+    	System.out.println("set roll value");
 		getResultView().showModal();
+    	System.out.println("show value");
 		RollNumber request = new RollNumber(facade.getLocalPlayerIndex(), rollValue);
+    	System.out.println("create request");
 		try {
 			Populator.getInstance().populateModel(proxy.rollNumber(request), proxy.getLocalPlayerName());
+	    	System.out.println("sent to server");
 		} catch (IOException | NoCookieException e) {
 			System.err.println(e.toString());
 		}
