@@ -2,6 +2,7 @@ package client.turntracker;
 
 import shared.definitions.CatanColor;
 import shared.exceptions.InvalidPlayerIndex;
+import shared.exceptions.NoCookieException;
 import shared.models.Player;
 import shared.models.DTO.params.FinishTurn;
 import client.base.*;
@@ -39,8 +40,8 @@ public class TurnTrackerController extends Controller
     public void endTurn() {
     	FinishTurn endTurn = new FinishTurn(facade.getLocalPlayerIndex());
     	try {
-			proxy.finishTurn(endTurn);
-		} catch (IOException e) {
+    		Populator.getInstance().populateModel(proxy.finishTurn(endTurn), proxy.getLocalPlayerName());
+		} catch (IOException | NoCookieException e) {
 			System.err.println(e.toString());
 		}
     }
@@ -74,11 +75,11 @@ public class TurnTrackerController extends Controller
         
         String state = facade.getState();
         boolean enabled = false;
-		Player player = null;
+		Player localPlayer = null;
 		boolean isTurn = false;
 		try {
-			player = facade.getPlayer(currentTurn);
-			isTurn = facade.isCurrentTurn(currentTurn);
+			localPlayer = facade.getPlayer(facade.getCurrentPlayerIndex());
+			isTurn = facade.isCurrentTurn(localPlayer.getIndex());
 		} catch (InvalidPlayerIndex e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -98,7 +99,7 @@ public class TurnTrackerController extends Controller
 				state = "Waiting for Other Players";
 			}
 			else {
-				if(player != null && player.getRoads() == 14 && player.getSettlements() == 4) {
+				if(localPlayer != null && localPlayer.getRoads() == 14 && localPlayer.getSettlements() == 4) {
 					state = "Finish Turn";
 					enabled = true;
 				}
@@ -109,7 +110,7 @@ public class TurnTrackerController extends Controller
 				state = "Waiting for Other Players";
 			}
 			else {
-				if(player != null && player.getRoads() == 13 && player.getSettlements() == 3) {
+				if(localPlayer != null && localPlayer.getRoads() == 13 && localPlayer.getSettlements() == 3) {
 					state = "Finish Turn";
 					enabled = true;
 				}

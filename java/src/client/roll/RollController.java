@@ -14,6 +14,7 @@ import java.util.Random;
 
 import javax.swing.Timer;
 
+import shared.exceptions.NoCookieException;
 import shared.models.DTO.params.RollNumber;
 
 /**
@@ -38,7 +39,6 @@ public class RollController extends Controller implements IRollController, Obser
         		getRollView().showModal();
         		if(countDown == 0) {
 	        		rollDice();
-	        		countDown = 3;
         		}
         	}
         }    
@@ -97,13 +97,14 @@ public class RollController extends Controller implements IRollController, Obser
     @Override
     public void rollDice() {
     	rollingTimer.stop();
+		countDown = 3;
     	int rollValue = rollDice(6,2);
 		getResultView().setRollValue(rollValue);
 		getResultView().showModal();
 		RollNumber request = new RollNumber(facade.getLocalPlayerIndex(), rollValue);
 		try {
-			proxy.rollNumber(request);
-		} catch (IOException e) {
+			Populator.getInstance().populateModel(proxy.rollNumber(request), proxy.getLocalPlayerName());
+		} catch (IOException | NoCookieException e) {
 			System.err.println(e.toString());
 		}
     }
