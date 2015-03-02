@@ -5,8 +5,10 @@ import java.io.IOException;
 import client.network.ServerProxy;
 import client.network.UserCookie;
 import shared.definitions.PieceType;
+import shared.exceptions.NoCookieException;
 import shared.locations.*;
 import client.model.ModelFacade;
+import client.model.Populator;
 import shared.models.DTO.params.*;
 import client.data.*;
 
@@ -72,8 +74,8 @@ public abstract class MapState {
 		void placeRoad(EdgeLocation edgeLoc) {
 			BuildRoad roadMove = new BuildRoad(facade.getLocalPlayerIndex(), new RoadLocation(edgeLoc), true);
 			try {
-				proxy.buildRoad(roadMove);
-			} catch (IOException e) {
+				Populator.getInstance().populateModel(proxy.buildRoad(roadMove), proxy.getLocalPlayerName());
+			} catch (IOException | NoCookieException e) {
 				e.printStackTrace();
 			}
 		}
@@ -81,8 +83,8 @@ public abstract class MapState {
 		void placeSettlement(VertexLocation vertLoc) {
 			BuildSettlement settlementMove = new BuildSettlement(facade.getLocalPlayerIndex(), new VertexLocationDTO(vertLoc), true);
 			try {
-				proxy.buildSettlement(settlementMove);
-			} catch (IOException e) {
+				Populator.getInstance().populateModel(proxy.buildSettlement(settlementMove), proxy.getLocalPlayerName());
+			} catch (IOException | NoCookieException e) {
 				e.printStackTrace();
 			}
 		}
@@ -122,8 +124,8 @@ public static class Setup2 extends Setup1 {
 		void robPlayer(RobPlayerInfo victim) {
 			RobPlayer robPlayer = new RobPlayer(facade.getLocalPlayerIndex(), victim.getPlayerIndex(), null);
 			try {
-				proxy.robPlayer(robPlayer);
-			} catch (IOException e) {
+				Populator.getInstance().populateModel(proxy.robPlayer(robPlayer), proxy.getLocalPlayerName());
+			} catch (IOException | NoCookieException e) {
 				e.printStackTrace();
 			}
 		}
@@ -150,8 +152,8 @@ public static class Setup2 extends Setup1 {
 		void placeRoad(EdgeLocation edgeLoc) {
 			BuildRoad roadMove = new BuildRoad(facade.getLocalPlayerIndex(), new RoadLocation(edgeLoc), false);
 			try {
-				proxy.buildRoad(roadMove);
-			} catch (IOException e) {
+				Populator.getInstance().populateModel(proxy.buildRoad(roadMove), proxy.getLocalPlayerName());
+			} catch (IOException | NoCookieException e) {
 				e.printStackTrace();
 			}
 		}
@@ -159,8 +161,8 @@ public static class Setup2 extends Setup1 {
 		void placeSettlement(VertexLocation vertLoc) {
 			BuildSettlement settlementMove = new BuildSettlement(facade.getLocalPlayerIndex(), new VertexLocationDTO(vertLoc), false);
 			try {
-				proxy.buildSettlement(settlementMove);
-			} catch (IOException e) {
+				Populator.getInstance().populateModel(proxy.buildSettlement(settlementMove), proxy.getLocalPlayerName());
+			} catch (IOException | NoCookieException e) {
 				e.printStackTrace();
 			}
 		}
@@ -168,8 +170,8 @@ public static class Setup2 extends Setup1 {
 		void placeCity(VertexLocation vertLoc) {
 			BuildCity cityMove = new BuildCity(facade.getLocalPlayerIndex(), new VertexLocationDTO(vertLoc));
 			try {
-				proxy.buildCity(cityMove);
-			} catch (IOException e) {
+				Populator.getInstance().populateModel(proxy.buildCity(cityMove), proxy.getLocalPlayerName());
+			} catch (IOException | NoCookieException e) {
 				e.printStackTrace();
 			}
 		}  		

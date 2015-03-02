@@ -2,6 +2,7 @@ package client.devcards;
 
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
+import shared.exceptions.NoCookieException;
 import shared.models.DTO.params.BuyDevCard;
 import shared.models.DTO.params.Monument;
 import client.base.*;
@@ -71,9 +72,9 @@ public class DevCardController extends Controller
     	BuyDevCard buyDevCard = new BuyDevCard(playerIndex);
     	
     	try {
-			proxy.buyDevCard(buyDevCard);
+			Populator.getInstance().populateModel(proxy.buyDevCard(buyDevCard), proxy.getLocalPlayerName());
 			System.out.println("hi");
-		} catch (IOException e) {
+		} catch (IOException | NoCookieException e) {
 
 			e.printStackTrace();
 		} 
