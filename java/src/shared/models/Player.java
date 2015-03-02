@@ -277,7 +277,7 @@ public class Player extends User {
 
     }
 
-	public PlayerHand getResources() {
-		return this.resources;
-	}
+    public PlayerHand getResources() {
+        return this.resources;
+    }
 }

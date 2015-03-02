@@ -85,15 +85,18 @@ public class CatanPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
 //				rollView.showModal();
 
-                discardView.setResourceMaxAmount(ResourceType.WOOD, 1);
+                discardView.setResourceMaxAmount(ResourceType.WOOD, 0);
                 discardView.setResourceMaxAmount(ResourceType.BRICK, 0);
-                discardView.setResourceMaxAmount(ResourceType.SHEEP, 11);
-                discardView.setResourceMaxAmount(ResourceType.WHEAT, 1);
+                discardView.setResourceMaxAmount(ResourceType.SHEEP, 0);
+                discardView.setResourceMaxAmount(ResourceType.WHEAT, 0);
                 discardView.setResourceMaxAmount(ResourceType.ORE, 0);
 
-                discardView.setResourceAmountChangeEnabled(ResourceType.WOOD, true, false);
-                discardView.setResourceAmountChangeEnabled(ResourceType.SHEEP, true, false);
-                discardView.setResourceAmountChangeEnabled(ResourceType.WHEAT, true, false);
+                discardView.setResourceAmountChangeEnabled(ResourceType.WOOD, false, false);
+                discardView.setResourceAmountChangeEnabled(ResourceType.SHEEP, false, false);
+                discardView.setResourceAmountChangeEnabled(ResourceType.WHEAT, false, false);
+                discardView.setResourceAmountChangeEnabled(ResourceType.BRICK, false, false);
+                discardView.setResourceAmountChangeEnabled(ResourceType.ORE, false, false);
+
 
                 discardView.setStateMessage("0/6");
 

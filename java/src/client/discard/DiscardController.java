@@ -5,9 +5,15 @@ import client.base.*;
 import client.misc.*;
 import client.model.ModelFacade;
 import client.model.Populator;
-
+import client.network.ServerProxy;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
+import shared.models.DTO.ResourceListDTO;
+import shared.models.DTO.params.DiscardCards;
+import shared.models.PlayerHand;
 
 /**
  * Discard controller implementation
@@ -16,6 +22,10 @@ public class DiscardController extends Controller
     implements IDiscardController, Observer {
 
     private IWaitView waitView;
+    private final Map<ResourceType, Integer> discardSet;
+    private final Map<ResourceType, Integer> hand;
+    private boolean discarding;
+    private final String discardMessage = "%d/%d";
 
     /**
      * DiscardController constructor
@@ -29,6 +39,19 @@ public class DiscardController extends Controller
         super(view);
         Populator.getInstance().addObserver(this);
         this.waitView = waitView;
+        discardSet = new HashMap<>();
+        hand = new HashMap<>();
+        discardSet.put(ResourceType.BRICK, 0);
+        discardSet.put(ResourceType.ORE, 0);
+        discardSet.put(ResourceType.SHEEP, 0);
+        discardSet.put(ResourceType.WHEAT, 0);
+        discardSet.put(ResourceType.WOOD, 0);
+        hand.put(ResourceType.BRICK, 0);
+        hand.put(ResourceType.ORE, 0);
+        hand.put(ResourceType.SHEEP, 0);
+        hand.put(ResourceType.WHEAT, 0);
+        hand.put(ResourceType.WOOD, 0);
+        discarding = false;
     }
 
     public IDiscardView getDiscardView() {
@@ -41,24 +64,197 @@ public class DiscardController extends Controller
 
     @Override
     public void increaseAmount(ResourceType resource) {
-
+        if (hand == null || discardSet == null) return;
+        IDiscardView view = getDiscardView();
+        if (discardSet.containsKey(resource)) {
+            int oldVal = discardSet.get(resource);
+            if (oldVal < hand.get(resource)) {
+                int newVal = oldVal+1;
+                discardSet.put(resource, newVal);
+                view.setResourceDiscardAmount(resource, newVal);
+                if (newVal == hand.get(resource)) {
+                    view.setResourceAmountChangeEnabled(resource, false, true);
+                } else {
+                    view.setResourceAmountChangeEnabled(resource, true, true);
+                }
+                if (getTotalDiscarding() >= getTotalHand() / 2) {
+                    view.setDiscardButtonEnabled(true);
+                    capArrows();
+                    view.setStateMessage("Discard");
+                } else {                
+                    String buttonLabel = String.format(discardMessage, 
+                            getTotalDiscarding(), getTotalHand()/2);
+                    view.setStateMessage(buttonLabel);
+                }
+            }
+        }
     }
 
     @Override
     public void decreaseAmount(ResourceType resource) {
-
+        if (hand == null || discardSet == null) return;
+        IDiscardView view = getDiscardView();
+        if (discardSet.containsKey(resource)) {
+            int oldVal = discardSet.get(resource);
+            if (oldVal > 0) {
+                int newVal = oldVal-1;
+                discardSet.put(resource, newVal);
+                view.setResourceDiscardAmount(resource, newVal);          
+                if (newVal == 0) {
+                    view.setResourceAmountChangeEnabled(resource, true, false);                
+                } else {
+                    view.setResourceAmountChangeEnabled(resource, true, true);
+                }                
+                if (getTotalDiscarding() < getTotalHand() / 2) {
+                    view.setDiscardButtonEnabled(false);
+                    String buttonLabel = String.format(discardMessage, 
+                            getTotalDiscarding(), getTotalHand()/2);
+                    uncapArrows();
+                    view.setStateMessage(buttonLabel);
+                }
+            }
+        }
+    }
+    
+    private int getTotalHand() {
+        if (hand == null) return 0;
+        int sum = 0;
+        for (Map.Entry<ResourceType, Integer> entry : hand.entrySet()) {
+            sum += entry.getValue();
+        }
+        return sum;
+    }
+    
+    private int getTotalDiscarding() {
+        if (discardSet == null) return 0;
+        int sum = 0;
+        for (Map.Entry<ResourceType, Integer> entry : discardSet.entrySet()) {
+            sum += entry.getValue();
+        }
+        return sum;
+    }
+    
+    private ResourceListDTO makeDiscardSet() {
+        int brick = discardSet.get(ResourceType.BRICK);
+        int ore = discardSet.get(ResourceType.ORE);
+        int sheep = discardSet.get(ResourceType.SHEEP);
+        int wheat = discardSet.get(ResourceType.WHEAT);
+        int wood = discardSet.get(ResourceType.WOOD);
+        
+        return new ResourceListDTO(brick, ore, sheep, wheat, wood);
     }
 
     @Override
     public void discard() {
-
-        getDiscardView().closeModal();
+        try {
+            ServerProxy proxy = ServerProxy.getInstance();
+            ModelFacade facade = new ModelFacade();           
+            ResourceListDTO bundle = makeDiscardSet();
+            int playerIndex = facade.getCurrentPlayerIndex();
+            DiscardCards discardingSet = new DiscardCards(playerIndex, bundle);
+            proxy.discardCards(discardingSet);
+            updateDiscarding();
+            discarding = false;
+            getDiscardView().closeModal();
+        } catch (IOException ex) {
+            System.err.println("Error while tring to discard cards");
+        }
+    }
+    
+    private void updateView() {
+        if (hand == null) return;
+        IDiscardView view = getDiscardView();        
+        for (Map.Entry<ResourceType, Integer> entry : hand.entrySet()) {
+            view.setResourceMaxAmount(entry.getKey(), entry.getValue());
+        }
+    }
+    
+    private void capArrows() {
+        if (hand == null || discardSet == null) return;
+        IDiscardView view = getDiscardView();
+        for (Map.Entry<ResourceType, Integer> entry : hand.entrySet()) {
+            if (discardSet.get(entry.getKey()) == 0) {
+                view.setResourceAmountChangeEnabled(entry.getKey(), 
+                        false, false); 
+            } else if (entry.getValue() > 0) { 
+                view.setResourceAmountChangeEnabled(entry.getKey(), 
+                        false, true);
+            } else {
+                view.setResourceAmountChangeEnabled(entry.getKey(), 
+                        false, false);
+            }
+        }
+    }
+    
+    private void uncapArrows() {
+        if (hand == null || discardSet == null) return;
+        IDiscardView view = getDiscardView();
+        for (Map.Entry<ResourceType, Integer> entry : hand.entrySet()) {
+            int discardVal = discardSet.get(entry.getKey());
+            if (entry.getValue() - discardVal > 0 && discardVal > 0) {
+                view.setResourceAmountChangeEnabled(entry.getKey(), 
+                        true, true); 
+            } else if (entry.getValue() - discardVal > 0) { 
+                view.setResourceAmountChangeEnabled(entry.getKey(), 
+                        true, false);
+            } else if (discardVal > 0) {
+                view.setResourceAmountChangeEnabled(entry.getKey(),
+                        false, true);
+            } else {
+                view.setResourceAmountChangeEnabled(entry.getKey(), 
+                        false, false);
+            }
+        }
+    }
+    
+    private void initArrows() {
+        if (hand == null) return;
+        IDiscardView view = getDiscardView();
+        for (Map.Entry<ResourceType, Integer> entry : hand.entrySet()) {
+            if (entry.getValue() > 0) {
+                view.setResourceAmountChangeEnabled(entry.getKey(), true, false);
+            } else {
+                view.setResourceAmountChangeEnabled(entry.getKey(), false, false);
+            }
+        }
+    }
+    
+    private void updateHand(PlayerHand hand) {
+        if (hand == null) return;
+        int wood = hand.getResourceCount(ResourceType.WOOD);
+        int brick = hand.getResourceCount(ResourceType.BRICK);
+        int sheep = hand.getResourceCount(ResourceType.SHEEP);
+        int wheat = hand.getResourceCount(ResourceType.WHEAT);
+        int ore = hand.getResourceCount(ResourceType.ORE);
+        
+        this.hand.put(ResourceType.WOOD, wood);
+        this.hand.put(ResourceType.BRICK, brick);
+        this.hand.put(ResourceType.SHEEP, sheep);
+        this.hand.put(ResourceType.WHEAT, wheat);
+        this.hand.put(ResourceType.ORE, ore);
+    }
+    
+    private void updateDiscarding() {
+        for (Map.Entry<ResourceType, Integer> entry : discardSet.entrySet()) {
+            discardSet.put(entry.getKey(), 0);
+        }
     }
 
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof Populator && arg instanceof ModelFacade) {
-            
+            ModelFacade facade = (ModelFacade) arg;
+            PlayerHand hand = facade.getResources(facade.getCurrentPlayerIndex());
+            updateHand(hand);
+            if (facade.getState().equals("DISCARDING") &&
+                    hand.getNumResourceCards() > 7) {
+                if (!discarding) {
+                    discarding = true;
+                    updateView();
+                    initArrows();
+                    getDiscardView().showModal();
+                }
+            }
         }
     }
 
