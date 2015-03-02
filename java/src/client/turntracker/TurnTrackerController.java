@@ -2,6 +2,7 @@ package client.turntracker;
 
 import shared.definitions.CatanColor;
 import shared.exceptions.InvalidPlayerIndex;
+import shared.exceptions.NoCookieException;
 import shared.models.Player;
 import shared.models.DTO.params.FinishTurn;
 import client.base.*;
@@ -39,8 +40,8 @@ public class TurnTrackerController extends Controller
     public void endTurn() {
     	FinishTurn endTurn = new FinishTurn(facade.getLocalPlayerIndex());
     	try {
-			proxy.finishTurn(endTurn);
-		} catch (IOException e) {
+    		Populator.getInstance().populateModel(proxy.finishTurn(endTurn), proxy.getLocalPlayerName());
+		} catch (IOException | NoCookieException e) {
 			System.err.println(e.toString());
 		}
     }
@@ -56,14 +57,13 @@ public class TurnTrackerController extends Controller
     	
     	if(color != null)
     		getView().setLocalPlayerColor(color);
-        boolean currentTurn = false;
+        int currentTurn = -1;
         
         for (int i = 0; i < 4; i++) {
-			Player player;
 			try {
-				player = facade.getPlayer(i);
-				if(!currentTurn)
-					currentTurn = username.equals(player.getUsername()) && facade.isCurrentTurn(i);
+				Player player = facade.getPlayer(i);
+				if(facade.isCurrentTurn(i))
+					currentTurn = i;
 				getView().initializePlayer(i, player.getUsername(), player.getColor());
 				getView().updatePlayer(i, player.getVictoryPoints(), facade.isCurrentTurn(i), 
 						facade.getLargestArmy() == i, facade.getlongestRoad() == i);
@@ -72,14 +72,66 @@ public class TurnTrackerController extends Controller
 				e.printStackTrace();
 			}
 		}
-        String state = facade.getState();
-        if(!currentTurn) {
-        	state = "Waiting for Other Players";
-        }
         
-        boolean enable = currentTurn && (state.equals("Playing") || 
-        			state.equals("FirstRound") || state.equals("SecondRound"));
-        getView().updateGameState((state.equals("Playing")?"Finish Turn":state), enable);
+        String state = facade.getState();
+        boolean enabled = false;
+		Player localPlayer = null;
+		boolean isTurn = false;
+		try {
+			localPlayer = facade.getPlayer(facade.getCurrentPlayerIndex());
+			isTurn = facade.isCurrentTurn(localPlayer.getIndex());
+		} catch (InvalidPlayerIndex e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+        
+        switch (state) {
+		case "Rolling":
+		case "Robbing":
+			if(!isTurn) {
+				state = "Waiting for Other Players";
+			}
+			break;
+		case "Discarding":
+		case "FirstRound":
+			if(!isTurn) {
+				state = "Waiting for Other Players";
+			}
+			else {
+				if(localPlayer != null && localPlayer.getRoads() == 14 && localPlayer.getSettlements() == 4) {
+					state = "Finish Turn";
+					enabled = true;
+				}
+			}
+			break;
+		case "SecondRound":
+			if(!isTurn) {
+				state = "Waiting for Other Players";
+			}
+			else {
+				if(localPlayer != null && localPlayer.getRoads() == 13 && localPlayer.getSettlements() == 3) {
+					state = "Finish Turn";
+					enabled = true;
+				}
+			}
+			break;
+		case "Playing":
+			if(!isTurn) {
+				state = "Waiting for Other Players";
+			}
+			else {
+				state = "Finish Turn";
+				enabled = true;
+			}
+			break;
+
+		default:
+			state = "Waiting for Other Players";
+			enabled = false;
+			break;
+		}
+        getView().updateGameState(state, enabled);
     }
 
     @Override

@@ -53,6 +53,8 @@ public class ModelFacade {
     }
 
     public boolean CanBuildRoad(BuildRoad buildRoad) { // check number of roads
+    	
+    	//check if hex is valid hex
         return models != null && models.CanBuildRoad(buildRoad);
     }
 

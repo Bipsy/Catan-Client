@@ -232,14 +232,14 @@ public class ServerProxy implements iServerProxy {
     @Override
     public ClientModelDTO buildRoad(BuildRoad roadMove) throws IOException {
         String params = serializer.serialize(roadMove);
-        Pair<String, Integer> result = doPost("/moves/buildRoad", params, false);
+        Pair<String, Integer> result = doPost("/moves/buildRoad", params, roadMove.isFree());
         return serializer.deserializeModel(result.getValue0());
     }
 
     @Override
     public ClientModelDTO buildSettlement(BuildSettlement settlementMove) throws IOException {
         String params = serializer.serialize(settlementMove);
-        Pair<String, Integer> result = doPost("/moves/buildSettlement", params, false);
+        Pair<String, Integer> result = doPost("/moves/buildSettlement", params, settlementMove.isFree());
         return serializer.deserializeModel(result.getValue0());
     }
 

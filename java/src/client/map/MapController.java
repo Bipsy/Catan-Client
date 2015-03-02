@@ -74,7 +74,9 @@ public class MapController extends Controller
         for (int i = 0; i < facade.NumberOfRoads(); i++) {
         	Road road = facade.GetRoadAt(i);
         	if (road !=null)
-        		getView().placeRoad(road.getLocation(), facade.GetPlayerColor(road.getOwner()));
+        	{
+        			getView().placeRoad(road.getLocation(), facade.GetPlayerColor(road.getOwner()));
+        	}
         }
         
         for (int i = 0; i < facade.NumberOfCities(); i++) {
@@ -123,23 +125,15 @@ public class MapController extends Controller
     }
 
     public void placeRoad(EdgeLocation edgeLoc) {
-    	
 		state.placeRoad(edgeLoc);
-		//getView().placeRoad(edgeLoc, facade.GetPlayerColor(facade.getLocalPlayerIndex()));
-
     }
 
     public void placeSettlement(VertexLocation vertLoc) {
-
 		state.placeSettlement(vertLoc);
-		//getView().placeSettlement(vertLoc, facade.GetPlayerColor(facade.getLocalPlayerIndex()));
     }
 
     public void placeCity(VertexLocation vertLoc) {
-
     	state.placeCity(vertLoc);
-    	//getView().placeCity(vertLoc, facade.GetPlayerColor(facade.getLocalPlayerIndex()));
-
     }
 
     public void placeRobber(HexLocation hexLoc) {
@@ -174,10 +168,11 @@ public class MapController extends Controller
     	switch (currState) {
     		case "FirstRound":
     			state = new MapState.Setup1();
+    			state.showMapOverlay(getView());
     			break;
     		case "SecondRound":
     			state = new MapState.Setup2();
-
+    			state.showMapOverlay(getView());
     			break;
     		case "Rolling":
     			state = new MapState.Rolling();
