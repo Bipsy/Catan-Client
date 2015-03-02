@@ -3,8 +3,8 @@ package client.network;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
-import org.junit.BeforeClass;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import shared.definitions.ResourceType;
@@ -172,7 +172,7 @@ public class ServerProxyTest {
         ClientModelDTO model = new ClientModelDTO();
         HexLocation loc = new HexLocation(-1, -1);
         EdgeLocation edge = new EdgeLocation(loc, EdgeDirection.NorthEast);
-        BuildRoad road = new BuildRoad(1, edge, false);
+        BuildRoad road = new BuildRoad(1, new RoadLocation(edge), false);
         try {
             proxy.buildRoad(road);
             assertTrue("A road has been built in the specified location", model != null);
@@ -186,7 +186,7 @@ public class ServerProxyTest {
     public void testBuildSettlement() {
         HexLocation hex = new HexLocation(-1, -1);
         VertexLocation vert = new VertexLocation(hex, VertexDirection.NorthEast);
-        BuildSettlement sett = new BuildSettlement(2, vert, false);
+        BuildSettlement sett = new BuildSettlement(2, new VertexLocationDTO(vert), false);
         try {
             ClientModelDTO model = proxy.buildSettlement(sett);
             assertTrue("A settlement has been built in the specified location", model != null);
@@ -201,7 +201,7 @@ public class ServerProxyTest {
         ClientModelDTO model = new ClientModelDTO();
         HexLocation hex = new HexLocation(-1, -1);
         VertexLocation vert = new VertexLocation(hex, VertexDirection.NorthEast);
-        BuildCity city = new BuildCity(2, vert);
+        BuildCity city = new BuildCity(2, new VertexLocationDTO(vert));
         try {
             proxy.buildCity(city);
             assertTrue("A city has been built in the specified location", model != null);
