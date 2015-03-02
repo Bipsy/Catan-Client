@@ -1,10 +1,12 @@
 package shared.models.DTO.params;
 
+import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
+import shared.models.DTO.VertexLocationDTO;
 
 public class BuildCity extends MoveParams {
 
-    private VertexLocation vertexLocation;
+    private VertexLocationDTO vertexLocation;
 
     public BuildCity() {
         super("buildCity");
@@ -13,14 +15,14 @@ public class BuildCity extends MoveParams {
 
     public BuildCity(int playerIndex, VertexLocation vertexLocation) {
         super("buildCity", playerIndex);
-        this.vertexLocation = vertexLocation;
+        this.vertexLocation = new VertexLocationDTO(vertexLocation.getHexLoc().getX(), vertexLocation.getHexLoc().getY(), vertexLocation.getDir());
     }
 
-    public VertexLocation getVertexLocation() {
+    public VertexLocationDTO getVertexLocation() {
         return vertexLocation;
     }
 
-    public void setVertexLocation(VertexLocation vertexLocation) {
+    public void setVertexLocation(VertexLocationDTO vertexLocation) {
         this.vertexLocation = vertexLocation;
     }
 

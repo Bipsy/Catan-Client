@@ -232,7 +232,7 @@ public class ServerProxy implements iServerProxy {
     @Override
     public ClientModelDTO buildRoad(BuildRoad roadMove) throws IOException {
         String params = serializer.serialize(roadMove);
-        Pair<String, Integer> result = doPost("/moves/buildRoad", params, roadMove.isFree());
+        Pair<String, Integer> result = doPost("/moves/buildRoad", params, false);
         return serializer.deserializeModel(result.getValue0());
     }
 

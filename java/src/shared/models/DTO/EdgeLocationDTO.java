@@ -1,6 +1,7 @@
 package shared.models.DTO;
 
 import shared.locations.EdgeDirection;
+import shared.locations.EdgeLocation;
 
 public class EdgeLocationDTO {
 	private int x;
