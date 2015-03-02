@@ -74,7 +74,9 @@ public class MapController extends Controller
         for (int i = 0; i < facade.NumberOfRoads(); i++) {
         	Road road = facade.GetRoadAt(i);
         	if (road !=null)
-        		getView().placeRoad(road.getLocation(), facade.GetPlayerColor(road.getOwner()));
+        	{
+        			getView().placeRoad(road.getLocation(), facade.GetPlayerColor(road.getOwner()));
+        	}
         }
         
         for (int i = 0; i < facade.NumberOfCities(); i++) {
@@ -123,23 +125,15 @@ public class MapController extends Controller
     }
 
     public void placeRoad(EdgeLocation edgeLoc) {
-    	
 		state.placeRoad(edgeLoc);
-		//getView().placeRoad(edgeLoc, facade.GetPlayerColor(facade.getLocalPlayerIndex()));
-
     }
 
     public void placeSettlement(VertexLocation vertLoc) {
-
 		state.placeSettlement(vertLoc);
-		//getView().placeSettlement(vertLoc, facade.GetPlayerColor(facade.getLocalPlayerIndex()));
     }
 
     public void placeCity(VertexLocation vertLoc) {
-
     	state.placeCity(vertLoc);
-    	//getView().placeCity(vertLoc, facade.GetPlayerColor(facade.getLocalPlayerIndex()));
-
     }
 
     public void placeRobber(HexLocation hexLoc) {
