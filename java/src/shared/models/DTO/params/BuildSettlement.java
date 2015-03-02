@@ -1,11 +1,12 @@
 package shared.models.DTO.params;
 
 import shared.locations.VertexLocation;
+import shared.models.DTO.VertexLocationDTO;
 
 public class BuildSettlement extends MoveParams {
 
     private static final String BUILD_SETTLEMENT = "buildSettlement";
-    private VertexLocation vertexLocation;
+    private VertexLocationDTO vertexLocation;
     private boolean free;
 
     public BuildSettlement() {
@@ -17,7 +18,7 @@ public class BuildSettlement extends MoveParams {
     public BuildSettlement(int playerIndex, VertexLocation vertexLocation,
             boolean free) {
         super(BUILD_SETTLEMENT, playerIndex);
-        this.vertexLocation = vertexLocation;
+        this.vertexLocation = new VertexLocationDTO(vertexLocation.getHexLoc().getX(), vertexLocation.getHexLoc().getY(), vertexLocation.getDir());
         this.free = free;
     }
 
@@ -29,11 +30,11 @@ public class BuildSettlement extends MoveParams {
         this.free = free;
     }
 
-    public VertexLocation getVertexLocation() {
+    public VertexLocationDTO getVertexLocation() {
         return vertexLocation;
     }
 
-    public void setVertexLocation(VertexLocation vertexLocation) {
+    public void setVertexLocation(VertexLocationDTO vertexLocation) {
         this.vertexLocation = vertexLocation;
     }
 }

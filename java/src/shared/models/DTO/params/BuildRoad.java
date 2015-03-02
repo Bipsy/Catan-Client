@@ -1,10 +1,11 @@
 package shared.models.DTO.params;
 
 import shared.locations.EdgeLocation;
+import shared.models.DTO.EdgeLocationDTO;
 
 public class BuildRoad extends MoveParams {
 
-    private EdgeLocation roadLocation;
+    private EdgeLocationDTO roadLocation;
     private boolean free;
 
     public BuildRoad() {
@@ -16,15 +17,15 @@ public class BuildRoad extends MoveParams {
 
     public BuildRoad(int playerIndex, EdgeLocation edgeLocation, boolean free) {
         super("buildRoad", playerIndex);
-        this.roadLocation = edgeLocation;
+        this.roadLocation = new EdgeLocationDTO(edgeLocation.getHexLoc().getX(), edgeLocation.getHexLoc().getY(), edgeLocation.getDir());
         this.free = free;
     }
 
-    public EdgeLocation getRoadLocation() {
+    public EdgeLocationDTO getRoadLocation() {
         return roadLocation;
     }
 
-    public void setRoadLocation(EdgeLocation roadLocation) {
+    public void setRoadLocation(EdgeLocationDTO roadLocation) {
         this.roadLocation = roadLocation;
     }
 
