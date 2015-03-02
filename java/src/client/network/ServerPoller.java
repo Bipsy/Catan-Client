@@ -80,13 +80,13 @@ public class ServerPoller implements ActionListener {
         if (model == null) {
             return false;
         } else {
-        	String name = null;
-			try {
-				name = serverProxy.getLocalPlayerName();
-			} catch (NoCookieException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+            String name = null;
+            try {
+                name = serverProxy.getLocalPlayerName();
+            } catch (NoCookieException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
             return modelHandle.populateModel(model, name);
         }
     }

@@ -31,11 +31,11 @@ public class PlayerTest {
         brooke = new Player("green", "Brooke", 3, 10, "Brooke", "brooke");
 
         sam.setOldDevCards(new DevCardList(new DevCardListDTO(1, 1, 1, 1, 1)));
-        sam.setDiscarded(false);
+        sam.setPlayedDevCard(false);
         mark.setOldDevCards(new DevCardList(new DevCardListDTO(1, 1, 1, 1, 1)));
-        mark.setDiscarded(true);
+        mark.setPlayedDevCard(true);
         brooke.setOldDevCards(new DevCardList(new DevCardListDTO(0, 0, 0, 0, 0)));
-        brooke.setDiscarded(false);
+        brooke.setPlayedDevCard(false);
     }
 
     @After
