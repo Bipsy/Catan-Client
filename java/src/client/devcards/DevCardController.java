@@ -4,6 +4,7 @@ import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 import shared.exceptions.NoCookieException;
 import shared.models.DTO.params.BuyDevCard;
+import shared.models.DTO.params.Monopoly;
 import shared.models.DTO.params.Monument;
 import shared.models.DTO.params.RoadBuilding;
 import shared.models.DTO.params.YearOfPlenty;
@@ -125,7 +126,18 @@ public class DevCardController extends Controller
 
     @Override
     public void playMonopolyCard(ResourceType resource) {
+    	ModelFacade model = new ModelFacade();
+    	ServerProxy proxy = ServerProxy.getInstance();
+    	int playerIndex = model.getCurrentPlayerIndex();
+    	Monopoly monopoly = new Monopoly(playerIndex, resource);
+    	
+    	try {
+			proxy.playMonopoly(monopoly);
+		} catch (IOException e) {
 
+			e.printStackTrace();
+		} 
+    	getPlayCardView().closeModal();
     }
 
     @Override
