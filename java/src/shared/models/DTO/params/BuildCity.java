@@ -4,23 +4,23 @@ import shared.locations.VertexLocation;
 
 public class BuildCity extends MoveParams {
 
-    private VertexLocation vertexLocation;
+    private VertexLocationDTO vertexLocation;
 
     public BuildCity() {
         super("buildCity");
         this.vertexLocation = null;
     }
 
-    public BuildCity(int playerIndex, VertexLocation vertexLocation) {
+    public BuildCity(int playerIndex, VertexLocationDTO vertexLocation) {
         super("buildCity", playerIndex);
         this.vertexLocation = vertexLocation;
     }
 
-    public VertexLocation getVertexLocation() {
+    public VertexLocationDTO getVertexLocation() {
         return vertexLocation;
     }
 
-    public void setVertexLocation(VertexLocation vertexLocation) {
+    public void setVertexLocation(VertexLocationDTO vertexLocation) {
         this.vertexLocation = vertexLocation;
     }
 

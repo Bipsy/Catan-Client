@@ -52,7 +52,7 @@ public class Board {
     }
 
     public boolean canBuildRoad(BuildRoad buildRoad) {
-        EdgeLocation road = buildRoad.getRoadLocation();
+        EdgeLocation road = buildRoad.getRoadLocation().getEdgeLocation();
         if (roadMap.containsKey(road.getNormalizedLocation())) {
             return false;
         } else {
@@ -73,7 +73,7 @@ public class Board {
 
     public boolean canBuildSettlement(BuildSettlement buildSettlement) {
         boolean result = false;
-        VertexLocation vertex = buildSettlement.getVertexLocation();
+        VertexLocation vertex = buildSettlement.getVertexLocation().getVertexLocation();
 
         if (!communityMap.containsKey(vertex.getNormalizedLocation())) {
             VertexLocation[] adjVertex = vertex.getAdjacentVertexes();
@@ -100,7 +100,7 @@ public class Board {
     }
 
     public boolean canBuildCity(BuildCity buildCity) {
-        VertexLocation vertex = buildCity.getVertexLocation().getNormalizedLocation();
+        VertexLocation vertex = buildCity.getVertexLocation().getVertexLocation().getNormalizedLocation();
 
         if (communityMap.containsKey(vertex)) {
             VertexObject vertexObj = communityMap.get(vertex);

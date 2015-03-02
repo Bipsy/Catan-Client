@@ -88,16 +88,16 @@ public class ModelFacadeTest {
     	//Our model always has player 0 as the current player
 
         //Test 0 - even though brooke has the resources and the location is available, it is not her turn
-        BuildRoad brooke = new BuildRoad(1, new EdgeLocation(new HexLocation(-1, 0), EdgeDirection.NorthEast), false);
+        BuildRoad brooke = new BuildRoad(1, new RoadLocation(-1, 0, EdgeDirection.NorthEast), false);
         assertFalse("A player can not build a road if it is not their turn", modelFacade.CanBuildRoad(brooke));
 
         //Test 1 - even though mark doesn't have the necessary resources, the road is free, and the location is available
-        BuildRoad mark = new BuildRoad(3, new EdgeLocation(new HexLocation(-1, 0), EdgeDirection.NorthEast), true);
+        BuildRoad mark = new BuildRoad(3, new RoadLocation(-1, 0, EdgeDirection.NorthEast), true);
         model.getUserManager().setCurrentUser(3);
         assertTrue("A player can build a road if the road is free, and the spot is available", modelFacade.CanBuildRoad(mark));
 
         //Test 2 - even though the road is free, the location is not available
-        mark = new BuildRoad(3, new EdgeLocation(new HexLocation(-2, 1), EdgeDirection.SouthWest), true);
+        mark = new BuildRoad(3, new RoadLocation(-2, 1, EdgeDirection.SouthWest), true);
         model.getUserManager().setCurrentUser(3);
         assertFalse("A player can not build a road if the road is free, but the spot is not available", modelFacade.CanBuildRoad(mark));
 
@@ -106,18 +106,18 @@ public class ModelFacadeTest {
         assertTrue("A player can build a road if they have enough resources", modelFacade.CanBuildRoad(brooke));
 
         //Test 4 - even though mark doesn't have the necessary resources, the road is free, and the location is available
-        mark = new BuildRoad(3, new EdgeLocation(new HexLocation(-1, 1), EdgeDirection.South), false);
+        mark = new BuildRoad(3, new RoadLocation(-1, 1, EdgeDirection.South), false);
         model.getUserManager().setCurrentUser(3);
         assertFalse("A player can build a road if they have enough resources", modelFacade.CanBuildRoad(mark));
 
         //Test 5 - brooke has the resources, but the location is not available
-        brooke = new BuildRoad(1, new EdgeLocation(new HexLocation(-2, 1), EdgeDirection.SouthWest), false);
+        brooke = new BuildRoad(1, new RoadLocation(-2, 1, EdgeDirection.SouthWest), false);
         model.getUserManager().setCurrentUser(3);
         assertFalse("A player can build a road if they have enough resources", modelFacade.CanBuildRoad(mark));
 
         //Test 6 - brooke has the resources, but has no more road pieces
         model.getUserManager().adjustUserPieces(3, 0, 5, 4); // player index, roads, settlements, cities
-        brooke = new BuildRoad(1, new EdgeLocation(new HexLocation(-2, 1), EdgeDirection.SouthWest), false);
+        brooke = new BuildRoad(1, new RoadLocation(-2, 1, EdgeDirection.SouthWest), false);
         model.getUserManager().setCurrentUser(3);
         assertFalse("A player can build a road if they have enough resources", modelFacade.CanBuildRoad(mark));
 
@@ -143,40 +143,40 @@ public class ModelFacadeTest {
 
         //Test 0
         model.getUserManager().setCurrentUser(0);
-        BuildSettlement pete = new BuildSettlement(2, new VertexLocation(new HexLocation(-1, -1), VertexDirection.NorthEast), false);
+        BuildSettlement pete = new BuildSettlement(2, new VertexLocationDTO(-1, -1, VertexDirection.NorthEast), false);
         assertFalse("A player can not build a settlement if it is not their turn", modelFacade.CanBuildSettlement(pete));
 
         //Test 1
-        BuildSettlement sam = new BuildSettlement(0, new VertexLocation(new HexLocation(-2, 3), VertexDirection.East), true);
+        BuildSettlement sam = new BuildSettlement(0, new VertexLocationDTO(-2, 3, VertexDirection.East), true);
         assertTrue("A player can build a settlement if the settlement is free and location available",
                 modelFacade.CanBuildSettlement(sam));
 
         //Test 2
         model.getUserManager().setCurrentUser(2);
-        pete = new BuildSettlement(2, new VertexLocation(new HexLocation(-1, -1), VertexDirection.East), true);
+        pete = new BuildSettlement(2, new VertexLocationDTO(-1, -1, VertexDirection.East), true);
         assertFalse("A player can not build a settlement if the settlement is free, but the location is not available",
                 modelFacade.CanBuildSettlement(pete));
 
         //Test 3
-        pete = new BuildSettlement(2, new VertexLocation(new HexLocation(-1, -1), VertexDirection.NorthEast), false);
+        pete = new BuildSettlement(2, new VertexLocationDTO(-1, -1, VertexDirection.NorthEast), false);
         assertTrue("A player can build a settlement if they have the resources, and the location is available",
                 modelFacade.CanBuildSettlement(pete));
 
         //Test 4
         model.getUserManager().setCurrentUser(0);
-        sam = new BuildSettlement(0, new VertexLocation(new HexLocation(-2, 3), VertexDirection.East), false);
+        sam = new BuildSettlement(0, new VertexLocationDTO(-2, 3, VertexDirection.East), false);
         assertFalse("A player can not build a settlement if they have the resources, but the location is not available",
                 modelFacade.CanBuildSettlement(sam));
 
         //Test 5
         model.getUserManager().setCurrentUser(2);
-        pete = new BuildSettlement(2, new VertexLocation(new HexLocation(-1, -1), VertexDirection.East), false);
+        pete = new BuildSettlement(2, new VertexLocationDTO(-1, -1, VertexDirection.East), false);
         assertFalse("A player can not build a settlement if they do not have the resources, but the location is available",
                 modelFacade.CanBuildSettlement(pete));
 
         //Test 6
         model.getUserManager().adjustUserPieces(2, 15, 0, 4); // player index, roads, settlements, cities
-        pete = new BuildSettlement(2, new VertexLocation(new HexLocation(-1, -1), VertexDirection.East), false);
+        pete = new BuildSettlement(2, new VertexLocationDTO(-1, -1, VertexDirection.East), false);
         assertFalse("A player can not build a settlement if they have no more pieces",
                 modelFacade.CanBuildSettlement(pete));
     }
@@ -192,8 +192,8 @@ public class ModelFacadeTest {
      */
     @Test
     public void testCanBuildCity() {
-        BuildCity pete = new BuildCity(2, new VertexLocation(new HexLocation(0, 0), VertexDirection.SouthWest));
-        BuildCity brooke = new BuildCity(1, new VertexLocation(new HexLocation(0, 0), VertexDirection.SouthWest));
+        BuildCity pete = new BuildCity(2, new VertexLocationDTO(0, 0, VertexDirection.SouthWest));
+        BuildCity brooke = new BuildCity(1, new VertexLocationDTO(0, 0, VertexDirection.SouthWest));
 
         //Test 0
         model.getUserManager().setCurrentUser(0);
@@ -211,13 +211,13 @@ public class ModelFacadeTest {
 
         //Test 3
         model.getUserManager().setCurrentUser(2);
-        pete = new BuildCity(2, new VertexLocation(new HexLocation(0, 0), VertexDirection.SouthEast));
+        pete = new BuildCity(2, new VertexLocationDTO(0, 0, VertexDirection.SouthEast));
         assertFalse("A player can not build a settlement if they have the resources, but the location is not available",
                 modelFacade.CanBuildCity(pete));
 
         //Test 4
         model.getUserManager().adjustUserPieces(2, 15, 5, 0); // player index, roads, settlements, cities
-        pete = new BuildCity(2, new VertexLocation(new HexLocation(0, 0), VertexDirection.SouthWest));
+        pete = new BuildCity(2, new VertexLocationDTO(0, 0, VertexDirection.SouthWest));
         assertFalse("A player cannot build a city if they don't have the pieces",
                 modelFacade.CanBuildCity(pete));
     }
