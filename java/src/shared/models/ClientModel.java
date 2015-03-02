@@ -42,7 +42,7 @@ public class ClientModel {
 
     public ClientModel() {
         winner = -1;
-        version = 0;
+        version = -1;
         bank = null;
         board = null;
         chatObject = null;
