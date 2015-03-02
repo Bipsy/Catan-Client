@@ -94,6 +94,7 @@ public class TurnTrackerController extends Controller
 			}
 			break;
 		case "Discarding":
+			break;
 		case "FirstRound":
 			if(!isTurn) {
 				state = "Waiting for Other Players";
@@ -131,6 +132,8 @@ public class TurnTrackerController extends Controller
 			enabled = false;
 			break;
 		}
+        
+//        enabled = true;
         getView().updateGameState(state, enabled);
     }
 

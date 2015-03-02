@@ -39,7 +39,6 @@ public class ChatController extends Controller
     public void sendMessage(String message) {
     	ClientModelDTO model = null;
     	try {
-			System.out.println("sendMessage");
     		SendChat chat = new SendChat(localIndex, message);
 			Populator.getInstance().populateModel(proxy.sendChat(chat), proxy.getLocalPlayerName());
 		} catch (IOException | NoCookieException e) {
@@ -53,13 +52,10 @@ public class ChatController extends Controller
         
     	if (facade != null) {
     		if (facade.getLocalPlayerIndex() != null) {
-    			System.out.println("getLocalPlayer != null");
 	        	localIndex = facade.getLocalPlayerIndex();
     		}
 	        for (int i=0; i<facade.getChatObject().size(); i++) {
-    			System.out.println("for loop");
 	        	String name = facade.getChatObject().get(i).getSource();
-	        	System.out.println("color: " + facade.GetPlayerColor(name));
 	        	entries.add(new LogEntry(facade.GetPlayerColor(name), facade.getChatObject().get(i).getMessage()));
 	        }
     	}
@@ -73,7 +69,6 @@ public class ChatController extends Controller
             ModelFacade facade = (ModelFacade) arg;
             initFromModel(facade);
     		if (facade.getLocalPlayerIndex() != null) {
-    			System.out.println("getLocalPlayer != null");
 	        	localIndex = facade.getLocalPlayerIndex();
     		}
         }

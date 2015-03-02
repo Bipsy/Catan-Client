@@ -125,11 +125,11 @@ public class MapController extends Controller
     }
 
     public void placeRoad(EdgeLocation edgeLoc) {
-		state.placeRoad(edgeLoc);
+	state.placeRoad(edgeLoc);
     }
 
     public void placeSettlement(VertexLocation vertLoc) {
-		state.placeSettlement(vertLoc);
+	state.placeSettlement(vertLoc);
     }
 
     public void placeCity(VertexLocation vertLoc) {

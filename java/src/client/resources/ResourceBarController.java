@@ -76,7 +76,6 @@ public class ResourceBarController extends Controller
 
     @Override
     public void update(Observable o, Object arg) {
-//    	System.out.println("observing from resource bar");
     	
         if (o instanceof Populator && arg instanceof ModelFacade) {
         	ModelFacade model = (ModelFacade) arg;
