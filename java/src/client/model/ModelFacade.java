@@ -2,6 +2,7 @@ package client.model;
 
 import java.util.List;
 
+import shared.locations.HexLocation;
 import shared.models.ClientModel;
 import shared.models.Harbor;
 import shared.models.Hex;
@@ -16,6 +17,7 @@ import shared.models.DTO.params.*;
 import shared.definitions.*;
 import shared.exceptions.InvalidPlayerIndex;
 import client.storage.Data;
+import client.network.ServerProxy;
 
 public class ModelFacade {
 
@@ -284,7 +286,7 @@ public class ModelFacade {
         PlayerHand cards = player.getResources();
         return cards.getResourceCount(type);
     }
-    
+
     public PlayerHand getResources(int playerIndex) {
         Player currentPlayer = models.getPlayer(playerIndex);
         PlayerHand hand = currentPlayer.getResources();
@@ -306,5 +308,78 @@ public class ModelFacade {
     public int soldierCount(int playerIndex) {
         Player player = models.getPlayer(playerIndex);
         return player.getSoldiers();
+    }
+
+    public int getObjectCount(int playerIndex, String objectType) throws Exception {
+        switch (objectType) {
+            case "Road":
+                return (15 - models.getUserManager().getPlayer(playerIndex).getRoads());
+            case "Settlement":
+                return (5 - models.getUserManager().getPlayer(playerIndex).getSettlements());
+            case "City":
+                return (4 - models.getUserManager().getPlayer(playerIndex).getCities());
+        }
+        throw new Exception("invalid object type");
+    }
+
+    public int[] getPlayersAtHex(Hex hex) {
+        //TODO:
+        return null;
+
+    }
+
+    public boolean canPlaySoldier(int playerIndex) {
+        Player player = models.getPlayer(playerIndex);
+
+        return player.canPlaySoldier();
+    }
+
+    public boolean canUseYearOfPlenty(int playerIndex) {
+        Player player = models.getPlayer(playerIndex);
+
+        return player.canUseYearOfPlenty();
+    }
+
+    public boolean canPlayMonopoly(int playerIndex) {
+        Player player = models.getPlayer(playerIndex);
+
+        return player.canPlayMonopoly();
+    }
+
+    public boolean canPlayMonument(int playerIndex) {
+        Player player = models.getPlayer(playerIndex);
+
+        return player.canPlayMonument();
+    }
+
+    public boolean canUseRoadBuilding(int playerIndex) {
+        Player player = models.getPlayer(playerIndex);
+
+        return player.canUseRoadBuilding();
+    }
+
+    public int getSoldierCount(int playerIndex) {
+        Player player = models.getPlayer(playerIndex);
+        return player.getSoldierCount();
+    }
+
+    public int getMonumentCount(int playerIndex) {
+        Player player = models.getPlayer(playerIndex);
+        return player.getMonumentCount();
+    }
+
+    public int getMonopolyCount(int playerIndex) {
+        Player player = models.getPlayer(playerIndex);
+        return player.getMonopolyCount();
+    }
+
+    public int getRoadBuildCount(int playerIndex) {
+        Player player = models.getPlayer(playerIndex);
+        return player.getRoadBuildCount();
+    }
+
+    public int getYearOfPlentyCount(int playerIndex) {
+        Player player = models.getPlayer(playerIndex);
+        return player.getYearOfPlentyCount();
     }
 }

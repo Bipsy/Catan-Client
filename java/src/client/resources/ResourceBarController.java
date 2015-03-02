@@ -101,6 +101,7 @@ public class ResourceBarController extends Controller
             this.getView().setElementAmount(ResourceBarElement.SHEEP, sheepAmount);
             this.getView().setElementAmount(ResourceBarElement.WHEAT, wheatAmount);
             this.getView().setElementAmount(ResourceBarElement.ORE, oreAmount);
+
 			this.getView().setElementEnabled(ResourceBarElement.ROAD, canBuildRoad);
 			this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, canBuildSettlement);
 			this.getView().setElementEnabled(ResourceBarElement.CITY, canBuildCity);

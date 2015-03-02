@@ -5,7 +5,7 @@ import shared.locations.VertexLocation;
 public class BuildSettlement extends MoveParams {
 
     private static final String BUILD_SETTLEMENT = "buildSettlement";
-    private VertexLocation vertexLocation;
+    private VertexLocationDTO vertexLocation;
     private boolean free;
 
     public BuildSettlement() {
@@ -14,7 +14,7 @@ public class BuildSettlement extends MoveParams {
         free = false;
     }
 
-    public BuildSettlement(int playerIndex, VertexLocation vertexLocation,
+    public BuildSettlement(int playerIndex, VertexLocationDTO vertexLocation,
             boolean free) {
         super(BUILD_SETTLEMENT, playerIndex);
         this.vertexLocation = vertexLocation;
@@ -29,11 +29,11 @@ public class BuildSettlement extends MoveParams {
         this.free = free;
     }
 
-    public VertexLocation getVertexLocation() {
+    public VertexLocationDTO getVertexLocation() {
         return vertexLocation;
     }
 
-    public void setVertexLocation(VertexLocation vertexLocation) {
+    public void setVertexLocation(VertexLocationDTO vertexLocation) {
         this.vertexLocation = vertexLocation;
     }
 }
