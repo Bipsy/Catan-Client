@@ -56,14 +56,13 @@ public class TurnTrackerController extends Controller
     	
     	if(color != null)
     		getView().setLocalPlayerColor(color);
-        boolean currentTurn = false;
+        int currentTurn = -1;
         
         for (int i = 0; i < 4; i++) {
-			Player player;
 			try {
-				player = facade.getPlayer(i);
-				if(!currentTurn)
-					currentTurn = username.equals(player.getUsername()) && facade.isCurrentTurn(i);
+				Player player = facade.getPlayer(i);
+				if(facade.isCurrentTurn(i))
+					currentTurn = i;
 				getView().initializePlayer(i, player.getUsername(), player.getColor());
 				getView().updatePlayer(i, player.getVictoryPoints(), facade.isCurrentTurn(i), 
 						facade.getLargestArmy() == i, facade.getlongestRoad() == i);
@@ -72,14 +71,66 @@ public class TurnTrackerController extends Controller
 				e.printStackTrace();
 			}
 		}
-        String state = facade.getState();
-        if(!currentTurn) {
-        	state = "Waiting for Other Players";
-        }
         
-        boolean enable = currentTurn && (state.equals("Playing") || 
-        			state.equals("FirstRound") || state.equals("SecondRound"));
-        getView().updateGameState((state.equals("Playing")?"Finish Turn":state), enable);
+        String state = facade.getState();
+        boolean enabled = false;
+		Player player = null;
+		boolean isTurn = false;
+		try {
+			player = facade.getPlayer(currentTurn);
+			isTurn = facade.isCurrentTurn(currentTurn);
+		} catch (InvalidPlayerIndex e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+        
+        switch (state) {
+		case "Rolling":
+		case "Robbing":
+			if(!isTurn) {
+				state = "Waiting for Other Players";
+			}
+			break;
+		case "Discarding":
+		case "FirstRound":
+			if(!isTurn) {
+				state = "Waiting for Other Players";
+			}
+			else {
+				if(player != null && player.getRoads() == 14 && player.getSettlements() == 4) {
+					state = "Finish Turn";
+					enabled = true;
+				}
+			}
+			break;
+		case "SecondRound":
+			if(!isTurn) {
+				state = "Waiting for Other Players";
+			}
+			else {
+				if(player != null && player.getRoads() == 13 && player.getSettlements() == 3) {
+					state = "Finish Turn";
+					enabled = true;
+				}
+			}
+			break;
+		case "Playing":
+			if(!isTurn) {
+				state = "Waiting for Other Players";
+			}
+			else {
+				state = "Finish Turn";
+				enabled = true;
+			}
+			break;
+
+		default:
+			state = "Waiting for Other Players";
+			enabled = false;
+			break;
+		}
+        getView().updateGameState(state, enabled);
     }
 
     @Override
