@@ -51,7 +51,7 @@ public class Board {
         return robber.isNewLocation(hex);
     }
 
-    public boolean canBuildRoad(BuildRoad buildRoad) {
+    public boolean canBuildRoad(BuildRoad buildRoad, String state) {
         EdgeLocation road = buildRoad.getRoadLocation().getEdgeLocation();
         if (roadMap.containsKey(road.getNormalizedLocation())) {
             return false;
