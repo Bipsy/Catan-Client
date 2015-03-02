@@ -88,15 +88,15 @@ public class RollController extends Controller implements IRollController, Obser
 
 		getRollView().setMessage(String.format(MESSAGE, countDown));
 		getRollView().showModal();
-		rollingTimer = new Timer(1000, timerListener);
-		rollingTimer.setInitialDelay(1000);
-		rollingTimer.setRepeats(true);
-		rollingTimer.start();
+//		rollingTimer = new Timer(1000, timerListener);
+//		rollingTimer.setInitialDelay(1000);
+//		rollingTimer.setRepeats(true);
+//		rollingTimer.start();
     }
 
     @Override
     public void rollDice() {
-    	rollingTimer.stop();
+//    	rollingTimer.stop();
 		countDown = 3;
     	int rollValue = rollDice(6,2);
 		getResultView().setRollValue(rollValue);

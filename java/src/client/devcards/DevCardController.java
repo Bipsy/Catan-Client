@@ -73,7 +73,6 @@ public class DevCardController extends Controller
     	
     	try {
 			Populator.getInstance().populateModel(proxy.buyDevCard(buyDevCard), proxy.getLocalPlayerName());
-			System.out.println("hi");
 		} catch (IOException | NoCookieException e) {
 
 			e.printStackTrace();
@@ -135,7 +134,6 @@ public class DevCardController extends Controller
     	
     	try {
 			proxy.playMonument(monument);
-			System.out.println("played monument");
 		} catch (IOException e) {
 
 			e.printStackTrace();
