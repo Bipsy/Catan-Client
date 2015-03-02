@@ -132,6 +132,7 @@ public class TurnTrackerController extends Controller
 		default:
 			state = "Waiting for Other Players";
 			enabled = false;
+			System.out.println("Default state called");
 			break;
 		}
         

@@ -40,6 +40,7 @@ public class RollController extends Controller implements IRollController, Obser
         		if(countDown == 0) {
         			System.out.println("Roll from timer");
 	        		rollDice();
+	        		System.out.println("Finished Timer");
         		}
         	}
         }    
@@ -98,29 +99,22 @@ public class RollController extends Controller implements IRollController, Obser
 
     @Override
     public void rollDice() {
-    	System.out.println("rolling dice");
-    	getRollView().closeModal();
-    	System.out.println("close modal");
     	rollingTimer.stop();
-    	System.out.println("stop timer");
 		countDown = 3;
-    	System.out.println("reinit count");
     	int rollValue = rollDice(6,2);
     	do {
     		rollValue = rollDice(6,2);
     	} while (rollValue == 7);
-    	System.out.println("roll dice");
-		getResultView().setRollValue(rollValue);
-    	System.out.println("set roll value");
-		getResultView().showModal();
-    	System.out.println("show value");
 		RollNumber request = new RollNumber(facade.getLocalPlayerIndex(), rollValue);
-    	System.out.println("create request");
+		getRollView().closeModal();
 		try {
 			Populator.getInstance().populateModel(proxy.rollNumber(request), proxy.getLocalPlayerName());
-	    	System.out.println("sent to server");
 		} catch (IOException | NoCookieException e) {
 			System.err.println(e.toString());
+		}
+		finally {
+			getResultView().setRollValue(rollValue);
+			getResultView().showModal();			
 		}
     }
 

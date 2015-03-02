@@ -52,6 +52,7 @@ public class ServerPoller implements ActionListener {
      * poll() returns an empty string.
      */
     public ClientModelDTO poll() {
+    	System.out.println("Polling");
         if (serverProxy == null) {
             return null;
         }
