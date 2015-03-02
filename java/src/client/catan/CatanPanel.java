@@ -58,7 +58,7 @@ public class CatanPanel extends JPanel {
         rollResultView.setController(rollController);
 
         JButton testButton = new JButton("Test");
-        testButton.addActionListener(new ActionListener() {
+//        testButton.addActionListener(new ActionListener() {
 
 //			 @Override
 //			 public void actionPerformed(ActionEvent e) {
@@ -79,39 +79,38 @@ public class CatanPanel extends JPanel {
 //			 midPanel.getMapController().startMove(PieceType.ROBBER,
 //			 false, false);
 //			 }
-            int state = 0;
+//            int state = 0;
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
 //				rollView.showModal();
 
-                discardView.setResourceMaxAmount(ResourceType.WOOD, 0);
-                discardView.setResourceMaxAmount(ResourceType.BRICK, 0);
-                discardView.setResourceMaxAmount(ResourceType.SHEEP, 0);
-                discardView.setResourceMaxAmount(ResourceType.WHEAT, 0);
-                discardView.setResourceMaxAmount(ResourceType.ORE, 0);
-
-                discardView.setResourceAmountChangeEnabled(ResourceType.WOOD, false, false);
-                discardView.setResourceAmountChangeEnabled(ResourceType.SHEEP, false, false);
-                discardView.setResourceAmountChangeEnabled(ResourceType.WHEAT, false, false);
-                discardView.setResourceAmountChangeEnabled(ResourceType.BRICK, false, false);
-                discardView.setResourceAmountChangeEnabled(ResourceType.ORE, false, false);
-
-
-                discardView.setStateMessage("0/6");
-
-                discardView.setDiscardButtonEnabled(true);
-
-                if (state == 0) {
-                    discardView.showModal();
-                    state = 1;
-                } else if (state == 1) {
-                    discardWaitView.showModal();
-                    state = 2;
-                }
-            }
-        });
-        this.add(testButton, BorderLayout.SOUTH);
+//                discardView.setResourceMaxAmount(ResourceType.WOOD, 0);
+//                discardView.setResourceMaxAmount(ResourceType.BRICK, 0);
+//                discardView.setResourceMaxAmount(ResourceType.SHEEP, 0);
+//                discardView.setResourceMaxAmount(ResourceType.WHEAT, 0);
+//                discardView.setResourceMaxAmount(ResourceType.ORE, 0);
+//
+//                discardView.setResourceAmountChangeEnabled(ResourceType.WOOD, false, false);
+//                discardView.setResourceAmountChangeEnabled(ResourceType.SHEEP, false, false);
+//                discardView.setResourceAmountChangeEnabled(ResourceType.WHEAT, false, false);
+//                discardView.setResourceAmountChangeEnabled(ResourceType.BRICK, false, false);
+//                discardView.setResourceAmountChangeEnabled(ResourceType.ORE, false, false);
+//
+//
+//                discardView.setStateMessage("0/6");
+//
+//
+//                if (state == 0) {
+//                    discardView.showModal();
+//                    state = 1;
+//                } else if (state == 1) {
+//                    discardWaitView.showModal();
+//                    state = 2;
+//                }
+//            }
+//        });
+//        this.add(testButton, BorderLayout.SOUTH);
     }
 
 }
