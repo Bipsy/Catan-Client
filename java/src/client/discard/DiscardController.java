@@ -244,10 +244,11 @@ public class DiscardController extends Controller
     public void update(Observable o, Object arg) {
         if (o instanceof Populator && arg instanceof ModelFacade) {
             ModelFacade facade = (ModelFacade) arg;
-            PlayerHand hand = facade.getResources(facade.getCurrentPlayerIndex());
-            updateHand(hand);
-            if (facade.getState().equals("DISCARDING") &&
-                    hand.getNumResourceCards() > 7) {
+            PlayerHand playerHand = facade.getResources(facade.getCurrentPlayerIndex());
+            updateHand(playerHand);
+            System.out.println(facade.getState());
+            if (facade.getState().equals("Discarding") &&
+                    playerHand.getNumResourceCards() > 7) {
                 if (!discarding) {
                     discarding = true;
                     updateView();
