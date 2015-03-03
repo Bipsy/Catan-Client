@@ -252,6 +252,7 @@ public class ServerProxy implements iServerProxy {
 
     @Override
     public ClientModelDTO offerTrade(OfferTrade tradeOffer) throws IOException {
+    	System.out.println("I GET HERE");
         String params = serializer.serialize(tradeOffer);
         Pair<String, Integer> result = doPost("/moves/offerTrade", params, false);
         return serializer.deserializeModel(result.getValue0());
