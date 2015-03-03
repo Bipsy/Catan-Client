@@ -36,8 +36,8 @@ public class Board {
     private Map<VertexLocation, VertexObject> communityMap;
 
     public Board() {
-        roadMap = new HashMap<EdgeLocation, Road>();
-        communityMap = new HashMap<VertexLocation, VertexObject>();
+        roadMap = new HashMap<>();
+        communityMap = new HashMap<>();
 
     }
 
@@ -123,6 +123,14 @@ public class Board {
     public List<Harbor> getHarbor() {
         return harbors;
     }
+    
+    public List<Harbor> getOwnedHarbors(int playerIndex) {
+        if (harbors != null) {
+            for (Harbor harbor : harbors) {
+                List<VertexLocation> adjacentLocations
+            }
+        }
+    }
 
     public void setHarbor(List<Harbor> harbor) {
         this.harbors = harbor;
@@ -134,7 +142,7 @@ public class Board {
     
     
     public void setRoads(EdgeValueDTO[] roadArray) {
-    	List<Road> temp = new ArrayList<Road>();
+    	List<Road> temp = new ArrayList<>();
     	for (int i = 0; i < roadArray.length; i++) {
     		temp.add(new Road(roadArray[i]));        		
     	}
@@ -187,7 +195,7 @@ public class Board {
     }
 
     public void setHexes(HexDTO[] hexArray) {
-        List<Hex> temp = new ArrayList<Hex>();
+        List<Hex> temp = new ArrayList<>();
         for (int i = 0; i < hexArray.length; i++) {
             temp.add(new Hex(hexArray[i]));
         }
@@ -195,7 +203,7 @@ public class Board {
     }
 
     public void setHarbor(PortDTO[] ports) {
-        List<Harbor> temp = new ArrayList<Harbor>();
+        List<Harbor> temp = new ArrayList<>();
         for (int i = 0; i < ports.length; i++) {
             temp.add(new Harbor(ports[i]));
         }
@@ -203,7 +211,7 @@ public class Board {
     }
 
     public void setSettlements(VertexObjectDTO[] settlementArray) {
-        List<VertexObject> temp = new ArrayList<VertexObject>();
+        List<VertexObject> temp = new ArrayList<>();
         for (int i = 0; i < settlementArray.length; i++) {
             temp.add(new VertexObject(settlementArray[i], PieceType.SETTLEMENT));
         }
@@ -212,7 +220,7 @@ public class Board {
     }
 
     public void setCities(VertexObjectDTO[] cityArray) {
-        List<VertexObject> temp = new ArrayList<VertexObject>();
+        List<VertexObject> temp = new ArrayList<>();
         for (int i = 0; i < cityArray.length; i++) {
             temp.add(new VertexObject(cityArray[i], PieceType.CITY));
         }

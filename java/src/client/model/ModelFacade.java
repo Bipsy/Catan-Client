@@ -2,7 +2,6 @@ package client.model;
 
 import java.util.List;
 
-import shared.locations.HexLocation;
 import shared.models.ClientModel;
 import shared.models.Harbor;
 import shared.models.Hex;
@@ -17,7 +16,7 @@ import shared.models.DTO.params.*;
 import shared.definitions.*;
 import shared.exceptions.InvalidPlayerIndex;
 import client.storage.Data;
-import client.network.ServerProxy;
+import java.util.ArrayList;
 
 public class ModelFacade {
 
@@ -107,6 +106,11 @@ public class ModelFacade {
 
     public boolean hasModel() {
         return (models != null);
+    }
+    
+    public List<Harbor> getOwnedHarbors(int playerIndex) {
+        if (models == null) return new ArrayList<>();
+        return models.getBoard().getOwnedHarbors(playerIndex);
     }
 
     //map data getters
