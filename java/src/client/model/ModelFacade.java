@@ -378,7 +378,6 @@ public class ModelFacade {
     	Set <RobPlayerInfo> victims = new HashSet<RobPlayerInfo>();
     	Hex targetHex = null;
     	for (Hex hex: models.getBoard().getHexes()) {
-    		//get normalized location??
     		if (hex.getLocation().getX() == hexLoc.getX() && hex.getLocation().getY() == hexLoc.getY()) {
     			targetHex = hex;
     			break;
@@ -393,7 +392,7 @@ public class ModelFacade {
         		victim.setId(player.getID());
         		victim.setName(player.getUsername());
         		victim.setPlayerIndex(player.getIndex());
-        		victim.setNumCards(player.getNewDevCards().getNumDevCards());
+        		victim.setNumCards(player.getResources().getNumResourceCards());
         		victims.add(victim);
         	}
         }

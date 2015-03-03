@@ -153,7 +153,8 @@ public class MapController extends Controller
     public void placeRobber(HexLocation hexLoc) {
 
     	getView().placeRobber(hexLoc);
-        //getRobView().setPlayers(facade.getVictims(hexLoc, facade.getLocalPlayerIndex()));
+    	state.setNewRobberLocation(hexLoc);
+        getRobView().setPlayers(facade.getVictims(hexLoc, facade.getLocalPlayerIndex()));
         getRobView().showModal();
     }
 
