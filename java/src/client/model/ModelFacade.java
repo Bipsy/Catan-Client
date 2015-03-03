@@ -404,7 +404,8 @@ public class ModelFacade {
         		victim.setName(player.getUsername());
         		victim.setPlayerIndex(player.getIndex());
         		victim.setNumCards(player.getResources().getNumResourceCards());
-        		victims.add(victim);
+        		if (victim.getNumCards() != 0)
+        			victims.add(victim);
         	}
         }
         return victims.toArray(new RobPlayerInfo[0]);

@@ -218,5 +218,23 @@ public static class Setup2 extends Setup1 {
 	
 		
 	}
+	
+	public static class PlayingSoldierCard extends MoveRobber {
+		
+		private HexLocation newRobberLocation;
+
+		public void setNewRobberLocation(HexLocation newRobberLocation) {
+			this.newRobberLocation = newRobberLocation;
+		}
+		
+		void robPlayer(RobPlayerInfo victim) {
+			Soldier soldier = new Soldier(facade.getLocalPlayerIndex(), victim.getPlayerIndex(), newRobberLocation);
+			try {
+				Populator.getInstance().populateModel(proxy.playSoldier(soldier), proxy.getLocalPlayerName());
+			} catch (IOException | NoCookieException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 }

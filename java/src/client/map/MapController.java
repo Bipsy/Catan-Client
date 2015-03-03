@@ -222,6 +222,9 @@ public class MapController extends Controller
     		case "PlayingBuildRoadCard":
     			state = new MapState.PlayingBuildRoadCard();
     			break;
+    		case "PlayingSoldierCard":
+    			state = new MapState.PlayingSoldierCard();
+    			break;
 			default:
 				break;				
     	}
