@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import shared.definitions.PieceType;
+import shared.definitions.PortType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -147,12 +148,25 @@ public class Board {
         return harbors;
     }
     
-    public List<Harbor> getOwnedHarbors(int playerIndex) {
+    public Map<PortType, Harbor> getOwnedHarbors(int playerIndex) {
+        Map<PortType, Harbor> ownedHarbors = new HashMap<>();
         if (harbors != null) {
             for (Harbor harbor : harbors) {
-                List<VertexLocation> adjacentLocations
+                EdgeLocation harborEdge = harbor.getLocation();
+                VertexLocation[] adjacentVertices = 
+                        harborEdge.getAdjacentVertices();
+                for (VertexLocation vertex : adjacentVertices) {
+                    if (communityMap.containsKey(vertex.getNormalizedLocation())) {
+                        VertexObject community = 
+                                communityMap.get(vertex.getNormalizedLocation());
+                        if (community.getOwner() == playerIndex) {
+                            ownedHarbors.put(harbor.getResource(), harbor);
+                        }
+                    }
+                }
             }
         }
+        return ownedHarbors;
     }
 
     public void setHarbor(List<Harbor> harbor) {
