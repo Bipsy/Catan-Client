@@ -153,7 +153,7 @@ public class DiscardController extends Controller
             Populator populator = Populator.getInstance();
             ModelFacade facade = new ModelFacade();           
             ResourceListDTO bundle = makeDiscardSet();
-            int playerIndex = facade.getCurrentPlayerIndex();
+            int playerIndex = facade.getLocalPlayerIndex();
             DiscardCards discardingSet = new DiscardCards(playerIndex, bundle);
                         clearDiscarding();
             discardProcess = false;
@@ -239,9 +239,9 @@ public class DiscardController extends Controller
                 Map<ResourceType, Integer> playerHand = 
                         facade.getResources(localIndex);
                 hand = playerHand;
-                System.out.println(localIndex);
-                System.out.println(facade.getState());
-                System.out.println(localPlayer.getDiscarded());
+                for (Map.Entry<ResourceType, Integer> entry : hand.entrySet()) {
+                    System.out.println(entry.getKey() + ": " + entry.getValue());
+                }
                 if (facade.getState().equals("Discarding") 
                         && this.getTotalHand() > 7
                         && !localPlayer.getDiscarded()) {
