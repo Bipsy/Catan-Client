@@ -3,6 +3,7 @@ package client.resources;
 import java.util.*;
 
 import shared.definitions.ResourceType;
+import shared.exceptions.InvalidPlayerIndex;
 import client.base.*;
 import client.model.ModelFacade;
 import client.model.Populator;
@@ -76,16 +77,17 @@ public class ResourceBarController extends Controller
 
     @Override
     public void update(Observable o, Object arg) {
-//    	System.out.println("observing from resource bar");
     	
         if (o instanceof Populator && arg instanceof ModelFacade) {
         	ModelFacade model = (ModelFacade) arg;
         	int playerIndex = model.getCurrentPlayerIndex();
 
-            boolean canBuildRoad = model.canBuildRoad(playerIndex);
-            boolean canBuildSettlement = model.canBuildSettlement(playerIndex);
-            boolean canBuildCity = model.canBuildCity(playerIndex);
-            boolean canBuyCard = model.canBuyDevCard(playerIndex);
+            boolean canBuildRoad = model.canBuildRoad(playerIndex) && model.getState().equals("Playing");
+            boolean canBuildSettlement = model.canBuildSettlement(playerIndex) && model.getState().equals("Playing");
+            boolean canBuildCity = model.canBuildCity(playerIndex) && model.getState().equals("Playing");
+            boolean canBuyCard = model.canBuyDevCard(playerIndex) && model.getState().equals("Playing");
+            boolean canPlayDevCard = model.canPlayDevCard(playerIndex) && model.getState().equals("Playing");
+            
             
 
 
@@ -94,6 +96,15 @@ public class ResourceBarController extends Controller
             int sheepAmount = model.getResourceCount(playerIndex, ResourceType.SHEEP);
             int wheatAmount = model.getResourceCount(playerIndex, ResourceType.WHEAT);
             int oreAmount = model.getResourceCount(playerIndex, ResourceType.ORE);
+            int roadAmount = 0, settlementAmount = 0, cityAmount = 0;
+			try {
+				roadAmount = model.getPlayer(playerIndex).getRoads();
+				settlementAmount = model.getPlayer(playerIndex).getSettlements();
+				cityAmount = model.getPlayer(playerIndex).getCities();
+			} catch (InvalidPlayerIndex e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
             int soliderCount = model.soldierCount(playerIndex);
             
             this.getView().setElementAmount(ResourceBarElement.WOOD, woodAmount);
@@ -106,6 +117,11 @@ public class ResourceBarController extends Controller
 			this.getView().setElementEnabled(ResourceBarElement.SETTLEMENT, canBuildSettlement);
 			this.getView().setElementEnabled(ResourceBarElement.CITY, canBuildCity);
 			this.getView().setElementEnabled(ResourceBarElement.BUY_CARD, canBuyCard);
+			this.getView().setElementEnabled(ResourceBarElement.PLAY_CARD, canBuyCard);
+			
+			this.getView().setElementAmount(ResourceBarElement.ROAD, roadAmount);
+			this.getView().setElementAmount(ResourceBarElement.SETTLEMENT, settlementAmount);
+			this.getView().setElementAmount(ResourceBarElement.CITY, cityAmount);
 			this.getView().setElementAmount(ResourceBarElement.SOLDIERS, soliderCount);
         }
     }

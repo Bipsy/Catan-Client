@@ -1,6 +1,5 @@
 package shared.models.DTO.params;
 
-import shared.locations.VertexLocation;
 
 public class BuildCity extends MoveParams {
 

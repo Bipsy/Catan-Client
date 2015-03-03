@@ -42,6 +42,10 @@ public class UserManager {
                 && !isCurrentPlayer(offerTrade.getReceiver())
                 && users.get(offerTrade.getPlayerIndex()).CanOfferTrade(offerTrade);
     }
+    
+//    public List<Player> getAllUser() {
+//    	return users;
+//    }
 
     public boolean isCurrentPlayer(int playerIndex) {
         return turnTracker.matchesCurrent(playerIndex);

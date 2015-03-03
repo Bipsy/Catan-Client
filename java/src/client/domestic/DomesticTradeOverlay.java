@@ -48,6 +48,7 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
         this.buildView();
     }
 
+    
     private void buildView() {
         this.resourceSelectionPanels = new ArrayList<JPanel>();
         this.resourceCounts = new HashMap<ResourceType, JLabel>();
@@ -130,7 +131,7 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
     private JPanel setupUsersList() {
         this.playerButtons = new ArrayList<JToggleButton>();
         this.toggleButtonGroup = new ButtonGroup();
-
+        
         JToggleButton noneToggle = new JToggleButton("None");
         noneToggle.setSelected(true);
         noneToggle.addActionListener(new ActionListener() {
@@ -302,7 +303,6 @@ public class DomesticTradeOverlay extends OverlayView implements IDomesticTradeO
         } catch (IOException e) {
             throw new RuntimeException("error possibly with image path, error: " + e.getLocalizedMessage());
         }
-
         return upDownButtonsPanel;
     }
 

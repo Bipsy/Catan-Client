@@ -189,7 +189,7 @@ public class ClientModel {
      */
     public boolean CanBuildRoad(BuildRoad buildRoad) {
         return (buildRoad.isFree() || userManager.CanBuildRoad(buildRoad))
-                && board.canBuildRoad(buildRoad);
+                && board.canBuildRoad(buildRoad, getStatus());
     }
     
     public boolean hasResourcesForRoad(int playerIndex) {

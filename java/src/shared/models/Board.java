@@ -32,6 +32,7 @@ public class Board {
     private int radius;
     private Robber robber;
 
+    private Map<HexLocation, Hex> hexMap;
     private Map<EdgeLocation, Road> roadMap;
     private Map<VertexLocation, VertexObject> communityMap;
 
@@ -48,27 +49,49 @@ public class Board {
      * @return true if robber can be moved. false if not
      */
     public boolean canPlaceRobber(HexLocation hex) {
-        return robber.isNewLocation(hex);
+        return robber.isNewLocation(hex) && hexMap.containsKey(hex);
     }
 
-    public boolean canBuildRoad(BuildRoad buildRoad) {
+    public boolean canBuildRoad(BuildRoad buildRoad, String state) {
         EdgeLocation road = buildRoad.getRoadLocation().getEdgeLocation();
         if (roadMap.containsKey(road.getNormalizedLocation())) {
             return false;
-        } else {
-            if (!buildRoad.isFree()) {
-                EdgeLocation[] adjRoads = road.getAdjacentEdges();
-                for (int i = 0; i < adjRoads.length; i++) {
-                    if (roadMap.containsKey(adjRoads[i].getNormalizedLocation())
-                            && roadMap.get(adjRoads[i].getNormalizedLocation()).getOwner()
-                            == buildRoad.getPlayerIndex()) {
-                        return true;
-                    }
-                }
-                return false;
-            }
+        } 
+        else if (!hexMap.containsKey(road.getHexLoc()) && !hexMap.containsKey(road.getHexLoc().getNeighborLoc(road.getDir()))) {
+        	return false;
         }
-        return true;
+        else if (state.contains("Round")) {
+        	VertexLocation[] adjVertex = road.getAdjacentVertices();
+        	System.out.println(adjVertex == null);
+        	boolean result = false;
+        	for (VertexLocation vertexLocation : adjVertex) {
+        		if(communityMap.containsKey(vertexLocation.getNormalizedLocation()))
+        				return false;
+        		boolean buildable = true;
+				VertexLocation[]adjVertecies = vertexLocation.getAdjacentVertexes();
+				for (VertexLocation vertexLocation2 : adjVertecies) {
+					if(communityMap.containsKey(vertexLocation2.getNormalizedLocation())) {
+						buildable = false;
+						break;
+					}
+				}
+				if(buildable) {
+					result = true;
+					break;
+				}
+			}
+        	return result;
+        }else {
+            EdgeLocation[] adjRoads = road.getAdjacentEdges();
+            for (int i = 0; i < adjRoads.length; i++) {
+                if (roadMap.containsKey(adjRoads[i].getNormalizedLocation())
+                        && roadMap.get(adjRoads[i].getNormalizedLocation()).getOwner()
+                        == buildRoad.getPlayerIndex()) {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
     public boolean canBuildSettlement(BuildSettlement buildSettlement) {
@@ -188,8 +211,15 @@ public class Board {
 
     public void setHexes(HexDTO[] hexArray) {
         List<Hex> temp = new ArrayList<Hex>();
+        hexMap = new HashMap<HexLocation, Hex>();
+//        for (Hex hex : hexes) {
+//			hexMap.put(hex.getLocation(), hex);
+//		}
         for (int i = 0; i < hexArray.length; i++) {
-            temp.add(new Hex(hexArray[i]));
+        	Hex hex = new Hex(hexArray[i]);
+
+            temp.add(hex);
+            hexMap.put(hex.getLocation(), hex);
         }
         this.hexes = temp;
     }

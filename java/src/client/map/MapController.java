@@ -132,16 +132,18 @@ public class MapController extends Controller
     }
 
     public void placeRoad(EdgeLocation edgeLoc) {
+
 		state.placeRoad(edgeLoc);
 		if (this.roadBuildingTurn1) {
     		this.edge1 = edgeLoc;
     	} else if (this.roadBuildingTurn2) {
     		this.edge2 = edgeLoc;
     	}
+
     }
 
     public void placeSettlement(VertexLocation vertLoc) {
-		state.placeSettlement(vertLoc);
+	state.placeSettlement(vertLoc);
     }
 
     public void placeCity(VertexLocation vertLoc) {

@@ -143,4 +143,26 @@ public class EdgeLocation {
         }
         return adjEdges;
     }
+
+	public VertexLocation[] getAdjacentVertices() {
+		VertexLocation[] vertices = new VertexLocation[2];
+		switch (getNormalizedLocation().getDir()) {
+		case NorthWest:
+			vertices[0] = new VertexLocation(getNormalizedLocation().getHexLoc(), VertexDirection.West);
+			vertices[1] = new VertexLocation(getNormalizedLocation().getHexLoc(), VertexDirection.NorthWest);
+			break;
+		case North:
+			vertices[0] = new VertexLocation(getNormalizedLocation().getHexLoc(), VertexDirection.NorthEast);
+			vertices[1] = new VertexLocation(getNormalizedLocation().getHexLoc(), VertexDirection.NorthWest);
+			break;
+		case NorthEast:
+			vertices[0] = new VertexLocation(getNormalizedLocation().getHexLoc(), VertexDirection.East);
+			vertices[1] = new VertexLocation(getNormalizedLocation().getHexLoc(), VertexDirection.NorthEast);
+			break;
+
+		default:
+			break;
+		}
+		return vertices;
+	}
 }

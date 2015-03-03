@@ -19,7 +19,6 @@ public abstract class DomesticTradeState {
 	
 	public static class Playing extends DomesticTradeState {
 		void startTrade() {
-			
 		}
 		
 		void sendTradeOffer() {
