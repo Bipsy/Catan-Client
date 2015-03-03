@@ -5,6 +5,7 @@ import client.base.*;
 import client.misc.*;
 import client.model.ModelFacade;
 import client.model.Populator;
+import client.network.ServerProxy;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -148,14 +149,14 @@ public class DiscardController extends Controller
     @Override
     public void discard() {
         try {
-            Populator populator = Populator.getInstance();
+            ServerProxy proxy = ServerProxy.getInstance();
             ModelFacade facade = new ModelFacade();           
             ResourceListDTO bundle = makeDiscardSet();
             int playerIndex = facade.getLocalPlayerIndex();
             DiscardCards discardingSet = new DiscardCards(playerIndex, bundle);
                         clearDiscarding();
             discardProcess = false;
-            populator.discardCards(discardingSet);
+            proxy.discardCards(discardingSet);
             getDiscardView().setDiscardButtonEnabled(false);
             getDiscardView().closeModal();
         } catch (IOException ex) {

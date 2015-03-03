@@ -80,7 +80,7 @@ public class ResourceBarController extends Controller
     	
         if (o instanceof Populator && arg instanceof ModelFacade) {
         	ModelFacade model = (ModelFacade) arg;
-        	int playerIndex = model.getCurrentPlayerIndex();
+        	int playerIndex = model.getLocalPlayerIndex();
 
             boolean canBuildRoad = model.canBuildRoad(playerIndex) && model.getState().equals("Playing");
             boolean canBuildSettlement = model.canBuildSettlement(playerIndex) && model.getState().equals("Playing");
