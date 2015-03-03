@@ -49,7 +49,7 @@ public class Board {
      * @return true if robber can be moved. false if not
      */
     public boolean canPlaceRobber(HexLocation hex) {
-        return robber.isNewLocation(hex);
+        return robber.isNewLocation(hex) && hexMap.containsKey(hex);
     }
 
     public boolean canBuildRoad(BuildRoad buildRoad, String state) {
