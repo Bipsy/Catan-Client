@@ -1,5 +1,6 @@
 package client.model;
 
+import client.network.ServerProxy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -23,6 +24,8 @@ import shared.models.DTO.ResourceListDTO;
 import shared.models.DTO.TurnTrackerDTO;
 import shared.models.DTO.ClientModelDTO;
 import client.storage.*;
+import java.io.IOException;
+import shared.models.DTO.params.DiscardCards;
 
 /**
  *
@@ -44,6 +47,12 @@ public class Populator extends Observable implements iPopulator {
     private Populator() {
         model = Data.getCurentModelInstance();
         facade = new ModelFacade();
+    }
+    
+    public void discardCards(DiscardCards cards) throws IOException {
+        ServerProxy proxy = ServerProxy.getInstance();
+        ClientModelDTO container = proxy.discardCards(cards);
+        populateModel(container, facade.getLocalUserName());
     }
 
     @Override

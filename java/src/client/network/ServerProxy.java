@@ -106,6 +106,7 @@ public class ServerProxy implements iServerProxy {
     public Pair<String, Integer> doPost(String urlPath, String jsonString,
             boolean extractCookie) throws IOException {
         try {
+            System.out.println(jsonString);
             URL url = new URL("http://" + serverHost + ":" + serverPort + urlPath);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             String cookieValue = "catan.user=" + userCookie + "; catan.game=" + gameCookie;

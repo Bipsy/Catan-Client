@@ -26,8 +26,7 @@ public class DiscardController extends Controller
     private IWaitView waitView;
     private final Map<ResourceType, Integer> discardSet;
     private Map<ResourceType, Integer> hand;
-    private boolean discarding;
-    private boolean discarded;
+    private boolean discardProcess;
     private final String discardMessage = "%d/%d";
 
     /**
@@ -54,7 +53,7 @@ public class DiscardController extends Controller
         hand.put(ResourceType.SHEEP, 0);
         hand.put(ResourceType.WHEAT, 0);
         hand.put(ResourceType.WOOD, 0);
-        discarding = false;
+        discardProcess = false;
         getDiscardView().setDiscardButtonEnabled(false);
     }
 
@@ -151,17 +150,16 @@ public class DiscardController extends Controller
     @Override
     public void discard() {
         try {
-            ServerProxy proxy = ServerProxy.getInstance();
+            Populator populator = Populator.getInstance();
             ModelFacade facade = new ModelFacade();           
             ResourceListDTO bundle = makeDiscardSet();
             int playerIndex = facade.getCurrentPlayerIndex();
             DiscardCards discardingSet = new DiscardCards(playerIndex, bundle);
-            proxy.discardCards(discardingSet);
-            updateDiscarding();
-            discarding = false;
-            if (getDiscardView().isModalShowing()) {
-                getDiscardView().closeModal();
-            }
+                        clearDiscarding();
+            discardProcess = false;
+            populator.discardCards(discardingSet);
+            getDiscardView().setDiscardButtonEnabled(false);
+            getDiscardView().closeModal();
         } catch (IOException ex) {
             System.err.println("Error while tring to discard cards");
         }
@@ -225,7 +223,7 @@ public class DiscardController extends Controller
         }
     }
     
-    private void updateDiscarding() {
+    private void clearDiscarding() {
         for (Map.Entry<ResourceType, Integer> entry : discardSet.entrySet()) {
             discardSet.put(entry.getKey(), 0);
         }
@@ -238,20 +236,21 @@ public class DiscardController extends Controller
                 ModelFacade facade = (ModelFacade) arg;
                 int localIndex = facade.getLocalPlayerIndex();
                 Player localPlayer = facade.getPlayer(localIndex);
-                Map<ResourceType, Integer> playerHand = facade.getResources(localIndex);
+                Map<ResourceType, Integer> playerHand = 
+                        facade.getResources(localIndex);
                 hand = playerHand;
+                System.out.println(localIndex);
                 System.out.println(facade.getState());
+                System.out.println(localPlayer.getDiscarded());
                 if (facade.getState().equals("Discarding") 
                         && this.getTotalHand() > 7
-                        && localPlayer.getDiscarded() == false) {
-                            if (!discarding) {
-                                discarding = true;
-                                updateView();
-                                initArrows();
-                            }
-                            if (getDiscardView().isModalShowing() == false) {
-                                getDiscardView().showModal();
-                            }
+                        && !localPlayer.getDiscarded()) {
+                    if (!discardProcess) {
+                        discardProcess = true;
+                        updateView();
+                        initArrows();
+                    }
+                    getDiscardView().showModal();
                 }
             } catch (InvalidPlayerIndex ex) {
                System.out.println("Error while obtaining player index");

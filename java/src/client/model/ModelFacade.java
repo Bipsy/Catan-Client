@@ -340,6 +340,12 @@ public class ModelFacade {
             map.put(ResourceType.SHEEP, hand.getResourceCount(ResourceType.SHEEP));
             map.put(ResourceType.WHEAT, hand.getResourceCount(ResourceType.WHEAT));
             map.put(ResourceType.WOOD, hand.getResourceCount(ResourceType.WOOD));
+        } else {
+            map.put(ResourceType.BRICK, 0);
+            map.put(ResourceType.ORE, 0);
+            map.put(ResourceType.SHEEP, 0);
+            map.put(ResourceType.WOOD, 0);
+            map.put(ResourceType.WHEAT, 0);
         }
         return map;
     }
