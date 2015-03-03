@@ -48,6 +48,15 @@ public abstract class MapState {
 	
 	void setNewRobberLocation(HexLocation newRobberLocation) {}
 	
+	void FinishTurn() {
+		FinishTurn turn = new FinishTurn(facade.getLocalPlayerIndex());
+		try {
+			Populator.getInstance().populateModel(proxy.finishTurn(turn), proxy.getLocalPlayerName());
+		} catch (IOException | NoCookieException e) {
+			e.printStackTrace();
+		}
+	}
+	
 
 	public static class Setup1 extends MapState {
 		
@@ -120,7 +129,7 @@ public abstract class MapState {
 		}
 	}
 	
-public static class Setup2 extends Setup1 {
+	public static class Setup2 extends Setup1 {
 		
 		void showMapOverlay(IMapView view) {
 			try {
@@ -217,6 +226,24 @@ public static class Setup2 extends Setup1 {
 	public static class Discarding extends MapState {
 	
 		
+	}
+	
+	public static class PlayingSoldierCard extends MoveRobber {
+		
+		private HexLocation newRobberLocation;
+
+		public void setNewRobberLocation(HexLocation newRobberLocation) {
+			this.newRobberLocation = newRobberLocation;
+		}
+		
+		void robPlayer(RobPlayerInfo victim) {
+			Soldier soldier = new Soldier(facade.getLocalPlayerIndex(), victim.getPlayerIndex(), newRobberLocation);
+			try {
+				Populator.getInstance().populateModel(proxy.playSoldier(soldier), proxy.getLocalPlayerName());
+			} catch (IOException | NoCookieException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 }

@@ -26,7 +26,7 @@ public class RollController extends Controller implements IRollController, Obser
     private static ServerProxy proxy = ServerProxy.getInstance();
 
     private IRollResultView resultView;
-    private final String MESSAGE = "Currently doesn't roll automatically";//"Rolling in %d seconds";
+    private final String MESSAGE = "Rolling in %d seconds";
     private int countDown = 3;
     private Timer rollingTimer;
     
@@ -97,7 +97,7 @@ public class RollController extends Controller implements IRollController, Obser
     @Override
     public void rollDice() {
 //    	rollingTimer.stop();
-//		countDown = 3;
+		countDown = 3;
     	int rollValue = rollDice(6,2);
 		getResultView().setRollValue(rollValue);
 		getResultView().showModal();
