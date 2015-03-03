@@ -52,7 +52,6 @@ public class TurnTrackerController extends Controller
     	
     	String username = facade.getLocalUserName();
     	
-        //<temp>
     	CatanColor color = facade.GetPlayerColor(username);
     	
     	if(color != null)
@@ -68,7 +67,6 @@ public class TurnTrackerController extends Controller
 				getView().updatePlayer(i, player.getVictoryPoints(), facade.isCurrentTurn(i), 
 						facade.getLargestArmy() == i, facade.getlongestRoad() == i);
 			} catch (InvalidPlayerIndex e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -81,7 +79,6 @@ public class TurnTrackerController extends Controller
 			localPlayer = facade.getPlayer(facade.getCurrentPlayerIndex());
 			isTurn = facade.isCurrentTurn(localPlayer.getIndex());
 		} catch (InvalidPlayerIndex e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
