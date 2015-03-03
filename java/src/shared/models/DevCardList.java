@@ -73,8 +73,7 @@ public class DevCardList {
     }
 
     public int getRoadBuilding() {
-//        return roadBuilding;
-    	return 1;
+        return roadBuilding;
     }
 
     public void setRoadBuilding(int roadBuilding) throws ExcessiveDevCards {
@@ -108,6 +107,7 @@ public class DevCardList {
 
     public int getSoldier() {
         return soldier;
+//    	return 1;
     }
 
     public void setSoldier(int soldier) throws ExcessiveDevCards {
