@@ -2,6 +2,7 @@ package client.domestic;
 
 import shared.definitions.*;
 import shared.exceptions.InvalidPlayerIndex;
+import shared.models.ResourceList;
 import shared.models.TradeOffer;
 import shared.models.DTO.ResourceListDTO;
 import shared.models.DTO.params.OfferTrade;
@@ -48,6 +49,7 @@ public class DomesticTradeController extends Controller
 	private boolean recieveResources = false;
 	private boolean playerTradingBool = false;
 	private ResourceType receiveResource;
+	private ResourceType sendResource;
     
     private String currState;
     private ModelFacade facade;
@@ -144,16 +146,12 @@ public class DomesticTradeController extends Controller
     	tradingResources.setOre(0);
     	
     	if (currState.equals("Playing")) {
-    		System.out.println("currState is Playing");
-    		setChangeEnabled(woodAmt, wood, ResourceType.WOOD);
-    		setChangeEnabled(brickAmt, brick, ResourceType.BRICK);
-    		setChangeEnabled(sheepAmt, sheep, ResourceType.SHEEP);
-    		setChangeEnabled(wheatAmt, wheat, ResourceType.WHEAT);
-    		setChangeEnabled(oreAmt, ore, ResourceType.ORE);
-    		
     		getTradeOverlay().showModal();
+    	} else {
+    		
     	}
     	//state.startTrade();
+    	
     }
 
     public void proxyCall() {
@@ -223,10 +221,15 @@ public class DomesticTradeController extends Controller
 
     public void setChangeEnabled(int resource, int currResource, ResourceType resourceType) {
 		int maxResources = currResource;
-    	if (resourceType == receiveResource)
+    	if (resourceType == receiveResource) {
     		maxResources = 25;
+    	}
 		if (maxResources == 0) {
-			tradeOverlay.setResourceAmountChangeEnabled(resourceType, false, false);
+			if (resourceType == receiveResource) {
+				tradeOverlay.setResourceAmountChangeEnabled(resourceType, true, false);
+			} else {
+				tradeOverlay.setResourceAmountChangeEnabled(resourceType, false, false);
+			}
 		} else if (resource == maxResources) {
     		tradeOverlay.setResourceAmountChangeEnabled(resourceType, false, true);
     	} else if (resource == 0) {
@@ -238,10 +241,10 @@ public class DomesticTradeController extends Controller
 
     @Override
     public void sendTradeOffer() {
-    	
+    	proxyCall();
         getTradeOverlay().closeModal();
         tradeOverlay.reset();
-//		getWaitOverlay().showModal();
+		getWaitOverlay().showModal();
     }
 
     @Override
@@ -250,14 +253,19 @@ public class DomesticTradeController extends Controller
     	playerTradingBool = true;
     	if (playerTradingBool && sendResources && recieveResources) {
     		tradeOverlay.setTradeEnabled(true);
-    		proxyCall();
     	}
     }
 
     @Override
     public void setResourceToReceive(ResourceType resource) {
     	receiveResource = resource;
+		setChangeEnabled(woodAmt, wood, ResourceType.WOOD);
+		setChangeEnabled(brickAmt, brick, ResourceType.BRICK);
+		setChangeEnabled(sheepAmt, sheep, ResourceType.SHEEP);
+		setChangeEnabled(wheatAmt, wheat, ResourceType.WHEAT);
+		setChangeEnabled(oreAmt, ore, ResourceType.ORE);
     	switch (resource) {
+    	
 		case BRICK:
 			tradingResources.setBrick(brickAmt);
 			break;
@@ -279,12 +287,19 @@ public class DomesticTradeController extends Controller
     	recieveResources = true;
     	if (playerTradingBool && sendResources && recieveResources) {
     		tradeOverlay.setTradeEnabled(true);
-    		proxyCall();
     	}
     }
 
     @Override
     public void setResourceToSend(ResourceType resource) {
+    	receiveResource = null;
+    	sendResource = resource;
+		setChangeEnabled(woodAmt, wood, ResourceType.WOOD);
+		setChangeEnabled(brickAmt, brick, ResourceType.BRICK);
+		setChangeEnabled(sheepAmt, sheep, ResourceType.SHEEP);
+		setChangeEnabled(wheatAmt, wheat, ResourceType.WHEAT);
+		setChangeEnabled(oreAmt, ore, ResourceType.ORE);
+		
     	switch (resource) {
 		case BRICK:
 			tradingResources.setBrick(-brickAmt);
@@ -307,7 +322,6 @@ public class DomesticTradeController extends Controller
     	sendResources = true;
     	if (playerTradingBool && sendResources && recieveResources) {
     		tradeOverlay.setTradeEnabled(true);
-    		proxyCall();
     	}
     }
 
@@ -362,8 +376,64 @@ public class DomesticTradeController extends Controller
 
     @Override
     public void acceptTrade(boolean willAccept) {
-
+    	
         getAcceptOverlay().closeModal();
+    }
+    
+    public void accept() {
+    	ResourceList rlistResource = new ResourceList();
+    	ResourceType tempRType = null ;
+    	int tempAmt = 0;
+    	ResourceType tempRTypeR = null ;
+    	int tempAmtR = 0;
+    	rlistResource = facade.getTradeOffer().getResources();
+    	if (rlistResource.getBrick() < 0) {
+    		tempRType = ResourceType.BRICK;
+    		tempAmt = rlistResource.getBrick();
+    		System.out.println("111: "+tempRType);
+    		System.out.println("2222: "+tempAmt);
+    	} else if (rlistResource.getOre() < 0) {
+    		tempRType = ResourceType.ORE;
+    		tempAmt = rlistResource.getOre();
+    		System.out.println("111: "+tempRType);
+    		System.out.println("2222: "+tempAmt);
+    	} else if (rlistResource.getSheep() < 0) {
+    		tempRType = ResourceType.SHEEP;
+    		tempAmt = rlistResource.getSheep();
+    		System.out.println("111: "+tempRType);
+    		System.out.println("2222: "+tempAmt);
+    	} else if (rlistResource.getWheat() < 0) {
+    		tempRType = ResourceType.WHEAT;
+    		tempAmt = rlistResource.getWheat();
+    		System.out.println("111: "+tempRType);
+    		System.out.println("2222: "+tempAmt);
+    	} else if (rlistResource.getWood() < 0) {
+    		tempRType = ResourceType.WOOD;
+    		tempAmt = rlistResource.getWood();
+    		System.out.println("111: "+tempRType);
+    		System.out.println("2222: "+tempAmt);
+    	}
+    	if (rlistResource.getBrick() > 0) {
+    		tempRTypeR = ResourceType.BRICK;
+    		tempAmtR = rlistResource.getBrick();
+    	} else if (rlistResource.getOre() > 0) {
+    		tempRTypeR = ResourceType.ORE;
+    		tempAmtR = rlistResource.getOre();
+    	} else if (rlistResource.getSheep() > 0) {
+    		tempRTypeR = ResourceType.SHEEP;
+    		tempAmtR = rlistResource.getSheep();
+    	} else if (rlistResource.getWheat() > 0) {
+    		tempRTypeR = ResourceType.WHEAT;
+    		tempAmtR = rlistResource.getWheat();
+    	} else if (rlistResource.getWood() > 0) {
+    		tempRTypeR = ResourceType.WOOD;
+    		tempAmtR = rlistResource.getWood();
+    	}
+
+//    	acceptOverlay.addGetResource(tempRType, tempAmt);
+//    	acceptOverlay.addGiveResource(tempRTypeR, tempAmtR);
+		getAcceptOverlay().showModal();
+		
     }
 
     public void updateState(String currState) {
@@ -383,9 +453,11 @@ public class DomesticTradeController extends Controller
         if (o instanceof Populator && arg instanceof ModelFacade) {
         	ModelFacade facade = (ModelFacade) arg;
             this.facade = facade;
-            if (this.facade == null) {
-            }
+//            if (facade.getTradeOffer() != null && !currState.equals("Playing")) {
+//            	//accept();
+//            }	
     		currState = facade.getState();
+    		//System.out.println(currState);
     		updateState(currState);
         }
     }

@@ -76,4 +76,27 @@ public class ResourceList {
                 return 0;
         }
     }
+
+	public int getBrick() {
+		return brick;
+	}
+
+	public int getOre() {
+		return ore;
+	}
+
+	public int getSheep() {
+		return sheep;
+	}
+
+	public int getWheat() {
+		return wheat;
+	}
+
+	public int getWood() {
+		return wood;
+	}
+
+    
+
 }
