@@ -25,7 +25,7 @@ public class DiscardController extends Controller
 
     private IWaitView waitView;
     private final Map<ResourceType, Integer> discardSet;
-    private final Map<ResourceType, Integer> hand;
+    private Map<ResourceType, Integer> hand;
     private boolean discarding;
     private final String discardMessage = "%d/%d";
 
