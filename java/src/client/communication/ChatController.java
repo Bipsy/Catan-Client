@@ -65,7 +65,6 @@ public class ChatController extends Controller
             ModelFacade facade = (ModelFacade) arg;
             initFromModel(facade);
     		if (facade.getLocalPlayerIndex() != null) {
-    			System.out.println("YOU IDIOT");
 	        	localIndex = facade.getLocalPlayerIndex();
     		}
         }

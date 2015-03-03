@@ -14,7 +14,7 @@ public interface IDomesticTradeOverlay extends IOverlayView {
      * Resets the view to its initial state.
      */
     void reset();
-
+    
     /**
      * Sets the opponents the local player may trade with. This should be called
      * on initializing the controller, and only called once.
