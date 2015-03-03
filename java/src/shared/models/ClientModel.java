@@ -42,7 +42,7 @@ public class ClientModel {
 
     public ClientModel() {
         winner = -1;
-        version = 0;
+        version = -1;
         bank = null;
         board = null;
         chatObject = null;
@@ -189,7 +189,7 @@ public class ClientModel {
      */
     public boolean CanBuildRoad(BuildRoad buildRoad) {
         return (buildRoad.isFree() || userManager.CanBuildRoad(buildRoad))
-                && board.canBuildRoad(buildRoad);
+                && board.canBuildRoad(buildRoad, getStatus());
     }
     
     public boolean hasResourcesForRoad(int playerIndex) {

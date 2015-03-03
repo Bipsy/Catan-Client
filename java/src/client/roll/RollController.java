@@ -14,6 +14,7 @@ import java.util.Random;
 
 import javax.swing.Timer;
 
+import shared.exceptions.NoCookieException;
 import shared.models.DTO.params.RollNumber;
 
 /**
@@ -27,6 +28,7 @@ public class RollController extends Controller implements IRollController, Obser
     private IRollResultView resultView;
     private final String MESSAGE = "Rolling in %d seconds";
     private int countDown = 3;
+    private Timer rollingTimer;
     
     private ActionListener timerListener = new ActionListener() {
     	   	
@@ -37,17 +39,13 @@ public class RollController extends Controller implements IRollController, Obser
         		getRollView().showModal();
         		if(countDown == 0) {
 	        		rollDice();
-	        		((Timer)e.getSource()).stop();
-	        		countDown = 3;
         		}
-        	}
-        	else {
-        		((Timer)e.getSource()).stop();
         	}
         }    
     };
     
     private int rollDice(int sides, int times) {
+    	
     	
 		Random random = new Random();
     	
@@ -90,22 +88,23 @@ public class RollController extends Controller implements IRollController, Obser
 
 		getRollView().setMessage(String.format(MESSAGE, countDown));
 		getRollView().showModal();
-		Timer rollingTimer = new Timer(1000, timerListener);
-		rollingTimer.setInitialDelay(1000);
-		rollingTimer.setRepeats(true);
-		rollingTimer.start();
+//		rollingTimer = new Timer(1000, timerListener);
+//		rollingTimer.setInitialDelay(1000);
+//		rollingTimer.setRepeats(true);
+//		rollingTimer.start();
     }
 
     @Override
     public void rollDice() {
-		getRollView().closeModal();
+//    	rollingTimer.stop();
+		countDown = 3;
     	int rollValue = rollDice(6,2);
 		getResultView().setRollValue(rollValue);
 		getResultView().showModal();
 		RollNumber request = new RollNumber(facade.getLocalPlayerIndex(), rollValue);
 		try {
-			proxy.rollNumber(request);
-		} catch (IOException e) {
+			Populator.getInstance().populateModel(proxy.rollNumber(request), proxy.getLocalPlayerName());
+		} catch (IOException | NoCookieException e) {
 			System.err.println(e.toString());
 		}
     }

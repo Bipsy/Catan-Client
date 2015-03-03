@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import shared.exceptions.NoCookieException;
+import shared.models.DTO.ClientModelDTO;
 import shared.models.DTO.params.SendChat;
 
 /**
@@ -35,12 +37,14 @@ public class ChatController extends Controller
 
     @Override
     public void sendMessage(String message) {
+    	ClientModelDTO model = null;
     	try {
     		SendChat chat = new SendChat(localIndex, message);
-			proxy.sendChat(chat);
-		} catch (IOException e) {
+			Populator.getInstance().populateModel(proxy.sendChat(chat), proxy.getLocalPlayerName());
+		} catch (IOException | NoCookieException e) {
 			e.printStackTrace();
 		}
+    	
     }
     private void initFromModel(ModelFacade facade) {
     	

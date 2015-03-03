@@ -2,8 +2,12 @@ package client.devcards;
 
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
+import shared.exceptions.NoCookieException;
 import shared.models.DTO.params.BuyDevCard;
+import shared.models.DTO.params.Monopoly;
 import shared.models.DTO.params.Monument;
+import shared.models.DTO.params.RoadBuilding;
+import shared.models.DTO.params.YearOfPlenty;
 import client.base.*;
 import client.model.ModelFacade;
 import client.model.Populator;
@@ -71,9 +75,8 @@ public class DevCardController extends Controller
     	BuyDevCard buyDevCard = new BuyDevCard(playerIndex);
     	
     	try {
-			proxy.buyDevCard(buyDevCard);
-			System.out.println("hi");
-		} catch (IOException e) {
+			Populator.getInstance().populateModel(proxy.buyDevCard(buyDevCard), proxy.getLocalPlayerName());
+		} catch (IOException | NoCookieException e) {
 
 			e.printStackTrace();
 		} 
@@ -122,7 +125,18 @@ public class DevCardController extends Controller
 
     @Override
     public void playMonopolyCard(ResourceType resource) {
+    	ModelFacade model = new ModelFacade();
+    	ServerProxy proxy = ServerProxy.getInstance();
+    	int playerIndex = model.getCurrentPlayerIndex();
+    	Monopoly monopoly = new Monopoly(playerIndex, resource);
+    	
+    	try {
+			proxy.playMonopoly(monopoly);
+		} catch (IOException e) {
 
+			e.printStackTrace();
+		} 
+    	getPlayCardView().closeModal();
     }
 
     @Override
@@ -134,7 +148,6 @@ public class DevCardController extends Controller
     	
     	try {
 			proxy.playMonument(monument);
-			System.out.println("played monument");
 		} catch (IOException e) {
 
 			e.printStackTrace();
@@ -156,7 +169,18 @@ public class DevCardController extends Controller
 
     @Override
     public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) {
+    	ModelFacade model = new ModelFacade();
+    	ServerProxy proxy = ServerProxy.getInstance();
+    	int playerIndex = model.getCurrentPlayerIndex();
+    	YearOfPlenty yearOfPlentyMove = new YearOfPlenty(playerIndex, resource1, resource2);
+    	
+    	try {
+			proxy.playYearOfPlenty(yearOfPlentyMove);
+		} catch (IOException e) {
 
+			e.printStackTrace();
+		} 
+    	getPlayCardView().closeModal();
     }
 
     @Override

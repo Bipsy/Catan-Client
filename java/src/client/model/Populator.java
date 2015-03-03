@@ -48,6 +48,7 @@ public class Populator extends Observable implements iPopulator {
 
     @Override
     public boolean populateModel(ClientModelDTO container, String username) {
+    	if(model == null || container.getVersion() == model.getVersion()) return false;
     	
         populateBank(container.getResources(), container.getDevCards());
 
