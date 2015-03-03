@@ -141,13 +141,13 @@ public static class Setup2 extends Setup1 {
 	}
 	
 	public static class MoveRobber extends MapState {
-		//TODO:
+		
+		void showMapOverlay(IMapView view) {			
+			view.startDrop(PieceType.ROBBER,facade.GetPlayerColor(facade.getLocalPlayerIndex()), false);				
+		}
 		
 		boolean canPlaceRobber(HexLocation hexLoc) {
-			System.out.println("I'm in the canPlaceRobber function");
-			//NEED VICTIM INDEX
-			RobPlayer robPlayer = new RobPlayer(facade.getLocalPlayerIndex(), 0, hexLoc);
-			return facade.CanPlaceRobber(robPlayer);
+			return facade.CanPlaceRobber(hexLoc);
 		}
 		
 		void robPlayer(RobPlayerInfo victim) {
