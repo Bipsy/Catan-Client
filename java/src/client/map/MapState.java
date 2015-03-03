@@ -46,6 +46,8 @@ public abstract class MapState {
 	void robPlayer(RobPlayerInfo victim) {}
 	void showMapOverlay(IMapView view) {}
 	
+	void setNewRobberLocation(HexLocation newRobberLocation) {}
+	
 
 	public static class Setup1 extends MapState {
 		
@@ -142,6 +144,12 @@ public static class Setup2 extends Setup1 {
 	
 	public static class MoveRobber extends MapState {
 		
+		private HexLocation newRobberLocation;
+
+		public void setNewRobberLocation(HexLocation newRobberLocation) {
+			this.newRobberLocation = newRobberLocation;
+		}
+
 		void showMapOverlay(IMapView view) {			
 			view.startDrop(PieceType.ROBBER,facade.GetPlayerColor(facade.getLocalPlayerIndex()), false);				
 		}
@@ -151,7 +159,7 @@ public static class Setup2 extends Setup1 {
 		}
 		
 		void robPlayer(RobPlayerInfo victim) {
-			RobPlayer robPlayer = new RobPlayer(facade.getLocalPlayerIndex(), victim.getPlayerIndex(), null);
+			RobPlayer robPlayer = new RobPlayer(facade.getLocalPlayerIndex(), victim.getPlayerIndex(), newRobberLocation);
 			try {
 				Populator.getInstance().populateModel(proxy.robPlayer(robPlayer), proxy.getLocalPlayerName());
 			} catch (IOException | NoCookieException e) {
