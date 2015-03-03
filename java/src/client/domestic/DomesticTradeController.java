@@ -8,6 +8,8 @@ import client.misc.*;
 import client.model.ModelFacade;
 import client.model.Populator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -92,16 +94,25 @@ public class DomesticTradeController extends Controller
     
     @Override
     public void startTrade() {
-    	System.out.println("showing modal");
+
+    	int currPlayer = facade.getCurrentPlayerIndex();
     	
-    	listOfPlayers = new PlayerInfo[4];
+    	List<PlayerInfo> tempList = new ArrayList<PlayerInfo>();
     	for (int i=0; i<4; i++) {
     		try {
-    			listOfPlayers[i] = new PlayerInfo(facade.getPlayer(i).getID(), i, facade.getPlayer(i).getUsername(), facade.GetPlayerColor(i));
+    			if (i != currPlayer) {
+    				tempList.add(new PlayerInfo(facade.getPlayer(i).getID(), i, facade.getPlayer(i).getUsername(), facade.GetPlayerColor(i)));
+    			}
 			} catch (InvalidPlayerIndex e) {
 				e.printStackTrace();
 			}
     	}
+    	listOfPlayers = new PlayerInfo[3];
+    	for (int i=0; i<3; i++) {
+    		listOfPlayers[i] = tempList.get(i);
+    	}
+    	
+    	
     	tradeOverlay.setPlayers(listOfPlayers);
     	
         brickAmt = 0;
@@ -109,8 +120,6 @@ public class DomesticTradeController extends Controller
         sheepAmt = 0;
         wheatAmt = 0;
         woodAmt = 0;
-    	
-    	int currPlayer = facade.getCurrentPlayerIndex();
     	brick = facade.getResourceCount(currPlayer, ResourceType.BRICK);
     	ore = facade.getResourceCount(currPlayer, ResourceType.ORE);
     	sheep = facade.getResourceCount(currPlayer, ResourceType.SHEEP);
@@ -118,14 +127,12 @@ public class DomesticTradeController extends Controller
     	wood = facade.getResourceCount(currPlayer, ResourceType.WOOD);
     	
     	if (currState.equals("Playing")) {
-    		System.out.println("currstate equals playing");
-    		
     		setChangeEnabled(woodAmt, wood, ResourceType.WOOD);
     		setChangeEnabled(brickAmt, brick, ResourceType.BRICK);
     		setChangeEnabled(sheepAmt, sheep, ResourceType.SHEEP);
     		setChangeEnabled(wheatAmt, wheat, ResourceType.WHEAT);
     		setChangeEnabled(oreAmt, ore, ResourceType.ORE);
-    	    tradeOverlay.setResourceSelectionEnabled(true);
+    	    //tradeOverlay.setResourceSelectionEnabled(true);
     		
     		getTradeOverlay().showModal();
 
@@ -139,7 +146,6 @@ public class DomesticTradeController extends Controller
 
     @Override
     public void decreaseResourceAmount(ResourceType resource) {
-    	System.out.println("I am decreasing");
 
     	switch (resource) {
 		case BRICK:
@@ -169,7 +175,6 @@ public class DomesticTradeController extends Controller
     
     @Override
     public void increaseResourceAmount(ResourceType resource) {
-    	System.out.println("I am increasing");
 
     	switch (resource) {
 		case BRICK:
@@ -246,12 +251,12 @@ public class DomesticTradeController extends Controller
 
     @Override
     public void setResourceToSend(ResourceType resource) {
-
+    	
     }
 
     @Override
     public void unsetResource(ResourceType resource) {
-
+    	
     }
 
     @Override
