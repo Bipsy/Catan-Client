@@ -5,6 +5,7 @@ import shared.exceptions.InvalidPlayerIndex;
 import shared.models.ResourceList;
 import shared.models.TradeOffer;
 import shared.models.DTO.ResourceListDTO;
+import shared.models.DTO.params.AcceptTrade;
 import shared.models.DTO.params.OfferTrade;
 import client.base.*;
 import client.data.PlayerInfo;
@@ -376,7 +377,14 @@ public class DomesticTradeController extends Controller
 
     @Override
     public void acceptTrade(boolean willAccept) {
-    	
+
+    	currPlayer = facade.getCurrentPlayerIndex();
+    	AcceptTrade accept = new AcceptTrade(currPlayer, willAccept);
+    	try {
+			proxy.acceptTrade(accept);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
         getAcceptOverlay().closeModal();
     }
     
@@ -433,6 +441,14 @@ public class DomesticTradeController extends Controller
 //    	acceptOverlay.addGetResource(tempRType, tempAmt);
 //    	acceptOverlay.addGiveResource(tempRTypeR, tempAmtR);
 		getAcceptOverlay().showModal();
+
+    	currPlayer = facade.getCurrentPlayerIndex();
+    	brick = facade.getResourceCount(currPlayer, ResourceType.BRICK);
+    	ore = facade.getResourceCount(currPlayer, ResourceType.ORE);
+    	sheep = facade.getResourceCount(currPlayer, ResourceType.SHEEP);
+    	wheat = facade.getResourceCount(currPlayer, ResourceType.WHEAT);
+    	wood = facade.getResourceCount(currPlayer, ResourceType.WOOD);
+    	
 		
     }
 
@@ -457,6 +473,11 @@ public class DomesticTradeController extends Controller
 //            	//accept();
 //            }	
     		currState = facade.getState();
+//    		if (!currState.equals("Playing")) {
+//    			if (facade.getTradeOffer() != null) {
+//    				accept();
+//    			}
+//    		}
     		//System.out.println(currState);
     		updateState(currState);
         }
