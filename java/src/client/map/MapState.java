@@ -14,6 +14,8 @@ import client.data.*;
 
 public abstract class MapState {
 	
+	
+
 	ServerProxy proxy = ServerProxy.getInstance();
 	UserCookie uCookie = proxy.getUserCookie();
 	ModelFacade facade = new ModelFacade();
@@ -90,6 +92,31 @@ public abstract class MapState {
 			}
 		}
 	}
+
+	
+	public static class PlayingBuildRoadCard extends MapState {
+//		IMapView view = new IMapView();
+		boolean round1 = true;
+		boolean canPlaceRoad(EdgeLocation edgeLoc) {
+			System.out.println("marbles everywhere!");
+			return true;
+		}
+		void placeRoad(EdgeLocation edgeLoc) {
+			
+			BuildRoad roadMove = new BuildRoad(facade.getLocalPlayerIndex(), new RoadLocation(edgeLoc), false);
+			if (round1) {
+				try {
+					Populator.getInstance().populateModel(proxy.buildRoad(roadMove), proxy.getLocalPlayerName());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NoCookieException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} 
+		}
+	}
 	
 public static class Setup2 extends Setup1 {
 		
@@ -114,12 +141,13 @@ public static class Setup2 extends Setup1 {
 	}
 	
 	public static class MoveRobber extends MapState {
-		//TODO:
+		
+		void showMapOverlay(IMapView view) {			
+			view.startDrop(PieceType.ROBBER,facade.GetPlayerColor(facade.getLocalPlayerIndex()), false);				
+		}
 		
 		boolean canPlaceRobber(HexLocation hexLoc) {
-			//NEED VICTIM INDEX
-			RobPlayer robPlayer = new RobPlayer(facade.getLocalPlayerIndex(), 0, hexLoc);
-			return facade.CanPlaceRobber(robPlayer);
+			return facade.CanPlaceRobber(hexLoc);
 		}
 		
 		void robPlayer(RobPlayerInfo victim) {

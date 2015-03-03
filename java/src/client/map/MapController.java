@@ -1,14 +1,18 @@
 package client.map;
 
+import java.io.IOException;
 import java.util.*;
 
 import shared.definitions.*;
 import shared.locations.*;
 import shared.models.*;
+import shared.models.DTO.params.Monopoly;
+import shared.models.DTO.params.RoadBuilding;
 import client.base.*;
 import client.data.*;
 import client.model.ModelFacade;
 import client.model.Populator;
+import client.network.ServerProxy;
 
 /**
  * Implementation for the map controller
@@ -20,6 +24,10 @@ public class MapController extends Controller
     private MapState state;
     private String currState;
     private ModelFacade facade;
+	private boolean roadBuildingTurn1 = false;
+	private EdgeLocation edge1;
+	private boolean roadBuildingTurn2 = false;
+	private EdgeLocation edge2;
 
     public MapController(IMapView view, IRobView robView) {
 
@@ -105,7 +113,6 @@ public class MapController extends Controller
     }
 
     public boolean canPlaceRoad(EdgeLocation edgeLoc) {
-
         return state.canPlaceRoad(edgeLoc);
     }
 
@@ -125,11 +132,18 @@ public class MapController extends Controller
     }
 
     public void placeRoad(EdgeLocation edgeLoc) {
-	state.placeRoad(edgeLoc);
+
+		state.placeRoad(edgeLoc);
+		if (this.roadBuildingTurn1) {
+    		this.edge1 = edgeLoc;
+    	} else if (this.roadBuildingTurn2) {
+    		this.edge2 = edgeLoc;
+    	}
+
     }
 
     public void placeSettlement(VertexLocation vertLoc) {
-	state.placeSettlement(vertLoc);
+    	state.placeSettlement(vertLoc);
     }
 
     public void placeCity(VertexLocation vertLoc) {
@@ -138,7 +152,8 @@ public class MapController extends Controller
 
     public void placeRobber(HexLocation hexLoc) {
 
-        getView().placeRobber(hexLoc);
+    	getView().placeRobber(hexLoc);
+        //getRobView().setPlayers(facade.getVictims(hexLoc, facade.getLocalPlayerIndex()));
         getRobView().showModal();
     }
 
@@ -156,7 +171,26 @@ public class MapController extends Controller
     }
 
     public void playRoadBuildingCard() {
-    	//TODO: 
+    	this.updateState("PlayingBuildRoadCard");
+    	
+    	this.roadBuildingTurn1 = true;
+    	getView().startDrop(PieceType.ROAD, facade.GetPlayerColor(facade.getLocalPlayerIndex()), true);
+    	this.roadBuildingTurn1 = false;
+    	
+    	this.roadBuildingTurn2 = true;
+    	getView().startDrop(PieceType.ROAD, facade.GetPlayerColor(facade.getLocalPlayerIndex()), false);
+    	this.roadBuildingTurn2 = false;
+   	  	
+    	ServerProxy proxy = ServerProxy.getInstance();
+    	int playerIndex = facade.getCurrentPlayerIndex();
+    	RoadBuilding roadBuildingMove = new RoadBuilding(playerIndex, this.edge1, this.edge2);
+    	
+    	try {
+			proxy.playRoadBuilding(roadBuildingMove);
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		} 
     }
 
     public void robPlayer(RobPlayerInfo victim) {
@@ -168,11 +202,9 @@ public class MapController extends Controller
     	switch (currState) {
     		case "FirstRound":
     			state = new MapState.Setup1();
-    			state.showMapOverlay(getView());
     			break;
     		case "SecondRound":
     			state = new MapState.Setup2();
-    			state.showMapOverlay(getView());
     			break;
     		case "Rolling":
     			state = new MapState.Rolling();
@@ -186,10 +218,13 @@ public class MapController extends Controller
     		case "Discarding":
     			state = new MapState.Discarding();
     			break;
+    		case "PlayingBuildRoadCard":
+    			state = new MapState.PlayingBuildRoadCard();
+    			break;
 			default:
-				break;
-    		
+				break;				
     	}
+		state.showMapOverlay(getView());
     }
 
     @Override

@@ -1,7 +1,10 @@
 package client.model;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import shared.locations.HexLocation;
 import shared.models.ClientModel;
 import shared.models.Harbor;
 import shared.models.Hex;
@@ -15,6 +18,7 @@ import shared.models.VertexObject;
 import shared.models.DTO.params.*;
 import shared.definitions.*;
 import shared.exceptions.InvalidPlayerIndex;
+import client.data.RobPlayerInfo;
 import client.storage.Data;
 import java.util.HashMap;
 import java.util.Map;
@@ -108,6 +112,10 @@ public class ModelFacade {
         return models != null && models.CanPlaceRobber(robPlayer);
     }
 
+    public boolean CanPlaceRobber(HexLocation hexLoc) {
+        return models != null && models.CanPlaceRobber(hexLoc);
+    }
+    
     public boolean hasModel() {
         return (models != null);
     }
@@ -365,10 +373,31 @@ public class ModelFacade {
         throw new Exception("invalid object type");
     }
 
-    public int[] getPlayersAtHex(Hex hex) {
-        //TODO:
-        return null;
-
+    public RobPlayerInfo[] getVictims(HexLocation hexLoc, Integer robberIndex) {
+    	if (models == null ) return null;
+    	Set <RobPlayerInfo> victims = new HashSet<RobPlayerInfo>();
+    	Hex targetHex = null;
+    	for (Hex hex: models.getBoard().getHexes()) {
+    		//get normalized location??
+    		if (hex.getLocation().getX() == hexLoc.getX() && hex.getLocation().getY() == hexLoc.getY()) {
+    			targetHex = hex;
+    			break;
+    		}
+    	}
+    	Set<Integer> ownersAtHex = models.getBoard().getOwnersIndeciesAt(targetHex);
+        for (Integer owner: ownersAtHex) {
+        	if (owner != robberIndex) {
+        		Player player = models.getUserManager().getPlayer(owner);
+        		RobPlayerInfo victim = new RobPlayerInfo();
+        		victim.setColor(player.getColor());
+        		victim.setId(player.getID());
+        		victim.setName(player.getUsername());
+        		victim.setPlayerIndex(player.getIndex());
+        		victim.setNumCards(player.getNewDevCards().getNumDevCards());
+        		victims.add(victim);
+        	}
+        }
+        return victims.toArray(new RobPlayerInfo[0]);
     }
 
     public boolean canPlaySoldier(int playerIndex) {
