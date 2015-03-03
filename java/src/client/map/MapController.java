@@ -164,7 +164,7 @@ public class MapController extends Controller
     }
 
     public void cancelMove() {
-    	//TODO: 
+    	//state.FinishTurn();
     }
 
     public void playSoldierCard() {
@@ -220,7 +220,7 @@ public class MapController extends Controller
     			state = new MapState.Discarding();
     			break;
     		case "PlayingBuildRoadCard":
-    			state = new MapState.PlayingBuildRoadCard();
+    			state = new MapState.PlayingSoldierCard();
     			break;
 			default:
 				break;				

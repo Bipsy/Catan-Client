@@ -8,6 +8,7 @@ import javax.swing.border.Border;
 
 import java.util.*;
 
+import shared.definitions.CatanColor;
 import shared.definitions.PieceType;
 import client.base.*;
 import client.data.*;
@@ -71,6 +72,13 @@ public class RobView extends OverlayView implements IRobView {
 
             if (e.getSource() == defaultButton) {
                 closeModal();
+                RobPlayerInfo victim = new RobPlayerInfo();
+        		victim.setColor(CatanColor.RED);
+        		victim.setId(-1);
+        		victim.setName("");
+        		victim.setPlayerIndex(-1);
+        		victim.setNumCards(0);
+                getController().robPlayer(victim);
             } else {
 
                 for (int i = 0; i < victimButtons.size(); i++) {
