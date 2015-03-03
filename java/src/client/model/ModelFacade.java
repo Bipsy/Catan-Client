@@ -13,6 +13,7 @@ import shared.models.Player;
 import shared.models.PlayerHand;
 import shared.models.Road;
 import shared.models.Robber;
+import shared.models.TradeOffer;
 import shared.models.UserManager;
 import shared.models.VertexObject;
 import shared.models.DTO.params.*;
@@ -303,6 +304,10 @@ public class ModelFacade {
         Player player = models.getPlayer(playerIndex);
         PlayerHand cards = player.getResources();
         return cards.getResourceCount(type);
+    }
+    
+    public TradeOffer getTradeOffer() {
+    	return models.getTradeOffer();
     }
     
     public Map<ResourceType, Integer> getBank() {

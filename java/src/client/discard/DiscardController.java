@@ -26,7 +26,6 @@ public class DiscardController extends Controller
     private final Map<ResourceType, Integer> discardSet;
     private Map<ResourceType, Integer> hand;
     private boolean discarding;
-    private boolean discarded;
     private final String discardMessage = "%d/%d";
 
     /**
