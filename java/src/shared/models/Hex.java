@@ -1,10 +1,13 @@
 package shared.models;
 
+import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 import shared.models.DTO.HexDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -33,21 +36,37 @@ public class Hex {
     }
 
     /**
-     * This function returns all the adjacent edges.
+     * This function returns all six adjacent edges with normalized locations
      *
      * @return list of edges
      */
     public List<EdgeLocation> getAdjacentEdges() {
-        return null;
+    	List<EdgeLocation> edges = new ArrayList<EdgeLocation>();
+    	edges.add(new EdgeLocation(this.location, EdgeDirection.North).getNormalizedLocation());
+    	edges.add(new EdgeLocation(this.location, EdgeDirection.NorthEast).getNormalizedLocation());
+    	edges.add(new EdgeLocation(this.location, EdgeDirection.NorthWest).getNormalizedLocation());
+    	edges.add(new EdgeLocation(this.location, EdgeDirection.South).getNormalizedLocation());
+    	edges.add(new EdgeLocation(this.location, EdgeDirection.SouthEast).getNormalizedLocation());
+    	edges.add(new EdgeLocation(this.location, EdgeDirection.SouthWest).getNormalizedLocation());
+        return edges;
     }
 
     /**
-     * This function returns all the adjacent vertices
+     * This function returns all six adjacent vertices with normalized locations
      *
      * @return list of vertices
      */
     public List<VertexLocation> getAdjacentVertices() {
-        return null;
+    	
+    	List<VertexLocation> verticies = new ArrayList<VertexLocation>();
+    	verticies.add(new VertexLocation(this.location, VertexDirection.East).getNormalizedLocation());
+    	verticies.add(new VertexLocation(this.location, VertexDirection.NorthEast).getNormalizedLocation());
+    	verticies.add(new VertexLocation(this.location, VertexDirection.NorthWest).getNormalizedLocation());
+    	verticies.add(new VertexLocation(this.location, VertexDirection.West).getNormalizedLocation());
+    	verticies.add(new VertexLocation(this.location, VertexDirection.SouthEast).getNormalizedLocation());
+    	verticies.add(new VertexLocation(this.location, VertexDirection.SouthWest).getNormalizedLocation());
+
+        return verticies;
     }
 
     /**
