@@ -382,4 +382,10 @@ public class ModelFacade {
         Player player = models.getPlayer(playerIndex);
         return player.getYearOfPlentyCount();
     }
+
+	public boolean canPlayDevCard(int playerIndex) {
+		Player player = models.getPlayer(playerIndex);
+		return player.canPlayMonopoly() || player.canPlayMonument() || player.canPlaySoldier() || player.canUseYearOfPlenty()
+				|| player.canUseRoadBuilding();
+	}
 }
