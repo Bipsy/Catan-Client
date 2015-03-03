@@ -306,7 +306,7 @@ public class ClientModel {
 	}
 
 	public boolean CanBuildSettlement(int playerIndex) {
-		return userManager.CanBuildSettlement(playerIndex);
+		return userManager.CanBuildRoad(playerIndex);
 	}
 
 	public boolean CanBuildCity(int playerIndex) {

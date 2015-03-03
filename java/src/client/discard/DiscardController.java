@@ -15,6 +15,7 @@ import shared.exceptions.InvalidPlayerIndex;
 import shared.models.DTO.ResourceListDTO;
 import shared.models.DTO.params.DiscardCards;
 import shared.models.Player;
+import shared.models.PlayerHand;
 
 /**
  * Discard controller implementation
@@ -24,7 +25,7 @@ public class DiscardController extends Controller
 
     private IWaitView waitView;
     private final Map<ResourceType, Integer> discardSet;
-    private Map<ResourceType, Integer> hand;
+    private final Map<ResourceType, Integer> hand;
     private boolean discarding;
     private final String discardMessage = "%d/%d";
 
@@ -154,13 +155,13 @@ public class DiscardController extends Controller
             ResourceListDTO bundle = makeDiscardSet();
             int playerIndex = facade.getCurrentPlayerIndex();
             DiscardCards discardingSet = new DiscardCards(playerIndex, bundle);
-            proxy.discardCards(discardingSet);
+            Populator.getInstance().populateModel(proxy.discardCards(discardingSet), proxy.getLocalPlayerName());
             updateDiscarding();
             discarding = false;
             if (getDiscardView().isModalShowing()) {
                 getDiscardView().closeModal();
             }
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             System.err.println("Error while tring to discard cards");
         }
     }
@@ -223,6 +224,21 @@ public class DiscardController extends Controller
         }
     }
     
+    private void updateHand(PlayerHand hand) {
+        if (hand == null) return;
+        int wood = hand.getResourceCount(ResourceType.WOOD);
+        int brick = hand.getResourceCount(ResourceType.BRICK);
+        int sheep = hand.getResourceCount(ResourceType.SHEEP);
+        int wheat = hand.getResourceCount(ResourceType.WHEAT);
+        int ore = hand.getResourceCount(ResourceType.ORE);
+        
+        this.hand.put(ResourceType.WOOD, wood);
+        this.hand.put(ResourceType.BRICK, brick);
+        this.hand.put(ResourceType.SHEEP, sheep);
+        this.hand.put(ResourceType.WHEAT, wheat);
+        this.hand.put(ResourceType.ORE, ore);
+    }
+    
     private void updateDiscarding() {
         for (Map.Entry<ResourceType, Integer> entry : discardSet.entrySet()) {
             discardSet.put(entry.getKey(), 0);
@@ -236,11 +252,11 @@ public class DiscardController extends Controller
                 ModelFacade facade = (ModelFacade) arg;
                 int localIndex = facade.getLocalPlayerIndex();
                 Player localPlayer = facade.getPlayer(localIndex);
-                Map<ResourceType, Integer> playerHand = facade.getResources(localIndex);
-                hand = playerHand;
+                PlayerHand playerHand = facade.getResources(localIndex);
+                updateHand(playerHand);
                 System.out.println(facade.getState());
                 if (facade.getState().equals("Discarding") 
-                        && this.getTotalHand() > 7
+                        && playerHand.getNumResourceCards() > 7
                         && localPlayer.getDiscarded() == false) {
                             if (!discarding) {
                                 discarding = true;

@@ -1,16 +1,20 @@
 package client.model;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import shared.locations.HexLocation;
+import shared.models.Bank;
 import shared.models.ClientModel;
 import shared.models.Harbor;
 import shared.models.Hex;
 import shared.models.Message;
 import shared.models.Player;
 import shared.models.PlayerHand;
+import shared.models.ResourceList;
 import shared.models.Road;
 import shared.models.Robber;
 import shared.models.TradeOffer;
@@ -21,11 +25,6 @@ import shared.definitions.*;
 import shared.exceptions.InvalidPlayerIndex;
 import client.data.RobPlayerInfo;
 import client.storage.Data;
-import java.util.HashMap;
-import java.util.Map;
-import shared.models.Bank;
-import shared.models.ResourceList;
-
 
 public class ModelFacade {
 
@@ -119,11 +118,6 @@ public class ModelFacade {
     
     public boolean hasModel() {
         return (models != null);
-    }
-    
-    public Map<PortType, Harbor> getOwnedHarbors(int playerIndex) {
-        if (models == null) return new HashMap<>();
-        return models.getBoard().getOwnedHarbors(playerIndex);
     }
 
     //map data getters
@@ -335,18 +329,10 @@ public class ModelFacade {
         return mapBank;
     }
 
-    public Map<ResourceType, Integer> getResources(int playerIndex) {
+    public PlayerHand getResources(int playerIndex) {
         Player currentPlayer = models.getPlayer(playerIndex);
         PlayerHand hand = currentPlayer.getResources();
-        Map<ResourceType, Integer> map = new HashMap<>();
-        if (hand != null) {
-            map.put(ResourceType.BRICK, hand.getResourceCount(ResourceType.BRICK));
-            map.put(ResourceType.ORE, hand.getResourceCount(ResourceType.ORE));
-            map.put(ResourceType.SHEEP, hand.getResourceCount(ResourceType.SHEEP));
-            map.put(ResourceType.WHEAT, hand.getResourceCount(ResourceType.WHEAT));
-            map.put(ResourceType.WOOD, hand.getResourceCount(ResourceType.WOOD));
-        }
-        return map;
+        return hand;
     }
 
     public int getWinner() {
@@ -398,7 +384,8 @@ public class ModelFacade {
         		victim.setName(player.getUsername());
         		victim.setPlayerIndex(player.getIndex());
         		victim.setNumCards(player.getResources().getNumResourceCards());
-        		victims.add(victim);
+        		if (victim.getNumCards() != 0)
+        			victims.add(victim);
         	}
         }
         return victims.toArray(new RobPlayerInfo[0]);
@@ -406,7 +393,6 @@ public class ModelFacade {
 
     public boolean canPlaySoldier(int playerIndex) {
         Player player = models.getPlayer(playerIndex);
-
         return player.canPlaySoldier();
     }
 
