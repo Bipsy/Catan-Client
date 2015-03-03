@@ -23,6 +23,7 @@ public class Catan extends JFrame {
 
     public Catan(String hostname, String port) {
 
+        initializeNetwork(hostname, port);
         client.base.OverlayView.setWindow(this);
 
         this.setTitle("Settlers of Catan");
@@ -30,12 +31,10 @@ public class Catan extends JFrame {
 
         catanPanel = new CatanPanel();
         this.setContentPane(catanPanel);
-        initializeNetwork(hostname, port);
 
         display();
     }
     
-    // TODO initialize pr
     private void initializeNetwork(String hostname, String port) {
         try {
             ServerProxy.init(hostname, port);
@@ -73,6 +72,7 @@ public class Catan extends JFrame {
                 if (args.length > 1) {
                     new Catan(args[0], args[1]);
                 } else {
+                    System.out.println("No args");
                     new Catan(null, null);
                 }
                 

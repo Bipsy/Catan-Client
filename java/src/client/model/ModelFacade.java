@@ -18,6 +18,7 @@ import shared.exceptions.InvalidPlayerIndex;
 import client.storage.Data;
 import java.util.ArrayList;
 
+
 public class ModelFacade {
 
     private ClientModel models;
@@ -388,4 +389,10 @@ public class ModelFacade {
         Player player = models.getPlayer(playerIndex);
         return player.getYearOfPlentyCount();
     }
+
+	public boolean canPlayDevCard(int playerIndex) {
+		Player player = models.getPlayer(playerIndex);
+		return player.canPlayMonopoly() || player.canPlayMonument() || player.canPlaySoldier() || player.canUseYearOfPlenty()
+				|| player.canUseRoadBuilding();
+	}
 }

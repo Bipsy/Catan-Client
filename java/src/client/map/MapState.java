@@ -47,6 +47,7 @@ public abstract class MapState {
 
 	public static class Setup1 extends MapState {
 		
+
 		void showMapOverlay(IMapView view) {
 			try {
 				if ((facade.getObjectCount(facade.getLocalPlayerIndex(), "Road")) == 0)
