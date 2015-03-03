@@ -1,7 +1,6 @@
 package shared.models;
 
 import shared.models.DTO.PlayerDTO;
-import shared.models.DTO.params.BuyDevCard;
 import shared.models.DTO.params.DiscardCards;
 import shared.models.DTO.params.MaritimeTrade;
 import shared.models.DTO.params.OfferTrade;
