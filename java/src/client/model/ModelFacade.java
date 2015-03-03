@@ -331,8 +331,8 @@ public class ModelFacade {
     }
 
     public Map<ResourceType, Integer> getResources(int playerIndex) {
-        Player currentPlayer = models.getPlayer(playerIndex);
-        PlayerHand hand = currentPlayer.getResources();
+        Player player = models.getPlayer(playerIndex);
+        PlayerHand hand = player.getResources();
         Map<ResourceType, Integer> map = new HashMap<>();
         if (hand != null) {
             map.put(ResourceType.BRICK, hand.getResourceCount(ResourceType.BRICK));

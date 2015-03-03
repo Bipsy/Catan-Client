@@ -15,6 +15,7 @@ import shared.exceptions.InvalidPlayerIndex;
 import shared.models.DTO.ResourceListDTO;
 import shared.models.DTO.params.DiscardCards;
 import shared.models.Player;
+import shared.models.PlayerHand;
 
 /**
  * Discard controller implementation
