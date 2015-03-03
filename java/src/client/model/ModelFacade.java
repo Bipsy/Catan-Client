@@ -1,18 +1,23 @@
 package client.model;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import shared.locations.HexLocation;
+import shared.models.Bank;
 import shared.models.ClientModel;
 import shared.models.Harbor;
 import shared.models.Hex;
 import shared.models.Message;
 import shared.models.Player;
 import shared.models.PlayerHand;
+import shared.models.ResourceList;
 import shared.models.Road;
 import shared.models.Robber;
+import shared.models.TradeOffer;
 import shared.models.UserManager;
 import shared.models.VertexObject;
 import shared.models.DTO.params.*;
@@ -293,6 +298,35 @@ public class ModelFacade {
         Player player = models.getPlayer(playerIndex);
         PlayerHand cards = player.getResources();
         return cards.getResourceCount(type);
+    }
+    
+    public TradeOffer getTradeOffer() {
+    	return models.getTradeOffer();
+    }
+    
+    public Map<ResourceType, Integer> getBank() {
+        Map<ResourceType, Integer> mapBank = new HashMap<>();
+        if (models != null) {
+            Bank bank = models.getBank();
+            ResourceList resources = bank.getResources();
+            mapBank.put(ResourceType.BRICK, 
+                    resources.getResourceNumber(ResourceType.BRICK));
+            mapBank.put(ResourceType.ORE, 
+                    resources.getResourceNumber(ResourceType.ORE));
+            mapBank.put(ResourceType.SHEEP, 
+                    resources.getResourceNumber(ResourceType.SHEEP));
+            mapBank.put(ResourceType.WOOD, 
+                    resources.getResourceNumber(ResourceType.WOOD));
+            mapBank.put(ResourceType.WHEAT, 
+                    resources.getResourceNumber(ResourceType.WHEAT));
+        } else {
+            mapBank.put(ResourceType.BRICK, 0);
+            mapBank.put(ResourceType.ORE, 0);
+            mapBank.put(ResourceType.SHEEP, 0);
+            mapBank.put(ResourceType.WOOD, 0);
+            mapBank.put(ResourceType.WHEAT, 0);
+        }
+        return mapBank;
     }
 
     public PlayerHand getResources(int playerIndex) {
