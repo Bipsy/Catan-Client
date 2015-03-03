@@ -5,7 +5,6 @@ import client.base.*;
 import client.misc.*;
 import client.model.ModelFacade;
 import client.model.Populator;
-import client.network.ServerProxy;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +14,6 @@ import shared.exceptions.InvalidPlayerIndex;
 import shared.models.DTO.ResourceListDTO;
 import shared.models.DTO.params.DiscardCards;
 import shared.models.Player;
-import shared.models.PlayerHand;
 
 /**
  * Discard controller implementation
