@@ -107,6 +107,7 @@ public class DevCardList {
 
     public int getSoldier() {
         return soldier;
+//    	return 1;
     }
 
     public void setSoldier(int soldier) throws ExcessiveDevCards {
