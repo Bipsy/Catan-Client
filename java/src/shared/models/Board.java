@@ -2,8 +2,10 @@ package shared.models;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import shared.definitions.PieceType;
 import shared.locations.EdgeLocation;
@@ -255,13 +257,19 @@ public class Board {
         this.roadMap.put(road.getLocation().getNormalizedLocation(), road);
     }
     
-    /*
-    public List<VertexObject> getBuildingsAt(Hex hex) {
-    	List<VertexObject> buildings = new ArrayList<VertexObject>();
+    public Set<Integer> getOwnersIndeciesAt(Hex hex) {
+    	Set<Integer> owners = new HashSet<Integer>();
     	for (VertexLocation vertex : hex.getAdjacentVertices()) {
-    		if (communityMap[vertex])
+    		if (communityMap.get(vertex) != null) {
+    			owners.add(communityMap.get(vertex).getOwner());
+    		}
     	}
+    	for (EdgeLocation edge : hex.getAdjacentEdges()) {
+    		if (roadMap.get(edge) != null) {
+    			owners.add(roadMap.get(edge).getOwner());
+    		}
+    	}
+    	return owners;
     }
-    */
 
 }

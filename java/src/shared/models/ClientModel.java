@@ -3,6 +3,7 @@ package shared.models;
 import java.util.List;
 
 import shared.definitions.ResourceType;
+import shared.locations.HexLocation;
 import shared.models.DTO.params.BuildCity;
 import shared.models.DTO.params.BuildRoad;
 import shared.models.DTO.params.BuildSettlement;
@@ -179,6 +180,10 @@ public class ClientModel {
                 && !userManager.isCurrentPlayer(robPlayer.getVictimIndex())
                 && board.canPlaceRobber(robPlayer.getLocation());
     }
+    
+    public boolean CanPlaceRobber(HexLocation hexLoc) {
+    	return board.canPlaceRobber(hexLoc);
+	}
 
     /**
      * Checks that there isn't a road already there. Also checks that there is
