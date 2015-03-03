@@ -51,10 +51,10 @@ public class ServerProxy implements iServerProxy {
     public static void init(String host, String port) 
             throws ProxyAlreadyInstantiated {
         if (instance == null) {
-            if (host != null) {
+            if (host != null && !host.equals("${host}")) {
                 serverHost = host;
             }
-            if (port != null) {
+            if (port != null && !port.equals("${port}")) {
                 serverPort = port;
             }
         } else {

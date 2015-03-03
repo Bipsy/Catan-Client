@@ -20,6 +20,11 @@ import shared.definitions.*;
 import shared.exceptions.InvalidPlayerIndex;
 import client.data.RobPlayerInfo;
 import client.storage.Data;
+import java.util.HashMap;
+import java.util.Map;
+import shared.models.Bank;
+import shared.models.ResourceList;
+
 
 public class ModelFacade {
 
@@ -113,6 +118,11 @@ public class ModelFacade {
     
     public boolean hasModel() {
         return (models != null);
+    }
+    
+    public Map<PortType, Harbor> getOwnedHarbors(int playerIndex) {
+        if (models == null) return new HashMap<>();
+        return models.getBoard().getOwnedHarbors(playerIndex);
     }
 
     //map data getters
@@ -294,11 +304,44 @@ public class ModelFacade {
         PlayerHand cards = player.getResources();
         return cards.getResourceCount(type);
     }
+    
+    public Map<ResourceType, Integer> getBank() {
+        Map<ResourceType, Integer> mapBank = new HashMap<>();
+        if (models != null) {
+            Bank bank = models.getBank();
+            ResourceList resources = bank.getResources();
+            mapBank.put(ResourceType.BRICK, 
+                    resources.getResourceNumber(ResourceType.BRICK));
+            mapBank.put(ResourceType.ORE, 
+                    resources.getResourceNumber(ResourceType.ORE));
+            mapBank.put(ResourceType.SHEEP, 
+                    resources.getResourceNumber(ResourceType.SHEEP));
+            mapBank.put(ResourceType.WOOD, 
+                    resources.getResourceNumber(ResourceType.WOOD));
+            mapBank.put(ResourceType.WHEAT, 
+                    resources.getResourceNumber(ResourceType.WHEAT));
+        } else {
+            mapBank.put(ResourceType.BRICK, 0);
+            mapBank.put(ResourceType.ORE, 0);
+            mapBank.put(ResourceType.SHEEP, 0);
+            mapBank.put(ResourceType.WOOD, 0);
+            mapBank.put(ResourceType.WHEAT, 0);
+        }
+        return mapBank;
+    }
 
-    public PlayerHand getResources(int playerIndex) {
+    public Map<ResourceType, Integer> getResources(int playerIndex) {
         Player currentPlayer = models.getPlayer(playerIndex);
         PlayerHand hand = currentPlayer.getResources();
-        return hand;
+        Map<ResourceType, Integer> map = new HashMap<>();
+        if (hand != null) {
+            map.put(ResourceType.BRICK, hand.getResourceCount(ResourceType.BRICK));
+            map.put(ResourceType.ORE, hand.getResourceCount(ResourceType.ORE));
+            map.put(ResourceType.SHEEP, hand.getResourceCount(ResourceType.SHEEP));
+            map.put(ResourceType.WHEAT, hand.getResourceCount(ResourceType.WHEAT));
+            map.put(ResourceType.WOOD, hand.getResourceCount(ResourceType.WOOD));
+        }
+        return map;
     }
 
     public int getWinner() {
