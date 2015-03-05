@@ -10,6 +10,8 @@ import java.net.URLDecoder;
 
 import client.data.GameInfo;
 import client.model.Serializer;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import java.util.List;
 
@@ -106,7 +108,7 @@ public class ServerProxy implements iServerProxy {
     public Pair<String, Integer> doPost(String urlPath, String jsonString,
             boolean extractCookie) throws IOException {
         try {
-            System.out.println(jsonString);
+            //System.out.println(jsonString);
             URL url = new URL("http://" + serverHost + ":" + serverPort + urlPath);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             String cookieValue = "catan.user=" + userCookie + "; catan.game=" + gameCookie;
@@ -198,8 +200,17 @@ public class ServerProxy implements iServerProxy {
 
     @Override
     public ClientModelDTO retrieveCurrentState(Integer version) throws IOException {
-        Pair<String, Integer> result = doGet("/game/model");
-        return serializer.deserializeModel(result.getValue0());
+        Pair<String, Integer> result;
+        if (version != null) {
+            result = doGet("/game/model?version=" + version);
+        } else {
+            result = doGet("/game/model");
+        }
+        try {
+            return serializer.deserializeModel(result.getValue0());
+        } catch (JsonSyntaxException ex) {
+            return null;
+        }
     }
 
     @Override
