@@ -146,6 +146,13 @@ public class JoinGameController extends Controller implements IJoinGameControlle
         Boolean nums = newGameView.getRandomlyPlaceNumbers();
         Boolean ports = newGameView.getUseRandomPorts();
         String title = newGameView.getTitle();
+        
+        if (title.isEmpty()) {
+            messageView.setTitle("Create Game Error");
+            messageView.setMessage("The name of the game cannot be blank");
+            messageView.showModal();
+            return;
+        }
 
         JoinGameView view = (JoinGameView) this.getView();
 
