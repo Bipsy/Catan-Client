@@ -145,18 +145,19 @@ public class JoinGameController extends Controller implements IJoinGameControlle
             getJoinGameView().showModal();
         }
     }
-
+    
     private void resetNewGameView() {
         INewGameView view = getNewGameView();
         view.setRandomlyPlaceHexes(false);
         view.setRandomlyPlaceNumbers(false);
         view.setTitle("");
-        view.setUseRandomPorts(false);
+        view.setUseRandomPorts(false);        
     }
 
     @Override
     public void startCreateNewGame() {
         pollingPaused = true;
+        resetNewGameView();
         getNewGameView().showModal();
     }
 
