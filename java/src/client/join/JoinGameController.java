@@ -236,7 +236,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
             e.printStackTrace();
         }
         
-        pollingPaused = true;
+        pollingTimer.stop();
 
         // If join succeeded
         getSelectColorView().closeModal();
