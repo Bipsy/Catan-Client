@@ -42,6 +42,10 @@ public class ModelFacade {
     public String getState() {
         return models.getStatus();
     }
+    
+    public int getVersion() {
+        return models.getVersion();
+    }
 
     public List<Message> getLogObject() {
         return models.getLogObject();
