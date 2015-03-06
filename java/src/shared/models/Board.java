@@ -59,42 +59,68 @@ public class Board {
         EdgeLocation road = buildRoad.getRoadLocation().getEdgeLocation();
         if (roadMap.containsKey(road.getNormalizedLocation())) {
             return false;
-        } 
-        else if (!hexMap.containsKey(road.getHexLoc()) && !hexMap.containsKey(road.getHexLoc().getNeighborLoc(road.getDir()))) {
-        	return false;
-        }
-        else if (state.contains("Round")) {
-        	VertexLocation[] adjVertex = road.getAdjacentVertices();
-        	System.out.println(adjVertex == null);
-        	boolean result = false;
-        	for (VertexLocation vertexLocation : adjVertex) {
-        		if(communityMap.containsKey(vertexLocation.getNormalizedLocation()))
-        				return false;
-        		boolean buildable = true;
-				VertexLocation[]adjVertecies = vertexLocation.getAdjacentVertexes();
-				for (VertexLocation vertexLocation2 : adjVertecies) {
-					if(communityMap.containsKey(vertexLocation2.getNormalizedLocation())) {
-						buildable = false;
-						break;
-					}
-				}
-				if(buildable) {
-					result = true;
-					break;
-				}
-			}
-        	return result;
-        }else {
+        } else if (!hexMap.containsKey(road.getHexLoc()) && !hexMap.containsKey(road.getHexLoc().getNeighborLoc(road.getDir()))) {
+            return false;
+        } else if (state.contains("Round")) {
+            VertexLocation[] adjVerticesToEdge = road.getAdjacentVertices();
+//            System.out.println(adjVertices == null);
+            boolean result = false;
+            for (VertexLocation adjVertexToEdge : adjVerticesToEdge) {
+                if (communityMap.containsKey(adjVertexToEdge.getNormalizedLocation())) {
+                    return false;
+                }
+                boolean buildable = true;
+                VertexLocation[] adjVerticesToVertex = adjVertexToEdge.getAdjacentVertexes();
+                for (VertexLocation adjVertexToVertex : adjVerticesToVertex) {
+                    if (communityMap.containsKey(adjVertexToVertex.getNormalizedLocation())) {
+                        buildable = false;
+                        break;
+                    }
+                }
+                if (buildable) {
+                    result = true;
+                    break;
+                }
+            }
+            return result;
+        } else {
             EdgeLocation[] adjRoads = road.getAdjacentEdges();
-            for (int i = 0; i < adjRoads.length; i++) {
-                if (roadMap.containsKey(adjRoads[i].getNormalizedLocation())
-                        && roadMap.get(adjRoads[i].getNormalizedLocation()).getOwner()
+            for (EdgeLocation adjRoad : adjRoads) {
+                if (roadMap.containsKey(adjRoad.getNormalizedLocation())
+                        && roadMap.get(adjRoad.getNormalizedLocation()).getOwner()
                         == buildRoad.getPlayerIndex()) {
+                    VertexLocation sharedVertex = sharedVertex(road, adjRoad).getNormalizedLocation();
+                    if (communityMap.containsKey(sharedVertex)) {
+                        VertexObject structure = communityMap.get(sharedVertex);
+                        if (structure.getOwner() != buildRoad.getPlayerIndex()) {
+                            return false;
+                        }
+                }
                     return true;
                 }
             }
             return false;
         }
+    }
+    
+    private VertexLocation sharedVertex(EdgeLocation edgeOne, 
+            EdgeLocation edgeTwo) {
+        
+        VertexLocation[] adjOne = edgeOne.getAdjacentVertices();
+        VertexLocation[] adjTwo = edgeTwo.getAdjacentVertices();
+        
+        for (VertexLocation vertexOne : adjOne) {
+            for (VertexLocation vertexTwo : adjTwo) {
+                VertexLocation normalizedOne = 
+                        vertexOne.getNormalizedLocation();
+                VertexLocation normalizedTwo = 
+                        vertexTwo.getNormalizedLocation();
+                if (normalizedOne.equals(normalizedTwo)) {
+                    return normalizedOne;
+                }
+            }
+        }
+        return null;
     }
 
     public boolean canBuildSettlement(BuildSettlement buildSettlement) {
@@ -149,18 +175,18 @@ public class Board {
     public List<Harbor> getHarbor() {
         return harbors;
     }
-    
+
     public Map<PortType, Harbor> getOwnedHarbors(int playerIndex) {
         Map<PortType, Harbor> ownedHarbors = new HashMap<>();
         if (harbors != null) {
             for (Harbor harbor : harbors) {
                 EdgeLocation harborEdge = harbor.getLocation();
-                VertexLocation[] adjacentVertices = 
-                        harborEdge.getAdjacentVertices();
+                VertexLocation[] adjacentVertices
+                        = harborEdge.getAdjacentVertices();
                 for (VertexLocation vertex : adjacentVertices) {
                     if (communityMap.containsKey(vertex.getNormalizedLocation())) {
-                        VertexObject community = 
-                                communityMap.get(vertex.getNormalizedLocation());
+                        VertexObject community
+                                = communityMap.get(vertex.getNormalizedLocation());
                         if (community.getOwner() == playerIndex) {
                             ownedHarbors.put(harbor.getResource(), harbor);
                         }
@@ -178,21 +204,20 @@ public class Board {
     public List<Road> getRoads() {
         return roads;
     }
-    
-    
+
     public void setRoads(EdgeValueDTO[] roadArray) {
-    	List<Road> temp = new ArrayList<>();
-    	for (int i = 0; i < roadArray.length; i++) {
-    		temp.add(new Road(roadArray[i]));        		
-    	}
-    	setRoads(temp);
+        List<Road> temp = new ArrayList<>();
+        for (int i = 0; i < roadArray.length; i++) {
+            temp.add(new Road(roadArray[i]));
+        }
+        setRoads(temp);
     }
-    
+
     public void setRoads(List<Road> road) {
-    	this.roads = road;
-    	for (int i = 0; i < road.size(); i++) {
-    		roadMap.put(road.get(i).getLocation().getNormalizedLocation(), road.get(i));
-    	}
+        this.roads = road;
+        for (int i = 0; i < road.size(); i++) {
+            roadMap.put(road.get(i).getLocation().getNormalizedLocation(), road.get(i));
+        }
     }
 
     public List<VertexObject> getSettlements() {
@@ -240,7 +265,7 @@ public class Board {
 //			hexMap.put(hex.getLocation(), hex);
 //		}
         for (int i = 0; i < hexArray.length; i++) {
-        	Hex hex = new Hex(hexArray[i]);
+            Hex hex = new Hex(hexArray[i]);
 
             temp.add(hex);
             hexMap.put(hex.getLocation(), hex);
@@ -278,20 +303,20 @@ public class Board {
         this.roads.add(road);
         this.roadMap.put(road.getLocation().getNormalizedLocation(), road);
     }
-    
+
     public Set<Integer> getOwnersIndeciesAt(Hex hex) {
-    	Set<Integer> owners = new HashSet<Integer>();
-    	for (VertexLocation vertex : hex.getAdjacentVertices()) {
-    		if (communityMap.get(vertex) != null) {
-    			owners.add(communityMap.get(vertex).getOwner());
-    		}
-    	}
-    	for (EdgeLocation edge : hex.getAdjacentEdges()) {
-    		if (roadMap.get(edge) != null) {
-    			owners.add(roadMap.get(edge).getOwner());
-    		}
-    	}
-    	return owners;
+        Set<Integer> owners = new HashSet<Integer>();
+        for (VertexLocation vertex : hex.getAdjacentVertices()) {
+            if (communityMap.get(vertex) != null) {
+                owners.add(communityMap.get(vertex).getOwner());
+            }
+        }
+        for (EdgeLocation edge : hex.getAdjacentEdges()) {
+            if (roadMap.get(edge) != null) {
+                owners.add(roadMap.get(edge).getOwner());
+            }
+        }
+        return owners;
     }
 
 }
