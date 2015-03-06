@@ -21,40 +21,40 @@ import shared.models.DTO.params.RollNumber;
  * Implementation for the roll controller
  */
 public class RollController extends Controller implements IRollController, Observer {
-	
-	private ModelFacade facade;
+
+    private ModelFacade facade;
     private static ServerProxy proxy = ServerProxy.getInstance();
 
     private IRollResultView resultView;
-    private final String MESSAGE = "Currently doesn't roll automatically";//"Rolling in %d seconds";
+    private final String MESSAGE = "Rolling in %d seconds";
     private int countDown = 3;
     private Timer rollingTimer;
-    
+
     private ActionListener timerListener = new ActionListener() {
-    	   	
+
         @Override
         public void actionPerformed(ActionEvent e) {
-        	if(getRollView().isModalShowing()) {
-        		getRollView().setMessage(String.format(MESSAGE, --countDown));
-        		getRollView().showModal();
-        		if(countDown == 0) {
-	        		rollDice();
-        		}
-        	}
-        }    
+            if (getRollView().isModalShowing()) {
+                getRollView().closeModal();
+                getRollView().setMessage(String.format(MESSAGE, --countDown));
+                getRollView().showModal();
+                if (countDown == 0) {
+                    rollDice();
+                }
+            }
+        }
     };
-    
+
     private int rollDice(int sides, int times) {
-    	
-    	
-		Random random = new Random();
-    	
-		int total = 0;
-    	for (int i = 0; i < times; i++) {
-			total += random.nextInt(sides) + 1;
-		}
-    	
-    	return total;
+
+        Random random = new Random();
+
+        int total = 0;
+        for (int i = 0; i < times; i++) {
+            total += random.nextInt(sides) + 1;
+        }
+
+        return total;
     }
 
     /**
@@ -66,7 +66,7 @@ public class RollController extends Controller implements IRollController, Obser
     public RollController(IRollView view, IRollResultView resultView) {
 
         super(view);
-        
+
         Populator.getInstance().addObserver(this);
 
         setResultView(resultView);
@@ -83,39 +83,41 @@ public class RollController extends Controller implements IRollController, Obser
     public IRollView getRollView() {
         return (IRollView) getView();
     }
-    
-    protected void showRollModal() {
 
-		getRollView().setMessage(String.format(MESSAGE, countDown));
-		getRollView().showModal();
-//		rollingTimer = new Timer(1000, timerListener);
-//		rollingTimer.setInitialDelay(1000);
-//		rollingTimer.setRepeats(true);
-//		rollingTimer.start();
+    protected void showRollModal() {
+        getRollView().setMessage(String.format(MESSAGE, countDown));
+        getRollView().showModal();
+        rollingTimer = new Timer(1000, timerListener);
+        rollingTimer.setInitialDelay(1000);
+        rollingTimer.setRepeats(true);
+        rollingTimer.start();
     }
 
     @Override
     public void rollDice() {
-//    	rollingTimer.stop();
-//		countDown = 3;
-    	int rollValue = rollDice(6,2);
-		getResultView().setRollValue(rollValue);
-		getResultView().showModal();
-		RollNumber request = new RollNumber(facade.getLocalPlayerIndex(), rollValue);
-		try {
-			Populator.getInstance().populateModel(proxy.rollNumber(request), proxy.getLocalPlayerName());
-		} catch (IOException | NoCookieException e) {
-			System.err.println(e.toString());
-		}
+    	rollingTimer.stop();
+        countDown = 3;
+        int rollValue = rollDice(6, 2);
+        if (getRollView().isModalShowing()) {
+            getRollView().closeModal();
+        }
+        getResultView().setRollValue(rollValue);
+        getResultView().showModal();
+        RollNumber request = new RollNumber(facade.getLocalPlayerIndex(), rollValue);
+        try {
+            Populator.getInstance().populateModel(proxy.rollNumber(request), proxy.getLocalPlayerName());
+        } catch (IOException | NoCookieException e) {
+            System.err.println(e.toString());
+        }
     }
 
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof Populator && arg instanceof ModelFacade) {
-        	facade = (ModelFacade)arg;
-        	if(facade.isLocalPlayerTurn() && facade.getState().toLowerCase().equals("rolling")) {
-        		showRollModal();
-        	}            
+            facade = (ModelFacade) arg;
+            if (facade.isLocalPlayerTurn() && facade.getState().toLowerCase().equals("rolling")) {
+                showRollModal();
+            }
         }
     }
 }
