@@ -245,12 +245,7 @@ public class DiscardController extends Controller
                 Map<ResourceType, Integer> playerHand = 
                         facade.getResources(localIndex);
                 hand = playerHand;
-//                for (Map.Entry<ResourceType, Integer> entry : hand.entrySet()) {
-//                    System.out.println(entry.getKey() + ": " + entry.getValue());
-//                }
-                System.out.println(facade.getState());
-                System.out.println("Total cards: " + getTotalHand());
-                System.out.println("Discarded: " + localPlayer.getDiscarded() + "\n");
+                
                 if (facade.getState().equals("Discarding") 
                         && this.getTotalHand() > 7
                         && !localPlayer.getDiscarded()) {

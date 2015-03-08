@@ -17,16 +17,18 @@ import java.util.Observer;
 /**
  * Implementation for the turn tracker controller
  */
-public class TurnTrackerController extends Controller 
-    implements ITurnTrackerController, Observer {
+public class TurnTrackerController extends Controller
+        implements ITurnTrackerController, Observer {
 
-	private ServerProxy proxy = ServerProxy.getInstance();
-	private ModelFacade facade;
+    private ServerProxy proxy = ServerProxy.getInstance();
+    private ModelFacade facade;
+    private int initializedPlayers;
 
     public TurnTrackerController(ITurnTrackerView view) {
 
         super(view);
         Populator.getInstance().addObserver(this);
+        initializedPlayers = 0;
         initFromModel(null);
     }
 
@@ -38,98 +40,99 @@ public class TurnTrackerController extends Controller
 
     @Override
     public void endTurn() {
-    	FinishTurn endTurn = new FinishTurn(facade.getLocalPlayerIndex());
-    	try {
-    		Populator.getInstance().populateModel(proxy.finishTurn(endTurn), proxy.getLocalPlayerName());
-		} catch (IOException | NoCookieException e) {
-			System.err.println(e.toString());
-		}
+        FinishTurn endTurn = new FinishTurn(facade.getLocalPlayerIndex());
+        try {
+            Populator.getInstance().populateModel(proxy.finishTurn(endTurn), proxy.getLocalPlayerName());
+        } catch (IOException | NoCookieException e) {
+            System.err.println(e.toString());
+        }
     }
 
     private void initFromModel(ModelFacade facade) {
-    	
-    	if (facade == null || !facade.hasModel()) return;
-    	
-    	String username = facade.getLocalUserName();
-    	
-    	CatanColor color = facade.GetPlayerColor(username);
-    	
-    	if(color != null)
-    		getView().setLocalPlayerColor(color);
-        int currentTurn = -1;
-        
+
+        if (facade == null || !facade.hasModel()) {
+            return;
+        }
+
+        String username = facade.getLocalUserName();
+
+        CatanColor color = facade.GetPlayerColor(username);
+
+        if (color != null) {
+            getView().setLocalPlayerColor(color);
+        }
+
         for (int i = 0; i < 4; i++) {
-			try {
-				Player player = facade.getPlayer(i);
-				if(facade.isCurrentTurn(i))
-					currentTurn = i;
-				getView().initializePlayer(i, player.getUsername(), player.getColor());
-				getView().updatePlayer(i, player.getVictoryPoints(), facade.isCurrentTurn(i), 
-						facade.getLargestArmy() == i, facade.getlongestRoad() == i);
-			} catch (InvalidPlayerIndex e) {
-				e.printStackTrace();
-			}
-		}
-        
+            try {
+                Player player = facade.getPlayer(i);
+                if (initializedPlayers < 4) {
+                    getView().initializePlayer(i, player.getUsername(), player.getColor());
+                    initializedPlayers++;
+                }
+                getView().updatePlayer(i, player.getVictoryPoints(), facade.isCurrentTurn(i),
+                        facade.getLargestArmy() == i, facade.getlongestRoad() == i);
+            } catch (InvalidPlayerIndex e) {
+                e.printStackTrace();
+            }
+        }
+
         String state = facade.getState();
         boolean enabled = false;
-		Player localPlayer = null;
-		boolean isTurn = false;
-		try {
-			localPlayer = facade.getPlayer(facade.getCurrentPlayerIndex());
-			isTurn = facade.isCurrentTurn(localPlayer.getIndex());
-		} catch (InvalidPlayerIndex e) {
-			e.printStackTrace();
-		}
-		
-        
-        switch (state) {
-		case "Rolling":
-		case "Robbing":
-			if(!isTurn) {
-				state = "Waiting for Other Players";
-			}
-			break;
-		case "Discarding":
-			break;
-		case "FirstRound":
-			if(!isTurn) {
-				state = "Waiting for Other Players";
-			}
-			else {
-				if(localPlayer != null && localPlayer.getRoads() == 14 && localPlayer.getSettlements() == 4) {
-					state = "Finish Turn";
-					enabled = true;
-				}
-			}
-			break;
-		case "SecondRound":
-			if(!isTurn) {
-				state = "Waiting for Other Players";
-			}
-			else {
-				if(localPlayer != null && localPlayer.getRoads() == 13 && localPlayer.getSettlements() == 3) {
-					state = "Finish Turn";
-					enabled = true;
-				}
-			}
-			break;
-		case "Playing":
-			if(!isTurn) {
-				state = "Waiting for Other Players";
-			}
-			else {
-				state = "Finish Turn";
-				enabled = true;
-			}
-			break;
+        Player localPlayer = null;
+        boolean isTurn = false;
+        try {
+            localPlayer = facade.getPlayer(facade.getLocalPlayerIndex());
+            isTurn = facade.isCurrentTurn(localPlayer.getIndex());
+        } catch (InvalidPlayerIndex e) {
+            e.printStackTrace();
+        }
 
-		default:
-			state = "Waiting for Other Players";
-			enabled = false;
-			break;
-		}
-        
+        switch (state) {
+            case "Rolling":
+            case "Robbing":
+                if (!isTurn) {
+                    state = "Waiting for Other Players";
+                }
+                break;
+            case "Discarding":
+                break;
+            case "FirstRound":
+                if (!isTurn) {
+                    state = "Waiting for Other Players";
+                } else {
+                    if (localPlayer != null && localPlayer.getRoads() == 14 
+                            && localPlayer.getSettlements() == 4) {
+                        state = "Finish Turn";
+                        enabled = true;
+                    }
+                }
+                break;
+            case "SecondRound":
+                if (!isTurn) {
+                    state = "Waiting for Other Players";
+                } else {
+                    if (localPlayer != null && localPlayer.getRoads() == 13 
+                            && localPlayer.getSettlements() == 3) {
+                        state = "Finish Turn";
+                        enabled = true;
+                    }
+                }
+                break;
+            case "Playing":
+                if (!isTurn) {
+                    state = "Waiting for Other Players";
+                } else {
+                    state = "Finish Turn";
+                    enabled = true;
+                }
+                break;
+
+            default:
+                state = "Waiting for Other Players";
+                enabled = false;
+                break;
+        }
+
 //        enabled = true;
         getView().updateGameState(state, enabled);
     }
@@ -137,7 +140,7 @@ public class TurnTrackerController extends Controller
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof Populator && arg instanceof ModelFacade) {
-        	facade = (ModelFacade) arg;
+            facade = (ModelFacade) arg;
             initFromModel(facade);
         }
     }
