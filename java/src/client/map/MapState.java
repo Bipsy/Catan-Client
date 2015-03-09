@@ -13,228 +13,234 @@ import shared.models.DTO.params.*;
 import client.data.*;
 
 public abstract class MapState {
-	
-	
 
-	ServerProxy proxy = ServerProxy.getInstance();
-	UserCookie uCookie = proxy.getUserCookie();
-	ModelFacade facade = new ModelFacade();
-	
-	//default methods
-	boolean canPlaceRoad(EdgeLocation edgeLoc) {
-		return false;
-	}
-	
-	boolean canPlaceSettlement(VertexLocation vertLoc) {
-		return false;
-	}
-	
-	boolean canPlaceCity(VertexLocation vertLoc) {
-		return false;
-	}
-	
-	boolean canPlaceRobber(HexLocation hexLoc) {
-		return false;
-	}
-	
-	void placeRoad(EdgeLocation edgeLoc) {}
-	
-	void placeSettlement(VertexLocation vertLoc) {}
-	
-	void placeCity(VertexLocation vertLoc) {}
-	
-	void robPlayer(RobPlayerInfo victim) {}
-	void showMapOverlay(IMapView view) {}
-	
-	void setNewRobberLocation(HexLocation newRobberLocation) {}
-	
+    ServerProxy proxy = ServerProxy.getInstance();
+    UserCookie uCookie = proxy.getUserCookie();
+    ModelFacade facade = new ModelFacade();
 
-	public static class Setup1 extends MapState {
-		
+    //default methods
+    boolean canPlaceRoad(EdgeLocation edgeLoc) {
+        return false;
+    }
 
-		void showMapOverlay(IMapView view) {
-			try {
-				if ((facade.getObjectCount(facade.getLocalPlayerIndex(), "Road")) == 0)
-					view.startDrop(PieceType.ROAD,facade.GetPlayerColor(facade.getLocalPlayerIndex()), false);
-				else if (facade.getObjectCount(facade.getLocalPlayerIndex(), "Road") == 1 &&
-							facade.getObjectCount(facade.getLocalPlayerIndex(), "Settlement") == 0) {
-					view.startDrop(PieceType.SETTLEMENT,facade.GetPlayerColor(facade.getLocalPlayerIndex()), false);
-				}
-			}
-			catch(Exception e) {
-				e.printStackTrace(System.out);
-			}				
-		}
+    boolean canPlaceSettlement(VertexLocation vertLoc) {
+        return false;
+    }
 
-		@Override
-		boolean canPlaceRoad(EdgeLocation edgeLoc) {
-			return facade.CanBuildRoad(new BuildRoad(facade.getLocalPlayerIndex(), new RoadLocation(edgeLoc), true));
-		}
-		
-		@Override
-		boolean canPlaceSettlement(VertexLocation vertLoc) {
-			return facade.CanBuildSettlement(new BuildSettlement(facade.getLocalPlayerIndex(), new VertexLocationDTO(vertLoc), true));
-		}
-		
-		void placeRoad(EdgeLocation edgeLoc) {
-			BuildRoad roadMove = new BuildRoad(facade.getLocalPlayerIndex(), new RoadLocation(edgeLoc), true);
-			try {
-				Populator.getInstance().populateModel(proxy.buildRoad(roadMove), proxy.getLocalPlayerName());
-			} catch (IOException | NoCookieException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		void placeSettlement(VertexLocation vertLoc) {
-			BuildSettlement settlementMove = new BuildSettlement(facade.getLocalPlayerIndex(), new VertexLocationDTO(vertLoc), true);
-			try {
-				Populator.getInstance().populateModel(proxy.buildSettlement(settlementMove), proxy.getLocalPlayerName());
-			} catch (IOException | NoCookieException e) {
-				e.printStackTrace();
-			}
-		}
-	}
+    boolean canPlaceCity(VertexLocation vertLoc) {
+        return false;
+    }
 
-	
-	public static class PlayingBuildRoadCard extends MapState {
-//		IMapView view = new IMapView();
-		boolean round1 = true;
-		boolean canPlaceRoad(EdgeLocation edgeLoc) {
-			System.out.println("marbles everywhere!");
-			return true;
-		}
-		void placeRoad(EdgeLocation edgeLoc) {
-			
-			BuildRoad roadMove = new BuildRoad(facade.getLocalPlayerIndex(), new RoadLocation(edgeLoc), false);
-			if (round1) {
-				try {
-					Populator.getInstance().populateModel(proxy.buildRoad(roadMove), proxy.getLocalPlayerName());
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (NoCookieException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			} 
-		}
-	}
-	
-public static class Setup2 extends Setup1 {
-		
-		void showMapOverlay(IMapView view) {
-			try {
-				if ((facade.getObjectCount(facade.getLocalPlayerIndex(), "Road")) == 1)
-					view.startDrop(PieceType.ROAD,facade.GetPlayerColor(facade.getLocalPlayerIndex()), false);
-				else if (facade.getObjectCount(facade.getLocalPlayerIndex(), "Road") == 2 &&
-							facade.getObjectCount(facade.getLocalPlayerIndex(), "Settlement") == 1) {
-					view.startDrop(PieceType.SETTLEMENT,facade.GetPlayerColor(facade.getLocalPlayerIndex()), false);
-				}
-			}
-			catch(Exception e) {
-				e.printStackTrace(System.out);
-			}				
-		}
-	}
-	
-	public static class Rolling extends MapState {
-		
-		
-	}
-	
-	public static class MoveRobber extends MapState {
-		
-		private HexLocation newRobberLocation;
+    boolean canPlaceRobber(HexLocation hexLoc) {
+        return false;
+    }
 
-		public void setNewRobberLocation(HexLocation newRobberLocation) {
-			this.newRobberLocation = newRobberLocation;
-		}
+    void placeRoad(EdgeLocation edgeLoc) {
+    }
 
-		void showMapOverlay(IMapView view) {			
-			view.startDrop(PieceType.ROBBER,facade.GetPlayerColor(facade.getLocalPlayerIndex()), false);				
-		}
-		
-		boolean canPlaceRobber(HexLocation hexLoc) {
-			return facade.CanPlaceRobber(hexLoc);
-		}
-		
-		void robPlayer(RobPlayerInfo victim) {
-			RobPlayer robPlayer = new RobPlayer(facade.getLocalPlayerIndex(), victim.getPlayerIndex(), newRobberLocation);
-			try {
-				Populator.getInstance().populateModel(proxy.robPlayer(robPlayer), proxy.getLocalPlayerName());
-			} catch (IOException | NoCookieException e) {
-				e.printStackTrace();
-			}
-		}
-		
-	}
-	
-	public static class Playing extends MapState {
+    void placeSettlement(VertexLocation vertLoc) {
+    }
 
-		boolean canPlaceRoad(EdgeLocation edgeLoc) {
-			BuildRoad road = new BuildRoad(facade.getLocalPlayerIndex(), new RoadLocation(edgeLoc), false);
-			return facade.CanBuildRoad(road);
-		}
-		
-		boolean canPlaceSettlement(VertexLocation vertLoc) {
-			BuildSettlement settlement = new BuildSettlement(facade.getLocalPlayerIndex(), new VertexLocationDTO(vertLoc), false);
-			return facade.CanBuildSettlement(settlement);
-		}
-				
-		boolean canPlaceCity(VertexLocation vertLoc) {
-			BuildCity city = new BuildCity(facade.getLocalPlayerIndex(), new VertexLocationDTO(vertLoc));
-			return facade.CanBuildCity(city);
-		}
-		
-		void placeRoad(EdgeLocation edgeLoc) {
-			BuildRoad roadMove = new BuildRoad(facade.getLocalPlayerIndex(), new RoadLocation(edgeLoc), false);
-			try {
-				Populator.getInstance().populateModel(proxy.buildRoad(roadMove), proxy.getLocalPlayerName());
-			} catch (IOException | NoCookieException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		void placeSettlement(VertexLocation vertLoc) {
-			BuildSettlement settlementMove = new BuildSettlement(facade.getLocalPlayerIndex(), new VertexLocationDTO(vertLoc), false);
-			try {
-				Populator.getInstance().populateModel(proxy.buildSettlement(settlementMove), proxy.getLocalPlayerName());
-			} catch (IOException | NoCookieException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		void placeCity(VertexLocation vertLoc) {
-			BuildCity cityMove = new BuildCity(facade.getLocalPlayerIndex(), new VertexLocationDTO(vertLoc));
-			try {
-				Populator.getInstance().populateModel(proxy.buildCity(cityMove), proxy.getLocalPlayerName());
-			} catch (IOException | NoCookieException e) {
-				e.printStackTrace();
-			}
-		}  		
-	}
-	
-	public static class Discarding extends MapState {
-	
-		
-	}
-	
-	public static class PlayingSoldierCard extends MoveRobber {
-		
-		private HexLocation newRobberLocation;
+    void placeCity(VertexLocation vertLoc) {
+    }
 
-		public void setNewRobberLocation(HexLocation newRobberLocation) {
-			this.newRobberLocation = newRobberLocation;
-		}
-		
-		void robPlayer(RobPlayerInfo victim) {
-			Soldier soldier = new Soldier(facade.getLocalPlayerIndex(), victim.getPlayerIndex(), newRobberLocation);
-			try {
-				Populator.getInstance().populateModel(proxy.playSoldier(soldier), proxy.getLocalPlayerName());
-			} catch (IOException | NoCookieException e) {
-				e.printStackTrace();
-			}
-		}
-	}
+    void robPlayer(RobPlayerInfo victim) {
+    }
+
+    void showMapOverlay(IMapView view) {
+    }
+
+    void setNewRobberLocation(HexLocation newRobberLocation) {
+    }
+
+    public static class Setup1 extends MapState {
+
+        void showMapOverlay(IMapView view) {
+            try {
+                if ((facade.getObjectCount(facade.getLocalPlayerIndex(), "Road")) == 0) {
+                    view.startDrop(PieceType.ROAD, facade.GetPlayerColor(facade.getLocalPlayerIndex()), false);
+                } else if (facade.getObjectCount(facade.getLocalPlayerIndex(), "Road") == 1
+                        && facade.getObjectCount(facade.getLocalPlayerIndex(), "Settlement") == 0) {
+                    view.startDrop(PieceType.SETTLEMENT, facade.GetPlayerColor(facade.getLocalPlayerIndex()), false);
+                }
+            } catch (Exception e) {
+                e.printStackTrace(System.out);
+            }
+        }
+
+        @Override
+        boolean canPlaceRoad(EdgeLocation edgeLoc) {
+            return facade.CanBuildRoad(new BuildRoad(facade.getLocalPlayerIndex(), new RoadLocation(edgeLoc), true));
+        }
+
+        @Override
+        boolean canPlaceSettlement(VertexLocation vertLoc) {
+            return facade.CanBuildSettlement(new BuildSettlement(facade.getLocalPlayerIndex(), new VertexLocationDTO(vertLoc), true));
+        }
+
+        void placeRoad(EdgeLocation edgeLoc) {
+            BuildRoad roadMove = new BuildRoad(facade.getLocalPlayerIndex(), new RoadLocation(edgeLoc), true);
+            try {
+                Populator.getInstance().populateModel(proxy.buildRoad(roadMove), proxy.getLocalPlayerName());
+            } catch (IOException | NoCookieException e) {
+                e.printStackTrace();
+            }
+        }
+
+        void placeSettlement(VertexLocation vertLoc) {
+            BuildSettlement settlementMove = new BuildSettlement(facade.getLocalPlayerIndex(), new VertexLocationDTO(vertLoc), true);
+            try {
+                Populator.getInstance().populateModel(proxy.buildSettlement(settlementMove), proxy.getLocalPlayerName());
+            } catch (IOException | NoCookieException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static class PlayingBuildRoadCard extends MapState {
+
+
+    	private RoadLocation edge1 = null;
+    	private IMapView view;
+    	
+        boolean canPlaceRoad(EdgeLocation edgeLoc) {
+        	
+            return facade.CanBuildRoad(new BuildRoad(facade.getLocalPlayerIndex(), new RoadLocation(edgeLoc), true));
+        }
+        
+        void showMapOverlay(IMapView view) {     
+        	this.view = view;
+            view.startDrop(PieceType.ROAD, facade.GetPlayerColor(facade.getLocalPlayerIndex()), true);
+        }
+
+        void placeRoad(EdgeLocation edgeLoc) {
+
+        	if (edge1 == null) {
+        		edge1 = new RoadLocation(edgeLoc);
+        		this.view.placeRoad(edgeLoc, facade.GetPlayerColor(facade.getLocalPlayerIndex()));
+        		showMapOverlay(this.view);
+        	}
+        	else {
+	        	RoadBuilding roadBuildingMove = new RoadBuilding(facade.getLocalPlayerIndex(), this.edge1, new RoadLocation(edgeLoc));
+	        	
+	        	try {
+	        		Populator.getInstance().populateModel(proxy.playRoadBuilding(roadBuildingMove), proxy.getLocalPlayerName());
+	    		} catch (Exception e) {
+	    			e.printStackTrace();
+	    		} 
+        	}
+        }
+    }
+
+    public static class Setup2 extends Setup1 {
+
+        void showMapOverlay(IMapView view) {
+            try {
+                if ((facade.getObjectCount(facade.getLocalPlayerIndex(), "Road")) == 1) {
+                    view.startDrop(PieceType.ROAD, facade.GetPlayerColor(facade.getLocalPlayerIndex()), false);
+                } else if (facade.getObjectCount(facade.getLocalPlayerIndex(), "Road") == 2
+                        && facade.getObjectCount(facade.getLocalPlayerIndex(), "Settlement") == 1) {
+                    view.startDrop(PieceType.SETTLEMENT, facade.GetPlayerColor(facade.getLocalPlayerIndex()), false);
+                }
+            } catch (Exception e) {
+                e.printStackTrace(System.out);
+            }
+        }
+    }
+
+    public static class Waiting extends MapState {
+
+    }
+    
+    public static class MoveRobber extends MapState {
+
+        private HexLocation newRobberLocation;
+
+        public void setNewRobberLocation(HexLocation newRobberLocation) {
+            this.newRobberLocation = newRobberLocation;
+        }
+
+        void showMapOverlay(IMapView view) {
+            view.startDrop(PieceType.ROBBER, facade.GetPlayerColor(facade.getLocalPlayerIndex()), false);
+        }
+
+        boolean canPlaceRobber(HexLocation hexLoc) {
+            return facade.CanPlaceRobber(hexLoc);
+        }
+
+        void robPlayer(RobPlayerInfo victim) {
+            RobPlayer robPlayer = new RobPlayer(facade.getLocalPlayerIndex(), victim.getPlayerIndex(), newRobberLocation);
+            try {
+                Populator.getInstance().populateModel(proxy.robPlayer(robPlayer), proxy.getLocalPlayerName());
+            } catch (IOException | NoCookieException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    public static class Playing extends MapState {
+
+        boolean canPlaceRoad(EdgeLocation edgeLoc) {
+            BuildRoad road = new BuildRoad(facade.getLocalPlayerIndex(), new RoadLocation(edgeLoc), false);
+            return facade.CanBuildRoad(road);
+        }
+
+        boolean canPlaceSettlement(VertexLocation vertLoc) {
+            BuildSettlement settlement = new BuildSettlement(facade.getLocalPlayerIndex(), new VertexLocationDTO(vertLoc), false);
+            return facade.CanBuildSettlement(settlement);
+        }
+
+        boolean canPlaceCity(VertexLocation vertLoc) {
+            BuildCity city = new BuildCity(facade.getLocalPlayerIndex(), new VertexLocationDTO(vertLoc));
+            return facade.CanBuildCity(city);
+        }
+
+        void placeRoad(EdgeLocation edgeLoc) {
+            BuildRoad roadMove = new BuildRoad(facade.getLocalPlayerIndex(), new RoadLocation(edgeLoc), false);
+            try {
+                Populator.getInstance().populateModel(proxy.buildRoad(roadMove), proxy.getLocalPlayerName());
+            } catch (IOException | NoCookieException e) {
+                e.printStackTrace();
+            }
+        }
+
+        void placeSettlement(VertexLocation vertLoc) {
+            BuildSettlement settlementMove = new BuildSettlement(facade.getLocalPlayerIndex(), new VertexLocationDTO(vertLoc), false);
+            try {
+                Populator.getInstance().populateModel(proxy.buildSettlement(settlementMove), proxy.getLocalPlayerName());
+            } catch (IOException | NoCookieException e) {
+                e.printStackTrace();
+            }
+        }
+
+        void placeCity(VertexLocation vertLoc) {
+            BuildCity cityMove = new BuildCity(facade.getLocalPlayerIndex(), new VertexLocationDTO(vertLoc));
+            try {
+                Populator.getInstance().populateModel(proxy.buildCity(cityMove), proxy.getLocalPlayerName());
+            } catch (IOException | NoCookieException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    public static class PlayingSoldierCard extends MoveRobber {
+
+        private HexLocation newRobberLocation;
+
+        public void setNewRobberLocation(HexLocation newRobberLocation) {
+            this.newRobberLocation = newRobberLocation;
+        }
+
+        void robPlayer(RobPlayerInfo victim) {
+            Soldier soldier = new Soldier(facade.getLocalPlayerIndex(), victim.getPlayerIndex(), newRobberLocation);
+            try {
+                Populator.getInstance().populateModel(proxy.playSoldier(soldier), proxy.getLocalPlayerName());
+            } catch (IOException | NoCookieException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 }

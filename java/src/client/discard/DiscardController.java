@@ -158,9 +158,16 @@ public class DiscardController extends Controller
             discardProcess = false;
             proxy.discardCards(discardingSet);
             getDiscardView().setDiscardButtonEnabled(false);
+            resetView();
             getDiscardView().closeModal();
         } catch (IOException ex) {
             System.err.println("Error while tring to discard cards");
+        }
+    }
+    
+    private void resetView() {
+        for (Map.Entry<ResourceType, Integer> entry : hand.entrySet()) {
+            getDiscardView().setResourceDiscardAmount(entry.getKey(), 0);
         }
     }
     
@@ -238,9 +245,7 @@ public class DiscardController extends Controller
                 Map<ResourceType, Integer> playerHand = 
                         facade.getResources(localIndex);
                 hand = playerHand;
-                for (Map.Entry<ResourceType, Integer> entry : hand.entrySet()) {
-                    System.out.println(entry.getKey() + ": " + entry.getValue());
-                }
+                
                 if (facade.getState().equals("Discarding") 
                         && this.getTotalHand() > 7
                         && !localPlayer.getDiscarded()) {

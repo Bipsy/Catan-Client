@@ -63,14 +63,14 @@ public class ServerPollerTest {
     // public void hello() {}
     @Test
     public void pollNewModelTest() {
-        ServerPoller poller = new ServerPoller(proxy, populator, 0);
+        ServerPoller poller = new ServerPoller(proxy, populator);
         ClientModelDTO model = poller.poll();
         assertNotNull(model);
     }
 
     @Test
     public void pollOldModelTest() {
-        ServerPoller poller = new ServerPoller(proxy, populator, 1);
+        ServerPoller poller = new ServerPoller(proxy, populator);
         ClientModelDTO model = poller.poll();
         assertNull(model);
     }

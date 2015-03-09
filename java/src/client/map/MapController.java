@@ -164,34 +164,16 @@ public class MapController extends Controller
     }
 
     public void cancelMove() {
-    	//TODO: 
+        initFromModel(facade);
     }
 
     public void playSoldierCard() {
-    	//TODO: 
+    	updateState("PlayingSoldierCard");
     }
 
     public void playRoadBuildingCard() {
+    	
     	this.updateState("PlayingBuildRoadCard");
-    	
-    	this.roadBuildingTurn1 = true;
-    	getView().startDrop(PieceType.ROAD, facade.GetPlayerColor(facade.getLocalPlayerIndex()), true);
-    	this.roadBuildingTurn1 = false;
-    	
-    	this.roadBuildingTurn2 = true;
-    	getView().startDrop(PieceType.ROAD, facade.GetPlayerColor(facade.getLocalPlayerIndex()), false);
-    	this.roadBuildingTurn2 = false;
-   	  	
-    	ServerProxy proxy = ServerProxy.getInstance();
-    	int playerIndex = facade.getCurrentPlayerIndex();
-    	RoadBuilding roadBuildingMove = new RoadBuilding(playerIndex, this.edge1, this.edge2);
-    	
-    	try {
-			proxy.playRoadBuilding(roadBuildingMove);
-		} catch (IOException e) {
-
-			e.printStackTrace();
-		} 
     }
 
     public void robPlayer(RobPlayerInfo victim) {
@@ -199,6 +181,19 @@ public class MapController extends Controller
     }
     
     public void updateState(String currState) {
+    	
+    	boolean isPlayersturn = false;
+    			try {
+    				isPlayersturn = facade.isCurrentTurn(facade.getLocalPlayerIndex());
+    			}
+    			catch (Exception e) {
+    				e.printStackTrace();
+    			}
+    	if (!isPlayersturn)
+    	{
+			state = new MapState.Waiting();
+			return;
+    	}
     	
     	switch (currState) {
     		case "FirstRound":
@@ -208,16 +203,14 @@ public class MapController extends Controller
     			state = new MapState.Setup2();
     			break;
     		case "Rolling":
-    			state = new MapState.Rolling();
+    		case "Discarding":	
+    			state = new MapState.Waiting();
     			break;
     		case "Robbing":
     			state = new MapState.MoveRobber();
     			break;
     		case "Playing":
     			state = new MapState.Playing();
-    			break;
-    		case "Discarding":
-    			state = new MapState.Discarding();
     			break;
     		case "PlayingBuildRoadCard":
     			state = new MapState.PlayingBuildRoadCard();

@@ -14,9 +14,9 @@ import org.javatuples.Pair;
  */
 public class LoginController extends Controller implements ILoginController {
 
-    private IMessageView messageView;
+    private final IMessageView messageView;
     private IAction loginAction;
-    private static ServerProxy proxy = ServerProxy.getInstance();
+    private static final ServerProxy proxy = ServerProxy.getInstance();
 
     /**
      * LoginController constructor
@@ -95,14 +95,38 @@ public class LoginController extends Controller implements ILoginController {
             String username = ((ILoginView) this.getView()).getRegisterUsername();
             String password1 = ((ILoginView) this.getView()).getRegisterPassword();
             String password2 = ((ILoginView) this.getView()).getRegisterPasswordRepeat();
-
-            if (!password1.equals(password2)) {
-                //show errors
+            
+            if (username.length() < 3 || username.length() > 7) {
+                messageView.setTitle("Register Error");
+                messageView.setMessage("Username must be between 3 and "
+                        + "7 characters long");
+                messageView.showModal();
+                return;
             }
 
-            //TODO: check for non approved characters
-            if (password1.length() < 3 || password1.length() > 7) {
-                //show errors
+            if (!password1.equals(password2)) {
+                messageView.setTitle("Register Error");
+                messageView.setMessage("Passwords didn't match");
+                messageView.showModal();
+                return;
+            }
+
+            if (password1.length() < 5) {
+                messageView.setTitle("Register Error");
+                messageView.setMessage("Password must be greater than "
+                        + "5 characters long");
+                messageView.showModal();
+                return;
+            }
+            
+            for (int i = 0; i < password1.length(); i++) {
+                char c = password1.charAt(i);
+                if (!(Character.isLetterOrDigit(c) || c == '_' || c == '-')) {
+                    messageView.setTitle("Register Error");
+                    messageView.setMessage("Password can only contain 0-9, a-z, A-Z, _, and -");
+                    messageView.showModal();
+                    return;
+                }
             }
 
             Pair<Boolean, Integer> pair = proxy.registerNewUser(new UserCredentials(username, password1));

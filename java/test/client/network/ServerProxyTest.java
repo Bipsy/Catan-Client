@@ -295,7 +295,7 @@ public class ServerProxyTest {
         HexLocation hexTwo = new HexLocation(1, -1);
         EdgeLocation edge = new EdgeLocation(hex, EdgeDirection.NorthEast);
         EdgeLocation edgeTwo = new EdgeLocation(hexTwo, EdgeDirection.South);
-        RoadBuilding card = new RoadBuilding(0, edge, edgeTwo);
+        RoadBuilding card = new RoadBuilding(0, new RoadLocation(edge), new RoadLocation(edgeTwo));
         try {
             proxy.playRoadBuilding(card);
             assertTrue("The Road Building development card has been played", model != null);

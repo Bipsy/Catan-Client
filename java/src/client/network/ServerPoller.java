@@ -5,6 +5,7 @@
  */
 package client.network;
 
+import client.model.ModelFacade;
 import client.model.iPopulator;
 
 import java.awt.event.ActionEvent;
@@ -26,7 +27,7 @@ public class ServerPoller implements ActionListener {
 
     final private iServerProxy serverProxy;
     final private iPopulator modelHandle;
-    private int version;
+    final private ModelFacade facade;
 
     /**
      * @param proxy The proxy object that the poller will use to update the
@@ -35,11 +36,10 @@ public class ServerPoller implements ActionListener {
      * @param populator The facade object that will receive the serialized model
      * @param version The initial version of the client model.
      */
-    public ServerPoller(iServerProxy proxy, iPopulator populator, int version) {
-
+    public ServerPoller(iServerProxy proxy, iPopulator populator) {
+        this.facade = new ModelFacade();
         this.serverProxy = proxy;
         this.modelHandle = populator;
-        this.version = version;
     }
 
     /**
@@ -56,6 +56,7 @@ public class ServerPoller implements ActionListener {
             return null;
         }
         try {
+            int version = facade.getVersion();
             ClientModelDTO newModel = serverProxy.retrieveCurrentState(new Integer(version));
             return newModel;
         } catch (IOException ex) {
@@ -63,17 +64,6 @@ public class ServerPoller implements ActionListener {
             System.err.println(ex.getLocalizedMessage());
         }
         return null;
-    }
-
-    private boolean isNew(ClientModelDTO model) {
-        if (model == null) {
-            return false;
-        } else if (model.getVersion() > version) {
-            version = model.getVersion();
-            return true;
-        } else {
-            return false;
-        }
     }
 
     private boolean updateModel(ClientModelDTO model) {
@@ -94,7 +84,7 @@ public class ServerPoller implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         ClientModelDTO newModel = poll();
-        if (isNew(newModel)) {
+        if (newModel != null) {
             updateModel(newModel);
         }
     }
