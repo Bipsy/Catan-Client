@@ -13,8 +13,6 @@ import client.network.ServerProxy;
 import client.network.UserCookie;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.Timer;
 
 /**
@@ -49,10 +47,10 @@ public class JoinGameController extends Controller implements IJoinGameControlle
             ISelectColorView selectColorView, IMessageView messageView) {
 
         super(view);
-      
+
         setNewGameView(newGameView);
         setSelectColorView(selectColorView);
-        setMessageView(messageView); 
+        setMessageView(messageView);
         pollingTimer = new Timer(MILLIS, this);
         pollingTimer.setInitialDelay(MILLIS);
     }
@@ -111,7 +109,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
         this.messageView = messageView;
     }
-    
+
     private void updateView() {
         try {
             games = proxy.listGames();
@@ -145,13 +143,13 @@ public class JoinGameController extends Controller implements IJoinGameControlle
             getJoinGameView().showModal();
         }
     }
-    
+
     private void resetNewGameView() {
         INewGameView view = getNewGameView();
         view.setRandomlyPlaceHexes(false);
         view.setRandomlyPlaceNumbers(false);
         view.setTitle("");
-        view.setUseRandomPorts(false);        
+        view.setUseRandomPorts(false);
     }
 
     @Override
@@ -173,7 +171,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
         Boolean nums = newGameView.getRandomlyPlaceNumbers();
         Boolean ports = newGameView.getUseRandomPorts();
         String title = newGameView.getTitle();
-        
+
         if (title.isEmpty()) {
             messageView.setTitle("Create Game Error");
             messageView.setMessage("The name of the game cannot be blank");
@@ -203,7 +201,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
     @Override
     public void startJoinGame(GameInfo game) {
-    	System.out.println(game.getId());
+        System.out.println(game.getId());
         pollingPaused = true;
         localGame = game;
         List<PlayerInfo> players = game.getPlayers();
@@ -237,7 +235,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        
+
         pollingTimer.stop();
 
         // If join succeeded
@@ -253,31 +251,25 @@ public class JoinGameController extends Controller implements IJoinGameControlle
         if (!pollingPaused) {
             System.out.println("Not paused");
             updateView();
-        } else {
-			localGame = getMostRecentLocalGame();
-        	startJoinGame(localGame);
         }
-        
     }
-    
-    public GameInfo getMostRecentLocalGame() {
-    	int gameId = 0;
-    	try {
-			games = proxy.listGames();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	
-    	for (int i = 0; i < games.size(); i++) {
-    		if (games.get(i).getId() == localGame.getId()) {
-    			gameId = i;
-    			break;
-    		}
-    	}
-    	return games.get(gameId);
-    }
-    
-    
+
+//    public GameInfo getMostRecentLocalGame() {
+//        int gameId = 0;
+//        try {
+//            games = proxy.listGames();
+//        } catch (IOException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//
+//        for (int i = 0; i < games.size(); i++) {
+//            if (games.get(i).getId() == localGame.getId()) {
+//                gameId = i;
+//                break;
+//            }
+//        }
+//        return games.get(gameId);
+//    }
 
 }
