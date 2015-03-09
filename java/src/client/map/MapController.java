@@ -164,7 +164,7 @@ public class MapController extends Controller
     }
 
     public void cancelMove() {
-    	//TODO: 
+        initFromModel(facade);
     }
 
     public void playSoldierCard() {
@@ -172,26 +172,8 @@ public class MapController extends Controller
     }
 
     public void playRoadBuildingCard() {
+    	
     	this.updateState("PlayingBuildRoadCard");
-    	
-    	this.roadBuildingTurn1 = true;
-    	getView().startDrop(PieceType.ROAD, facade.GetPlayerColor(facade.getLocalPlayerIndex()), true);
-    	this.roadBuildingTurn1 = false;
-    	
-    	this.roadBuildingTurn2 = true;
-    	getView().startDrop(PieceType.ROAD, facade.GetPlayerColor(facade.getLocalPlayerIndex()), false);
-    	this.roadBuildingTurn2 = false;
-   	  	
-    	ServerProxy proxy = ServerProxy.getInstance();
-    	int playerIndex = facade.getCurrentPlayerIndex();
-    	RoadBuilding roadBuildingMove = new RoadBuilding(playerIndex, this.edge1, this.edge2);
-    	
-    	try {
-			proxy.playRoadBuilding(roadBuildingMove);
-		} catch (IOException e) {
-
-			e.printStackTrace();
-		} 
     }
 
     public void robPlayer(RobPlayerInfo victim) {
