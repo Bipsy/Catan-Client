@@ -168,7 +168,7 @@ public class MapController extends Controller
     }
 
     public void playSoldierCard() {
-    	//TODO: 
+    	updateState("PlayingSoldierCard");
     }
 
     public void playRoadBuildingCard() {
