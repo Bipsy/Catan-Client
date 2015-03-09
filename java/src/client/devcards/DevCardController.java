@@ -134,7 +134,9 @@ public class DevCardController extends Controller
 
             e.printStackTrace();
         }
-        getPlayCardView().closeModal();
+        if (getPlayCardView().isModalShowing()) {
+            getPlayCardView().closeModal();
+        }
     }
 
     @Override
@@ -180,7 +182,9 @@ public class DevCardController extends Controller
 
             e.printStackTrace();
         }
-        getPlayCardView().closeModal();
+        if (getPlayCardView().isModalShowing()) {
+            getPlayCardView().closeModal();
+        }
     }
 
     @Override
