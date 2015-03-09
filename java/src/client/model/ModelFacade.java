@@ -393,24 +393,25 @@ public class ModelFacade {
     	Set <RobPlayerInfo> victims = new HashSet<RobPlayerInfo>();
     	Hex targetHex = null;
     	for (Hex hex: models.getBoard().getHexes()) {
-    		if (hex.getLocation().getX() == hexLoc.getX() && hex.getLocation().getY() == hexLoc.getY()) {
-    			targetHex = hex;
-    			break;
-    		}
+            if (hex.getLocation().getX() == hexLoc.getX() 
+                    && hex.getLocation().getY() == hexLoc.getY()) {
+                    targetHex = hex;
+                    break;
+            }
     	}
     	Set<Integer> ownersAtHex = models.getBoard().getOwnersIndeciesAt(targetHex);
         for (Integer owner: ownersAtHex) {
-        	if (owner != robberIndex) {
-        		Player player = models.getUserManager().getPlayer(owner);
-        		RobPlayerInfo victim = new RobPlayerInfo();
-        		victim.setColor(player.getColor());
-        		victim.setId(player.getID());
-        		victim.setName(player.getUsername());
-        		victim.setPlayerIndex(player.getIndex());
-        		victim.setNumCards(player.getResources().getNumResourceCards());
-        		if (victim.getNumCards() != 0)
-        			victims.add(victim);
-        	}
+            if (owner != robberIndex) {
+                    Player player = models.getUserManager().getPlayer(owner);
+                    RobPlayerInfo victim = new RobPlayerInfo();
+                    victim.setColor(player.getColor());
+                    victim.setId(player.getID());
+                    victim.setName(player.getUsername());
+                    victim.setPlayerIndex(player.getIndex());
+                    victim.setNumCards(player.getResources().getNumResourceCards());
+                    if (victim.getNumCards() != 0)
+                            victims.add(victim);
+            }
         }
         return victims.toArray(new RobPlayerInfo[0]);
     }

@@ -161,7 +161,8 @@ public abstract class MapState {
         }
 
         void showMapOverlay(IMapView view) {
-            view.startDrop(PieceType.ROBBER, facade.GetPlayerColor(facade.getLocalPlayerIndex()), false);
+            view.startDrop(PieceType.ROBBER, facade.GetPlayerColor(
+                    facade.getLocalPlayerIndex()), false);
         }
 
         boolean canPlaceRobber(HexLocation hexLoc) {
@@ -169,9 +170,11 @@ public abstract class MapState {
         }
 
         void robPlayer(RobPlayerInfo victim) {
-            RobPlayer robPlayer = new RobPlayer(facade.getLocalPlayerIndex(), victim.getPlayerIndex(), newRobberLocation);
+            RobPlayer robPlayer = new RobPlayer(facade.getLocalPlayerIndex(), 
+                    victim.getPlayerIndex(), newRobberLocation);
             try {
-                Populator.getInstance().populateModel(proxy.robPlayer(robPlayer), proxy.getLocalPlayerName());
+                Populator.getInstance().populateModel(
+                        proxy.robPlayer(robPlayer), proxy.getLocalPlayerName());
             } catch (IOException | NoCookieException e) {
                 e.printStackTrace();
             }
