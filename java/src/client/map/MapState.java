@@ -140,10 +140,10 @@ public abstract class MapState {
         }
     }
 
-    public static class Rolling extends MapState {
+    public static class Waiting extends MapState {
 
     }
-
+    
     public static class MoveRobber extends MapState {
 
         private HexLocation newRobberLocation;
@@ -216,9 +216,6 @@ public abstract class MapState {
         }
     }
 
-    public static class Discarding extends MapState {
-
-    }
 
     public static class PlayingSoldierCard extends MoveRobber {
 
