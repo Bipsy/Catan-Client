@@ -328,11 +328,11 @@ public class ResourceBarView extends PanelView implements IResourceBarView {
 
     private class ResourceElement {
 
-        private static final int PADDING = 0;
-        private static final int IMAGE_SIZE = 30;
+        private static final int PADDING = 5;
+        private static final int IMAGE_SIZE = 50;
         private static final int LABEL_FONT_SIZE = 30;
 
-        private static final float SCALE = 0.5f;
+        private static final float SCALE = 0.8f;
         private static final float R_SCALE = SCALE;
         private static final float G_SCALE = SCALE;
         private static final float B_SCALE = SCALE;
