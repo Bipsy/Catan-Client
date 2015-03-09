@@ -98,29 +98,37 @@ public abstract class MapState {
     }
 
     public static class PlayingBuildRoadCard extends MapState {
-//		IMapView view = new IMapView();
 
-        boolean round1 = true;
 
+    	private RoadLocation edge1 = null;
+    	private IMapView view;
+    	
         boolean canPlaceRoad(EdgeLocation edgeLoc) {
-            System.out.println("marbles everywhere!");
-            return true;
+        	
+            return facade.CanBuildRoad(new BuildRoad(facade.getLocalPlayerIndex(), new RoadLocation(edgeLoc), true));
+        }
+        
+        void showMapOverlay(IMapView view) {     
+        	this.view = view;
+            view.startDrop(PieceType.ROAD, facade.GetPlayerColor(facade.getLocalPlayerIndex()), true);
         }
 
         void placeRoad(EdgeLocation edgeLoc) {
 
-            BuildRoad roadMove = new BuildRoad(facade.getLocalPlayerIndex(), new RoadLocation(edgeLoc), false);
-            if (round1) {
-                try {
-                    Populator.getInstance().populateModel(proxy.buildRoad(roadMove), proxy.getLocalPlayerName());
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (NoCookieException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
+        	if (edge1 == null) {
+        		edge1 = new RoadLocation(edgeLoc);
+        		this.view.placeRoad(edgeLoc, facade.GetPlayerColor(facade.getLocalPlayerIndex()));
+        		showMapOverlay(this.view);
+        	}
+        	else {
+	        	RoadBuilding roadBuildingMove = new RoadBuilding(facade.getLocalPlayerIndex(), this.edge1, new RoadLocation(edgeLoc));
+	        	
+	        	try {
+	        		Populator.getInstance().populateModel(proxy.playRoadBuilding(roadBuildingMove), proxy.getLocalPlayerName());
+	    		} catch (Exception e) {
+	    			e.printStackTrace();
+	    		} 
+        	}
         }
     }
 
