@@ -200,6 +200,19 @@ public class MapController extends Controller
     
     public void updateState(String currState) {
     	
+    	boolean isPlayersturn = false;
+    			try {
+    				isPlayersturn = facade.isCurrentTurn(facade.getLocalPlayerIndex());
+    			}
+    			catch (Exception e) {
+    				e.printStackTrace();
+    			}
+    	if (!isPlayersturn)
+    	{
+			state = new MapState.Waiting();
+			return;
+    	}
+    	
     	switch (currState) {
     		case "FirstRound":
     			state = new MapState.Setup1();
@@ -208,16 +221,14 @@ public class MapController extends Controller
     			state = new MapState.Setup2();
     			break;
     		case "Rolling":
-    			state = new MapState.Rolling();
+    		case "Discarding":	
+    			state = new MapState.Waiting();
     			break;
     		case "Robbing":
     			state = new MapState.MoveRobber();
     			break;
     		case "Playing":
     			state = new MapState.Playing();
-    			break;
-    		case "Discarding":
-    			state = new MapState.Discarding();
     			break;
     		case "PlayingBuildRoadCard":
     			state = new MapState.PlayingBuildRoadCard();
