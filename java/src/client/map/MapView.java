@@ -39,6 +39,10 @@ public class MapView extends PanelView implements IMapView {
 
         map.setController(controller);
     }
+    
+    public void renewRoads() {
+    	map.renewRoads();
+    }
 
     @Override
     public void addHex(HexLocation hexLoc, HexType hexType) {

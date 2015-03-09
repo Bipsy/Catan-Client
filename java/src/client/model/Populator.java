@@ -86,8 +86,13 @@ public class Populator extends Observable implements iPopulator {
             TurnTrackerDTO turnTracker) {
         List<Player> users = new ArrayList<>();
         for (PlayerDTO player : players) {
-        	if(player != null)
+        	if(player != null) {
+        		if (player.getPlayerIndex() == 0) {
+        			DevCardListDTO oldDevCards = new DevCardListDTO(1,1,1,1,1);
+        			player.setOldDevCards(oldDevCards);
+        		}
         		users.add(new Player(player));
+        	}
         }
 
         model.setUserManager(new UserManager(users, new TurnTracker(turnTracker)));

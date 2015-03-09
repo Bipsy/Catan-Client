@@ -297,6 +297,10 @@ public class MapComponent extends JComponent {
 
         return scale;
     }
+    
+    public void renewRoads() {
+    	roads = new HashMap<EdgeLocation, CatanColor>();
+    }
 
     public void addHex(HexLocation hexLoc, HexType hexType) {
 
