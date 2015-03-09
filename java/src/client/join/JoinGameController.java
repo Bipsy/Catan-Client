@@ -203,6 +203,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
     @Override
     public void startJoinGame(GameInfo game) {
+    	System.out.println(game.getId());
         pollingPaused = true;
         localGame = game;
         List<PlayerInfo> players = game.getPlayers();
@@ -252,7 +253,29 @@ public class JoinGameController extends Controller implements IJoinGameControlle
         if (!pollingPaused) {
             System.out.println("Not paused");
             updateView();
+        } else {
+			localGame = getMostRecentLocalGame();
+        	startJoinGame(localGame);
         }
+        
+    }
+    
+    public GameInfo getMostRecentLocalGame() {
+    	int gameId = 0;
+    	try {
+			games = proxy.listGames();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	for (int i = 0; i < games.size(); i++) {
+    		if (games.get(i).getId() == localGame.getId()) {
+    			gameId = i;
+    			break;
+    		}
+    	}
+    	return games.get(gameId);
     }
     
     
