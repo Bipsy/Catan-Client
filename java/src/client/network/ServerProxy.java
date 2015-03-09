@@ -10,7 +10,6 @@ import java.net.URLDecoder;
 
 import client.data.GameInfo;
 import client.model.Serializer;
-import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
 import java.util.List;
