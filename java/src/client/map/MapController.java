@@ -160,6 +160,7 @@ public class MapController extends Controller
     }
 
     public void cancelMove() {
+    	getView().renewRoads();
         initFromModel(facade);
     }
 

@@ -305,15 +305,10 @@ public class Board {
     }
 
     public Set<Integer> getOwnersIndeciesAt(Hex hex) {
-        Set<Integer> owners = new HashSet<Integer>();
+        Set<Integer> owners = new HashSet<>();
         for (VertexLocation vertex : hex.getAdjacentVertices()) {
             if (communityMap.get(vertex) != null) {
                 owners.add(communityMap.get(vertex).getOwner());
-            }
-        }
-        for (EdgeLocation edge : hex.getAdjacentEdges()) {
-            if (roadMap.get(edge) != null) {
-                owners.add(roadMap.get(edge).getOwner());
             }
         }
         return owners;
