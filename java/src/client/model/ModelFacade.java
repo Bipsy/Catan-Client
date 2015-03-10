@@ -303,6 +303,10 @@ public class ModelFacade {
         }
         return false;
     }
+    
+    public String getCurrentPlayerName(int index) {
+    	return models.getUserManager().getPlayer(index).getUsername();
+    }
 
     public int getResourceCount(int playerIndex, ResourceType type) {
         Player player = models.getPlayer(playerIndex);

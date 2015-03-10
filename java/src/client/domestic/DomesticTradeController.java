@@ -430,7 +430,8 @@ public class DomesticTradeController extends Controller
     }
 
     public void accept(TradeOffer trade) {
-
+    	
+    	acceptOverlay.setPlayerName(facade.getCurrentPlayerName(trade.getSender()));
     	
     	assignAcceptResources(ResourceType.BRICK, trade.getResources().getBrick());
     	assignAcceptResources(ResourceType.ORE, trade.getResources().getOre());
@@ -451,7 +452,7 @@ public class DomesticTradeController extends Controller
     
     public void assignAcceptResources(ResourceType type, int amount) {
     	if (amount < 0) {
-    		acceptOverlay.addGetResource(type, amount);
+    		acceptOverlay.addGetResource(type, -amount);
     	} else if (amount > 0) {
     		acceptOverlay.addGiveResource(type, amount);
     	} else {
