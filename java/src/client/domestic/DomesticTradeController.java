@@ -3,6 +3,7 @@ package client.domestic;
 import shared.definitions.*;
 import shared.exceptions.InvalidPlayerIndex;
 import shared.models.ResourceList;
+import shared.models.TradeOffer;
 import shared.models.DTO.ResourceListDTO;
 import shared.models.DTO.params.AcceptTrade;
 import shared.models.DTO.params.OfferTrade;
@@ -26,7 +27,6 @@ public class DomesticTradeController extends Controller
         implements IDomesticTradeController, Observer {
 
     private IDomesticTradeOverlay tradeOverlay;
-    private DomesticTradeState state;
     private IWaitView waitOverlay;
     private IAcceptTradeOverlay acceptOverlay;
     private PlayerInfo[] listOfPlayers;
@@ -316,7 +316,6 @@ public class DomesticTradeController extends Controller
             tradeOverlay.setTradeEnabled(true);
         }
     }
-
     
 
     @Override
@@ -430,73 +429,33 @@ public class DomesticTradeController extends Controller
         getAcceptOverlay().closeModal();
     }
 
-    public void accept(ResourceList resourceList) {
-//    	System.out.println("ReceiveResource: " + receiveResource);
-//    	System.out.println("SendResource: " + sendResource);
-//    	int rAmt = 0;
-//        switch (receiveResource) {
-//        case BRICK:
-//        	rAmt = brickAmt;
-//            break;
-//        case ORE:
-//        	rAmt = oreAmt;
-//            break;
-//        case SHEEP:
-//        	rAmt = sheepAmt;
-//            break;
-//        case WHEAT:
-//        	rAmt = wheatAmt;
-//            break;
-//        case WOOD:
-//        	rAmt = woodAmt;
-//            break;
-//        default:
-//            break;
-//    }
-//        int sAmt = 0;
-//        switch (sendResource) {
-//        case BRICK:
-//        	sAmt = brickAmt;
-//            break;
-//        case ORE:
-//        	sAmt = oreAmt;
-//            break;
-//        case SHEEP:
-//        	sAmt = sheepAmt;
-//            break;
-//        case WHEAT:
-//        	sAmt = wheatAmt;
-//            break;
-//        case WOOD:
-//        	sAmt = woodAmt;
-//            break;
-//        default:
-//            break;
-//    }
-//
-//    	acceptOverlay.addGetResource(receiveResource, rAmt);
-//    	acceptOverlay.addGiveResource(sendResource, sAmt);
-        getAcceptOverlay().showModal();
+    public void accept(TradeOffer trade) {
 
+    	
+    	assignAcceptResources(ResourceType.BRICK, trade.getResources().getBrick());
+    	assignAcceptResources(ResourceType.ORE, trade.getResources().getOre());
+    	assignAcceptResources(ResourceType.SHEEP, trade.getResources().getSheep());
+    	assignAcceptResources(ResourceType.WHEAT, trade.getResources().getWheat());
+    	assignAcceptResources(ResourceType.WOOD, trade.getResources().getWood());
+    	
         currPlayer = facade.getCurrentPlayerIndex();
         myBrick = facade.getResourceCount(currPlayer, ResourceType.BRICK);
         myOre = facade.getResourceCount(currPlayer, ResourceType.ORE);
         mySheep = facade.getResourceCount(currPlayer, ResourceType.SHEEP);
         myWheat = facade.getResourceCount(currPlayer, ResourceType.WHEAT);
         myWood = facade.getResourceCount(currPlayer, ResourceType.WOOD);
+        
 
+        getAcceptOverlay().showModal();
     }
-
-    public void updateState(String currState) {
-
-        switch (currState) {
-            case "Playing":
-                state = new DomesticTradeState.Playing();
-                break;
-            default:
-                break;
-
-        }
+    
+    public void assignAcceptResources(ResourceType type, int amount) {
+    	if (amount < 0) {
+    		acceptOverlay.addGetResource(type, amount);
+    	} else if (amount > 0) {
+    		acceptOverlay.addGiveResource(type, amount);
+    	} else {
+    	}
     }
 
     @Override
@@ -505,13 +464,8 @@ public class DomesticTradeController extends Controller
             ModelFacade facade = (ModelFacade) arg;
             this.facade = facade;
             if (facade.getTradeOffer() != null) {
-            	System.out.println("TRADEOFFER != NULL");
-            	System.out.println(currPlayer);
-            	System.out.println(facade.getLocalPlayerIndex());
-            	System.out.println(facade.getTradeOffer().getReceiver());
             	if (facade.getTradeOffer().getReceiver() == facade.getLocalPlayerIndex()) {
-            		System.out.println("SHOW MODAL");
-            		accept(facade.getTradeOffer().getResources());
+            		accept(facade.getTradeOffer());
             	}
             }
             if (facade.isLocalPlayerTurn()) {
@@ -520,13 +474,6 @@ public class DomesticTradeController extends Controller
                 getTradeView().enableDomesticTrade(false);
             }
             currState = facade.getState();
-//    		if (!currState.equals("Playing")) {
-//    			if (facade.getTradeOffer() != null) {
-//    				accept();
-//    			}
-//    		}
-            System.out.println(currState);
-            updateState(currState);
         }
     }
 
