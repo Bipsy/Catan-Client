@@ -2,7 +2,6 @@ package client.domestic;
 
 import shared.definitions.*;
 import shared.exceptions.InvalidPlayerIndex;
-import shared.models.ResourceList;
 import shared.models.TradeOffer;
 import shared.models.DTO.ResourceListDTO;
 import shared.models.DTO.params.AcceptTrade;
@@ -418,43 +417,48 @@ public class DomesticTradeController extends Controller
 
     @Override
     public void acceptTrade(boolean willAccept) {
-
-        currPlayer = facade.getCurrentPlayerIndex();
-        AcceptTrade accept = new AcceptTrade(currPlayer, willAccept);
+        int localPlayer = facade.getLocalPlayerIndex();
+        AcceptTrade accept = new AcceptTrade(localPlayer, willAccept);
         try {
             proxy.acceptTrade(accept);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        getAcceptOverlay().closeModal();
+//        getAcceptOverlay().closeModal();
+//        getAcceptOverlay().reset();
+        acceptOverlay.closeModal();
+        acceptOverlay.reset();
     }
 
     public void accept(TradeOffer trade) {
     	
     	acceptOverlay.setPlayerName(facade.getCurrentPlayerName(trade.getSender()));
-    	
-    	assignAcceptResources(ResourceType.BRICK, trade.getResources().getBrick());
-    	assignAcceptResources(ResourceType.ORE, trade.getResources().getOre());
-    	assignAcceptResources(ResourceType.SHEEP, trade.getResources().getSheep());
-    	assignAcceptResources(ResourceType.WHEAT, trade.getResources().getWheat());
-    	assignAcceptResources(ResourceType.WOOD, trade.getResources().getWood());
-    	
+    	acceptOverlay.setAcceptEnabled(true);
+
         currPlayer = facade.getCurrentPlayerIndex();
-        myBrick = facade.getResourceCount(currPlayer, ResourceType.BRICK);
-        myOre = facade.getResourceCount(currPlayer, ResourceType.ORE);
-        mySheep = facade.getResourceCount(currPlayer, ResourceType.SHEEP);
-        myWheat = facade.getResourceCount(currPlayer, ResourceType.WHEAT);
-        myWood = facade.getResourceCount(currPlayer, ResourceType.WOOD);
+        int rBrick = facade.getResourceCount(facade.getLocalPlayerIndex(), ResourceType.BRICK);
+        int rOre = facade.getResourceCount(facade.getLocalPlayerIndex(), ResourceType.ORE);
+        int rSheep = facade.getResourceCount(facade.getLocalPlayerIndex(), ResourceType.SHEEP);
+        int rWheat = facade.getResourceCount(facade.getLocalPlayerIndex(), ResourceType.WHEAT);
+        int rWood = facade.getResourceCount(facade.getLocalPlayerIndex(), ResourceType.WOOD);
         
+    	assignAcceptResources(ResourceType.BRICK, trade.getResources().getBrick(), rBrick);
+    	assignAcceptResources(ResourceType.ORE, trade.getResources().getOre(), rOre);
+    	assignAcceptResources(ResourceType.SHEEP, trade.getResources().getSheep(), rSheep);
+    	assignAcceptResources(ResourceType.WHEAT, trade.getResources().getWheat(), rWheat);
+    	assignAcceptResources(ResourceType.WOOD, trade.getResources().getWood(), rWood);
 
         getAcceptOverlay().showModal();
     }
     
-    public void assignAcceptResources(ResourceType type, int amount) {
+    public void assignAcceptResources(ResourceType type, int amount, int myResources) {
     	if (amount < 0) {
-    		acceptOverlay.addGetResource(type, -amount);
+    		acceptOverlay.addGiveResource(type, -amount);
+            if (-amount > myResources) {
+            	acceptOverlay.setAcceptEnabled(false);
+            }
     	} else if (amount > 0) {
-    		acceptOverlay.addGiveResource(type, amount);
+    		acceptOverlay.addGetResource(type, amount);
     	} else {
     	}
     }
