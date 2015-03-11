@@ -89,8 +89,10 @@ public abstract class MapState {
 
         void placeSettlement(VertexLocation vertLoc) {
             BuildSettlement settlementMove = new BuildSettlement(facade.getLocalPlayerIndex(), new VertexLocationDTO(vertLoc), true);
+            FinishTurn turn = new FinishTurn(facade.getCurrentPlayerIndex());
             try {
                 Populator.getInstance().populateModel(proxy.buildSettlement(settlementMove), proxy.getLocalPlayerName());
+                Populator.getInstance().populateModel(proxy.finishTurn(turn), proxy.getLocalPlayerName());
             } catch (IOException | NoCookieException e) {
                 e.printStackTrace();
             }
