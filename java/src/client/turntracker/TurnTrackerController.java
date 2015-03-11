@@ -133,7 +133,6 @@ public class TurnTrackerController extends Controller
                 break;
         }
         
-        enabled = true;
         getView().updateGameState(state, enabled);
     }
 
