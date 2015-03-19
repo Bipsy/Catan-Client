@@ -4,6 +4,7 @@ import java.util.List;
 
 import shared.definitions.ResourceType;
 import shared.locations.HexLocation;
+import shared.models.DTO.params.AcceptTrade;
 import shared.models.DTO.params.BuildCity;
 import shared.models.DTO.params.BuildRoad;
 import shared.models.DTO.params.BuildSettlement;
@@ -37,6 +38,7 @@ public class ClientModel {
     private ChatObject chatObject;
     private UserManager userManager;
     private TradeOffer tradeOffer;
+    private AcceptTrade acceptTrade;
     private int version;
     //Player index of the game winner
     private int winner;
@@ -49,6 +51,7 @@ public class ClientModel {
         chatObject = null;
         userManager = null;
         tradeOffer = null;
+        acceptTrade = null;
         localPlayerIndex = null;
 
     }
@@ -114,11 +117,19 @@ public class ClientModel {
     public TradeOffer getTradeOffer() {
         return tradeOffer;
     }
+    
+	public AcceptTrade getAcceptTrade() {
+		return acceptTrade;
+	}
 
     public void setTradeOffer(TradeOffer tradeOffer) {
         this.tradeOffer = tradeOffer;
     }
 
+    public void setAcceptTrade(AcceptTrade acceptTrade) {
+    	this.acceptTrade = acceptTrade;
+    }
+    
     /**
      * VERSION
      */
@@ -348,4 +359,6 @@ public class ClientModel {
 	public boolean CanBuyDevCard(int playerIndex) {
 		return userManager.CanBuyDevCard(playerIndex) && bank.hasDevCards();
 	}
+
+
 }

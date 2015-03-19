@@ -2,6 +2,7 @@ package client.domestic;
 
 import shared.definitions.*;
 import shared.exceptions.InvalidPlayerIndex;
+import shared.exceptions.NoCookieException;
 import shared.models.TradeOffer;
 import shared.models.DTO.ResourceListDTO;
 import shared.models.DTO.params.AcceptTrade;
@@ -420,14 +421,17 @@ public class DomesticTradeController extends Controller
         int localPlayer = facade.getLocalPlayerIndex();
         AcceptTrade accept = new AcceptTrade(localPlayer, willAccept);
         try {
-            proxy.acceptTrade(accept);
+        	try {
+				Populator.getInstance().populateModel(proxy.acceptTrade(accept), proxy.getLocalPlayerName());
+			} catch (NoCookieException e) {
+				e.printStackTrace();
+			}
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        getAcceptOverlay().closeModal();
-//        getAcceptOverlay().reset();
         acceptOverlay.closeModal();
         acceptOverlay.reset();
+        getWaitOverlay().closeModal();
     }
 
     public void accept(TradeOffer trade) {

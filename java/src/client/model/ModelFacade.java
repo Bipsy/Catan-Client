@@ -318,6 +318,10 @@ public class ModelFacade {
     	return models.getTradeOffer();
     }
     
+    public AcceptTrade getAcceptTrade() {
+    	return models.getAcceptTrade();
+    }
+    
     public Map<ResourceType, Integer> getBank() {
         Map<ResourceType, Integer> mapBank = new HashMap<>();
         if (models != null) {
