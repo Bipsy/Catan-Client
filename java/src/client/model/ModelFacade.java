@@ -303,6 +303,10 @@ public class ModelFacade {
         }
         return false;
     }
+    
+    public String getCurrentPlayerName(int index) {
+    	return models.getUserManager().getPlayer(index).getUsername();
+    }
 
     public int getResourceCount(int playerIndex, ResourceType type) {
         Player player = models.getPlayer(playerIndex);
@@ -312,6 +316,10 @@ public class ModelFacade {
     
     public TradeOffer getTradeOffer() {
     	return models.getTradeOffer();
+    }
+    
+    public AcceptTrade getAcceptTrade() {
+    	return models.getAcceptTrade();
     }
     
     public Map<ResourceType, Integer> getBank() {

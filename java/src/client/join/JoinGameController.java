@@ -1,8 +1,6 @@
 package client.join;
-
 import java.io.IOException;
 import java.util.List;
-
 import shared.definitions.CatanColor;
 import shared.models.DTO.params.CreateGameRequest;
 import shared.models.DTO.params.JoinGameRequest;
