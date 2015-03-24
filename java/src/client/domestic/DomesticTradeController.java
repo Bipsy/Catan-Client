@@ -48,6 +48,7 @@ public class DomesticTradeController extends Controller
     private boolean sendResources = false;
     private boolean recieveResources = false;
     private boolean playerTradingBool = false;
+    private boolean sentTrade = false;
     private ResourceType receiveResource;
     private ResourceType sendResource;
 
@@ -156,6 +157,8 @@ public class DomesticTradeController extends Controller
         OfferTrade tradeOffer = new OfferTrade(currPlayer, tradingResources, playerTradingWith);
         try {
             proxy.offerTrade(tradeOffer);
+            sentTrade = true;
+        	System.out.println("sendTrade: proxyCall " + sentTrade);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -472,9 +475,19 @@ public class DomesticTradeController extends Controller
         if (o instanceof Populator && arg instanceof ModelFacade) {
             ModelFacade facade = (ModelFacade) arg;
             this.facade = facade;
+            System.out.println("mudpate");
             if (facade.getTradeOffer() != null) {
+            	System.out.println("there is a trade");
             	if (facade.getTradeOffer().getReceiver() == facade.getLocalPlayerIndex()) {
             		accept(facade.getTradeOffer());
+            	}
+            } else {
+            	System.out.println("sendTrade: update " + sentTrade);
+            	if (sentTrade) {
+            		System.out.println("I think the trade went through");
+                    getWaitOverlay().closeModal();
+                    System.out.println("should've closed the modal");
+                    sentTrade = false;
             	}
             }
             if (facade.isLocalPlayerTurn()) {
