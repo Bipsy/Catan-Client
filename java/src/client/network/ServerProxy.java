@@ -134,8 +134,11 @@ public class ServerProxy implements iServerProxy {
                         gameCookie = extractGameCookie(cookieField);
                         gameNum = Integer.parseInt(gameCookie);
                     } else if (cookieField != null && cookieField.contains("catan.user")) {
+                        System.out.println(cookieField);
                         userCookie = extractUserCookie(cookieField);
+                        System.out.println(userCookie);
                         String result = URLDecoder.decode(userCookie, "UTF-8");
+                        System.out.println(result);
                         storeCookies(result);
                     }
                 }
@@ -392,18 +395,27 @@ public class ServerProxy implements iServerProxy {
 //          e.printStackTrace();
 //      }
 //  }
-    private String extractGameCookie(String cookieField) {
-        String trimPath = cookieField.replace(";Path=/;", "");
-        String trimCatan = trimPath.replace("catan.game=", "");
-        return trimCatan;
+    private String extractGameCookie(String cookie) {
+        cookie = cookie.substring(cookie.indexOf("catan.game"));
+        String cookieName = cookie.substring(0, cookie.indexOf("="));
+        String cookieValue = cookie.substring(cookie.indexOf("=")+1,
+            cookie.indexOf(";"));
+//        System.out.println(cookieValue);
+        return cookieValue;
     }
 
-    private String extractUserCookie(String cookieField) {
-        return cookieField.replace(";Path=/;", "").replace("catan.user=", "");
+    private String extractUserCookie(String cookie) {
+        cookie = cookie.substring(0, cookie.indexOf(";"));
+        String cookieName = cookie.substring(0, cookie.indexOf("="));
+        String cookieValue = cookie.substring(cookie.indexOf("%"),
+                cookie.length());
+//        System.out.println(cookieValue);
+        return cookieValue;
     }
 
     private void storeCookies(String result) {
     	uCookie = serializer.deserializeUserCookie(result);
+//        System.out.println("User id: " + uCookie.getPlayerID());
     }
 
 	@Override

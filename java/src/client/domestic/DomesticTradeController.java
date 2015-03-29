@@ -3,7 +3,6 @@ package client.domestic;
 import shared.definitions.*;
 import shared.exceptions.InvalidPlayerIndex;
 import shared.models.ResourceList;
-import shared.models.TradeOffer;
 import shared.models.DTO.ResourceListDTO;
 import shared.models.DTO.params.AcceptTrade;
 import shared.models.DTO.params.OfferTrade;
