@@ -11,8 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import shared.models.DTO.params.MaritimeTrade;
 import shared.models.Harbor;
 

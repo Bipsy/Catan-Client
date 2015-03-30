@@ -1,18 +1,14 @@
 package client.map;
 
-import java.io.IOException;
 import java.util.*;
 
 import shared.definitions.*;
 import shared.locations.*;
 import shared.models.*;
-import shared.models.DTO.params.Monopoly;
-import shared.models.DTO.params.RoadBuilding;
 import client.base.*;
 import client.data.*;
 import client.model.ModelFacade;
 import client.model.Populator;
-import client.network.ServerProxy;
 
 /**
  * Implementation for the map controller
