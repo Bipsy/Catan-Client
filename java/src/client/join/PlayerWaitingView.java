@@ -155,7 +155,8 @@ public class PlayerWaitingView extends OverlayView implements IPlayerWaitingView
             choiceList.add(v);
         }
 
-        aiModel.setList(choiceList);
+        if (value.length > 0)
+        	aiModel.setList(choiceList);
 
         if (value.length > 0) {
             aiChoices.setValue(value[0]);
