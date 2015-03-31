@@ -67,7 +67,8 @@ public class Populator extends Observable implements iPopulator {
         
         populateUserManager(container.getPlayers(), container.getTurnTracker());
 
-        if (container.getTradeOffer() != null) {
+        if (container.getTradeOffer() != null && container.getTradeOffer().getOffer()!= null 
+        		&& container.getTradeOffer().getOffer().getBrick() != -1) {
             model.setTradeOffer(new TradeOffer(container.getTradeOffer()));
         } else {
         	model.setTradeOffer(null);
