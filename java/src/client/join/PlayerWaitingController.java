@@ -87,6 +87,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
     @Override
     public void addAI() {
+    	/*
     	AddAIRequest player = new AddAIRequest(view.getSelectedAI());
     	try {
 			proxy.addAIPlayer(player);
@@ -94,6 +95,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 			System.err.println("Error creating AIPlayer");
 			e.printStackTrace();
 		}
+		*/
     	
     }
 
