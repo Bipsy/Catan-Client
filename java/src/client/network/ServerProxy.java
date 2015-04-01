@@ -153,7 +153,8 @@ public class ServerProxy implements iServerProxy {
 //            } else if (connection.getResponseCode() == HttpURLConnection.HTTP_BAD_REQUEST) {
 //                return null;
             } else {
-                return new Pair<>("Error", HttpURLConnection.HTTP_OK);
+                System.out.println("Error: " + connection.getResponseCode());
+                return new Pair<>("Error", connection.getResponseCode());
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -41,6 +41,12 @@ public class RollController extends Controller implements IRollController, Obser
                 if (countDown == 0) {
                     rollDice();
                 }
+            } else {
+                getRollView().setMessage(String.format(MESSAGE, --countDown));
+                getRollView().showModal();
+                if (countDown == 0) {
+                    rollDice();
+                }
             }
         }
     };
@@ -87,16 +93,16 @@ public class RollController extends Controller implements IRollController, Obser
     protected void showRollModal() {
         getRollView().setMessage(String.format(MESSAGE, countDown));
         getRollView().showModal();
-        rollingTimer = new Timer(1000, timerListener);
-        rollingTimer.setInitialDelay(1000);
-        rollingTimer.setRepeats(true);
-        rollingTimer.start();
+//        rollingTimer = new Timer(1000, timerListener);
+//        rollingTimer.setInitialDelay(1000);
+//        rollingTimer.setRepeats(true);
+//        rollingTimer.start();
     }
 
     @Override
     public void rollDice() {
-    	rollingTimer.stop();
-        countDown = 3;
+//    	rollingTimer.stop();
+//        countDown = 3;
         int rollValue = rollDice(6, 2);
         if (getRollView().isModalShowing()) {
             getRollView().closeModal();
