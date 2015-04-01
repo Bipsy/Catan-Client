@@ -54,4 +54,14 @@ public class GameInfo {
 	public List<PlayerInfo> getPlayers() {
         return Collections.unmodifiableList(players);
     }
+    
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Game ID: " + id + "\n");
+        builder.append("Game Title: " + title + "\n");
+        for (PlayerInfo player : players) {
+            builder.append(player.toString());            
+        }
+        return builder.toString();
+    }
 }
