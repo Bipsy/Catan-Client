@@ -24,5 +24,12 @@ public class UserCookie {
 	public void setPlayerID(int playerID) {
 		this.playerID = playerID;
 	}
+        public String toString() {
+            StringBuilder builder = new StringBuilder();
+            builder.append("Cookie Name: " + name + "\n");
+            builder.append("Cookie Password: " + password + "\n");
+            builder.append("Cookie Player ID: " + playerID + "\n");
+            return builder.toString();
+        }
 	
 }

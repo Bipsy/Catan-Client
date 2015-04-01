@@ -30,7 +30,7 @@ import shared.models.DTO.params.*;
 public class ServerProxy implements iServerProxy {
 
     private static String serverHost = "localhost";
-    private static String serverPort = "8081";
+    private static String serverPort = "8088";
     private String userCookie = "";
     private String gameCookie = "";
     private final String COOKIE_HEADER = "Set-cookie";

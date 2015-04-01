@@ -27,6 +27,15 @@ public class PlayerInfo {
         this.name = name;
         this.color = color;
     }
+    
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("PlayerID: " + id + "\n");
+        builder.append("Player Index: " + playerIndex + "\n");
+        builder.append("Player Name: " + name + "\n");
+        builder.append("Player Color: " + color + "\n");
+        return builder.toString();
+    }
 
     public PlayerInfo() {
     }
@@ -77,8 +86,8 @@ public class PlayerInfo {
             return false;
         }
         final PlayerInfo other = (PlayerInfo) obj;
-//        System.out.println("this id: " + this.id +
-//                " other id " + other.id);
+        System.out.println("this id: " + this.id +
+                " other id " + other.id);
         return this.id == other.id;
     }
 }

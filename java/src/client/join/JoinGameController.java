@@ -127,14 +127,18 @@ public class JoinGameController extends Controller implements IJoinGameControlle
         pollingPaused = false;
         try {
             UserCookie uCookie = proxy.getUserCookie();
+            System.out.println(uCookie.toString());
 
             games = proxy.listGames();
+            for (GameInfo game : games) {
+                System.out.println(game.toString());
+                System.out.println();
+            }
 
             IJoinGameView view = getJoinGameView();
             CatanColor color = CatanColor.RED;
-
             localPlayer = new PlayerInfo(uCookie.getPlayerID(), -1, uCookie.getName(), color);
-            System.out.println(localPlayer.getId());
+            System.out.println(localPlayer);
             view.setGames(games.toArray(new GameInfo[games.size()]), localPlayer);
         } catch (IOException e) {
             System.err.println("Error in Starting Game");
