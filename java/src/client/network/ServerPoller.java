@@ -83,8 +83,12 @@ public class ServerPoller implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+    	System.out.println("trying to poll " + this.facade.getLocalUserName());
         ClientModelDTO newModel = poll();
+    	System.out.println("polled " + this.facade.getLocalUserName());
         if (newModel != null) {
+        	System.out.println("trying to update model " + this.facade.getLocalUserName());
+        	System.out.println(newModel);
             updateModel(newModel);
         }
     }
