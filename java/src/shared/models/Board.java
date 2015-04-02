@@ -19,6 +19,7 @@ import shared.models.DTO.VertexObjectDTO;
 import shared.models.DTO.params.BuildCity;
 import shared.models.DTO.params.BuildRoad;
 import shared.models.DTO.params.BuildSettlement;
+import shared.models.DTO.params.RoadLocation;
 
 /**
  * Model representation of the Catan board
@@ -34,12 +35,13 @@ public class Board {
     private List<VertexObject> cities;
     private int radius;
     private Robber robber;
-
+    
     private Map<HexLocation, Hex> hexMap;
     private Map<EdgeLocation, Road> roadMap;
     private Map<VertexLocation, VertexObject> communityMap;
 
     public Board() {
+    	setTempRoad(null);
         roadMap = new HashMap<>();
         communityMap = new HashMap<>();
 
@@ -313,5 +315,18 @@ public class Board {
         }
         return owners;
     }
+
+	public void setTempRoad(Road road) {
+		System.out.println("adding temporary road");
+		if(road != null)
+			this.roadMap.put(road.getLocation().getNormalizedLocation(), road);
+	}
+
+	public void removeTempRoad(Road road) {
+		System.out.println("removing temporary road");
+		if(road != null)
+			this.roadMap.remove(road.getLocation().getNormalizedLocation());
+		
+	}
 
 }
