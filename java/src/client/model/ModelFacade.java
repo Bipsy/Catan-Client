@@ -421,6 +421,8 @@ public class ModelFacade {
                             victims.add(victim);
             }
         }
+        if(victims.size() == 0)
+        	return new RobPlayerInfo[0];
         return victims.toArray(new RobPlayerInfo[0]);
     }
 
@@ -483,5 +485,14 @@ public class ModelFacade {
 		Player player = models.getPlayer(playerIndex);
 		return player.canPlayMonopoly() || player.canPlayMonument() || player.canPlaySoldier() || player.canUseYearOfPlenty()
 				|| player.canUseRoadBuilding();
+	}
+	
+
+	public void setTempRoad(Road tempRoad) {
+		this.models.setTempRoad(tempRoad);
+	}
+
+	public void removeTempRoad(Road tempRoad) {
+		this.models.removeTempRoad(tempRoad);		
 	}
 }

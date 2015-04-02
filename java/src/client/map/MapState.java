@@ -9,6 +9,7 @@ import shared.exceptions.NoCookieException;
 import shared.locations.*;
 import client.model.ModelFacade;
 import client.model.Populator;
+import shared.models.Road;
 import shared.models.DTO.params.*;
 import client.data.*;
 
@@ -106,8 +107,19 @@ public abstract class MapState {
     	private IMapView view;
     	
         boolean canPlaceRoad(EdgeLocation edgeLoc) {
+        	Road tempRoad = null;
+        	if(edge1 != null) {
+        		tempRoad = new Road();
+        		tempRoad.setLocation(edge1.convertToEdgeLocation());
+        		tempRoad.setOwner(facade.getLocalPlayerIndex());
+        		facade.setTempRoad(tempRoad);
+        	}
+        	boolean result = facade.CanBuildRoad(new BuildRoad(facade.getLocalPlayerIndex(), new RoadLocation(edgeLoc), true));
+        	if(edge1 != null) {
+        		facade.removeTempRoad(tempRoad);
+        	}
+        	return result;
         	
-            return facade.CanBuildRoad(new BuildRoad(facade.getLocalPlayerIndex(), new RoadLocation(edgeLoc), true));
         }
         
         void showMapOverlay(IMapView view) {     

@@ -361,4 +361,12 @@ public class ClientModel {
 	}
 
 
+
+	public void setTempRoad(Road tempRoad) {
+		this.board.setTempRoad(tempRoad);
+	}
+
+	public void removeTempRoad(Road tempRoad) {
+		this.board.removeTempRoad(tempRoad);		
+	}
 }

@@ -19,6 +19,10 @@ public class RoadLocation {
 		this.y = y;
 		direction = dir;
 	}
+	
+	public EdgeLocation convertToEdgeLocation() {
+		return new EdgeLocation(new HexLocation(x,y), direction);
+	}
 		
 	public int getX() {
 		return x;
