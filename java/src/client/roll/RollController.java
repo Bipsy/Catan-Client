@@ -39,12 +39,14 @@ public class RollController extends Controller implements IRollController, Obser
                 getRollView().setMessage(String.format(MESSAGE, --countDown));
                 getRollView().showModal();
                 if (countDown == 0) {
+                    rollingTimer.stop();
                     rollDice();
                 }
             } else {
                 getRollView().setMessage(String.format(MESSAGE, --countDown));
                 getRollView().showModal();
                 if (countDown == 0) {
+                    rollingTimer.stop();
                     rollDice();
                 }
             }
@@ -101,9 +103,10 @@ public class RollController extends Controller implements IRollController, Obser
 
     @Override
     public void rollDice() {
-//    	rollingTimer.stop();
-//        countDown = 3;
+        countDown = 3;
+        
         int rollValue = rollDice(6, 2);
+        while ((rollValue = rollDice(6, 2)) == 7);
         if (getRollView().isModalShowing()) {
             getRollView().closeModal();
         }
