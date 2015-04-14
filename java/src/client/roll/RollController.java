@@ -36,18 +36,13 @@ public class RollController extends Controller implements IRollController, Obser
         public void actionPerformed(ActionEvent e) {
             if (getRollView().isModalShowing()) {
                 getRollView().closeModal();
-                getRollView().setMessage(String.format(MESSAGE, --countDown));
-                getRollView().showModal();
-                if (countDown == 0) {
-                    rollDice();
-                }
-            } else {
-                getRollView().setMessage(String.format(MESSAGE, --countDown));
-                getRollView().showModal();
-                if (countDown == 0) {
-                    rollDice();
-                }
             }
+            getRollView().setMessage(String.format(MESSAGE, --countDown));
+            getRollView().showModal();
+            if (countDown == 0) {
+                rollingTimer.stop();
+                rollDice();
+            }   
         }
     };
 
@@ -93,16 +88,17 @@ public class RollController extends Controller implements IRollController, Obser
     protected void showRollModal() {
         getRollView().setMessage(String.format(MESSAGE, countDown));
         getRollView().showModal();
-//        rollingTimer = new Timer(1000, timerListener);
-//        rollingTimer.setInitialDelay(1000);
-//        rollingTimer.setRepeats(true);
-//        rollingTimer.start();
+        rollingTimer = new Timer(1000, timerListener);
+        rollingTimer.setInitialDelay(1000);
+        rollingTimer.setRepeats(true);
+        rollingTimer.start();
     }
 
     @Override
     public void rollDice() {
-//    	rollingTimer.stop();
-//        countDown = 3;
+        countDown = 3;
+        rollingTimer.stop();
+        
         int rollValue = rollDice(6, 2);
         if (getRollView().isModalShowing()) {
             getRollView().closeModal();
@@ -114,6 +110,7 @@ public class RollController extends Controller implements IRollController, Obser
             Populator.getInstance().populateModel(proxy.rollNumber(request), proxy.getLocalPlayerName());
         } catch (IOException | NoCookieException e) {
             System.err.println(e.toString());
+            System.exit(1);
         }
     }
 

@@ -11,6 +11,7 @@ import client.model.iPopulator;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import javax.swing.SwingUtilities;
 
 import shared.exceptions.NoCookieException;
 import shared.models.DTO.ClientModelDTO;
@@ -83,10 +84,19 @@ public class ServerPoller implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ClientModelDTO newModel = poll();
-        if (newModel != null) {
-            updateModel(newModel);
-        }
+        Thread pollingThread = new Thread() {
+            public void run() {
+                final ClientModelDTO newModel = poll();
+                if(newModel != null) {
+                    SwingUtilities.invokeLater(new Runnable() {
+                        public void run() {
+                            updateModel(newModel);
+                        }
+                    });
+                }
+            }
+        };
+        pollingThread.start();
     }
 
 }

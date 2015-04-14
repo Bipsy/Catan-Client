@@ -45,6 +45,7 @@ public class GameStatePanel extends JPanel {
         ActionListener actionListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+//                System.out.println("Button was pushed");
                 action.execute();
             }
         };

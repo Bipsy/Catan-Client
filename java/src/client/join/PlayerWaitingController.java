@@ -18,8 +18,8 @@ import shared.models.DTO.params.AddAIRequest;
  */
 public class PlayerWaitingController extends Controller implements IPlayerWaitingController {
 	
-	private ServerProxy proxy;
-	private IPlayerWaitingView view;
+    private ServerProxy proxy;
+    private IPlayerWaitingView view;
 
     public PlayerWaitingController(IPlayerWaitingView view) {
 
@@ -73,14 +73,13 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
         int numPlayers = setViewPlayers(view, proxy);
         setViewAIs(view, proxy);
         view.showModal();
-        if(numPlayers < 4) {
-        	final Timer timer = new Timer();
-        	final WaitForPlayersTask waiting = new WaitForPlayersTask(this, proxy, timer);
-        	timer.schedule(waiting, 0, 2000);        	
-        }
-        else if (numPlayers == 4){
-        	view.closeModal();
-			Catan.startPoller(2000);
+        if (numPlayers < 4) {
+            final Timer timer = new Timer();
+            final WaitForPlayersTask waiting = new WaitForPlayersTask(this, proxy, timer);
+            timer.schedule(waiting, 0, 2000);
+        } else if (numPlayers == 4) {
+            view.closeModal();
+            Catan.startPoller(2000);
         }
     }
     
@@ -106,23 +105,22 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
     	private int players = 0;
     	
     	public WaitForPlayersTask(PlayerWaitingController parent, ServerProxy proxy, Timer timer) {
-    		this.parent = parent;
-    		this.proxy = proxy;
-    		this.timer = timer;
+            this.parent = parent;
+            this.proxy = proxy;
+            this.timer = timer;
     	}
     	
     	@Override
     	public void run() {
-    		if(players < 4) {
-    			players = parent.setViewPlayers(parent.getView(), proxy);
-    			parent.getView().showModal();
-    		}
-    		else {
-    			parent.getView().closeModal();
-    			Catan.startPoller(2000);
-    			timer.cancel();
-    			timer.purge();
-    		}
+            if (players < 4) {
+                players = parent.setViewPlayers(parent.getView(), proxy);
+                parent.getView().showModal();
+            } else {
+                parent.getView().closeModal();
+                Catan.startPoller(2000);
+                timer.cancel();
+                timer.purge();
+            }
     	}
     	
     }
