@@ -86,8 +86,8 @@ public class PlayerInfo {
             return false;
         }
         final PlayerInfo other = (PlayerInfo) obj;
-        System.out.println("this id: " + this.id +
-                " other id " + other.id);
+//        System.out.println("this id: " + this.id +
+//                " other id " + other.id);
         return this.id == other.id;
     }
 }

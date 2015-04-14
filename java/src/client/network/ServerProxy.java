@@ -197,6 +197,7 @@ public class ServerProxy implements iServerProxy {
     @Override
     public GameInfo createGames(CreateGameRequest game) throws IOException {
         String params = serializer.serialize(game);
+        System.out.print(params);
         Pair<String, Integer> result = doPost("/games/create", params, false);
         return serializer.deserializeGameInfo(result.getValue0());
     }
@@ -239,8 +240,10 @@ public class ServerProxy implements iServerProxy {
 
     @Override
     public ClientModelDTO rollNumber(RollNumber rollMove) throws IOException {
+        System.out.println("Pre Roll Number");
         String params = serializer.serialize(rollMove);
         Pair<String, Integer> result = doPost("/moves/rollNumber", params, false);
+        System.out.println("Post Roll Number");
         return serializer.deserializeModel(result.getValue0());
     }
 
@@ -338,6 +341,7 @@ public class ServerProxy implements iServerProxy {
     @Override
     public Integer joinGame(JoinGameRequest game) throws IOException {
         String params = serializer.serialize(game);
+        System.out.println(params);
         Pair<String, Integer> result = doPost("/games/join", params, true);
         return result.getValue1();
     }

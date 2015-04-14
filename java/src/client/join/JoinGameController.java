@@ -251,8 +251,9 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
     @Override
     public void actionPerformed(ActionEvent e) {
+//        System.out.println("Still running");
         if (!pollingPaused) {
-            System.out.println("Not paused");
+//            System.out.println("Not paused");
             updateView();
         }
     }

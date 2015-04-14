@@ -62,6 +62,7 @@ public class TurnTrackerView extends PanelView implements ITurnTrackerView {
         this.gameStatePanel.setButtonAction(new IAction() {
             @Override
             public void execute() {
+                System.out.println("I am trying to finish turn");
                 getController().endTurn();
             }
         });

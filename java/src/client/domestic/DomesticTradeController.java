@@ -476,18 +476,13 @@ public class DomesticTradeController extends Controller
         if (o instanceof Populator && arg instanceof ModelFacade) {
             ModelFacade facade = (ModelFacade) arg;
             this.facade = facade;
-            System.out.println("mudpate");
             if (facade.getTradeOffer() != null) {
-            	System.out.println("there is a trade");
             	if (facade.getTradeOffer().getReceiver() == facade.getLocalPlayerIndex()) {
             		accept(facade.getTradeOffer());
             	}
             } else {
-            	System.out.println("sendTrade: update " + sentTrade);
             	if (sentTrade) {
-            		System.out.println("I think the trade went through");
                     getWaitOverlay().closeModal();
-                    System.out.println("should've closed the modal");
                     sentTrade = false;
             	}
             }
